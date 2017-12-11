@@ -1,0 +1,12 @@
+<div>
+    <CloudTable :list = list :type="'selection'"  :title="title" :query="listQuery" :listLoading="listLoading"  @getList="getList" >
+        <el-table-column  label="操作"  >
+            <template slot-scope="scope">
+             <el-button  size="small"  type="primary" icon="iconfont icon-detail" title="详情"  @click="showDetail(scope)"></el-button>
+           </template>
+         </el-table-column> 
+    </CloudTable>
+
+    <VueTreeList :model="data" default-tree-node-name="新建组织" default-leaf-node-name="新建员工"></VueTreeList>
+    
+</div>
