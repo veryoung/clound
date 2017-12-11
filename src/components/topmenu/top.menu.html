@@ -1,5 +1,7 @@
 <div class="top-menu">
     <ul class="nav-menu">
-        <router-link v-for="(item, $index) in appRouter" :key="$index" :to=item.path replace tag="li">{{item.name}}</router-link>
+        <router-link active-class="active" v-for="(item, $index) in appRouter" :key="$index" :to=item.path replace tag="li">
+            <div>{{item.name}}</div>
+        </router-link>
     </ul>
 </div>
