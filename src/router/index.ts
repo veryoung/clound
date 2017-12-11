@@ -1,17 +1,19 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import { Plugins } from "../views/plugins/plugins";
+import { Layout } from "@views/layout/layout";
+import { appRouter } from "@router/app";
 
 
 Vue.use(Router);
 
-export default new Router({
+export const entryRouter = new Router({
   routes: [
-{
-      path: "/plugins",
-      name: "plugins",
-      component: Plugins
+    {
+      path: "/",
+      name: "layout",
+      component: Layout,
+      children: appRouter
     }
   ]
 });

@@ -19,7 +19,8 @@ module.exports = function (env) {
                 'src': path.resolve(__dirname, '../src'),
                 'vue$': 'vue/dist/vue.esm.js',
                 '@views': 'src/views/',
-                '@components': 'src/components/'
+                '@components': 'src/components/',
+                '@router':'src/router/'
             }
         },
         module: {
