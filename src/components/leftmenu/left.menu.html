@@ -8,10 +8,13 @@
                         <span slot="title">{{menu.name}}</span>
                     </template>
 
-                    <el-menu-item :index="menu.path" v-for="(menu,$index) in menu.children">
-                        <i class="iconfont">&#xe616;</i>
-                        <span slot="title">{{menu.name}}</span>
-                    </el-menu-item>
+                    <template v-for="(menu,$index) in menu.children">
+                        <el-menu-item :index="menu.path">
+                            <i class="iconfont">&#xe616;</i>
+                            <span slot="title">{{menu.name}}</span>
+                        </el-menu-item>
+                    </template>
+
 
                 </el-submenu>
                 <el-menu-item v-show="!menu.children" :index="menu.path">
