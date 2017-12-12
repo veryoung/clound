@@ -1,1 +1,3 @@
-<el-aside width="200px">Aside</el-aside>
+<el-aside class="sider-component" :style="{width:width+'px',transition:time+' all'}">
+    <LeftMenu :menus="menuProps" @changeWidth="changeWidth"/>
+</el-aside>

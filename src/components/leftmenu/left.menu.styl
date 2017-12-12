@@ -1,0 +1,54 @@
+$active-bg = #1f4c6f
+$bg = #1c415e
+
+
+.left-menu:not(.el-menu--collapse)
+    width 200px
+    min-height 400px
+.el-menu-item i
+    font-size 52px
+    color #306b9c
+.left-menu-panel
+    position absolute
+    left 0
+    top 60px
+    bottom 0
+    display flex
+    flex 1 0 auto
+    flex-direction column
+    justify-content space-between
+    >.list-menu
+        display flex
+        flex 1 0 auto
+    >.back
+        cursor pointer
+        height 40px
+        background #0e2f4a
+        color #ffffff
+        overflow hidden
+        display flex
+        align-items center
+        justify-content center
+        transition .3s all
+    &:hover
+        color green
+    >.iconfont
+        font-size 20px
+    .el-menu
+        border-right 0px solid transparent !important
+        background-color $bg !important
+        .el-submenu__title i
+            color #ffffff
+        .el-menu-item-group__title
+            color #ffffff
+        .el-submenu__title
+            color #ffffff
+            &:hover
+                background $active-bg
+        .el-menu-item
+            color #ffffff
+            &:hover
+                background $active-bg
+        .el-menu-item.is-active
+            color #ffffff
+            background $active-bg
