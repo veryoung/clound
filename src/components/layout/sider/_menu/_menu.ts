@@ -5,10 +5,10 @@ import { RouteConfig } from "vue-router";
 
 
 
-require("./left.menu.styl");
+require("./_menu.styl");
 @Component({
     name: "leftmenu",
-    template: require("./left.menu.html"),
+    template: require("./_menu.html"),
     props: {
         menus: {
             type: Array

@@ -3,7 +3,7 @@ import Vue from "vue";
 import { RouteConfig } from "vue-router";
 
 
-import { LeftMenu } from "@components/leftmenu/left.menu";
+import { LeftMenu } from "@components/layout/sider/_menu/_menu";
 import { systemRouter } from "@router/system";
 import { fail } from "assert";
 
