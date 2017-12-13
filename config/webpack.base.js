@@ -20,7 +20,8 @@ module.exports = function (env) {
                 'vue$': 'vue/dist/vue.esm.js',
                 '@views': 'src/views/',
                 '@components': 'src/components/',
-                '@router':'src/router/'
+                '@router':'src/router/',
+                '@store':'src/store/'
             }
         },
         module: {

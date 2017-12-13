@@ -1,8 +1,11 @@
 import Vue from "vue";
 const ElementUI = require("element-ui");
-import { entryRouter } from "@router/index";
 
+
+
+import { entryRouter } from "@router/index";
 import { Entry } from "@views/entry";
+import { Store } from "@store/store";
 
 require("element-ui/lib/theme-chalk/index.css");
 require("./resource/iconfont/iconfont.css");
@@ -13,11 +16,11 @@ if (process.env.NODE_ENV === "test") {
     console.log = function () { };
 }
 
-
 Vue.use(ElementUI);
 
 const app = new Vue({
     el: "#app",
+    store: Store,
     router: entryRouter,
     render: h => h(Entry),
 });

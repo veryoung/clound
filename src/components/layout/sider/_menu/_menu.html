@@ -1,24 +1,24 @@
 <div class="left-menu-panel">
     <div class="list-menu">
-        <el-menu default-active="1-4-1" class="left-menu" @open="handleOpen" @close="handleClose" :collapse="IsCollapse">
+        <el-menu class="left-menu" @open="handleOpen" @close="handleClose" :collapse="IsCollapse">
             <template v-for="(menu,$index) in menus">
                 <el-submenu v-show="menu.children" :index="menu.path">
                     <template slot="title">
-                        <i class="el-icon-location"></i>
+                        <i class="iconfont" :class="menu.meta.icon"></i>
                         <span slot="title">{{menu.name}}</span>
                     </template>
 
                     <template v-for="(menu,$index) in menu.children">
-                        <el-menu-item :index="menu.path">
-                            <i class="iconfont">&#xe616;</i>
+                        <el-menu-item :index="menu.path" @click="go(menu)">
+                            <i class="iconfont" :class="menu.meta.icon"></i>
                             <span slot="title">{{menu.name}}</span>
                         </el-menu-item>
                     </template>
 
 
                 </el-submenu>
-                <el-menu-item v-show="!menu.children" :index="menu.path">
-                    <i class="el-icon-menu"></i>
+                <el-menu-item v-show="!menu.children" :index="menu.path" @click="go(menu)">
+                    <i class="iconfont" :class="menu.meta.icon"></i>
                     <span slot="title">{{menu.name}}</span>
                 </el-menu-item>
 

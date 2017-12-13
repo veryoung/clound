@@ -41,11 +41,8 @@ export class LeftMenu extends Vue {
         console.log(key, keyPath);
     }
 
+    go(pathObj: any) {
+        this.$router.replace(pathObj);
+    }
 
-    // // init lifehack
-    // created() {
-    //     this.$on("test", (info: boolean) => {
-    //         this.IsCollapse = info;
-    //     });
-    // }
 }

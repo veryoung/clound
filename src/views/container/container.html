@@ -1,0 +1,9 @@
+<el-container>
+    <SiderComponent :menus="menuProps" v-if="menuProps.length !== 0" />
+    <el-container>
+        <el-main>
+            <router-view />
+        </el-main>
+        <FooterComponent />
+    </el-container>
+</el-container>

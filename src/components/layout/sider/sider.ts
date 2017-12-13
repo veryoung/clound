@@ -4,8 +4,6 @@ import { RouteConfig } from "vue-router";
 
 
 import { LeftMenu } from "@components/layout/sider/_menu/_menu";
-import { systemRouter } from "@router/system";
-import { fail } from "assert";
 
 
 require("./sider.styl");
@@ -14,12 +12,19 @@ require("./sider.styl");
     template: require("./sider.html"),
     components: {
         LeftMenu
+    },
+    props: {
+        menus: {
+            type: Array
+        }
     }
 })
 export class SiderComponent extends Vue {
+    // init props
+    public menus: Array<RouteConfig>;
+
     // init data
     public width: number = 200;
-    public menuProps: Array<RouteConfig> = systemRouter;
 
     // init method
 

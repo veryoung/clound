@@ -2,6 +2,10 @@ import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 
 
+import { ViewContainer } from "@views/container/container";
+import { systemRouter } from "@router/system";
+
+
 export const appRouter: RouteConfig[] = [
     {
         path: "/home",
@@ -30,7 +34,12 @@ export const appRouter: RouteConfig[] = [
     },
     {
         path: "/SystemManagement",
-        name: "系统管理"
+        name: "系统管理",
+        component: ViewContainer,
+        props: {
+            menus: systemRouter
+        },
+        children: systemRouter
     },
     {
         path: "/SituationalAwareness",
