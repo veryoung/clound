@@ -3,16 +3,17 @@ import { RouteConfig } from "vue-router";
 
 import { notifyRouter } from "./notify.manage";
 import { Organization } from "@views/organization/organization";
+import { UserManagement } from "@views/usermanage/user.manage";
 
 
 export const systemRouter: RouteConfig[] = [
     {
-        path: "home",
+        path: "UserManagement",
         name: "用户管理",
         meta: {
             icon: "icon-yonghuguanli"
-        }
-        // component: Layout,
+        },
+        component: UserManagement,
     },
     {
         path: "Organization",

@@ -1,0 +1,23 @@
+.cloud-table
+    display flex
+    flex 1 0 auto
+    flex-direction column
+    >.table-panel
+        display flex
+        flex-direction column
+        flex 1 0 auto
+        overflow auto
+        position relative
+        >.el-table
+            position absolute
+            left 0
+            right 0
+            .ellipsis
+                overflow hidden
+                text-overflow ellipsis
+                white-space nowrap
+    >.el-pagination
+        display flex
+        height 50px
+        align-items center
+        justify-content flex-end

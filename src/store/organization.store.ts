@@ -1,26 +1,11 @@
 import { Module } from "vuex";
-import { ORGANIZATION } from "@store/organization.type";
-/**
- * {
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }
- */
+import { ORGANIZATION } from "./organization.type";
+
+
 export interface OrganizationTreeType {
     id: string;
-    label: string;
-    children?: Array<OrganizationType>;
+    sname: string;
+    nodes: Array<OrganizationTreeType>;
 }
 
 export interface MessageType {
@@ -40,14 +25,14 @@ export interface Organization {
 }
 
 export interface OrganizationType {
-    tree: Array<OrganizationType>;
+    tree: Array<OrganizationTreeType>;
     message: Organization;
 }
 
 
 export const OrganizationStore: Module<OrganizationType, any> = {
     state: (): OrganizationType => {
-        let organization: Array<OrganizationType> = [];
+        let organization: Array<OrganizationTreeType> = new Array<OrganizationTreeType>();
         let message: Organization = {
             "init": {
                 desc: "",

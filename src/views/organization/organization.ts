@@ -2,7 +2,8 @@ import Component from "vue-class-component";
 import Vue from "vue";
 
 
-import { OrganizationTree } from "@views/organization/organization.attachment";
+import { ModuleTitle } from "@components/title/module.title";
+import { TissueTree } from "@components/tissuetree/tree";
 
 
 require("./organization.styl");
@@ -15,9 +16,14 @@ require("./organization.styl");
             temp.filter(val);
         }
     },
+    components: {
+        ModuleTitle, TissueTree
+    }
 })
 export class Organization extends Vue {
     // init data
+    public title1: Array<string> = ["组织机构列表"];
+    public title2: Array<string> = ["企业详情"];
     public form: any = {
         sname: "",
         babel: "",
@@ -33,17 +39,12 @@ export class Organization extends Vue {
         ]
     };
 
-    public defaultProps: any = OrganizationTree.defaultProps;
-    public data: any = OrganizationTree.data;
-    public filterText: string = OrganizationTree.filterText;
+
+
+    // lifecycle hook
+
+
     // init methods
-
-
-
-    filterNode(value: any, data: any) {
-        if (!value) return true;
-        return data.label.indexOf(value) !== -1;
-    }
 
 
     onSubmit(form: string) {
@@ -62,7 +63,4 @@ export class Organization extends Vue {
         let temp: any = this.$refs[form];
         temp.resetFields();
     }
-
-
-
 }

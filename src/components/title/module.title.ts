@@ -5,16 +5,16 @@ import Vue from "vue";
 
 require("./module.title.styl");
 @Component({
-    name: "module.title",
+    name: "moduletitle",
     template: require("./module.title.html"),
     props: {
-        title: {
-            type: String,
-            default: "默认标题"
+        titles: {
+            type: Array,
+            default: ["默认标题"]
         }
     }
 })
 export class ModuleTitle extends Vue {
     // init props
-    public title: string;
+    public titles: Array<string>;
 }

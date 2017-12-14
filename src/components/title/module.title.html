@@ -1,4 +1,6 @@
 <div class="module-title">
-    <span class="icon"></span>
-    <span class="title"></span>
+    <div class="icon"></div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item v-for="(title,$index) in titles" :key="$index">{{title}}</el-breadcrumb-item>
+    </el-breadcrumb>
 </div>

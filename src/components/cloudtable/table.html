@@ -1,0 +1,28 @@
+<div class="cloud-table">
+    <div class="table-panel">
+        <el-table 
+            :data="datas" 
+            stripe
+            @selection-change="handleSelectionChange">
+            <slot name="type"></slot>
+            <el-table-column 
+                v-for="(column,$index) in columns" 
+                :label="column.label" :prop="column.prop" 
+                :sortable="column.sortable?column.sortable === true?true:false:false"
+                align="center"
+                header-align="center"
+                :key="$index">
+                <template slot-scope="scope">
+                    <el-tooltip class="item" effect="dark" placement="top">
+                        <div slot="content">{{scope.row[column.prop]}}</div>
+                        <span class="ellipsis">{{scope.row[column.prop]}}</span>
+                    </el-tooltip>
+                </template>
+            </el-table-column>
+            <slot></slot>
+        </el-table>
+    </div>
+    <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
+    </el-pagination>
+</div>
