@@ -5,14 +5,15 @@
         </el-badge>
     </div>
     <div class="down-menu">
-        <el-dropdown>
+        <el-dropdown :hide-on-click="false">
             <span class="el-dropdown-link">
                 下拉菜单
                 <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>个人中心</el-dropdown-item>
-                <el-dropdown-item>修改密码</el-dropdown-item>
+                <el-dropdown-item v-for="(router,$index) in Routers" :key="$index">
+                    <router-link :to="router.path" tag="span">{{router.name}}</router-link>
+                </el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </div>

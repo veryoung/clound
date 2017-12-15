@@ -1,8 +1,11 @@
-<el-container>
-    <SiderComponent :menus="menuProps" v-if="menuProps.length !== 0" />
+<el-container class="el-container-panel">
+    <SiderComponent :menus="menus" v-if="menus.length !== 0" />
     <el-container>
+        <BreadCrumbComponent />
         <el-main>
-            <router-view />
+            <transition name="fade" mode="out-in">
+                <router-view />
+            </transition>
         </el-main>
         <FooterComponent />
     </el-container>

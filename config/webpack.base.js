@@ -21,7 +21,8 @@ module.exports = function (env) {
                 '@views': 'src/views/',
                 '@components': 'src/components/',
                 '@router':'src/router/',
-                '@store':'src/store/'
+                '@store':'src/store/',
+                '@directives':'src/directives',
             }
         },
         module: {

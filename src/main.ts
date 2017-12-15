@@ -2,10 +2,12 @@ import Vue from "vue";
 const ElementUI = require("element-ui");
 
 
-
 import { entryRouter } from "@router/index";
 import { Entry } from "@views/entry";
 import { Store } from "@store/store";
+import { InitDirective } from "@directives/index";
+
+
 
 require("element-ui/lib/theme-chalk/index.css");
 require("./resource/iconfont/iconfont.css");
@@ -16,6 +18,8 @@ if (process.env.NODE_ENV === "test") {
 } else if (process.env.NODE_ENV === "production") {
     console.log = function () { };
 }
+
+new InitDirective();
 
 Vue.use(ElementUI);
 

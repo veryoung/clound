@@ -22,7 +22,7 @@ export class UserManagement extends Vue {
     // init data
     public title1: Array<string> = ["组织机构列表"];
     public title2: Array<string> = ["企业详情", "test"];
-
+    public checked: boolean = true;
     public datas: any = test;
     public columns: any = columns;
     public formInline: any = {

@@ -6,6 +6,7 @@ import { RouteConfig } from "vue-router";
 
 import { FooterComponent } from "@components/layout/footer/footer";
 import { SiderComponent } from "@components/layout/sider/sider";
+import { BreadCrumbComponent } from "@components/layout/breadcrumb/bread.crumb";
 
 
 
@@ -15,19 +16,15 @@ require("./container.styl");
     name: "viewcontainer",
     template: require("./container.html"),
     components: {
-        FooterComponent, SiderComponent
+        FooterComponent, SiderComponent, BreadCrumbComponent
     },
     props: {
         menus: {
             type: Array
         }
-    }
+    },
 })
 export class ViewContainer extends Vue {
     // init props
     public menus: Array<RouteConfig>;
-
-    // init data
-    public menuProps: Array<RouteConfig> = this.menus;
-
 }

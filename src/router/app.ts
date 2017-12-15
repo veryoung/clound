@@ -4,6 +4,8 @@ import { RouteConfig } from "vue-router";
 
 import { ViewContainer } from "@views/container/container";
 import { systemRouter } from "@router/system";
+import { userCenterRouter } from "@router/user.center";
+
 
 
 export const appRouter: RouteConfig[] = [
@@ -34,6 +36,7 @@ export const appRouter: RouteConfig[] = [
     },
     {
         path: "/SystemManagement",
+        redirect: "/SystemManagement/UserManagement",
         name: "系统管理",
         component: ViewContainer,
         props: {
@@ -44,5 +47,18 @@ export const appRouter: RouteConfig[] = [
     {
         path: "/SituationalAwareness",
         name: "态势感知"
+    },
+    {
+        path: "/usercenter",
+        // redirect: "/usercenter",
+        name: "个人中心",
+        component: ViewContainer,
+        props: {
+            menus: userCenterRouter,
+        },
+        children: userCenterRouter,
+        meta: {
+            hidden: true
+        }
     }
 ];

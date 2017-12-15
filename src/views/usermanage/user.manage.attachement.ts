@@ -13,7 +13,7 @@ export const testfn = (len: number) => {
     return temp;
 };
 
-export const test: any = testfn(30);
+export const test: any = testfn(20);
 
 export const columns: any = [
     {
