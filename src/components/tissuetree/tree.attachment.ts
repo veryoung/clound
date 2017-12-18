@@ -1,4 +1,4 @@
-import { OrganizationTreeType } from "@store/organization.store";
+import { OrganizationTreeType } from "@store/organization.type";
 
 enum OPERATION {
     ADD,

@@ -4,6 +4,7 @@ import { RouteConfig } from "vue-router";
 
 
 import { UserMessage } from "@views/usercenter/user.message";
+import { UserPwd } from "@views/usercenter/user.pwd";
 
 
 
@@ -19,6 +20,7 @@ export const userCenterRouter: RouteConfig[] = [
     {
         path: "/usercenter/ChangPwd",
         name: "修改密码",
+        component: UserPwd,
         meta: {
             icon: "icon-xiugaimima"
         }

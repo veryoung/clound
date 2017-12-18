@@ -10,13 +10,10 @@ require("./bread.crumb.styl");
         "$route": "getBreadcrumb" // 监听事件
     }
 })
-
-
 export class BreadCrumbComponent extends Vue {
     // initial data
-    Listlen: boolean = true;
-    BreadList: RouteRecord[];
-    // created
+    BreadList: RouteRecord[] = new Array<RouteRecord>();
+    // lifecircle hook
     created() {
         this.getBreadcrumb();
     }
@@ -25,12 +22,14 @@ export class BreadCrumbComponent extends Vue {
         console.log(this.$route);
         let matched: RouteRecord[] = this.$route.matched.filter(item => item.name);
         // const first: RouteRecord = matched[0];
+        matched.splice(0, 1);
         // if (first && (first.name !== "首页" || first.path !== "")) {
-        //     matched = matched;
+        //     matched.splice(0, 1);
         // }
         // 判断显示不显示的条件 listenlen === false （显示）
         // this.Listlen = first.name === matched[1].name ? false : true;
 
-        this.BreadList = matched.splice(1);
+        this.BreadList = matched;
+        console.log(this.BreadList);
     }
 }

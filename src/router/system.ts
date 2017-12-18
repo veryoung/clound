@@ -4,16 +4,35 @@ import { RouteConfig } from "vue-router";
 import { notifyRouter } from "./notify.manage";
 import { Organization } from "@views/organization/organization";
 import { UserManagement } from "@views/usermanage/user.manage";
+import { UserOperation } from "@views/usermanage/operation/operation";
 
-
+// /SystemManagement/UserManagement/
 export const systemRouter: RouteConfig[] = [
     {
         path: "UserManagement",
         name: "用户管理",
         meta: {
-            icon: "icon-yonghuguanli"
+            icon: "icon-yonghuguanli",
         },
         component: UserManagement,
+    },
+    {
+        path: "/SystemManagement/add",
+        name: "添加用户",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        component: UserOperation,
+    },
+    {
+        path: "editor/:id",
+        name: "编辑用户",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        component: UserOperation,
     },
     {
         path: "Organization",

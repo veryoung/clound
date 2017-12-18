@@ -14,10 +14,8 @@
                             <span slot="title">{{menu.name}}</span>
                         </el-menu-item>
                     </template>
-
-
                 </el-submenu>
-                <el-menu-item v-show="!menu.children" :index="menu.path" @click="go(menu)">
+                <el-menu-item v-if="menu.meta&&!menu.meta.hidden" v-show="!menu.children" :index="menu.path" @click="go(menu)">
                     <i class="iconfont" :class="menu.meta.icon"></i>
                     <span slot="title">{{menu.name}}</span>
                 </el-menu-item>

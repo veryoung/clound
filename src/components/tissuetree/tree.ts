@@ -2,7 +2,7 @@ import Component from "vue-class-component";
 import Vue from "vue";
 
 import { OrganizationTree } from "@components/tissuetree/tree.attachment";
-import { OrganizationTreeType } from "@store/organization.store";
+import { OrganizationTreeType } from "@store/organization.type";
 
 
 

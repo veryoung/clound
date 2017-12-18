@@ -1,10 +1,10 @@
+@import "../../resource/mixins.styl"
+
 .organization
-    background-color #ffffff
-    display flex
-    flex 1 0 auto
+    common-panel(0,20px)
     // flex-wrap wrap
     >.select-part
-        padding 0 20px
+        padding-right 20px
         width 300px
         display flex
         flex 0 0 auto
@@ -13,7 +13,6 @@
         display flex
         flex 1 1 auto
         flex-direction column
-        margin 0 20px
         .el-form-item__content
             display flex
 

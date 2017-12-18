@@ -1,7 +1,7 @@
 <el-breadcrumb class="app-levelbar" separator="/">
     <span class="iconfont ">&#xe63b;</span>
-    <el-breadcrumb-item v-for="(item,index) of BreadList" :key="index">
-        <span v-if='!item.redirect||index==BreadList.length-1' href="javascript:void(0)" class="no-redirect">
+    <el-breadcrumb-item v-for="(item,index) of BreadList" :key="item.name">
+        <span v-if='index==BreadList.length-1' class="no-redirect">
             {{item.name}}
         </span>
 

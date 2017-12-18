@@ -1,0 +1,32 @@
+<div class="user-pwd">
+    <div class="usermessage">
+        <div class="iconfont">&#xe619;</div>
+        <h1 class="name">365GCDADMIN </h1>
+        <p class="level">最牛逼的管理员</p>
+        <p class="company">最low的company</p>
+    </div>
+    <div class="form">
+        <ModuleTitle :titles="['修改密码']" />
+        <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="用户名" prop="pass">
+                <span>系统管理员</span>
+            </el-form-item>
+            <el-form-item label="密码" prop="pass">
+                <el-input type="password" v-model="form.pass" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+                <el-input type="password" v-model="form.checkPass" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="年龄" prop="age">
+                <el-input v-model.number="form.age"></el-input>
+            </el-form-item>
+            <el-form-item label="">
+                <span>密码为8-15个字符,至少包含数字,大小写字母</span>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('form')">提交</el-button>
+                <el-button @click="resetForm('form')">重置</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>

@@ -31,6 +31,14 @@ export class UserManagement extends Vue {
     };
 
     // init method
+    go(type: string, id?: string) {
+        if (type === "add") {
+            this.$router.push(`/SystemManagement/add`);
+        } else if (type === "editor") {
+            this.$router.replace(`/SystemManagement/UserManagement/editor/${id}`);
+        }
+    }
+
     onSubmit() {
         console.log("submit!");
     }

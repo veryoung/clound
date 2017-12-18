@@ -1,3 +1,48 @@
 <div class="user-message">
-    <h1>test</h1>
+    <ModuleTitle :titles="basicTitle" />
+
+    <ul class="basicmessage">
+        <li>
+            <div class="label">用户名：</div>
+            <div class="message">XXX</div>
+        </li>
+        <li>
+            <div class="label">用户角色：</div>
+            <div class="message">普通用户</div>
+        </li>
+        <li>
+            <div class="label">企业名称：</div>
+            <div class="message">二级企业</div>
+        </li>
+        <li>
+            <div class="label">手机号码：</div>
+            <div class="message">18197978675</div>
+        </li>
+        <li>
+            <div class="label">邮箱：</div>
+            <div class="message">87416549@qq.com</div>
+        </li>
+    </ul>
+
+    <ModuleTitle :titles="serverTitle" />
+
+    <ul class="basicmessage">
+        <li>
+            <div class="label">网站总数：</div>
+            <div class="message">已使用0个，剩余989575个可用，总共100000000个</div>
+        </li>
+        <li>
+            <div class="label">服务项：</div>
+            <div class="server" style="color:#999">
+                <div>WEB防火墙：开启</div>
+                <div>ADS防护：开启</div>
+                <div>网站镜像：开启</div>
+                <div>加速优化：开启</div> 
+            </div>
+        </li>
+        <li>
+            <div class="label">到期时间：</div>
+            <div class="message">2017-12-18</div>
+        </li>
+    </ul>
 </div>
