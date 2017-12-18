@@ -1,13 +1,11 @@
-<el-breadcrumb  class="app-levelbar" separator="/">
+<el-breadcrumb class="app-levelbar" separator="/">
     <span class="iconfont ">&#xe63b;</span>
-    <el-breadcrumb-item v-for = "(item,index) of  BreadList" :key="index">
-        <span v-if='item.redirect==="noredirect"||index==BreadList.length-1' 
-            href="javascript:void(0)" 
-            class="no-redirect">
+    <el-breadcrumb-item v-for="(item,index) of BreadList" :key="index">
+        <span v-if='!item.redirect||index==BreadList.length-1' href="javascript:void(0)" class="no-redirect">
             {{item.name}}
         </span>
 
-        <router-link v-else :to="item.path" class="">{{item.name}}</router-link>
+        <router-link v-else :to="item.path" class="" tag="span">{{item.name}}</router-link>
     </el-breadcrumb-item>
 
-  </el-breadcrumb>
+</el-breadcrumb>

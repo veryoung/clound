@@ -1,5 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
+import { RouteRecord } from "vue-router";
 
 require("./bread.crumb.styl");
 @Component({
@@ -14,7 +15,7 @@ require("./bread.crumb.styl");
 export class BreadCrumbComponent extends Vue {
     // initial data
     Listlen: boolean = true;
-    BreadList: any = [];
+    BreadList: RouteRecord[];
     // created
     created() {
         this.getBreadcrumb();
@@ -22,13 +23,14 @@ export class BreadCrumbComponent extends Vue {
     // method
     getBreadcrumb() {
         console.log(this.$route);
-        let matched = this.$route.matched.filter(item => item.name);
-        const first = matched[0];
-        if (first && (first.name !== "首页" || first.path !== "")) {
-            matched = matched;
-        }
-        this.Listlen = first.name === matched[1].name ? false : true;
-        let length = matched.length - 1;
+        let matched: RouteRecord[] = this.$route.matched.filter(item => item.name);
+        // const first: RouteRecord = matched[0];
+        // if (first && (first.name !== "首页" || first.path !== "")) {
+        //     matched = matched;
+        // }
+        // 判断显示不显示的条件 listenlen === false （显示）
+        // this.Listlen = first.name === matched[1].name ? false : true;
+
         this.BreadList = matched.splice(1);
     }
 }
