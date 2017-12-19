@@ -19,7 +19,7 @@ export class BreadCrumbComponent extends Vue {
     }
     // method
     getBreadcrumb() {
-        console.log(this.$route);
+        // console.log(this.$route);
         let matched: RouteRecord[] = this.$route.matched.filter(item => item.name);
         // const first: RouteRecord = matched[0];
         matched.splice(0, 1);
@@ -30,6 +30,6 @@ export class BreadCrumbComponent extends Vue {
         // this.Listlen = first.name === matched[1].name ? false : true;
 
         this.BreadList = matched;
-        console.log(this.BreadList);
+        // console.log(this.BreadList);
     }
 }

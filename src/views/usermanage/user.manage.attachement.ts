@@ -1,3 +1,5 @@
+import { ColumnType } from "@components/cloudtable/table.attachment";
+
 export const testfn = (len: number) => {
     let temp = [];
     for (let i = 0; i < len; i++) {
@@ -15,47 +17,56 @@ export const testfn = (len: number) => {
 
 export const test: any = testfn(20);
 
-export const columns: any = [
+export const columns: ColumnType[] = [
     {
         prop: "date",
         label: "序号",
-        fixed: true,
-        sortable: true
+        sortable: true,
+        show: true
     },
     {
         prop: "name",
         label: "用户名",
+        show: true
     },
     {
         prop: "province",
-        label: "用户角色"
+        label: "用户角色",
+        show: true
     },
     {
         prop: "city",
-        label: "创建人"
+        label: "创建人",
+        show: true
     },
     {
         prop: "address",
-        label: "企业名称"
+        label: "企业名称",
+        show: true
     },
     {
         prop: "zip",
-        label: "手机号码"
+        label: "手机号码",
+        show: true
     },
     {
         prop: "zip",
-        label: "邮箱"
+        label: "邮箱",
+        show: true
     },
     {
         prop: "zip",
-        label: "创建时间"
+        label: "创建时间",
+        show: true
     },
     {
         prop: "zip",
-        label: "到期时间"
+        label: "到期时间",
+        show: true
     },
     {
         prop: "zip",
-        label: "状态"
+        label: "状态",
+        show: true
     },
 ];

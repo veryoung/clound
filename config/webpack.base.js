@@ -23,6 +23,7 @@ module.exports = function (env) {
                 '@router':'src/router/',
                 '@store':'src/store/',
                 '@directives':'src/directives',
+                '@utils':'src/utils',
             }
         },
         module: {

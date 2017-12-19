@@ -10,24 +10,24 @@ export interface UserPwdType {
 
 export interface UserMessageType {
     userId: string;
+    username: string;
+    pwd: string;
     role: string;
     companyName: string;
-    tel: number;
+    tel: number | "";
     email: string;
-    usedNetwork: number;
-    totalNetwork: number;
+    remark: string;
+    usedNetwork: number | "";
+    totalNetwork: number | "";
     WEB: boolean;
     ADS: boolean;
     SITEMIRROR: boolean;
     ACCELERATE: boolean;
-    DUWDATE: Date;
+    DUEDATE: string;
 }
 
 export interface UserCenterType {
-    [extra: string]: {
-        pwd: UserPwdType,
-        message: UserMessageType
-    };
+    [extra: string]: UserMessageType;
 }
 
 export enum USERPWD {

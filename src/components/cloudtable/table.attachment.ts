@@ -34,5 +34,7 @@ export interface ColumnType {
     // fixed	列是否固定在左侧或者右侧，true 表示固定在左侧	string, boolean	true, left, right
     fixed?: string & boolean;
     // sortable	对应列是否可以排序，如果设置为 'custom'，则代表用户希望远程排序，需要监听 Table 的 sort-change 事件
-    sortable?: "custom";
+    sortable?: "custom" | boolean;
+    // 代表该列是否展示
+    show?: boolean;
 }

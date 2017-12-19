@@ -1,0 +1,13 @@
+<div class="setcol-plane">
+    <el-dropdown :hideOnClick="false" class="fr">
+        <el-button>
+            自定义列
+            <i class="el-icon-caret-bottom el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-for="(item,index) in columns" :key='index'>
+                <el-checkbox v-model="item.show">{{item[keyName]}}</el-checkbox>
+            </el-dropdown-item>
+        </el-dropdown-menu>
+    </el-dropdown>
+</div>

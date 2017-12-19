@@ -6,7 +6,7 @@
             @selection-change="handleSelectionChange">
             <slot name="type"></slot>
             <el-table-column 
-                v-for="(column,$index) in columns" 
+                v-for="(column,$index) in filterColums" 
                 :label="column.label" :prop="column.prop" 
                 :sortable="column.sortable?column.sortable === true?true:false:false"
                 align="center"

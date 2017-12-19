@@ -6,6 +6,8 @@ import Vue from "vue";
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { CloudTable } from "@components/cloudtable/table";
+import { SetCol } from "@components/setcol/setcol";
+
 
 import { test, columns } from "./user.manage.attachement";
 
@@ -15,13 +17,11 @@ require("./user.manage.styl");
     name: "usermanagement",
     template: require("./user.manage.html"),
     components: {
-        ModuleTitle, TissueTree, CloudTable
+        ModuleTitle, TissueTree, CloudTable, SetCol
     }
 })
 export class UserManagement extends Vue {
     // init data
-    public title1: Array<string> = ["组织机构列表"];
-    public title2: Array<string> = ["企业详情", "test"];
     public checked: boolean = true;
     public datas: any = test;
     public columns: any = columns;
@@ -31,19 +31,26 @@ export class UserManagement extends Vue {
     };
 
     // init method
-    go(type: string, id?: string) {
+    go(type: "add" | "editor" | "changepwd" | "del", rowObj?: any) {
+        if (type === "del") {
+            return;
+        }
+        if (rowObj) {
+            const { $index, row } = rowObj;
+            if (type === "editor") {
+                this.$router.replace(`/SystemManagement/${row.id}`);
+            } else if (type === "changepwd") {
+                this.$router.replace(`/usercenter/ChangPwd`);
+            }
+            return;
+        }
         if (type === "add") {
-            this.$router.push(`/SystemManagement/add`);
-        } else if (type === "editor") {
-            this.$router.replace(`/SystemManagement/UserManagement/editor/${id}`);
+            this.$router.replace(`/SystemManagement/add`);
         }
     }
 
     onSubmit() {
         console.log("submit!");
-    }
-    handleEdit(a: any, b: any) {
-        console.log(a, b);
     }
 
     handleSizeChange(val: number) {

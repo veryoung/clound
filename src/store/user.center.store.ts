@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { UserCenterType, USERPWD, UserPwdType, UserMessageType } from "./user.center.type";
+import { UserCenterType, USERPWD, UserPwdType, UserMessageType, USERMESSAGE } from "./user.center.type";
 
 
 export const UserCenterStore: Module<UserCenterType, any> = {
@@ -12,23 +12,23 @@ export const UserCenterStore: Module<UserCenterType, any> = {
         };
         let message: UserMessageType = {
             userId: "init",
+            username: "",
+            pwd: "",
             role: "init",
             companyName: "init",
-            tel: 0,
+            tel: "",
             email: "init",
-            usedNetwork: 0,
+            remark: "",
+            usedNetwork: "",
             totalNetwork: 0,
-            WEB: false,
-            ADS: false,
-            SITEMIRROR: false,
-            ACCELERATE: false,
-            DUWDATE: new Date()
+            WEB: true,
+            ADS: true,
+            SITEMIRROR: true,
+            ACCELERATE: true,
+            DUEDATE: new Date() + ""
         };
         return {
-            "init": {
-                pwd: userPwd,
-                message: message
-            }
+            "init": message
         };
     },
 
@@ -37,11 +37,22 @@ export const UserCenterStore: Module<UserCenterType, any> = {
             // state.message = {
 
             // }
+        },
+        [USERMESSAGE.GETMESSAGE]: (state: UserCenterType) => {
+
         }
     },
     actions: {
         [USERPWD.CHANGEPWD]: ({ state, commit, rootState }) => {
 
+        },
+        [USERMESSAGE.GETMESSAGE]: ({ state, commit, rootState }) => {
+
         }
     },
+    getters: {
+        "init": function (state) {
+            return state["init"];
+        },
+    }
 };

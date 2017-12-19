@@ -17,24 +17,6 @@ export const systemRouter: RouteConfig[] = [
         component: UserManagement,
     },
     {
-        path: "/SystemManagement/add",
-        name: "添加用户",
-        meta: {
-            icon: "icon-quan-",
-            hidden: true
-        },
-        component: UserOperation,
-    },
-    {
-        path: "editor/:id",
-        name: "编辑用户",
-        meta: {
-            icon: "icon-quan-",
-            hidden: true
-        },
-        component: UserOperation,
-    },
-    {
         path: "Organization",
         name: "组织机构",
         component: Organization,
@@ -63,5 +45,29 @@ export const systemRouter: RouteConfig[] = [
         meta: {
             icon: "icon-tongzhiguanli"
         }
+    },
+    {
+        path: "/SystemManagement/add",
+        name: "添加用户",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        props: {
+            operation: "add"
+        },
+        component: UserOperation,
+    },
+    {
+        path: "/SystemManagement/:id",
+        name: "编辑用户",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        props: {
+            operation: "editor"
+        },
+        component: UserOperation,
     },
 ];

@@ -21,7 +21,10 @@ export class CloudTable extends Vue {
     public datas: Array<any>;
     public columns: Array<ColumnType>;
 
-
+    // init computed
+    get filterColums() {
+        return this.columns.filter((item) => item.show);
+    }
     // init data 
     public currentPage: number = 4;
 

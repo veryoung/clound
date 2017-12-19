@@ -1,10 +1,10 @@
 <div class="user-manage">
     <div class="select-part">
-        <ModuleTitle :titles="title1" />
+        <ModuleTitle :titles="['组织机构列表']" />
         <TissueTree :editor="false" />
     </div>
     <div class="form-part">
-        <ModuleTitle :titles="title2" />
+        <ModuleTitle :titles="['企业详情', 'test']" />
         <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
             <el-form-item label="用户名">
                 <el-input v-model="formInline.user" placeholder="审批人"></el-input>
@@ -34,31 +34,31 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">查询</el-button>
+                <el-button type="primary" icon="el-icon-search"  @click="onSubmit">搜索</el-button>
                 <el-button>重置</el-button>
             </el-form-item>
         </el-form>
         <div class="btn-group">
             <div class="btn-first">
-                <el-button type="primary" @click="go('add')">添加</el-button>
-                <el-button type="primary" @click="">导入</el-button>
-                <el-button type="primary" @click="">导出</el-button>
-                <el-button type="primary" @click="">导出所有</el-button>
+                <el-button type="primary" @click="go('add')">
+                    <span class="iconfont">&#xe61a;</span>
+                    添加
+                </el-button>
+                <el-button type="primary" @click="">
+                    <span class="iconfont">&#xe61b;</span>
+                    导入
+                </el-button>
+                <el-button type="primary" @click="">
+                    <span class="iconfont">&#xe61e;</span>
+                    导出
+                </el-button>
+                <el-button type="primary" @click="">
+                    <span class="iconfont">&#xe61e;</span>
+                    导出所有
+                </el-button>
             </div>
             <div class="btn-last">
-                <el-dropdown :hide-on-click="false">
-                    <span class="el-dropdown-link">
-                        下拉菜单
-                        <i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item><el-checkbox v-model="checked">备选项</el-checkbox></el-dropdown-item>
-                        <el-dropdown-item>狮子头</el-dropdown-item>
-                        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                        <el-dropdown-item>双皮奶</el-dropdown-item>
-                        <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <SetCol :columns="columns"/>
             </div>
         </div>
         <CloudTable 
@@ -72,12 +72,9 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作123123">
-                <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <i style="cursor:pointer" class="iconfont" @click="go('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="go('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="go('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
                 </template>
             </el-table-column>
         </CloudTable>
