@@ -13,6 +13,7 @@
   "dependencies": {
     "@types/node": "^8.0.34",
     "element-ui": "^2.0.1",
+    "moment": "^2.20.1",
     "vue": "^2.5.0",
     "vue-class-component": "^6.0.0",
     "vue-router": "^3.0.1",
