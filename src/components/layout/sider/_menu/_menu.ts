@@ -42,7 +42,7 @@ export class LeftMenu extends Vue {
     }
 
     go(pathObj: any) {
-        this.$router.replace(pathObj);
+        this.$router.push(pathObj);
     }
 
 }

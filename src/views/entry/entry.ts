@@ -5,6 +5,7 @@ import Vue from "vue";
 import { Custom } from "@components/custom/custom";
 
 
+require("./entry.styl");
 @Component({
     name: "entry",
     components: { Custom },

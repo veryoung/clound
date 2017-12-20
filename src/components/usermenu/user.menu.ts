@@ -16,12 +16,4 @@ export class UserMenu extends Vue {
     constructor() {
         super();
     }
-
-    // init methods
-
-    /**
-     *                 <el-dropdown-item v-for="(router,$index) in Routers.children" :key="$index">
-                    <router-link :to="router.path" tag="span">{{router.name}}</router-link>
-                </el-dropdown-item>
-     */
 }

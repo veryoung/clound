@@ -32,21 +32,23 @@ export class UserManagement extends Vue {
         region: ""
     };
     // init method
-    go(type: "add" | "editor" | "changepwd" | "del", rowObj?: any) {
+    handle(type: "look" | "add" | "editor" | "changepwd" | "del", rowObj?: any) {
         if (type === "del") {
             return;
         }
         if (rowObj) {
             const { $index, row } = rowObj;
             if (type === "editor") {
-                this.$router.replace(`/SystemManagement/${row.id}`);
+                this.$router.push(`/SystemManagement/UserManagement/editor/${row.id}`);
             } else if (type === "changepwd") {
-                this.$router.replace(`/usercenter/ChangPwd`);
+                this.$router.push(`/usercenter/ChangPwd`);
+            } else if (type === "look") {
+                this.$router.push(`/SystemManagement/UserManagement/look/${row.id}`);
             }
             return;
         }
         if (type === "add") {
-            this.$router.replace(`/SystemManagement/add`);
+            this.$router.push(`/SystemManagement/UserManagement/add`);
         }
     }
 

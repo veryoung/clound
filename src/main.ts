@@ -3,7 +3,7 @@ const ElementUI = require("element-ui");
 
 
 import { entryRouter } from "@router/index";
-import { Entry } from "@views/entry";
+import { Entry } from "@views/entry/entry";
 import { Store } from "@store/store";
 import { InitDirective } from "@directives/index";
 

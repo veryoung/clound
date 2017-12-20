@@ -3,7 +3,7 @@ import Vue from "vue";
 import { RouteConfig } from "vue-router";
 
 
-import { appRouter } from "@router/app";
+import { entry } from "@router/index";
 
 require("./top.menu.styl");
 @Component({
@@ -12,5 +12,5 @@ require("./top.menu.styl");
 })
 export class TopMenu extends Vue {
     // init data
-    public appRouter: Array<RouteConfig> = appRouter;
+    public entryRouter: Array<RouteConfig> = entry;
 }

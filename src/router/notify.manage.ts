@@ -1,15 +1,17 @@
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 
+import { UserOperation } from "@views/usermanage/operation/operation";
+
 
 export const notifyRouter: RouteConfig[] = [
     {
-        path: "/home",
+        path: "/SystemManagement/ReportManagement/notice",
         name: "站内公告",
         meta: {
             icon: "icon-quan-"
-        }
-        // component: Layout,
+        },
+        component: UserOperation,
     },
     {
         path: "/OperationAnalysis",

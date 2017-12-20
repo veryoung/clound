@@ -41,7 +41,7 @@
         </el-form>
         <div class="btn-group">
             <div class="btn-first">
-                <el-button type="primary" @click="go('add')">
+                <el-button type="primary" @click="handle('add')">
                     <span class="iconfont">&#xe61a;</span>
                     添加
                 </el-button>
@@ -73,9 +73,10 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
-                    <i style="cursor:pointer" class="iconfont" @click="go('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
-                    <i style="cursor:pointer" class="iconfont" @click="go('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
-                    <i style="cursor:pointer" class="iconfont" @click="go('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
                 </template>
             </el-table-column>
         </CloudTable>

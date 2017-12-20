@@ -5,6 +5,7 @@ import { notifyRouter } from "./notify.manage";
 import { Organization } from "@views/organization/organization";
 import { UserManagement } from "@views/usermanage/user.manage";
 import { UserOperation } from "@views/usermanage/operation/operation";
+import { userManageRouter } from "./user.manage";
 
 // /SystemManagement/UserManagement/
 export const systemRouter: RouteConfig[] = [
@@ -15,9 +16,10 @@ export const systemRouter: RouteConfig[] = [
             icon: "icon-yonghuguanli",
         },
         component: UserManagement,
+        // children: userManageRouter
     },
     {
-        path: "Organization",
+        path: "/SystemManagement/Organization",
         name: "组织机构",
         component: Organization,
         meta: {
@@ -25,21 +27,21 @@ export const systemRouter: RouteConfig[] = [
         }
     },
     {
-        path: "WebsiteAnalysis",
+        path: "/SystemManagement/WebsiteAnalysis",
         name: "角色管理",
         meta: {
             icon: "icon-jiaoseguanli"
         }
     },
     {
-        path: "WebsiteManagement",
+        path: "/SystemManagement/WebsiteManagement",
         name: "日志审计",
         meta: {
             icon: "icon-rizhishenji"
         }
     },
     {
-        path: "ReportManagement",
+        path: "/SystemManagement/ReportManagement",
         name: "通知管理",
         children: notifyRouter,
         meta: {
@@ -47,7 +49,7 @@ export const systemRouter: RouteConfig[] = [
         }
     },
     {
-        path: "/SystemManagement/add",
+        path: "UserManagement/add",
         name: "添加用户",
         meta: {
             icon: "icon-quan-",
@@ -59,7 +61,7 @@ export const systemRouter: RouteConfig[] = [
         component: UserOperation,
     },
     {
-        path: "/SystemManagement/:id",
+        path: "UserManagement/editor/:id",
         name: "编辑用户",
         meta: {
             icon: "icon-quan-",
@@ -67,6 +69,18 @@ export const systemRouter: RouteConfig[] = [
         },
         props: {
             operation: "editor"
+        },
+        component: UserOperation,
+    },
+    {
+        path: "UserManagement/look/:id",
+        name: "编辑用户",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        props: {
+            operation: "look"
         },
         component: UserOperation,
     },
