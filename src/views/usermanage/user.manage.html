@@ -1,5 +1,5 @@
 <div class="user-manage">
-    <ImportUserFrame :dialogVisible="dialogVisible" @close="close"/>
+    <ImportUserFrame :dialogVisible="dialogVisible" @close="close" />
     <div class="select-part">
         <ModuleTitle :titles="['组织机构列表']" />
         <TissueTree :editor="false" />
@@ -8,67 +8,64 @@
         <ModuleTitle :titles="['企业详情', 'test']" />
         <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="80px">
             <el-form-item label="用户名">
-                <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+                <el-input v-model="formInline.user" placeholder="审批人" size="small"></el-input>
             </el-form-item>
             <el-form-item label="用户角色">
-                <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+                <el-input v-model="formInline.user" placeholder="审批人" size="small"></el-input>
             </el-form-item>
             <el-form-item label="手机号码">
-                <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+                <el-input v-model="formInline.user" placeholder="审批人" size="small"></el-input>
             </el-form-item>
             <el-form-item label="邮箱">
-                <el-select v-model="formInline.region" placeholder="活动区域">
+                <el-select v-model="formInline.region" placeholder="活动区域" size="small">
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="创建时间">
-                <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+                <el-date-picker v-model="formInline.user" type="datetime" size="small" placeholder="选择日期时间">
+                </el-date-picker>
             </el-form-item>
             <el-form-item label="到期时间">
-                <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+                <el-date-picker v-model="formInline.user" type="datetime" size="small" placeholder="选择日期时间">
+                </el-date-picker>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="formInline.region" placeholder="活动区域">
+                <el-select v-model="formInline.region" placeholder="活动区域" size="small">
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" icon="el-icon-search"  @click="onSubmit">搜索</el-button>
-                <el-button>重置</el-button>
+                <el-button size="small" type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
+                <el-button size="small">重置</el-button>
             </el-form-item>
         </el-form>
         <div class="btn-group">
             <div class="btn-first">
-                <el-button type="primary" @click="handle('add')">
+                <el-button type="primary" @click="handle('add')" size="small">
                     <span class="iconfont">&#xe61a;</span>
                     添加
                 </el-button>
-                <el-button type="primary" @click="importUser()">
+                <el-button type="primary" @click="importUser()" size="small">
                     <span class="iconfont">&#xe61b;</span>
                     导入
                 </el-button>
-                <el-button type="primary" @click="">
+                <el-button type="primary" @click="" size="small">
                     <span class="iconfont">&#xe61e;</span>
                     导出
                 </el-button>
-                <el-button type="primary" @click="">
+                <el-button type="primary" @click="" size="small">
                     <span class="iconfont">&#xe61e;</span>
                     导出所有
                 </el-button>
             </div>
             <div class="btn-last">
-                <SetCol :columns="columns"/>
+                <SetCol :columns="columns" />
             </div>
         </div>
-        <CloudTable 
-            :columns="columns" 
-            :datas="datas"
-            @handleSizeChange="handleSizeChange"
-            @handleCurrentChange="handleCurrentChange"
-            @handleSelectionChange="handleSelectionChange"
-            >
+        <CloudTable :columns="columns" :datas="datas" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+            @handleSelectionChange="handleSelectionChange">
             <el-table-column fixed type="selection" width="55" slot="type">
             </el-table-column>
             <el-table-column label="操作">
