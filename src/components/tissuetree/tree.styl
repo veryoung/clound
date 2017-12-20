@@ -3,24 +3,31 @@
     flex-direction column
     flex 1 0 auto
     overflow hidden
-    >.btn-group
-        display flex
-        margin 10px
-        justify-content space-around
-        height 40px
+    // >.btn-group
+    //     display flex
+    //     margin 10px
+    //     justify-content space-around
+    //     height 40px
     >.el-input
         line-height 0
     >.tree-panel
         display flex
-        overflow auto
         flex 1 0 auto
-        position relative
         >.el-tree
-            position absolute
-            left 0
-            top 0
-            bottom 0
-            right 0
+            position relative
+            display flex
+            flex 1 0 auto
+            overflow auto
+            >.el-tree-node
+                position absolute
+                display flex
+                min-width 100%
+                flex 1 0 auto
+                flex-direction column
+                // left 0
+                // top 0
+                // bottom 0
+                // right 0
             .editor
                 &:hover
                     .btn-group-jt

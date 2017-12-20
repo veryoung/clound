@@ -1,4 +1,5 @@
 <div class="user-operation">
+    <AddOrganizationFrame :dialogVisible="dialogVisible" @close="close"/>
     <div class="panel">
         <ModuleTitle :titles="['添加用户']" />
         <el-form :model="form" :rules="rules" ref="formbasic" label-width="100px" class="demo-form">
@@ -13,6 +14,7 @@
             </el-form-item>
             <el-form-item label="企业名称" required>
                 <el-input v-model="form.companyName" size="small"></el-input>
+                <el-button size="small" @click="addOrganization">选择</el-button>
             </el-form-item>
             <el-form-item label="手机号码" prop="tel" required>
                 <el-input v-model="form.tel" size="small"></el-input>

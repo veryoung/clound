@@ -7,6 +7,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
+import { ImportUserFrame } from "@views/usermanage/dialogbox/import.user";
 
 
 import { test, columns } from "./user.manage.attachement";
@@ -17,11 +18,12 @@ require("./user.manage.styl");
     name: "usermanagement",
     template: require("./user.manage.html"),
     components: {
-        ModuleTitle, TissueTree, CloudTable, SetCol
+        ModuleTitle, TissueTree, CloudTable, SetCol, ImportUserFrame
     }
 })
 export class UserManagement extends Vue {
     // init data
+    public dialogVisible: boolean = false;
     public checked: boolean = true;
     public datas: any = test;
     public columns: any = columns;
@@ -29,7 +31,6 @@ export class UserManagement extends Vue {
         user: "",
         region: ""
     };
-
     // init method
     go(type: "add" | "editor" | "changepwd" | "del", rowObj?: any) {
         if (type === "del") {
@@ -47,6 +48,14 @@ export class UserManagement extends Vue {
         if (type === "add") {
             this.$router.replace(`/SystemManagement/add`);
         }
+    }
+
+    importUser() {
+        this.dialogVisible = true;
+    }
+
+    close() {
+        this.dialogVisible = false;
     }
 
     onSubmit() {

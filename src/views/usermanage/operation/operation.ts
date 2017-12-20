@@ -7,6 +7,7 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, USERMESSAGE } from "@store/user.center.type";
 import { FromValidator } from "@utils/form.validator";
+import { AddOrganizationFrame } from "@views/usermanage/dialogbox/add.organization.frame";
 
 
 
@@ -27,11 +28,12 @@ require("./operation.styl");
         })
     },
     components: {
-        ModuleTitle
+        ModuleTitle, AddOrganizationFrame
     }
 })
 export class UserOperation extends Vue {
     // init props
+    public dialogVisible: boolean = false;
     public operation: "add" | "editor";
     // init computed
     public form: UserMessageType;
@@ -83,6 +85,13 @@ export class UserOperation extends Vue {
 
 
     // init methods
+
+    addOrganization() {
+        this.dialogVisible = true;
+    }
+    close() {
+        this.dialogVisible = false;
+    }
     // 'formbasic','formserver'
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
