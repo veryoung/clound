@@ -5,7 +5,6 @@ import { notifyRouter } from "./notify.manage";
 import { Organization } from "@views/organization/organization";
 import { UserManagement } from "@views/usermanage/user.manage";
 import { UserOperation } from "@views/usermanage/operation/operation";
-import { userManageRouter } from "./user.manage";
 
 // /SystemManagement/UserManagement/
 export const systemRouter: RouteConfig[] = [
@@ -16,7 +15,6 @@ export const systemRouter: RouteConfig[] = [
             icon: "icon-yonghuguanli",
         },
         component: UserManagement,
-        // children: userManageRouter
     },
     {
         path: "/SystemManagement/Organization",
