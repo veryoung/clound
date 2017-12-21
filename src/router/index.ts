@@ -9,6 +9,8 @@ import { HeaderComponent } from "@components/layout/header/header";
 import { SiderComponent } from "@components/layout/sider/sider";
 import { ViewContainer } from "@views/container/container";
 import { userCenterRouter } from "@router/user.center";
+import { Login } from "@views/login/login";
+
 
 Vue.use(Router);
 
@@ -19,6 +21,13 @@ export const entry: RouteConfig[] = [
         meta: {
             hidden: true
         }
+    },
+    {
+        path: "/login",
+        meta: {
+            hidden: true
+        },
+        component: Login
     },
     {
         path: "/home",

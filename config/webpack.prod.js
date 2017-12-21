@@ -20,6 +20,12 @@ const extractCss = new ExtractTextPlugin({
     filename: "css.[name].[contenthash].css",
     disable: process.env.NODE_ENV === "development"
 });
+const moduleCss = new ExtractTextPlugin({
+    allChunks: true,
+    filename: "css.[name].[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
+
 
 module.exports = function (env) {
     return merge.strategy({
@@ -69,6 +75,22 @@ module.exports = function (env) {
                                 sourceMap: true,
                             }
                         }],
+                    }),
+                    exclude: /\.m\.css/
+                },
+                {
+                    test: /\.m\.css/,
+                    use: moduleCss.extract({
+                        use: [{
+                            loader: "css-loader",
+                            options: {
+                                minimize: true,
+                                sourceMap: true,
+                                modules: true,
+                                importLoaders: 1,
+                                localIdentName: '[path]___[name]__[local]___[hash:base64:5]'
+                            }
+                        }],
                     })
                 }
             ]
@@ -83,6 +105,7 @@ module.exports = function (env) {
             }),
             extractStylus,
             extractCss,
+            moduleCss,
             // new CopyWebpackPlugin([{
             //         from: './src/assets/ip.svg',
             //         to: './src/assets/ip.svg'
