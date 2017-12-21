@@ -53,7 +53,7 @@ module.exports = function (env) {
                             }
                         }
                     ],
-                    exclude:/\.m\.css/
+                    exclude:/\.m\.css$/
                 },
                 {
                     test: /\.m\.css$/,
