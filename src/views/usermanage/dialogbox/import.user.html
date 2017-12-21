@@ -1,46 +1,37 @@
-<div class="dialog-plane">
-    <el-dialog :visible="dialogVisible" width="50%" top="10%" @close="handleClose">
-        <span slot="title" class="dialog-title">
-            <span class="iconfont ">&#xe63b;</span>
-            导入网站
-        </span>
-        <div class="content-box">
-            <div class="attetion">
-                <div>
-                    注意:
-                </div>
-                <div>
-                    1, 导入数据时请仔细填写表格中的每一项数据,并严格按照指定的格式导入。
-                </div>
-                <div>
-                    2, 一次性导入的数据量不宜过大,对于大数据量建议分批次导入。
-                </div>
+<el-dialog :visible="dialogVisible" width="600px" top="10%" @close="handleClose" class="dialog-plane">
+    <span slot="title" class="dialog-title">
+        <span class="iconfont ">&#xe63b;</span>
+        导入网站
+    </span>
+    <div class="content-box">
+        <div class="attetion">
+            <div>
+                注意:
             </div>
-            <div class="improt">
-                <div>
-                    <span>
-                        选择导入数据
-                    </span>
-                </div>
-                <div>
-                    <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple :limit="1">
-                        <i class="el-icon-upload"></i>
-                        <div class="el-upload__text">将文件拖到此处，或
-                            <em>点击上传</em>
-                        </div>
-                    </el-upload>
-                </div>
-                <div>
-                    <el-button type="primary">
-                        下载导入模板
-                    </el-button>
-                </div>
-
+            <div>
+                1, 导入数据时请仔细填写表格中的每一项数据,并严格按照指定的格式导入。
+            </div>
+            <div>
+                2, 一次性导入的数据量不宜过大,对于大数据量建议分批次导入。
             </div>
         </div>
-        <span slot="footer" class="dialog-footer">
-            <el-button type="primary">导入</el-button>
-            <el-button @click="handleClose">取消</el-button>
-        </span>
-    </el-dialog>
-</div>
+        <div class="improt">
+            <span>
+                选择导入数据
+            </span>
+            <el-upload drag action="https://jsonplaceholder.typicode.com/posts/" multiple :limit="1">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或
+                    <em>点击上传</em>
+                </div>
+            </el-upload>
+            <el-button type="primary" size="small">
+                下载导入模板
+            </el-button>
+        </div>
+    </div>
+    <span slot="footer" class="dialog-footer">
+        <el-button type="primary">导入</el-button>
+        <el-button @click="handleClose">取消</el-button>
+    </span>
+</el-dialog>

@@ -53,12 +53,33 @@ module.exports = function (env) {
                             }
                         }
                     ],
+                },
+                {
+                    test: /\.m\.css$/,
+                    use: [{
+                            loader: 'style-loader'
+                        },
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules:true,
+                                importLoaders:1,
+                                localIdentName:'[path]___[name]__[local]___[hash:base64:5]'
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: () => [autoprefixer]
+                            }
+                        }
+                    ],
                 }
             ]
         },
         // plugins: [
-            // new webpack.NamedModulesPlugin(),
-            // new webpack.HotModuleReplacementPlugin()
+        // new webpack.NamedModulesPlugin(),
+        // new webpack.HotModuleReplacementPlugin()
         // ]
     })
 }

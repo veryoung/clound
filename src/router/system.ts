@@ -2,9 +2,10 @@ import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 
 import { notifyRouter } from "./notify.manage";
-import { Organization } from "@views/organization/organization";
+import { OrganizationComponent } from "@views/organization/organization";
 import { UserManagement } from "@views/usermanage/user.manage";
 import { UserOperation } from "@views/usermanage/operation/operation";
+import { UserMessage } from "@views/usercenter/user.message";
 
 // /SystemManagement/UserManagement/
 export const systemRouter: RouteConfig[] = [
@@ -17,29 +18,29 @@ export const systemRouter: RouteConfig[] = [
         component: UserManagement,
     },
     {
-        path: "/SystemManagement/Organization",
+        path: "Organization",
         name: "组织机构",
-        component: Organization,
+        component: OrganizationComponent,
         meta: {
             icon: "icon-zuzhijigou"
         }
     },
     {
-        path: "/SystemManagement/WebsiteAnalysis",
+        path: "WebsiteAnalysis",
         name: "角色管理",
         meta: {
             icon: "icon-jiaoseguanli"
         }
     },
     {
-        path: "/SystemManagement/WebsiteManagement",
+        path: "WebsiteManagement",
         name: "日志审计",
         meta: {
             icon: "icon-rizhishenji"
         }
     },
     {
-        path: "/SystemManagement/ReportManagement",
+        path: "ReportManagement",
         name: "通知管理",
         children: notifyRouter,
         meta: {
@@ -72,7 +73,7 @@ export const systemRouter: RouteConfig[] = [
     },
     {
         path: "UserManagement/look/:id",
-        name: "编辑用户",
+        name: "查看用户",
         meta: {
             icon: "icon-quan-",
             hidden: true
@@ -80,6 +81,6 @@ export const systemRouter: RouteConfig[] = [
         props: {
             operation: "look"
         },
-        component: UserOperation,
+        component: UserMessage,
     },
 ];

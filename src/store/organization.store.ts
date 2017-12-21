@@ -23,16 +23,30 @@ export const OrganizationStore: Module<OrganizationType, any> = {
     },
 
     mutations: {
-        [ORGANIZATION.ADDORGANIZATION]: (state: OrganizationType) => {
+        [ORGANIZATION.ADDORGANIZATION]: (state: OrganizationType, val) => {
+            console.log(state);
             // state.message = {
 
             // }
-        }
+        },
+        // [ORGANIZATION.GETORGANIZATION]: (state: OrganizationType) => {
+
+        // }
     },
     actions: {
-        [ORGANIZATION.ADDORGANIZATION]: ({ state, commit, rootState }) => {
+        [ORGANIZATION.ADDORGANIZATION]: ({ state, commit, rootState }, val) => {
+            commit(ORGANIZATION.ADDORGANIZATION, val);
+        },
+        // [ORGANIZATION.GETORGANIZATION]: ({ state, commit, rootState }) => {
 
-        }
+        // }
     },
-    // getters: { ... }
+    getters: {
+        OrganizationTree: function (state) {
+            return state.tree;
+        },
+        OrganizationMessage: function (state) {
+            return state.message;
+        },
+    }
 };

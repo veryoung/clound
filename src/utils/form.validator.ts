@@ -12,7 +12,7 @@ export class Validator {
     }
 
     public email(rule: any, value: string, callback: Function) {
-        if ( /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
+        if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
             callback();
         } else {
             callback(new Error("邮箱格式有误"));
@@ -21,3 +21,16 @@ export class Validator {
 }
 
 export const FromValidator = new Validator();
+
+
+export interface SingleRule {
+    required?: boolean;
+    message?: string;
+    trigger?: string;
+    validator?: Function;
+    min?: number;
+    max?: number;
+}
+export interface FormRuleType {
+    [extra: string]: SingleRule[];
+}

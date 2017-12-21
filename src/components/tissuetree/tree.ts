@@ -3,6 +3,8 @@ import Vue from "vue";
 
 import { OrganizationTree } from "@components/tissuetree/tree.attachment";
 import { OrganizationTreeType } from "@store/organization.type";
+import { EventBus } from "@utils/event";
+import { TREECOMPONENT } from "@utils/event.type";
 
 
 
@@ -15,26 +17,35 @@ require("./tree.styl");
             type: Boolean,
             default: true
         }
+    },
+    watch: {
+        filterText(val) {
+            let temp: any = this.$refs.tree;
+            temp.filter(val);
+        }
     }
 })
 export class TissueTree extends Vue {
     // init props
     public editor: boolean;
     // init data
-
+    // public selectNode: any = "";
     public defaultProps: any = OrganizationTree.defaultProps;
     public data: Array<OrganizationTreeType> = OrganizationTree.data;
     public filterText: string = OrganizationTree.filterText;
     // init methods
-    addNode() {
-        // OrganizationTree.addNode(this.selectNode);
+    addNode(data: OrganizationTreeType & "") {
+        this.$emit("addNode", data);
+        // EventBus.doNotify(TREECOMPONENT.ADDNODE, data);
+        OrganizationTree.addNode(data);
     }
 
     editNode() {
         // OrganizationTree.editNode(this.selectNode);
     }
 
-    delNode() {
+    delNode(data: OrganizationTreeType & "") {
+        this.$emit("delNode", data);
         // OrganizationTree.delNode(this.selectNode);
     }
 
@@ -44,9 +55,13 @@ export class TissueTree extends Vue {
         return data.label.indexOf(value) !== -1;
     }
 
+    clickNode(key: OrganizationTreeType) {
+        this.$emit("clickNode", key);
+        // EventBus.doNotify(TREECOMPONENT.CLICKNODE, key);
+    }
+
     renderContent(h: Function, options: any) {
         const { node, data, store } = options;
-        console.log(node, data);
         return (
             h("li", {
                 "class": {
@@ -72,7 +87,7 @@ export class TissueTree extends Vue {
                                     "icon-tianjia": true
                                 },
                                 on: {
-                                    click: (e: any) => { OrganizationTree.addNode(data); e.stopPropagation(); }
+                                    click: (e: any) => { this.addNode(data); e.stopPropagation(); }
                                 },
                             }, ""),
                             h("i", {
@@ -81,7 +96,7 @@ export class TissueTree extends Vue {
                                     "icon-shanchu": true
                                 },
                                 on: {
-                                    click: (e: any) => { OrganizationTree.delNode(data); e.stopPropagation(); }
+                                    click: (e: any) => { this.delNode(data); e.stopPropagation(); }
                                 },
                             }, "")
                         ]),

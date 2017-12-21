@@ -1,5 +1,5 @@
 export enum ORGANIZATION {
-    ADDORGANIZATION = "addOrganization"
+    ADDORGANIZATION = "addOrganization",
 }
 
 

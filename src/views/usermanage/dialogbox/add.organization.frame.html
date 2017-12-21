@@ -1,15 +1,13 @@
-<div class="dialog-plane">
-    <el-dialog :visible="dialogVisible" width="400px" height="400px" top="10%" :before-close="handleClose">
-        <span slot="title" class="dialog-title">
-            <span class="iconfont ">&#xe63b;</span>
-            导入网站
-        </span>
-        <div class="content-box">
-            <TissueTree :editor="false" />
-        </div>
-        <span slot="footer" class="dialog-footer">
-            <el-button type="primary">导入</el-button>
-            <el-button @click="handleClose()">取消</el-button>
-        </span>
-    </el-dialog>
-</div>
+<el-dialog :visible="dialogVisible" width="340px" top="10%" :before-close="handleClose" class="dialog-usermanage">
+    <span slot="title" class="dialog-title">
+        <span class="iconfont">&#xe63b;</span>
+        导入网站
+    </span>
+    <div class="content-box">
+        <TissueTree :editor="false" @clickNode="clickNode"/>
+    </div>
+    <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="importOrganization()">导入</el-button>
+        <el-button @click="handleClose()">取消</el-button>
+    </span>
+</el-dialog>

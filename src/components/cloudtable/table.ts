@@ -26,23 +26,21 @@ export class CloudTable extends Vue {
         return this.columns.filter((item) => item.show);
     }
     // init data 
-    public currentPage: number = 4;
-
+    public currentPage: number = 1;
+    public pageSizes: number[] = [10, 20, 30, 40, 50];
+    public pageSize: number = this.pageSizes[0];
 
     // init methods
 
     handleSizeChange(val: number) {
         this.$emit("handleSizeChange", val);
-        // console.log(`每页 ${val} 条`);
     }
     handleCurrentChange(val: number) {
         this.$emit("handleCurrentChange", val);
-        // console.log(`当前页: ${val}`);
     }
 
     handleSelectionChange(options: any) {
         this.$emit("handleSelectionChange", options);
-        // console.log(options);
     }
 
 }

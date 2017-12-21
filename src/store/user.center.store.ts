@@ -15,6 +15,9 @@ export const UserCenterStore: Module<UserCenterType, any> = {
             username: "",
             pwd: "",
             role: "init",
+            createby: "",
+            addTime: new Date() + "",
+            status: "",
             companyName: "init",
             tel: "",
             email: "init",
@@ -27,9 +30,10 @@ export const UserCenterStore: Module<UserCenterType, any> = {
             ACCELERATE: true,
             DUEDATE: new Date() + ""
         };
-        return {
+        let personInfo: UserCenterType = {
             "init": message
         };
+        return personInfo;
     },
 
     mutations: {
@@ -51,8 +55,11 @@ export const UserCenterStore: Module<UserCenterType, any> = {
         }
     },
     getters: {
-        "init": function (state) {
-            return state["init"];
+        personInfo: function (state) {
+            return state;
         },
+        init: function (state) {
+            return state.init;
+        }
     }
 };

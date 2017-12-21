@@ -13,6 +13,9 @@ export interface UserMessageType {
     username: string;
     pwd: string;
     role: string;
+    createby: string;
+    addTime: string;
+    status: string;
     companyName: string;
     tel: number | "";
     email: string;

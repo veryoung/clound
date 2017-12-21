@@ -1,24 +1,28 @@
 <div class="organization">
+    <TipBox :dialogVisible="dialogVisible" @close="close" />
     <div class="select-part">
-        <ModuleTitle :titles="title1" />
-        <TissueTree :editor="true"/>
+        <ModuleTitle :titles="['组织机构列表']" />
+        <TissueTree :editor="true" @addNode="addNode" @clickNode="clickNode"/>
     </div>
     <div class="form-part">
-        <ModuleTitle :titles="title2" />
+        <ModuleTitle :titles="['企业详情']" />
         <el-form ref="form" :model="form" label-width="80px" :rules="rules">
             <el-form-item label="企业名称" prop="label">
-                <el-input size="small" v-model="form.label"></el-input>
+                <el-input size="small" v-model="form.label" :disabled="!create"></el-input>
             </el-form-item>
             <el-form-item label="企业简称" prop="sname">
-                <el-input size="small" v-model="form.sname"></el-input>
+                <el-input size="small" v-model="form.sname" :disabled="!create"></el-input>
             </el-form-item>
             <el-form-item label="企业简介" prop="desc">
-                <el-input  size="small" type="textarea" v-model="form.desc" :rows="10"></el-input>
+                <el-input size="small" type="textarea" v-model="form.desc" :rows="10" :disabled="!create"></el-input>
             </el-form-item>
 
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
-                <el-button>重置</el-button>
+            <el-form-item v-if="!create">
+                <el-button size="small" @click="()=>create=true">编辑</el-button>
+            </el-form-item>
+            <el-form-item v-if="create">
+                <el-button size="small" type="primary" @click="onSubmit('form')">确定</el-button>
+                <el-button size="small" @click="()=>create=false">取消</el-button>
             </el-form-item>
         </el-form>
     </div>

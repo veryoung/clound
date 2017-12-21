@@ -1,5 +1,27 @@
 import { ColumnType } from "@components/cloudtable/table.attachment";
 
+
+export default interface SearchType {
+    username: string;
+    role: string;
+    tel: string;
+    email: string;
+    createTime: string;
+    dueTime: string;
+    status: string;
+}
+
+export const filterData: SearchType = {
+    username: "",
+    role: "",
+    tel: "",
+    email: "",
+    createTime: "",
+    dueTime: "",
+    status: ""    
+};
+
+
 export const testfn = (len: number) => {
     let temp = [];
     for (let i = 0; i < len; i++) {

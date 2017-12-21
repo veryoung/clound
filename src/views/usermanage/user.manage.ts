@@ -10,7 +10,9 @@ import { SetCol } from "@components/setcol/setcol";
 import { ImportUserFrame } from "@views/usermanage/dialogbox/import.user";
 
 
-import { test, columns } from "./user.manage.attachement";
+import { test, columns, filterData } from "./user.manage.attachement";
+import SearchType from "./user.manage.attachement";
+
 
 
 require("./user.manage.styl");
@@ -27,10 +29,7 @@ export class UserManagement extends Vue {
     public checked: boolean = true;
     public datas: any = test;
     public columns: any = columns;
-    public formInline: any = {
-        user: "",
-        region: ""
-    };
+    public filter: SearchType = (<any>Object).assign({}, filterData);
     // init method
     handle(type: "look" | "add" | "editor" | "changepwd" | "del", rowObj?: any) {
         if (type === "del") {
@@ -39,11 +38,11 @@ export class UserManagement extends Vue {
         if (rowObj) {
             const { $index, row } = rowObj;
             if (type === "editor") {
-                this.$router.push(`/SystemManagement/UserManagement/editor/${row.id}`);
+                this.$router.push(`/SystemManagement/UserManagement/editor/${row.date}`);
             } else if (type === "changepwd") {
                 this.$router.push(`/usercenter/ChangPwd`);
             } else if (type === "look") {
-                this.$router.push(`/SystemManagement/UserManagement/look/${row.id}`);
+                this.$router.push(`/SystemManagement/UserManagement/look/${row.date}`);
             }
             return;
         }
@@ -59,7 +58,10 @@ export class UserManagement extends Vue {
     close() {
         this.dialogVisible = false;
     }
+    clickNode() {
 
+    }
+    
     onSubmit() {
         console.log("submit!");
     }
