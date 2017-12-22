@@ -24,7 +24,7 @@ export class ImportUserFrame extends Vue {
 
     }
 
-    handleClose(done: any) {
+    handleClose(done: Function) {
         this.$emit("close", false);
     }
 

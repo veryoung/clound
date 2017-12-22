@@ -14,10 +14,20 @@
                 header-align="center"
                 :key="$index">
                 <template slot-scope="scope">
-                    <el-tooltip class="item" effect="dark" placement="top">
-                        <div slot="content">{{scope.row[column.prop]}}</div>
-                        <span class="ellipsis">{{scope.row[column.prop]}}</span>
-                    </el-tooltip>
+                    <span class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop]}}</span>
+                    <!-- <el-popover
+                        trigger="focus"
+                        placement="top"
+                        width="160">
+                        <p slot="content">{{ scope.row[column.prop] }}</p>
+                        <span slot="reference" class="ellipsis">{{scope.row[column.prop]}}</span>
+                      </el-popover> -->
+                      
+                    <!-- <el-tooltip class="item" effect="dark" placement="top"> -->
+                        <!-- <div slot="content">{{scope.row[column.prop]}}</div> -->
+                        <!-- <span class="ellipsis" placement="top" title="{{scope.row[column.prop]}}">{{scope.row[column.prop]}}</span> -->
+                    <!-- </el-tooltip> -->
+                    
                 </template>
             </el-table-column>
             <slot></slot>

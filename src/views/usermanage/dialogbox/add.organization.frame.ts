@@ -45,7 +45,8 @@ export class AddOrganizationFrame extends Vue {
         this.$emit("importNode", this.selectNode);
     }
 
-    handleClose() {
+    handleClose(done: any) {
+        console.log(done);
         this.$emit("close", false);
     }
 
