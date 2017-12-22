@@ -18,7 +18,7 @@ export const filterData: SearchType = {
     email: "",
     createTime: "",
     dueTime: "",
-    status: ""    
+    status: ""
 };
 
 
@@ -49,12 +49,14 @@ export const columns: ColumnType[] = [
     {
         prop: "name",
         label: "用户名",
-        show: true
+        show: true,
+        disable: true
     },
     {
         prop: "province",
         label: "用户角色",
-        show: true
+        show: true,
+        disable: true
     },
     {
         prop: "city",
@@ -89,6 +91,7 @@ export const columns: ColumnType[] = [
     {
         prop: "zip",
         label: "状态",
-        show: true
+        show: true,
+        disable: true
     },
 ];

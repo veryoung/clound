@@ -37,4 +37,6 @@ export interface ColumnType {
     sortable?: "custom" | boolean;
     // 代表该列是否展示
     show?: boolean;
+    // 代表该列是必须显示的，不能被删除
+    disable?: boolean;
 }

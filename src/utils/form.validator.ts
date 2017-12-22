@@ -3,6 +3,14 @@ export class Validator {
 
     }
 
+    public pwd(rule: any, value: string, callback: Function) {
+        if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,15}$/.test(value)) {
+            callback();
+        } else {
+            callback(new Error("密码不符合规范"));
+        }
+    }
+
     public tel(rule: any, value: string, callback: Function) {
         if (/^1[34578]\d{9}$/.test(value)) {
             callback();

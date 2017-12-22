@@ -3,7 +3,8 @@
         <el-table 
             :data="datas" 
             stripe
-            @selection-change="handleSelectionChange">
+            @selection-change="handleSelectionChange"
+            height="200px">
             <slot name="type"></slot>
             <el-table-column 
                 v-for="(column,$index) in filterColums" 
