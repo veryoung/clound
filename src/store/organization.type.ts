@@ -1,11 +1,13 @@
 export enum ORGANIZATION {
     ADDORGANIZATION = "addOrganization",
+    INITORGANIZATIONTREE = "initOrganizationtree",
+    ADDORGANIZATIONMESSAGE = "addOrganizationMessage",
 }
 
 
 export interface OrganizationTreeType {
     id: string;
-    sname: string;
+    name: string;
     nodes: Array<OrganizationTreeType>;
 }
 
@@ -13,11 +15,11 @@ export interface MessageType {
     // 企业介绍
     desc: string;
     // 组织结构ID		
-    id: string;
+    id?: string;
     // 	组织机构名称
-    label: string;
+    name: string;
     // 上级组织关系ID 根组织传空字符串或者不传
-    pid: string;
+    pid?: string;
     // 简称
     sname: string;
 }

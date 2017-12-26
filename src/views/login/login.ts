@@ -1,5 +1,11 @@
 import Component from "vue-class-component";
 import Vue from "vue";
+import ElementUI from "element-ui";
+
+
+import { GeneralServer } from "@server/general";
+import { ResType } from "@server/index";
+
 
 
 const style = require("./login.m.css");
@@ -8,9 +14,9 @@ const style = require("./login.m.css");
     template: require("./login.html")
 })
 export class Login extends Vue {
-    public formInline: any = {
-        user: "",
-        region: ""
+    public form: any = {
+        username: "",
+        pwd: ""
     };
 
     // computed
@@ -20,6 +26,14 @@ export class Login extends Vue {
 
     // init methods
     onSubmit() {
-        console.log("submit!");
+        GeneralServer.login(this.form).then((res: ResType & any) => {
+            switch (res.status) {
+                case "suc":
+                    this.$router.push("/home");
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }

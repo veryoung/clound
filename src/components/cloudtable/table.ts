@@ -1,35 +1,46 @@
 import Vue from "vue";
 import Component from "vue-class-component";
+import { mapGetters } from "vuex";
 
-import { ColumnType } from "./table.attachment";
+import { TableConfigType, ColumnType, Config } from "@store/table.type";
+import { TableServer } from "@server/table";
 
 require("./table.styl");
 @Component({
     name: "cloudtable",
     template: require("./table.html"),
     props: {
-        columns: {
-            type: Array
+        moduleName: {
+            type: String
         },
         datas: {
             type: Array
         }
+    },
+    computed: {
+        ...mapGetters([
+            "tableConfig"
+        ])
     }
 })
 export class CloudTable extends Vue {
     // init props
     public datas: Array<any>;
-    public columns: Array<ColumnType>;
+    // init data
+    public obj: Config;
+
+    // lifecircle hook
+    created() {
+        this.obj = this.tableConfig[this.moduleName];
+    }
+
+    beforeDestroy() {
+        TableServer.setConfig(this.tableConfig[this.moduleName]);
+    }
 
     // init computed
-    get filterColums() {
-        return this.columns.filter((item) => item.show);
-    }
-    // init data 
-    public currentPage: number = 1;
-    public pageSizes: number[] = [10, 20, 30, 40, 50];
-    public pageSize: number = this.pageSizes[0];
-
+    public tableConfig: TableConfigType;
+    public moduleName: string;
     // init methods
 
     handleSizeChange(val: number) {

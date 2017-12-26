@@ -1,97 +1,96 @@
-import { ColumnType } from "@components/cloudtable/table.attachment";
+import { UserListType, UserServer } from "@server/user";
+import { ResType } from "server";
+import ElementUI from "element-ui";
+import { UserListColumnType } from "@store/user.center.type";
 
 
+
+// ctime	创建时间		
+// email			
+// expiry_date	过期时间		
+// is_active			
+// name	用户名		
+// ori_id	组织id	number	
+// page	当前页		
+// page_size	每页条数		
+// phone			
+// role_id	角色id		
+// sort_ctime	创建时间排序	boolean	
+// sort_expiry_date	过期日期排序	boolean	
 export default interface SearchType {
-    username: string;
-    role: string;
-    tel: string;
+    name: string;
+    role_id?: string;
+    phone: string;
     email: string;
-    createTime: string;
-    dueTime: string;
-    status: string;
+    ctime: string;
+    expiry_date: string;
+    is_active: string;
+    ori_id?: string;
+    sort_ctime?: boolean;
+    sort_expiry_date?: boolean;
 }
 
 export const filterData: SearchType = {
-    username: "",
-    role: "",
-    tel: "",
+    name: "",
+    role_id: "",
+    phone: "",
     email: "",
-    createTime: "",
-    dueTime: "",
-    status: ""
+    ctime: "",
+    expiry_date: "",
+    is_active: "",
+    ori_id: "",
 };
 
-
-export const testfn = (len: number) => {
-    let temp = [];
-    for (let i = 0; i < len; i++) {
-        temp.push({
-            date: new Date().getTime(),
-            name: "王小虎" + i,
-            province: "上海",
-            city: "普陀区",
-            address: "上海市普陀区金沙江路 1518 弄",
-            zip: 200333
+export class UserManager {
+    public exportUser(ids: number[]) {
+        UserServer.exportUser(ids).then((res: ResType & any) => {
+            switch (res.status) {
+                case "suc":
+                    ElementUI.Message({
+                        message: "导出成功",
+                        type: "success"
+                    });
+                    break;
+                default:
+                    break;
+            }
         });
     }
-    return temp;
-};
 
-export const test: any = testfn(20);
+    exportAll() {
+        UserServer.exportUser([]).then((res: ResType & any) => {
+            switch (res.status) {
+                case "suc":
+                    ElementUI.Message({
+                        message: "导出成功",
+                        type: "success"
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
 
-export const columns: ColumnType[] = [
-    {
-        prop: "date",
-        label: "序号",
-        sortable: true,
-        show: true
-    },
-    {
-        prop: "name",
-        label: "用户名",
-        show: true,
-        disable: true
-    },
-    {
-        prop: "province",
-        label: "用户角色",
-        show: true,
-        disable: true
-    },
-    {
-        prop: "city",
-        label: "创建人",
-        show: true
-    },
-    {
-        prop: "address",
-        label: "企业名称",
-        show: true
-    },
-    {
-        prop: "zip",
-        label: "手机号码",
-        show: true
-    },
-    {
-        prop: "zip",
-        label: "邮箱",
-        show: true
-    },
-    {
-        prop: "zip",
-        label: "创建时间",
-        show: true
-    },
-    {
-        prop: "zip",
-        label: "到期时间",
-        show: true
-    },
-    {
-        prop: "zip",
-        label: "状态",
-        show: true,
-        disable: true
-    },
-];
+    handleDel(row: UserListColumnType) {
+        ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
+            UserServer.delUser(row.uid).then((res: ResType & any) => {
+                switch (res.status) {
+                    case "suc":
+                        ElementUI.Message({
+                            message: "删除成功",
+                            type: "success"
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }).catch(() => {
+
+        });
+    }
+}
+
+export const UserManagerController = new UserManager();
+

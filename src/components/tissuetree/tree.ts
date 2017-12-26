@@ -1,10 +1,11 @@
 import Component from "vue-class-component";
 import Vue from "vue";
+import { mapGetters } from "vuex";
 
-import { OrganizationTree } from "@components/tissuetree/tree.attachment";
+
+
+import { treeAttchment } from "@components/tissuetree/tree.attachment";
 import { OrganizationTreeType } from "@store/organization.type";
-import { EventBus } from "@utils/event";
-import { TREECOMPONENT } from "@utils/event.type";
 
 
 
@@ -23,41 +24,47 @@ require("./tree.styl");
             let temp: any = this.$refs.tree;
             temp.filter(val);
         }
+    },
+    computed: {
+        ...mapGetters([
+            "OrganizationTree"
+        ])
     }
 })
 export class TissueTree extends Vue {
     // init props
     public editor: boolean;
     // init data
-    // public selectNode: any = "";
-    public defaultProps: any = OrganizationTree.defaultProps;
-    public data: Array<OrganizationTreeType> = OrganizationTree.data;
-    public filterText: string = OrganizationTree.filterText;
+    public defaultProps: any = treeAttchment.defaultProps;
+    public data: Array<OrganizationTreeType>;
+    public filterText: string = treeAttchment.filterText;
+    // init computed
+    public OrganizationTree: Array<OrganizationTreeType>;
+    // lifecircle hook
+    created() {
+        this.data = this.OrganizationTree;
+    }
     // init methods
     addNode(data: OrganizationTreeType & "") {
         this.$emit("addNode", data);
-        // EventBus.doNotify(TREECOMPONENT.ADDNODE, data);
-        OrganizationTree.addNode(data);
     }
 
-    editNode() {
-        // OrganizationTree.editNode(this.selectNode);
+    editNode(data: OrganizationTreeType & "") {
+        this.$emit("delNode", data);
     }
 
     delNode(data: OrganizationTreeType & "") {
         this.$emit("delNode", data);
-        // OrganizationTree.delNode(this.selectNode);
     }
 
 
     filterNode(value: any, data: any) {
         if (!value) return true;
-        return data.label.indexOf(value) !== -1;
+        return data.name.indexOf(value) !== -1;
     }
 
     clickNode(key: OrganizationTreeType) {
         this.$emit("clickNode", key);
-        // EventBus.doNotify(TREECOMPONENT.CLICKNODE, key);
     }
 
     renderContent(h: Function, options: any) {

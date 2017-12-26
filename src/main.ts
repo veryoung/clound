@@ -6,6 +6,8 @@ import { entryRouter } from "@router/index";
 import { Entry } from "@views/entry/entry";
 import { Store } from "@store/store";
 import { InitDirective } from "@directives/index";
+import { vm } from "@utils/event";
+import { InitFilters } from "@filters/index";
 
 
 
@@ -20,10 +22,11 @@ if (process.env.NODE_ENV === "test") {
 }
 
 new InitDirective();
+new InitFilters();
 
 Vue.use(ElementUI);
 
-const app = new Vue({
+export const app = new Vue({
     el: "#app",
     store: Store,
     router: entryRouter,

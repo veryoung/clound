@@ -1,11 +1,14 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
+import ElementUI from "element-ui";
 
 
-
-import { MessageType, Organization } from "@store/organization.type";
+import { MessageType, Organization, ORGANIZATION } from "@store/organization.type";
 import { FormRuleType } from "@utils/form.validator";
+import { OrganizationServer } from "@server/organization";
+import { ResType } from "server";
+
 
 
 require("./tip.box.styl");
@@ -16,6 +19,10 @@ require("./tip.box.styl");
         dialogVisible: {
             type: Boolean,
             default: false
+        },
+        pid: {
+            type: String,
+            default: ""
         }
     },
     computed: {
@@ -27,18 +34,25 @@ require("./tip.box.styl");
 export class TipBox extends Vue {
     // init props
     public dialogVisible: boolean;
+    public pid: string;
     // init computed
     public OrganizationMessage: Organization;
 
-    public form: MessageType;
+    public form: MessageType = {
+        name: "",
+        sname: "",
+        desc: "",
+        pid: "",
+        id: ""
+    };
 
     // lifecircle hook
     created() {
-        this.form = this.OrganizationMessage.init;
+        // this.form = this.OrganizationMessage.init;
     }
 
     public rules: FormRuleType = {
-        label: [
+        name: [
             { required: true, message: "请输入组织名称", trigger: "blur" },
         ],
         sname: [
@@ -47,6 +61,24 @@ export class TipBox extends Vue {
     };
 
     // init methods
+    addCompany() {
+        this.form.pid = this.pid;
+        OrganizationServer.addOrganization(this.form).then((res: ResType & any) => {
+            switch (res.status) {
+                case "suc":
+                    // 'success' | 'warning' | 'info' | 'error'
+                    ElementUI.Message({
+                        message: res.message || "组织机构添加成功",
+                        type: "success"
+                    });
+                    this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
+                    this.$emit("close", false);
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
     cancel() {
         this.$emit("close", false);
     }

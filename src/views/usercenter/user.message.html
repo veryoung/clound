@@ -1,63 +1,66 @@
 <div class="user-message">
-    <ModuleTitle :titles="['基本信息']" />
-    <ul class="basicmessage">
-        <li>
-            <div class="label">用户名：</div>
-            <div class="message">XXX</div>
-        </li>
-        <li>
-            <div class="label">用户角色：</div>
-            <div class="message">普通用户</div>
-        </li>
-        <li>
-            <div class="label">创建人：</div>
-            <div class="message">普通用户</div>
-        </li>
-        <li>
-            <div class="label">企业名称：</div>
-            <div class="message">二级企业</div>
-        </li>
-        <li>
-            <div class="label">手机号码：</div>
-            <div class="message">18197978675</div>
-        </li>
-        <li>
-            <div class="label">邮箱：</div>
-            <div class="message">87416549@qq.com</div>
-        </li>
-        <li>
-            <div class="label">添加时间：</div>
-            <div class="message">87416549@qq.com</div>
-        </li>
-        <li>
-            <div class="label">状态：</div>
-            <div class="message">87416549@qq.com</div>
-        </li>
-        <li>
-            <div class="label">备注：</div>
-            <div class="message">87416549@qq.com</div>
-        </li>
-    </ul>
+    <div class="panel">
+        <ModuleTitle :titles="['基本信息']" />
+        <ul class="basicmessage">
+            <li>
+                <div class="label">用户名：</div>
+                <div class="message">{{ userMessage.user_name }}</div>
+            </li>
+            <li>
+                <div class="label">用户角色：</div>
+                <div class="message">{{ userMessage.role }}</div>
+            </li>
+            <li>
+                <div class="label">创建人：</div>
+                <div class="message">{{ userMessage.cperson }}</div>
+            </li>
+            <li>
+                <div class="label">企业名称：</div>
+                <div class="message">{{ userMessage.company }}</div>
+            </li>
+            <li>
+                <div class="label">手机号码：</div>
+                <div class="message">{{ userMessage.phone }}</div>
+            </li>
+            <li>
+                <div class="label">邮箱：</div>
+                <div class="message">{{ userMessage.email }}</div>
+            </li>
+            <li>
+                <div class="label">添加时间：</div>
+                <div class="message">{{ userMessage.ctime }}</div>
+            </li>
+            <li>
+                <div class="label">状态：</div>
+                <div class="message">{{ userMessage.state }}</div>
+            </li>
+            <li>
+                <div class="label">备注：</div>
+                <div class="message">{{ userMessage.remark }}</div>
+            </li>
+        </ul>
 
-    <ModuleTitle :titles="['服务信息']" />
+        <ModuleTitle :titles="['服务信息']" />
 
-    <ul class="basicmessage">
-        <li>
-            <div class="label">网站总数：</div>
-            <div class="message">已使用0个，剩余989575个可用，总共100000000个</div>
-        </li>
-        <li>
-            <div class="label">服务项：</div>
-            <div class="server" style="color:#999">
-                <div>WEB防火墙：开启</div>
-                <div>ADS防护：开启</div>
-                <div>网站镜像：开启</div>
-                <div>加速优化：开启</div> 
-            </div>
-        </li>
-        <li>
-            <div class="label">到期时间：</div>
-            <div class="message">2017-12-18</div>
-        </li>
-    </ul>
+        <ul class="basicmessage">
+            <li>
+                <div class="label">网站总数：</div>
+                <div class="message">已使用{{ userMessage.used_domain_num }}个，剩余{{ userMessage.max_domain_num-userMessage.used_domain_num }}个可用，总共{{
+                    userMessage.max_domain_num }}个</div>
+            </li>
+            <li>
+                <div class="label">服务项：</div>
+                <div class="server" style="color:#999">
+                    <div>WEB防火墙：{{ userMessage.waf_enable==="1"?"开启":"关闭" }}</div>
+                    <div>ADS防护：{{ userMessage.ads_enable==="1"?"开启":"关闭" }}</div>
+                    <div>网站镜像：{{ userMessage.mirror_enable==="1"?"开启":"关闭" }}</div>
+                    <div>加速优化：{{ userMessage.cdn_enable==="1"?"开启":"关闭" }}</div>
+                </div>
+            </li>
+            <li>
+                <div class="label">到期时间：</div>
+                <div class="message">{{ userMessage.expiry_date }}</div>
+            </li>
+        </ul>
+    </div>
 </div>

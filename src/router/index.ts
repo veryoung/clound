@@ -115,6 +115,7 @@ export const entry: RouteConfig[] = [
     },
     {
         path: "/usercenter",
+        redirect: "/usercenter/PersonalMessage",
         name: "个人中心",
         components: {
             header: HeaderComponent,

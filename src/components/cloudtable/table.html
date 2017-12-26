@@ -7,33 +7,21 @@
             height="200px">
             <slot name="type"></slot>
             <el-table-column 
-                v-for="(column,$index) in filterColums" 
+                v-for="(column,$index) in obj.columns" 
                 :label="column.label" :prop="column.prop" 
+                v-if="column.show"
                 :sortable="column.sortable?column.sortable === true?true:false:false"
                 align="center"
                 header-align="center"
                 :key="$index">
                 <template slot-scope="scope">
-                    <span class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop]}}</span>
-                    <!-- <el-popover
-                        trigger="focus"
-                        placement="top"
-                        width="160">
-                        <p slot="content">{{ scope.row[column.prop] }}</p>
-                        <span slot="reference" class="ellipsis">{{scope.row[column.prop]}}</span>
-                      </el-popover> -->
-                      
-                    <!-- <el-tooltip class="item" effect="dark" placement="top"> -->
-                        <!-- <div slot="content">{{scope.row[column.prop]}}</div> -->
-                        <!-- <span class="ellipsis" placement="top" title="{{scope.row[column.prop]}}">{{scope.row[column.prop]}}</span> -->
-                    <!-- </el-tooltip> -->
-                    
+                    <span class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop]}}</span>     
                 </template>
             </el-table-column>
             <slot></slot>
         </el-table>
     </div>
-    <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-        :page-sizes="pageSizes" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="400">
+    <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="obj.page"
+        :page-sizes="obj.pageSizes" :page-size="obj.page_size" layout="total, sizes, prev, pager, next, jumper" :total="obj.total">
     </el-pagination>
 </div>

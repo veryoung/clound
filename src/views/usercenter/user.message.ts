@@ -4,7 +4,8 @@ import { mapGetters } from "vuex";
 
 
 import { ModuleTitle } from "@components/title/module.title";
-import { UserMessageType, UserCenterType } from "@store/user.center.type";
+import { UserMessageType, UserCenterType, USER } from "@store/user.center.type";
+import { USERMANAGEEVENT, vm } from "@utils/event";
 
 
 require("./user.message.styl");
@@ -22,16 +23,44 @@ require("./user.message.styl");
 })
 export class UserMessage extends Vue {
     // init data
-    public userMessage: UserMessageType;
+    public userMessage: UserMessageType = {
+        uid: 0,
+        user_name: "",
+        pwd: "",
+        role: "",
+        role_id: "",
+        cperson: "",
+        ctime: "",
+        state: "",
+        company: "",
+        phone: "",
+        email: "",
+        remark: "",
+        used_domain_num: "",
+        max_domain_num: "",
+        waf_enable: "1",
+        ads_enable: "1",
+        mirror_enable: "1",
+        cdn_enable: "1",
+        expiry_date: "",
+    };
     // init computed
     public personInfo: UserCenterType;
 
     // lifecircle hook
     created() {
-        if (this.$route.params.id) {
-            this.userMessage = this.personInfo[this.$route.params.id];
+        let id = this.$route.params.id;
+        if (id) {
+            this.$store.dispatch(USER.GETOTHERUSER, { uid: id });
         } else {
-            this.userMessage = this.personInfo.init;
+            this.userMessage = this.personInfo.default;
         }
+        vm.$on(USERMANAGEEVENT.GETUSER, () => {
+            this.userMessage = this.personInfo[id];
+        });
+    }
+
+    beforeDestroy() {
+        vm.$off(USERMANAGEEVENT.GETUSER);
     }
 }

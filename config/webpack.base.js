@@ -25,6 +25,7 @@ module.exports = function (env) {
                 '@directives':'src/directives',
                 '@utils':'src/utils',
                 '@server':'src/server',
+                '@filters':'src/filters',
             }
         },
         module: {

@@ -1,4 +1,5 @@
-import { OrganizationTreeType } from "@store/organization.type";
+import { OrganizationTreeType, ORGANIZATION } from "@store/organization.type";
+import { Store } from "@store/store";
 
 enum OPERATION {
     ADD,
@@ -10,16 +11,10 @@ export class Tree {
     public filterText: string = "";
     public defaultProps: any = {
         children: "nodes",
-        label: "sname"
+        label: "name"
     };
     constructor() {
-        this.data = [
-            {
-                id: "全部组织机构",
-                sname: "全部组织机构",
-                nodes: []
-            }
-        ];
+        Store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
     }
 
     public addNode(item: OrganizationTreeType & "") {
@@ -51,7 +46,7 @@ export class Tree {
                     case OPERATION.ADD:
                         unit.nodes.push({
                             id: new Date().getTime() + "",
-                            sname: "test",
+                            name: "test",
                             nodes: []
                         });
                         break;
@@ -59,7 +54,7 @@ export class Tree {
                         item.splice($index, 1);
                         break;
                     case OPERATION.EDIT:
-                        unit.sname = new Date().getTime() + "";
+                        unit.name = new Date().getTime() + "";
                         break;
                 }
                 return;
@@ -71,6 +66,6 @@ export class Tree {
 }
 
 
-export const OrganizationTree = new Tree();
+export const treeAttchment = new Tree();
 
 

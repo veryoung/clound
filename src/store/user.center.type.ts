@@ -1,42 +1,89 @@
+/**
 
-
-export interface UserPwdType {
-    userId: string;
-    username?: string;
-    oldpwd: string;
-    newpwd: string;
-    newpwd1: string;
-}
-
+ads_enable	是否CC攻击	string	@mock=ads_enable
+cdn_enable	是否CDN加速	string	@mock=cdn_enable
+company	公司名称	string	@mock=organization__name
+cperson	创建人	string	@mock=cperson
+ctime	创建日期	string	@mock=ctime
+email	邮箱	string	@mock=email
+expiry_date	到期日期	string	@mock=expiry_date
+max_domain_num	分配的网站数	string	@mock=max_domain_num
+mirror_enable	是否镜像	string	@mock=mirror_enable
+phone	电话号码	string	@mock=phone
+remark	备注	string	@mock=remark
+role	角色名称	string	@mock=role__name
+uid	用户ID	string	@mock=id
+used_domain_num	已使用网站数	string	@mock=used_domain_num
+user_name	用户名	string	@mock=name
+waf_enable	允许WEB应用防火墙权限	string	@mock=waf_enable
+ */
 export interface UserMessageType {
-    userId: string;
-    username: string;
-    pwd: string;
-    role: string;
-    createby: string;
-    addTime: string;
-    status: string;
-    companyName: string;
-    tel: number | "";
+    uid: number;
+    user_name: string;
+    pwd?: string;
+    role?: string;
+    role_id?: string;
+    cperson: string;
+    ctime: string;
+    state: string;
+    company: string;
+    phone: string;
     email: string;
     remark: string;
-    usedNetwork: number | "";
-    totalNetwork: number | "";
-    WEB: boolean;
-    ADS: boolean;
-    SITEMIRROR: boolean;
-    ACCELERATE: boolean;
-    DUEDATE: string;
+    used_domain_num: string;
+    max_domain_num: string;
+    waf_enable: string;
+    ads_enable: string;
+    mirror_enable: string;
+    cdn_enable: string;
+    expiry_date: string;
 }
 
 export interface UserCenterType {
     [extra: string]: UserMessageType;
 }
 
-export enum USERPWD {
-    CHANGEPWD = "changepwd"
-}
-export enum USERMESSAGE {
-    GETMESSAGE = "getmessage"
+export interface UserStoreType {
+    personInfo: UserCenterType;
+    userlist: UserCompanyListType;
 }
 
+
+export interface UserCompanyListType {
+    [extra: string]: UserListType;
+}
+export interface UserListType {
+    data: UserListStructure;
+    total: number;
+}
+export interface UserListStructure {
+    [extra: number]: Array<UserListColumnType>;
+}
+export interface UserListColumnType {
+    company: string;
+    cperson: string;
+    ctime: string;
+    email: string;
+    expiry_date: string;
+    is_active: string;
+    is_delete: string;
+    is_edite: string;
+    phone: string;
+    role: string;
+    user_name: string;
+    uid: string;
+}
+
+export enum USER {
+    ADDUSERMESSAGE = "addusermessage",
+    UPDATEMESSAGE = "updatemessage",
+    CHANGEPWD = "changepwd",
+    DEFAULTUSER = "defaultuser",
+    GETUSERLIST = "getuserlist",
+    GETOTHERUSER = "getotheruser"
+}
+
+
+export interface RoleType {
+
+}

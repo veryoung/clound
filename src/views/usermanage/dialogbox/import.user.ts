@@ -1,5 +1,7 @@
 import Component from "vue-class-component";
 import Vue from "vue";
+import { ResType } from "server";
+import ElementUI from "element-ui";
 
 require("./import.user.styl");
 @Component({
@@ -12,18 +14,53 @@ require("./import.user.styl");
 export class ImportUserFrame extends Vue {
     // init data
     public dialogVisible: boolean;
-
+    public loading: boolean = false;
     // lifecycle hook
     created() {
-        this.getList();
 
     }
 
     // init method
-    getList() {
 
+    importUser() {
+        let temp: any = this.$refs.upload;
+        temp.submit();
+        this.loading = true;
     }
 
+    success(response: ResType) {
+        let message: string = "";
+        switch (response.status) {
+            case "suc":
+                message = `
+                    <p>导入成功${response.data.success}条</p>
+                    <p>导入失败${response.data.error}条</p>
+                    <p>${response.data.error_info}</p>
+                `;
+                this.loading = false;
+                break;
+            case "error":
+                message = "失败";
+                this.loading = false;
+            default:
+                break;
+        }
+        ElementUI.MessageBox.alert(`<div>${message}</div>`, "提示", {
+            dangerouslyUseHTMLString: true
+        }).then(() => {
+            if (response.status === "suc") {
+
+            } else if (response.status === "error") {
+
+            }
+        });
+        /**
+         *         this.$alert("<strong>这是 <i>HTML</i> 片段</strong>", "HTML 片段", {
+          dangerouslyUseHTMLString: true
+        });
+         */
+
+    }
     handleClose(done: Function) {
         this.$emit("close", false);
     }

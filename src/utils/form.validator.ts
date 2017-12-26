@@ -3,7 +3,7 @@ export class Validator {
 
     }
 
-    public pwd(rule: any, value: string, callback: Function) {
+    public pwd(rule: FormRuleType, value: string, callback: Function) {
         if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,15}$/.test(value)) {
             callback();
         } else {
@@ -11,7 +11,7 @@ export class Validator {
         }
     }
 
-    public tel(rule: any, value: string, callback: Function) {
+    public tel(rule: FormRuleType, value: string, callback: Function) {
         if (/^1[34578]\d{9}$/.test(value)) {
             callback();
         } else {
@@ -19,7 +19,7 @@ export class Validator {
         }
     }
 
-    public email(rule: any, value: string, callback: Function) {
+    public email(rule: FormRuleType, value: string, callback: Function) {
         if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
             callback();
         } else {

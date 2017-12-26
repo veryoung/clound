@@ -1,41 +1,42 @@
 <div class="user-manage">
     <ImportUserFrame :dialogVisible="dialogVisible" @close="close" />
+    <ResetPwd :dialogVisible="dialogVisiblePwd" @close="closePwd" :uid="uid" />
     <div class="select-part">
         <ModuleTitle :titles="['组织机构列表']" />
-        <TissueTree :editor="false" @clickNode="clickNode"/>
+        <TissueTree :editor="false" @clickNode="clickNode" />
     </div>
     <div class="form-part">
-        <ModuleTitle :titles="['企业详情', 'test']" />
+        <ModuleTitle :titles="titles" />
         <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px">
             <el-form-item label="用户名">
-                <el-input v-model="filter.username" placeholder="用户名" size="small"></el-input>
+                <el-input v-model="filter.name" placeholder="用户名" size="small"></el-input>
             </el-form-item>
             <el-form-item label="用户角色">
-                <el-input v-model="filter.role" placeholder="用户角色" size="small"></el-input>
+                <el-input v-model="filter.role_id" placeholder="用户角色" size="small"></el-input>
             </el-form-item>
             <el-form-item label="手机号码">
-                <el-input v-model="filter.tel" placeholder="手机号码" size="small"></el-input>
+                <el-input v-model="filter.phone" placeholder="手机号码" size="small"></el-input>
             </el-form-item>
             <el-form-item label="邮箱">
                 <el-input v-model="filter.email" placeholder="邮箱" size="small"></el-input>
             </el-form-item>
             <el-form-item label="创建时间">
-                <el-date-picker v-model="filter.createTime" type="date" size="small" placeholder="选择创建时间">
+                <el-date-picker v-model="filter.ctime" type="date" size="small" placeholder="选择创建时间">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="到期时间">
-                <el-date-picker v-model="filter.dueTime" type="date" size="small" placeholder="选择到期时间">
+                <el-date-picker v-model="filter.expiry_date" type="date" size="small" placeholder="选择到期时间">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="filter.status" placeholder="活动区域" size="small">
+                <el-select v-model="filter.is_active" placeholder="活动区域" size="small">
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button size="small" type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
-                <el-button size="small">重置</el-button>
+                <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                <el-button size="small" @click="reset">重置</el-button>
             </el-form-item>
         </el-form>
         <div class="btn-group">
@@ -48,20 +49,20 @@
                     <span class="iconfont">&#xe61b;</span>
                     导入
                 </el-button>
-                <el-button type="primary" @click="" size="small">
+                <el-button type="primary" @click="exportUser" size="small">
                     <span class="iconfont">&#xe61e;</span>
                     导出
                 </el-button>
-                <el-button type="primary" @click="" size="small">
+                <el-button type="primary" @click="exportAll" size="small">
                     <span class="iconfont">&#xe61e;</span>
                     导出所有
                 </el-button>
             </div>
             <div class="btn-last">
-                <SetCol :columns="columns" />
+                <SetCol moduleName="usertable" />
             </div>
         </div>
-        <CloudTable :columns="columns" :datas="datas" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+        <CloudTable moduleName="usertable" :datas="tableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
             @handleSelectionChange="handleSelectionChange">
             <el-table-column fixed type="selection" width="55" slot="type">
             </el-table-column>
@@ -71,6 +72,10 @@
                     <i style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
                     <i style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
                     <i style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
+                    <!-- <i style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
+                    <i v-if="scope.row.is_edite==='1'" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
+                    <i v-if="scope.row.is_delete==='1'" style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i> -->
                 </template>
             </el-table-column>
         </CloudTable>

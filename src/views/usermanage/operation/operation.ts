@@ -1,18 +1,24 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-
+import ElementUI from "element-ui";
 
 
 import { ModuleTitle } from "@components/title/module.title";
-import { UserMessageType, USERMESSAGE, UserCenterType } from "@store/user.center.type";
+import { UserMessageType, USER, UserCenterType } from "@store/user.center.type";
 import { OrganizationTreeType, Organization } from "@store/organization.type";
 import { FromValidator, FormRuleType } from "@utils/form.validator";
 import { AddOrganizationFrame } from "@views/usermanage/dialogbox/add.organization.frame";
 import { TissueTree } from "@components/tissuetree/tree";
+import { UserServer } from "@server/user";
+import { ResType } from "server";
+import { AxiosResponse } from "axios";
 
 
-
+interface RoleType {
+    name: string;
+    role_id: number;
+}
 
 require("./operation.styl");
 @Component({
@@ -26,13 +32,8 @@ require("./operation.styl");
     },
     computed: {
         ...mapGetters([
-            "personInfo",
-            "OrganizationMessage",
-            "OrganizationTree"
-        ]),
-        ...mapGetters({
-            form: "init"
-        })
+            "personInfo"
+        ])
     },
     components: {
         ModuleTitle, AddOrganizationFrame, TissueTree
@@ -45,18 +46,39 @@ export class UserOperation extends Vue {
 
     // init computed
     public personInfo: UserCenterType;
-    public OrganizationMessage: Organization;
-    public OrganizationTree: OrganizationTreeType;
-
-
-    // init data
     public form: UserMessageType;
+
+    /**
+     * {
+        uid: string;
+        user_name: string;
+        pwd?: string;
+        role?: string;
+        role_id?: string;
+        cperson: string;
+        ctime: string;
+        state: string;
+        company: string;
+        phone: string;
+        email: string;
+        remark: string;
+        used_domain_num: string;
+        max_domain_num: string;
+        waf_enable: string;
+        ads_enable: string;
+        mirror_enable: string;
+        cdn_enable: string;
+        expiry_date: string;
+    }
+     */
+    // init data
+    public roles: Array<RoleType> = new Array<RoleType>();
     public rules: FormRuleType = {
-        username: [
+        user_name: [
             { required: true, message: "真实姓名不能为空", trigger: "blur" },
             { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
         ],
-        tel: [
+        phone: [
             { required: true, message: "手机号码不能为空", trigger: "blur" },
             { validator: FromValidator.tel, trigger: "blur", message: "请填写正确手机号码" }
         ],
@@ -64,7 +86,13 @@ export class UserOperation extends Vue {
             { required: true, message: "邮箱不能为空", trigger: "blur" },
             { validator: FromValidator.email, trigger: "blur", message: "请填写正确邮箱" }
         ],
-        DUEDATE: [
+        company: [
+            { required: true, message: "企业名称不能为空", trigger: "blur" },
+        ],
+        pwd: [
+            { required: true, message: "密码不能为空", trigger: "blur" },
+        ],
+        expiry_date: [
             { required: true, message: "请填写到期日期", trigger: "blur" },
         ]
     };
@@ -73,15 +101,29 @@ export class UserOperation extends Vue {
 
     // init lifecircle hook
     created() {
-        let id = this.$route.params.id ? this.$route.params.id : "init";
-        // this.form = this.personInfo.id;
+        let id = this.$route.params.id;
+        if (id) {
+            this.form = this.personInfo[id];
+        } else {
+            this.form = this.personInfo.init;
+        }
+        UserServer.getUserRole().then((res: ResType & any) => {
+            switch (res.status) {
+                case "suc":
+                    this.roles = res.data;
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
 
 
     // init methods
     importNode(node: OrganizationTreeType) {
-        this.form.companyName = this.OrganizationMessage[node.id].sname;
+        this.form.company = node.name;
+        this.dialogVisible = false;
     }
     addOrganization() {
         this.dialogVisible = true;
@@ -94,9 +136,23 @@ export class UserOperation extends Vue {
         let temp: any = this.$refs[formBasic];
         temp.validate((valid: any) => {
             if (valid) {
-                alert("submit!");
+                UserServer.addUser(this.form).then((res: ResType & any) => {
+                    switch (res.status) {
+                        case "suc":
+                            ElementUI.Message({
+                                message: "添加用户成功",
+                                type: "success"
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                });
             } else {
-                console.log("error submit!!");
+                ElementUI.Message({
+                    message: "表单格式不正确",
+                    type: "error"
+                });
                 return false;
             }
         });

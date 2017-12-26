@@ -1,9 +1,14 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-
+import { mapGetters } from "vuex";
+import ElementUI from "element-ui";
 
 
 import { ModuleTitle } from "@components/title/module.title";
+import { UserCenterType, UserMessageType } from "@store/user.center.type";
+import { FormRuleType, FromValidator } from "@utils/index";
+import { UserServer } from "@server/user";
+import { ResType } from "@server/index";
 
 
 
@@ -15,30 +20,68 @@ require("./user.pwd.styl");
     components: {
         ModuleTitle
     },
+    computed: {
+        ...mapGetters([
+            "personInfo"
+        ])
+    }
 })
 export class UserPwd extends Vue {
     // init data
     public form = {
-        pass: "",
-        checkPass: "",
-        age: ""
+        opwd: "",
+        npwd: "",
+        npwdAgain: ""
     };
 
-    rules = {
-        pass: [{ validator: () => this.validatePass, trigger: "blur" }],
-        checkPass: [{ validator: () => this.validatePass2, trigger: "blur" }],
-        age: [{ validator: () => this.checkAge, trigger: "blur" }]
-    };
+    public userMessage: UserMessageType;
 
+    public rules: FormRuleType = {
+        opwd: [
+            { required: true, message: "原始密码不能为空", trigger: "blur" },
+            // { message: "密码不符合要求", validator: FromValidator.pwd, trigger: "blur" }
+        ],
+        npwd: [
+            { required: true, message: "新密码不能为空", trigger: "blur" },
+            { message: "密码不符合要求", validator: FromValidator.pwd, trigger: "blur" }
+        ],
+        npwdAgain: [
+            { required: true, message: "确认密码不能为空", trigger: "blur" },
+            { message: "与密码不符合", validator: this.npwdAgain, trigger: "blur" }
+        ]
+    };
+    // init computed
+    public personInfo: UserCenterType;
+
+
+    // lifecircle hook 
+    created() {
+        this.userMessage = this.personInfo.default;
+    }
 
     // init methods
+    npwdAgain(rule: FormRuleType, value: string, callback: Function) {
+        if (value !== this.form.npwd) {
+            callback(new Error("两次输入密码不一致"));
+        } else {
+            callback();
+        }
+    }
     submitForm(formName: string) {
         let temp: any = this.$refs[formName];
         temp.validate((valid: boolean) => {
             if (valid) {
-                alert("submit!");
+                UserServer.changePwd(this.form).then((res: ResType & any) => {
+                    switch (res.status) {
+                        case "suc":
+                            ElementUI.Message.success(res.message);
+                            break;
+                        default:
+                            break;
+                    }
+                });
             } else {
-                console.log("error submit!!");
+                ElementUI.Message.info("修改密码错误,表单验证不成功");
                 return false;
             }
         });
@@ -47,42 +90,5 @@ export class UserPwd extends Vue {
     resetForm(formName: string) {
         let temp: any = this.$refs[formName];
         temp.resetFields();
-    }
-
-    checkAge(rule: any, value: number, callback: Function) {
-        if (!value) {
-            return callback(new Error("年龄不能为空"));
-        }
-        setTimeout(() => {
-            if (!Number.isInteger(value)) {
-                callback(new Error("请输入数字值"));
-            } else {
-                if (value < 18) {
-                    callback(new Error("必须年满18岁"));
-                } else {
-                    callback();
-                }
-            }
-        }, 1000);
-    }
-    validatePass(rule: any, value: string, callback: Function) {
-        if (value === "") {
-            callback(new Error("请输入密码"));
-        } else {
-            if (this.form.checkPass !== "") {
-                let temp: any = this.$refs.form;
-                temp.validateField("checkPass");
-            }
-            callback();
-        }
-    }
-    validatePass2(rule: any, value: string, callback: Function) {
-        if (value === "") {
-            callback(new Error("请再次输入密码"));
-        } else if (value !== this.form.pass) {
-            callback(new Error("两次输入密码不一致!"));
-        } else {
-            callback();
-        }
     }
 }
