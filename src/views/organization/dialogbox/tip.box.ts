@@ -8,6 +8,7 @@ import { MessageType, Organization, ORGANIZATION } from "@store/organization.typ
 import { FormRuleType } from "@utils/form.validator";
 import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
+import { AxiosResponse } from "axios";
 
 
 
@@ -63,7 +64,8 @@ export class TipBox extends Vue {
     // init methods
     addCompany() {
         this.form.pid = this.pid;
-        OrganizationServer.addOrganization(this.form).then((res: ResType & any) => {
+        OrganizationServer.addOrganization(this.form).then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     // 'success' | 'warning' | 'info' | 'error'

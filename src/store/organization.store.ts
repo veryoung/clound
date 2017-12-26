@@ -5,6 +5,7 @@ import { ResType } from "server";
 import { OrganizationServer } from "@server/organization";
 import { treeAttchment } from "@components/tissuetree/tree.attachment";
 import { vm, ORGANIZATIONEVENT } from "@utils/index";
+import { AxiosResponse } from "axios";
 
 
 
@@ -50,7 +51,8 @@ export const OrganizationStore: Module<OrganizationType, any> = {
             commit(ORGANIZATION.ADDORGANIZATION, payload);
         },
         [ORGANIZATION.INITORGANIZATIONTREE]: ({ state, commit, rootState }) => {
-            OrganizationServer.getTree().then((res: ResType & any) => {
+            OrganizationServer.getTree().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
                         commit(ORGANIZATION.INITORGANIZATIONTREE, { data: res.data });
@@ -65,7 +67,8 @@ export const OrganizationStore: Module<OrganizationType, any> = {
                 vm.$emit(ORGANIZATIONEVENT.GETORGANIZATION, payload.id);
                 return false;
             }
-            OrganizationServer.getOrganizationInfo(payload.id).then((res: ResType & any) => {
+            OrganizationServer.getOrganizationInfo(payload.id).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 commit(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: payload.id, data: res.data });
                 vm.$emit(ORGANIZATIONEVENT.GETORGANIZATION, payload.id);
             });

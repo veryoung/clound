@@ -1,5 +1,9 @@
 import { Module } from "vuex";
 import { TableConfigType, TABLECONFIG } from "@store/table.type";
+import { TableServer } from "@server/table";
+import { ResType } from "server";
+import { AxiosResponse } from "axios";
+import { ResetType } from "@views/usermanage/dialogbox/reset.pwd";
 
 
 
@@ -85,6 +89,9 @@ export const TableConfigStore: Module<TableConfigType, any> = {
         [TABLECONFIG.TOTAL]: (state: TableConfigType, payload) => {
             state[payload.moduleName].total = payload.total;
         },
+        [TABLECONFIG.TABLEALL]: (state: TableConfigType, payload) => {
+            state[payload.moduleName] = payload.all;
+        },
     },
     actions: {
         [TABLECONFIG.CHANGECOLUMNS]: ({ state, commit, rootState }, payload) => {
@@ -98,6 +105,13 @@ export const TableConfigStore: Module<TableConfigType, any> = {
         },
         [TABLECONFIG.TOTAL]: ({ state, commit, rootState }, payload) => {
             commit(TABLECONFIG.TOTAL, { moduleName: payload.moduleName, total: payload.total });
+        },
+        [TABLECONFIG.TABLEALL]: ({ state, commit, rootState }, payload) => {
+            TableServer.getConfig().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                res.data.status;
+            });
+            commit(TABLECONFIG.TABLEALL, { moduleName: payload.moduleName, all: payload.all });
         },
     },
     getters: {

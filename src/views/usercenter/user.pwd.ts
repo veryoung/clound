@@ -9,6 +9,7 @@ import { UserCenterType, UserMessageType } from "@store/user.center.type";
 import { FormRuleType, FromValidator } from "@utils/index";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
+import { AxiosResponse } from "axios";
 
 
 
@@ -71,7 +72,8 @@ export class UserPwd extends Vue {
         let temp: any = this.$refs[formName];
         temp.validate((valid: boolean) => {
             if (valid) {
-                UserServer.changePwd(this.form).then((res: ResType & any) => {
+                UserServer.changePwd(this.form).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
                             ElementUI.Message.success(res.message);

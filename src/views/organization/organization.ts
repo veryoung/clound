@@ -12,6 +12,7 @@ import { vm, ORGANIZATIONEVENT, FormRuleType } from "@utils/index";
 import { OrganizationTreeType, Organization, MessageType, ORGANIZATION } from "@store/organization.type";
 import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
+import { AxiosResponse } from "axios";
 
 
 
@@ -77,7 +78,8 @@ export class OrganizationComponent extends Vue {
 
     delNode(opt: any) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
-            OrganizationServer.delOrganization(opt.id).then((res: ResType & any) => {
+            OrganizationServer.delOrganization(opt.id).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
                         ElementUI.Message({
@@ -108,7 +110,8 @@ export class OrganizationComponent extends Vue {
         let temp: any = this.$refs[form];
         temp.validate((valid: any) => {
             if (valid) {
-                OrganizationServer.editOrganizationInfo((<any>Object).assign({}, this.form)).then((res: ResType & any) => {
+                OrganizationServer.editOrganizationInfo((<any>Object).assign({}, this.form)).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
                             ElementUI.Message.success(res.message);

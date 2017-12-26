@@ -107,7 +107,8 @@ export class UserOperation extends Vue {
         } else {
             this.form = this.personInfo.init;
         }
-        UserServer.getUserRole().then((res: ResType & any) => {
+        UserServer.getUserRole().then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     this.roles = res.data;
@@ -136,7 +137,8 @@ export class UserOperation extends Vue {
         let temp: any = this.$refs[formBasic];
         temp.validate((valid: any) => {
             if (valid) {
-                UserServer.addUser(this.form).then((res: ResType & any) => {
+                UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
                             ElementUI.Message({

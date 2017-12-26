@@ -5,6 +5,7 @@ import { ResType } from "@server/index";
 import { session, vm, USERMANAGEEVENT } from "@utils/index";
 import { Store } from "@store/store";
 import { TABLECONFIG } from "@store/table.type";
+import { AxiosResponse } from "axios";
 
 
 export const UserCenterStore: Module<UserStoreType, any> = {
@@ -88,23 +89,27 @@ export const UserCenterStore: Module<UserStoreType, any> = {
     },
     actions: {
         [USER.ADDUSERMESSAGE]: ({ state, commit, rootState }, payload) => {
-            UserServer.getPersonInfo(payload.uid).then((res: ResType & any) => {
+            UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 commit(USER.ADDUSERMESSAGE, { uid: payload.uid, message: res.data });
             });
         },
         [USER.DEFAULTUSER]: ({ state, commit, rootState }, payload) => {
-            UserServer.getPersonInfo(payload.uid).then((res: ResType & any) => {
+            UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 commit(USER.DEFAULTUSER, { uid: payload.uid, message: res.data });
             });
         },
         [USER.GETOTHERUSER]: ({ state, commit, rootState }, payload) => {
-            UserServer.getPersonInfo(payload.uid).then((res: ResType & any) => {
+            UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
                 vm.$emit(USERMANAGEEVENT.GETUSER);
             });
         },
         [USER.GETUSERLIST]: ({ state, commit, rootState }, payload) => {
-            UserServer.getUserList(payload).then((res: ResType & any) => {
+            UserServer.getUserList(payload).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
                         commit(USER.GETUSERLIST, { ori_id: payload.ori_id, page: payload.page, message: res.data });

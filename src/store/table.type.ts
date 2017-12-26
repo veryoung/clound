@@ -62,4 +62,5 @@ export enum TABLECONFIG {
     CHANGEPAGE = "changepage",
     CHANGEPAGESIZE = "changepagesize",
     TOTAL = "total",
+    TABLEALL = "tableall"
 }

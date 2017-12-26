@@ -8,6 +8,7 @@ import { userCenterRouter } from "@router/user.center";
 import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
 import { UserCenterType, USER } from "@store/user.center.type";
+import { AxiosResponse } from "axios";
 
 
 require("./user.menu.styl");
@@ -23,7 +24,8 @@ export class UserMenu extends Vue {
     public personInfo: UserCenterType;
     // lifecircle hook
     created() {
-        GeneralServer.oneself().then((res: ResType & any) => {
+        GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     this.$store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });

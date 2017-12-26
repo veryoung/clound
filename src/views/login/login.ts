@@ -5,6 +5,7 @@ import ElementUI from "element-ui";
 
 import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
+import { AxiosResponse } from "axios";
 
 
 
@@ -26,7 +27,8 @@ export class Login extends Vue {
 
     // init methods
     onSubmit() {
-        GeneralServer.login(this.form).then((res: ResType & any) => {
+        GeneralServer.login(this.form).then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     this.$router.push("/home");

@@ -55,7 +55,7 @@ axios.interceptors.request.use(function (config) {
 
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response: AxiosResponse<ResType> & AxiosResponse<any>) {
+axios.interceptors.response.use((response): AxiosResponse<ResType> => {
     let res: ResType = response.data;
     // Do something with response data
     switch (res.status) {
@@ -69,7 +69,7 @@ axios.interceptors.response.use(function (response: AxiosResponse<ResType> & Axi
             entryRouter.replace("/login");
             break;
     }
-    return response.data;
+    return response;
 }, function (error: any) {
     // Do something with response error
     return Promise.reject(error);

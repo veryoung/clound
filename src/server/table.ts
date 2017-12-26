@@ -8,7 +8,7 @@ export class Table extends Restful {
     }
 
 
-    public getColumns() {
+    public getConfig() {
         return this.get({
             url: "/api/v20/account/user/list/config/",
             params: {}

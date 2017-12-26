@@ -4,6 +4,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import ElementUI from "element-ui";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
+import { AxiosResponse } from "axios";
 
 
 require("./reset.pwd.styl");
@@ -55,7 +56,8 @@ export class ResetPwd extends Vue {
         let temp: any = this.$refs[formName];
         temp.validate((valid: any) => {
             if (valid) {
-                UserServer.resetPwd({ uid: this.uid + "", pwd: this.form.pwd }).then((res: ResType & any) => {
+                UserServer.resetPwd({ uid: this.uid + "", pwd: this.form.pwd }).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
                             ElementUI.Message({

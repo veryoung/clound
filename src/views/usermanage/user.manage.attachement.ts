@@ -2,6 +2,7 @@ import { UserListType, UserServer } from "@server/user";
 import { ResType } from "server";
 import ElementUI from "element-ui";
 import { UserListColumnType } from "@store/user.center.type";
+import { AxiosResponse } from "axios";
 
 
 
@@ -43,7 +44,8 @@ export const filterData: SearchType = {
 
 export class UserManager {
     public exportUser(ids: number[]) {
-        UserServer.exportUser(ids).then((res: ResType & any) => {
+        UserServer.exportUser(ids).then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     ElementUI.Message({
@@ -58,7 +60,8 @@ export class UserManager {
     }
 
     exportAll() {
-        UserServer.exportUser([]).then((res: ResType & any) => {
+        UserServer.exportUser([]).then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     ElementUI.Message({
@@ -74,7 +77,8 @@ export class UserManager {
 
     handleDel(row: UserListColumnType) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
-            UserServer.delUser(row.uid).then((res: ResType & any) => {
+            UserServer.delUser(row.uid).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
                         ElementUI.Message({
