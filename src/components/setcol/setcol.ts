@@ -39,14 +39,17 @@ export class SetCol extends Vue {
     // initial data
     // lifecircle hook
     created() {
-        this.columns = (<any>Object).assign({}, this.tableConfig[this.moduleName].columns);
+        this.$store.dispatch(TABLECONFIG.TABLEALL, { moduleName: this.moduleName });
+        vm.$on(TABLECONFIG.TABLEALL, () => {
+            this.columns = (<any>Object).assign({}, this.tableConfig[this.moduleName].columns);
+        });
         this.unwatch = vm.$watch(() => {
             return this.columns;
         }, (val, oldval) => {
             Store.dispatch(TABLECONFIG.CHANGECOLUMNS, { moduleName: this.moduleName, columns: val });
         }, {
-                deep: true
-            });
+            deep: true
+        });
     }
     beforeDestroy() {
         TableServer.setConfig(this.tableConfig[this.moduleName]);

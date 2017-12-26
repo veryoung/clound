@@ -2,8 +2,9 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
 
-import { TableConfigType, ColumnType, Config } from "@store/table.type";
+import { TableConfigType, ColumnType, Config, TABLECONFIG } from "@store/table.type";
 import { TableServer } from "@server/table";
+import { vm } from "@utils/event";
 
 require("./table.styl");
 @Component({
@@ -27,11 +28,15 @@ export class CloudTable extends Vue {
     // init props
     public datas: Array<any>;
     // init data
-    public obj: Config;
+    public obj: Config | "" = "";
 
     // lifecircle hook
     created() {
-        this.obj = this.tableConfig[this.moduleName];
+        // this.obj = this.tableConfig[this.moduleName];
+        this.$store.dispatch(TABLECONFIG.TABLEALL, { moduleName: this.moduleName });
+        vm.$on(TABLECONFIG.TABLEALL, () => {
+            this.obj = this.tableConfig[this.moduleName];
+        });
     }
 
     beforeDestroy() {

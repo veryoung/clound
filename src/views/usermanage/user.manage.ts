@@ -55,7 +55,6 @@ export class UserManagement extends Vue {
         });
         vm.$on(USERMANAGEEVENT.GETUSERLIST, (id: string) => {
             this.tableData = this.userlist[id].data[this.tableConfig.usertable.page - 1];
-            console.log(this.tableData, this.userlist[id], this.tableConfig.usertable);
         });
     }
 

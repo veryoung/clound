@@ -4,6 +4,7 @@ import { TableServer } from "@server/table";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { ResetType } from "@views/usermanage/dialogbox/reset.pwd";
+import { vm } from "@utils/event";
 
 
 
@@ -109,9 +110,16 @@ export const TableConfigStore: Module<TableConfigType, any> = {
         [TABLECONFIG.TABLEALL]: ({ state, commit, rootState }, payload) => {
             TableServer.getConfig().then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
-                res.data.status;
+                switch (res.status) {
+                    case "suc":
+                        commit(TABLECONFIG.TABLEALL, { moduleName: payload.moduleName, all: res.data });
+                        vm.$emit(TABLECONFIG.TABLEALL);
+                        break;
+                    default:
+                        break;
+                }
             });
-            commit(TABLECONFIG.TABLEALL, { moduleName: payload.moduleName, all: payload.all });
+
         },
     },
     getters: {
