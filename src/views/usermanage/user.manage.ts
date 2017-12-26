@@ -16,6 +16,7 @@ import SearchType, { filterData, UserManagerController } from "./user.manage.att
 import { OrganizationTreeType } from "@store/organization.type";
 import { Config, TableConfigType } from "@store/table.type";
 import { filterPipe } from "@utils/filters";
+import { EventBus, CONSTANT } from "@utils/event";
 
 
 
@@ -41,25 +42,26 @@ export class UserManagement extends Vue {
     public titles: string[] = ["企业详情"];
     public dialogVisible: boolean = false;
     public dialogVisiblePwd: boolean = false;
-    public uid: number = 0;
-    public ids: number[] = [];
+    public uid: string = "0";
+    public ids: string[] = [];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public tableData: UserListColumnType[] = new Array<UserListColumnType>();
     // public tableDefault: = 
     // lifecircle hook 
     created() {
+        let that = this;
         this.clickNode({
             id: "",
             name: "全部组织机构",
             nodes: []
         });
-        vm.$on(USERMANAGEEVENT.GETUSERLIST, (id: string) => {
-            this.tableData = this.userlist[id].data[this.tableConfig.usertable.page - 1];
+        EventBus.register(new Date().getTime() + "", CONSTANT.USERLISTMESSAGE, function (event: string, info: any) {
+            that.tableData = that.userlist[info.id].data[that.tableConfig.usertable.page - 1];
         });
     }
 
     destroyed() {
-        vm.$off(USERMANAGEEVENT.GETUSERLIST);
+        EventBus.unRegister(CONSTANT.USERLISTMESSAGE);
     }
 
 
@@ -117,11 +119,11 @@ export class UserManagement extends Vue {
         if (this.ids.length === 0) {
             return false;
         }
-        UserManagerController.exportUser(this.ids);
+        UserManagerController.exportUser(this.ids, this.filter);
     }
 
     exportAll() {
-        UserManagerController.exportAll();
+        UserManagerController.exportAll(this.filter);
     }
 
     search() {

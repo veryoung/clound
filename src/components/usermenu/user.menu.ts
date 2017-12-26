@@ -35,4 +35,17 @@ export class UserMenu extends Vue {
             }
         });
     }
+
+    logout() {
+        GeneralServer.logout().then((response) => {
+            let res: ResType = response.data;
+            switch (res.status) {
+                case "suc":
+                    this.$router.push("/login");
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
 }

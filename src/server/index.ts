@@ -28,7 +28,7 @@ export class Restful {
 
     protected put(opt: GetType) {
         const { url, params } = opt;
-        return axios.post(`${url}`, params);
+        return axios.put(`${url}`, params);
     }
 
 

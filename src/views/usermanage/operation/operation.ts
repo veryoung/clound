@@ -13,6 +13,7 @@ import { TissueTree } from "@components/tissuetree/tree";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
+import { vm, EventBus, CONSTANT } from "@utils/event";
 
 
 interface RoleType {
@@ -46,32 +47,29 @@ export class UserOperation extends Vue {
 
     // init computed
     public personInfo: UserCenterType;
-    public form: UserMessageType;
 
-    /**
-     * {
-        uid: string;
-        user_name: string;
-        pwd?: string;
-        role?: string;
-        role_id?: string;
-        cperson: string;
-        ctime: string;
-        state: string;
-        company: string;
-        phone: string;
-        email: string;
-        remark: string;
-        used_domain_num: string;
-        max_domain_num: string;
-        waf_enable: string;
-        ads_enable: string;
-        mirror_enable: string;
-        cdn_enable: string;
-        expiry_date: string;
-    }
-     */
     // init data
+    public form: UserMessageType = {
+        uid: "0",
+        user_name: "",
+        pwd: "",
+        role: "",
+        role_id: "",
+        cperson: "",
+        ctime: "",
+        state: "",
+        company: "",
+        phone: "",
+        email: "",
+        remark: "",
+        used_domain_num: "",
+        max_domain_num: "",
+        waf_enable: "1",
+        ads_enable: "1",
+        mirror_enable: "1",
+        cdn_enable: "1",
+        expiry_date: "",
+    };
     public roles: Array<RoleType> = new Array<RoleType>();
     public rules: FormRuleType = {
         user_name: [
@@ -101,12 +99,17 @@ export class UserOperation extends Vue {
 
     // init lifecircle hook
     created() {
+        let that = this;
         let id = this.$route.params.id;
         if (id) {
-            this.form = this.personInfo[id];
+            this.$store.dispatch(USER.GETOTHERUSER, { uid: id, operation: this.operation });
         } else {
             this.form = this.personInfo.init;
         }
+        EventBus.register(new Date().getTime() + "", CONSTANT.USERMESSAGE, function (event: string, info: any) {
+            that.form = that.personInfo[id];
+        });
+
         UserServer.getUserRole().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             switch (res.status) {
@@ -117,6 +120,10 @@ export class UserOperation extends Vue {
                     break;
             }
         });
+    }
+
+    destroyed() {
+        EventBus.unRegister(CONSTANT.USERMESSAGE);
     }
 
 
@@ -135,21 +142,43 @@ export class UserOperation extends Vue {
     // 'formbasic','formserver'
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
+        this.form.role_id = this.form.role;
         temp.validate((valid: any) => {
             if (valid) {
-                UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
-                    let res: ResType = response.data;
-                    switch (res.status) {
-                        case "suc":
-                            ElementUI.Message({
-                                message: "添加用户成功",
-                                type: "success"
-                            });
-                            break;
-                        default:
-                            break;
-                    }
-                });
+                switch (this.operation) {
+                    case "add":
+                        UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
+                            let res: ResType = response.data;
+                            switch (res.status) {
+                                case "suc":
+                                    ElementUI.Message({
+                                        message: "添加用户成功",
+                                        type: "success"
+                                    });
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                        break;
+                    case "editor":
+                        UserServer.editUser(this.form).then((response: AxiosResponse<ResType>) => {
+                            let res: ResType = response.data;
+                            switch (res.status) {
+                                case "suc":
+                                    ElementUI.Message({
+                                        message: "编辑用户成功",
+                                        type: "success"
+                                    });
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                    default:
+                        break;
+                }
+
             } else {
                 ElementUI.Message({
                     message: "表单格式不正确",

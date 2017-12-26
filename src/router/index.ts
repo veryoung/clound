@@ -10,6 +10,8 @@ import { SiderComponent } from "@components/layout/sider/sider";
 import { ViewContainer } from "@views/container/container";
 import { userCenterRouter } from "@router/user.center";
 import { Login } from "@views/login/login";
+import { Route } from "vue-router/types/router";
+import { session } from "@utils/sessionstorage";
 
 
 Vue.use(Router);
@@ -17,17 +19,16 @@ Vue.use(Router);
 export const entry: RouteConfig[] = [
     {
         path: "/",
-        redirect: "/home",
         meta: {
             hidden: true
-        }
+        },
     },
     {
         path: "/login",
         meta: {
             hidden: true
         },
-        component: Login
+        component: Login,
     },
     {
         path: "/home",

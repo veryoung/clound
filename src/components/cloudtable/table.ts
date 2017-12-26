@@ -4,7 +4,7 @@ import { mapGetters } from "vuex";
 
 import { TableConfigType, ColumnType, Config, TABLECONFIG } from "@store/table.type";
 import { TableServer } from "@server/table";
-import { vm } from "@utils/event";
+import { EventBus, CONSTANT } from "@utils/event";
 
 require("./table.styl");
 @Component({
@@ -34,12 +34,14 @@ export class CloudTable extends Vue {
     created() {
         // this.obj = this.tableConfig[this.moduleName];
         this.$store.dispatch(TABLECONFIG.TABLEALL, { moduleName: this.moduleName });
-        vm.$on(TABLECONFIG.TABLEALL, () => {
-            this.obj = this.tableConfig[this.moduleName];
+        let that = this;
+        EventBus.register(new Date().getTime() + "", CONSTANT.TABLEALL, (event: string, info: any) => {
+            that.obj = that.tableConfig[that.moduleName];
         });
     }
 
     beforeDestroy() {
+        EventBus.unRegister(CONSTANT.TABLEALL);
         TableServer.setConfig(this.tableConfig[this.moduleName]);
     }
 

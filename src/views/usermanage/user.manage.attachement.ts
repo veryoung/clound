@@ -43,8 +43,8 @@ export const filterData: SearchType = {
 };
 
 export class UserManager {
-    public exportUser(ids: number[]) {
-        UserServer.exportUser(ids).then((response: AxiosResponse<ResType>) => {
+    public exportUser(ids: string[], opt: SearchType) {
+        UserServer.exportUser(ids, opt).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
@@ -59,8 +59,8 @@ export class UserManager {
         });
     }
 
-    exportAll() {
-        UserServer.exportUser([]).then((response: AxiosResponse<ResType>) => {
+    exportAll(opt: SearchType) {
+        UserServer.exportUser([], opt).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":

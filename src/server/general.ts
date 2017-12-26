@@ -19,6 +19,13 @@ export class General extends Restful {
         });
     }
 
+    public logout() {
+        return this.post({
+            url: "/api/v20/account/logout",
+            params: {}
+        });
+    }
+
     public oneself() {
         return this.get({
             url: "api/v20/account/info",

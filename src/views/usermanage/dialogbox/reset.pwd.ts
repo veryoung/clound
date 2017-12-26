@@ -14,13 +14,13 @@ require("./reset.pwd.styl");
     props: {
         dialogVisible: Boolean,
         uid: {
-            type: Number
+            type: String
         }
     }
 })
 export class ResetPwd extends Vue {
     // init props
-    public uid: number;
+    public uid: string;
     // init data
     public form: ResetType = {
         pwd1: "",
@@ -36,17 +36,17 @@ export class ResetPwd extends Vue {
      */
     public rules: FormRuleType = {
         pwd: [
-            { required: true, message: "密码不能为空" },
-            { validator: FromValidator.pwd, message: "密码不符合规则" }
+            { required: true, message: "密码不能为空", trigger: "blur" },
+            { validator: FromValidator.pwd, message: "密码不符合规则", trigger: "blur" }
         ],
         pwd1: [
-            { required: true, message: "密码不能为空" },
-            { validator: this.npwdAgain }
+            { required: true, message: "密码不能为空", trigger: "blur" },
+            { validator: this.npwdAgain, message: "两次密码不一致", trigger: "blur" }
         ]
     };
     // init methods
     npwdAgain(rule: FormRuleType, value: string, callback: Function) {
-        if (value !== this.form.pwd1) {
+        if (value !== this.form.pwd) {
             callback(new Error("两次输入密码不一致"));
         } else {
             callback();
@@ -70,7 +70,7 @@ export class ResetPwd extends Vue {
                     }
                 });
             } else {
-                console.log("error submit!!");
+                this.$message.error("表单验证不成功");
                 return false;
             }
         });

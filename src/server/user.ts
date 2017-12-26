@@ -1,5 +1,6 @@
 import { axios, Restful } from "@server/index";
 import { UserMessageType } from "@store/user.center.type";
+import SearchType from "@views/usermanage/user.manage.attachement";
 
 
 export class User extends Restful {
@@ -7,7 +8,16 @@ export class User extends Restful {
         super();
     }
 
-    importUser() {
+
+    public editUser(opt: UserMessageType) {
+        return this.put({
+            url: "/api/v20/account/user/info/",
+            params: opt
+        });
+    }
+
+
+    public importUser() {
         return this.post({
             url: "/api/v20/account/user/excel/",
             params: { uid: "sdsd" }
@@ -23,10 +33,13 @@ export class User extends Restful {
         });
     }
 
-    public exportUser(ids: Array<number>) {
-        return this.get({
-            url: "/api/v20/account/user/excel/",
-            params: ids
+    public exportUser(ids: Array<string>, opt: SearchType) {
+        return this.post({
+            url: "/api/v20/account/user/excel_out/",
+            params: {
+                ids: ids,
+                search: opt
+            }
         });
     }
 
@@ -62,6 +75,15 @@ export class User extends Restful {
     public getPersonInfo(uid: string) {
         return this.get({
             url: "/api/v20/account/user/display/",
+            params: {
+                uid: uid
+            }
+        });
+    }
+
+    public getPersonEdit(uid: string) {
+        return this.get({
+            url: "/api/v20/account/user/info/",
             params: {
                 uid: uid
             }

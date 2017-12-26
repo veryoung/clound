@@ -6,7 +6,7 @@ import { mapGetters } from "vuex";
 import { ColumnType, TableConfigType, TABLECONFIG } from "@store/table.type";
 import { TableServer } from "@server/table";
 import { Store } from "@store/store";
-import { vm } from "@utils/event";
+import { vm, EventBus, CONSTANT } from "@utils/event";
 
 require("./setcol.styl");
 @Component({
@@ -39,9 +39,10 @@ export class SetCol extends Vue {
     // initial data
     // lifecircle hook
     created() {
+        let that = this;
         this.$store.dispatch(TABLECONFIG.TABLEALL, { moduleName: this.moduleName });
-        vm.$on(TABLECONFIG.TABLEALL, () => {
-            this.columns = (<any>Object).assign({}, this.tableConfig[this.moduleName].columns);
+        EventBus.register(new Date().getTime() + "", CONSTANT.TABLEALL, (event: string, info: any) => {
+            that.columns = (<any>Object).assign({}, that.tableConfig[that.moduleName].columns);
         });
         this.unwatch = vm.$watch(() => {
             return this.columns;
@@ -52,6 +53,7 @@ export class SetCol extends Vue {
         });
     }
     beforeDestroy() {
+        EventBus.unRegister(CONSTANT.TABLEALL);
         TableServer.setConfig(this.tableConfig[this.moduleName]);
         this.unwatch();
     }

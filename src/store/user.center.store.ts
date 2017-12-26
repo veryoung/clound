@@ -6,12 +6,13 @@ import { session, vm, USERMANAGEEVENT } from "@utils/index";
 import { Store } from "@store/store";
 import { TABLECONFIG } from "@store/table.type";
 import { AxiosResponse } from "axios";
+import { EventBus, CONSTANT } from "@utils/event";
 
 
 export const UserCenterStore: Module<UserStoreType, any> = {
     state: (): UserStoreType => {
         let message: UserMessageType = {
-            uid: 0,
+            uid: "0",
             user_name: "",
             pwd: "",
             role: "",
@@ -64,17 +65,18 @@ export const UserCenterStore: Module<UserStoreType, any> = {
 
     mutations: {
         [USER.ADDUSERMESSAGE]: (state: UserStoreType, payload) => {
-            if (!(payload.uid in state)) {
-                state.personInfo[payload.uid] = payload.message;
-            }
+            state.personInfo[payload.uid] = payload.message;
         },
         [USER.DEFAULTUSER]: (state: UserStoreType, payload) => {
             state.personInfo["default"] = payload.message;
             session.setItem("personInfo", state.personInfo);
         },
         [USER.GETOTHERUSER]: (state: UserStoreType, payload) => {
-            state.personInfo[payload.uid] = payload.message;
-            // session.setItem("personInfo", state.personInfo);
+            if (state.personInfo[payload.uid]) {
+                state.personInfo[payload.uid] = (<any>Object).assign({}, state.personInfo[payload.uid], payload.message);
+            } else {
+                state.personInfo[payload.uid] = (<any>Object).assign({}, payload.message);
+            }
         },
         [USER.GETUSERLIST]: (state: UserStoreType, payload) => {
             if (!state.userlist[payload.ori_id]) {
@@ -101,11 +103,22 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             });
         },
         [USER.GETOTHERUSER]: ({ state, commit, rootState }, payload) => {
-            UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
-                vm.$emit(USERMANAGEEVENT.GETUSER);
-            });
+            if (payload.uid in state.personInfo) {
+                EventBus.doNotify(CONSTANT.USERMESSAGE);
+            }
+            if (payload.operation && payload.operation === "editor") {
+                UserServer.getPersonEdit(payload.uid).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
+                    EventBus.doNotify(CONSTANT.USERMESSAGE);
+                });
+            } else {
+                UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
+                    EventBus.doNotify(CONSTANT.USERMESSAGE);
+                });
+            }
         },
         [USER.GETUSERLIST]: ({ state, commit, rootState }, payload) => {
             UserServer.getUserList(payload).then((response: AxiosResponse<ResType>) => {
@@ -114,7 +127,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                     case "suc":
                         commit(USER.GETUSERLIST, { ori_id: payload.ori_id, page: payload.page, message: res.data });
                         Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "usertable", total: res.data.total });
-                        vm.$emit(USERMANAGEEVENT.GETUSERLIST, payload.ori_id);
+                        EventBus.doNotify(CONSTANT.USERLISTMESSAGE, { id: payload.ori_id });
                         break;
                     default:
                         break;

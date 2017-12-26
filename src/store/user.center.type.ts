@@ -18,7 +18,7 @@ user_name	用户名	string	@mock=name
 waf_enable	允许WEB应用防火墙权限	string	@mock=waf_enable
  */
 export interface UserMessageType {
-    uid: number;
+    uid: string;
     user_name: string;
     pwd?: string;
     role?: string;

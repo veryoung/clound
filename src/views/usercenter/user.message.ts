@@ -5,7 +5,7 @@ import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER } from "@store/user.center.type";
-import { USERMANAGEEVENT, vm } from "@utils/event";
+import { USERMANAGEEVENT, vm, EventBus, CONSTANT } from "@utils/event";
 
 
 require("./user.message.styl");
@@ -24,7 +24,7 @@ require("./user.message.styl");
 export class UserMessage extends Vue {
     // init data
     public userMessage: UserMessageType = {
-        uid: 0,
+        uid: "0",
         user_name: "",
         pwd: "",
         role: "",
@@ -49,18 +49,19 @@ export class UserMessage extends Vue {
 
     // lifecircle hook
     created() {
+        let that = this;
         let id = this.$route.params.id;
         if (id) {
             this.$store.dispatch(USER.GETOTHERUSER, { uid: id });
         } else {
             this.userMessage = this.personInfo.default;
         }
-        vm.$on(USERMANAGEEVENT.GETUSER, () => {
-            this.userMessage = this.personInfo[id];
+        EventBus.register(new Date().getTime() + "", CONSTANT.USERMESSAGE, function (event: string, info: any) {
+            that.userMessage = that.personInfo[id];
         });
     }
 
     beforeDestroy() {
-        vm.$off(USERMANAGEEVENT.GETUSER);
+        EventBus.unRegister(CONSTANT.USERMESSAGE);
     }
 }

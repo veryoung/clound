@@ -6,6 +6,7 @@ import { OrganizationServer } from "@server/organization";
 import { treeAttchment } from "@components/tissuetree/tree.attachment";
 import { vm, ORGANIZATIONEVENT } from "@utils/index";
 import { AxiosResponse } from "axios";
+import { EventBus, CONSTANT } from "@utils/event";
 
 
 
@@ -64,13 +65,12 @@ export const OrganizationStore: Module<OrganizationType, any> = {
         },
         [ORGANIZATION.ADDORGANIZATIONMESSAGE]: ({ state, commit, rootState }, payload) => {
             if (payload.id in state.message) {
-                vm.$emit(ORGANIZATIONEVENT.GETORGANIZATION, payload.id);
-                return false;
+                EventBus.doNotify(CONSTANT.ADDORGANIZATIONMESSAGE, { id: payload.id });
             }
             OrganizationServer.getOrganizationInfo(payload.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 commit(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: payload.id, data: res.data });
-                vm.$emit(ORGANIZATIONEVENT.GETORGANIZATION, payload.id);
+                EventBus.doNotify(CONSTANT.ADDORGANIZATIONMESSAGE, { id: payload.id, message: state.message });
             });
         },
     },

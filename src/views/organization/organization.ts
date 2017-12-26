@@ -13,6 +13,7 @@ import { OrganizationTreeType, Organization, MessageType, ORGANIZATION } from "@
 import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
+import { EventBus, CONSTANT } from "@utils/event";
 
 
 
@@ -62,12 +63,13 @@ export class OrganizationComponent extends Vue {
 
     // lifecycle hook
     created() {
-        vm.$on(ORGANIZATIONEVENT.GETORGANIZATION, (id: string) => {
-            this.form = this.OrganizationMessage[id];
+        let that = this;
+        EventBus.register(new Date().getTime() + "", CONSTANT.ADDORGANIZATIONMESSAGE, function (event: string, info: any) {
+            that.form = that.OrganizationMessage[info.id];
         });
     }
     destroyed() {
-        vm.$off(ORGANIZATIONEVENT.GETORGANIZATION);
+        EventBus.unRegister(CONSTANT.ADDORGANIZATIONMESSAGE);
     }
 
     // init methods

@@ -4,7 +4,7 @@ import { TableServer } from "@server/table";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { ResetType } from "@views/usermanage/dialogbox/reset.pwd";
-import { vm } from "@utils/event";
+import { vm, EventBus, CONSTANT } from "@utils/event";
 
 
 
@@ -91,6 +91,9 @@ export const TableConfigStore: Module<TableConfigType, any> = {
             state[payload.moduleName].total = payload.total;
         },
         [TABLECONFIG.TABLEALL]: (state: TableConfigType, payload) => {
+            if (payload.all === "") {
+                return false;
+            }
             state[payload.moduleName] = payload.all;
         },
     },
@@ -113,7 +116,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                 switch (res.status) {
                     case "suc":
                         commit(TABLECONFIG.TABLEALL, { moduleName: payload.moduleName, all: res.data });
-                        vm.$emit(TABLECONFIG.TABLEALL);
+                        EventBus.doNotify(CONSTANT.TABLEALL);
                         break;
                     default:
                         break;
