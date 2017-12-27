@@ -1,6 +1,8 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { RouteConfig } from "vue-router";
+import { Route } from "vue-router/types/router";
+import { vm } from "@utils/event";
 
 
 
@@ -24,6 +26,37 @@ export class LeftMenu extends Vue {
     public IsCollapse: boolean = false;
     public width: number = 200;
     public flex: string = "0deg";
+    public defaultIndex: string | undefined = this.menus[0].name;
+    public unwatch: any = "";
+
+    created() {
+        // this.defaultIndex = this.menus[0].name;
+        let that = this;
+        this.unwatch = vm.$watch(() => {
+            return this.defaultIndex;
+        }, (to, from) => {
+            console.warn("watch", to, from);
+        }, {
+                deep: true
+            });
+        this.unwatch = vm.$watch(() => {
+            return this.$route;
+        }, (to, from) => {
+            that.defaultIndex = to.name;
+        }, {
+                deep: true
+            });
+    }
+
+    updated() {
+        // this.defaultIndex = this.$route.name;
+        // console.log(this.$route.name);
+    }
+
+    destroyed() {
+        console.log("destroyed");
+        this.unwatch();
+    }
 
     // init method
     toggleMenu() {

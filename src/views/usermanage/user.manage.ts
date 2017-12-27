@@ -71,6 +71,9 @@ export class UserManagement extends Vue {
             () => {
                 return this.filter;
             }, (val, oldval) => {
+                if (JSON.stringify(val) === JSON.stringify(oldval)) {
+                    return false;
+                }
                 console.log(val);
                 let temp: any = val;
                 this.serialize = "&";
@@ -95,9 +98,8 @@ export class UserManagement extends Vue {
     // init method
     mergeData(opt: Config) {
         const { page_size, page } = opt;
-        console.log(opt);
-        this.filter.expiry_date = filterPipe.date(this.filter.expiry_date);
-        this.filter.ctime = filterPipe.date(this.filter.ctime);
+        // this.filter.expiry_date = filterPipe.date(this.filter.expiry_date);
+        // this.filter.ctime = filterPipe.date(this.filter.ctime);
         return (<any>Object).assign({}, this.filter, {
             page: page,
             page_size: page_size
@@ -136,6 +138,7 @@ export class UserManagement extends Vue {
         this.dialogVisible = false;
     }
     clickNode(opt: OrganizationTreeType) {
+        this.filter = (<any>Object).assign({}, filterData);
         this.titles.splice(1, 1, opt.name);
         this.$store.dispatch(USER.GETUSERLIST, {
             ori_id: opt.id,
@@ -146,6 +149,7 @@ export class UserManagement extends Vue {
 
     search() {
         this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
+        console.log(this.filter);
     }
 
     reset() {

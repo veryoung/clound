@@ -1,21 +1,28 @@
 <div class="left-menu-panel">
     <div class="list-menu">
-        <el-menu class="left-menu" @open="handleOpen" @close="handleClose" :collapse="IsCollapse">
+        <el-menu 
+            active-text-color="#ffffff" 
+            :default-active="defaultIndex" 
+            :unique-opened="true"
+            class="left-menu" 
+            @open="handleOpen" 
+            @close="handleClose" 
+            :collapse="IsCollapse">
             <template v-for="(menu,$index) in menus">
-                <el-submenu v-show="menu.children" :index="menu.path">
+                <el-submenu v-show="menu.children" :index="menu.name">
                     <template slot="title">
                         <i class="iconfont" :class="menu.meta.icon"></i>
                         <span slot="title">{{menu.name}}</span>
                     </template>
 
                     <template v-for="(menu,$index) in menu.children">
-                        <el-menu-item :index="menu.path" @click="go(menu)">
+                        <el-menu-item :index="menu.name" @click="go(menu)">
                             <i class="iconfont" :class="menu.meta.icon"></i>
                             <span slot="title">{{menu.name}}</span>
                         </el-menu-item>
                     </template>
                 </el-submenu>
-                <el-menu-item v-if="menu.meta&&!menu.meta.hidden" v-show="!menu.children" :index="menu.path" @click="go(menu)">
+                <el-menu-item v-if="menu.meta&&!menu.meta.hidden" v-show="!menu.children" :index="menu.name" @click="go(menu)" :style="{'background':defaultIndex === menu.name}">
                     <i class="iconfont" :class="menu.meta.icon"></i>
                     <span slot="title">{{menu.name}}</span>
                 </el-menu-item>
