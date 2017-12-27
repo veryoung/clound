@@ -106,6 +106,9 @@ export class OrganizationComponent extends Vue {
     }
 
     clickNode(data: OrganizationTreeType) {
+        if (data.id === "") {
+            return false;
+        }
         this.$store.dispatch(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: data.id });
     }
 
