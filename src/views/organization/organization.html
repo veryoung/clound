@@ -1,8 +1,8 @@
 <div class="organization">
-    <TipBox :dialogVisible="dialogVisible" @close="close" :pid="pid"/>
+    <TipBox :dialogVisible="dialogVisible" @close="close" :pid="pid" />
     <div class="select-part">
         <ModuleTitle :titles="['组织机构列表']" />
-        <TissueTree :editor="true" @addNode="addNode" @clickNode="clickNode" @delNode="delNode"/>
+        <TissueTree :editor="true" @addNode="addNode" @clickNode="clickNode" @delNode="delNode" />
     </div>
     <div class="form-part">
         <ModuleTitle :titles="['企业详情']" />
@@ -18,7 +18,7 @@
             </el-form-item>
 
             <el-form-item v-if="!create">
-                <el-button size="small" @click="()=>create=true">编辑</el-button>
+                <el-button size="small" @click="()=>create=true" v-if="form.id!==''">编辑</el-button>
             </el-form-item>
             <el-form-item v-if="create">
                 <el-button size="small" type="primary" @click="onSubmit('form')">确定</el-button>

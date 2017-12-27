@@ -15,26 +15,12 @@ require("./user.menu.styl");
 @Component({
     name: "usermenu",
     template: require("./user.menu.html"),
-    computed: {
-    }
 })
 export class UserMenu extends Vue {
     public Routers: Array<RouteConfig> = userCenterRouter;
     // init computed
     public personInfo: UserCenterType;
     // lifecircle hook
-    created() {
-        GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
-            let res: ResType = response.data;
-            switch (res.status) {
-                case "suc":
-                    this.$store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
 
     logout() {
         GeneralServer.logout().then((response) => {

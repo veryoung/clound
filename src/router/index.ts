@@ -12,6 +12,11 @@ import { userCenterRouter } from "@router/user.center";
 import { Login } from "@views/login/login";
 import { Route } from "vue-router/types/router";
 import { session } from "@utils/sessionstorage";
+import { GeneralServer } from "@server/general";
+import { AxiosResponse } from "axios";
+import { ResType } from "server";
+import { USER } from "@store/user.center.type";
+import { Store } from "@store/store";
 
 
 Vue.use(Router);
@@ -19,9 +24,23 @@ Vue.use(Router);
 export const entry: RouteConfig[] = [
     {
         path: "/",
+        // redirect: "/login",
         meta: {
             hidden: true
         },
+        beforeEnter(to: Route, from: Route, next: Function) {
+            GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        next("/home");
+                        Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
     },
     {
         path: "/login",
