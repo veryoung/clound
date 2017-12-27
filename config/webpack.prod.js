@@ -106,27 +106,12 @@ module.exports = function (env) {
             extractStylus,
             extractCss,
             moduleCss,
-            // new CopyWebpackPlugin([{
-            //         from: './src/assets/ip.svg',
-            //         to: './src/assets/ip.svg'
-            //     },
-            //     {
-            //         from: './src/assets/domain.svg',
-            //         to: './src/assets/domain.svg'
-            //     },
-            //     {
-            //         from: './src/assets/sample.svg',
-            //         to: './src/assets/sample.svg'
-            //     },
-            //     {
-            //         from: './src/assets/whoisemail.svg',
-            //         to: './src/assets/whoisemail.svg'
-            //     },
-            //     {
-            //         from: './src/assets/whoisname.svg',
-            //         to: './src/assets/whoisname.svg'
-            //     },
-            // ]),
+            new CopyWebpackPlugin([
+                {
+                    from: path.resolve(__dirname, '../users_template_opc.xls'),
+                    to: './download/users_template_opc.xls'
+                },
+            ]),
             new webpack.optimize.UglifyJsPlugin({
                 sourceMap: false,
                 compress: {

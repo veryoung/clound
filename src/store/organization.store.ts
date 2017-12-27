@@ -38,7 +38,6 @@ export const OrganizationStore: Module<OrganizationType, any> = {
     mutations: {
         [ORGANIZATION.ADDORGANIZATION]: (state: OrganizationType, payload) => {
             console.log(state);
-            // treeAttchment.addNode
         },
         [ORGANIZATION.INITORGANIZATIONTREE]: (state: OrganizationType, payload) => {
             state.tree[0].nodes = payload.data;
@@ -73,6 +72,8 @@ export const OrganizationStore: Module<OrganizationType, any> = {
                 EventBus.doNotify(CONSTANT.ADDORGANIZATIONMESSAGE, { id: payload.id, message: state.message });
             });
         },
+        // [ORGANIZATION.SAVEORGANIZATION]: ({ state, commit, rootState }, payload) => {
+        // }
     },
     getters: {
         OrganizationTree: function (state) {

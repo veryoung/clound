@@ -116,7 +116,10 @@ export class OrganizationComponent extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            ElementUI.Message.success(res.message);
+                            ElementUI.Message({
+                                message: res.message,
+                                type: "success"
+                            });
                             this.create = false;
                             break;
                         default:

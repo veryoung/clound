@@ -2,6 +2,7 @@ export enum ORGANIZATION {
     ADDORGANIZATION = "addOrganization",
     INITORGANIZATIONTREE = "initOrganizationtree",
     ADDORGANIZATIONMESSAGE = "addOrganizationMessage",
+    SAVEORGANIZATION = "保存组织机构",
 }
 
 
