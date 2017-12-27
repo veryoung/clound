@@ -76,7 +76,11 @@ export class UserPwd extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            ElementUI.Message.success(res.message);
+                            ElementUI.Message({
+                                message: res.message || "修改密码成功",
+                                type: "success"
+                            });
+                            this.resetForm(formName);
                             break;
                         default:
                             break;
