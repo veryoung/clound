@@ -11,7 +11,7 @@ export class Tree {
     public filterText: string = "";
     public defaultProps: any = {
         children: "nodes",
-        label: "name"
+        label: "tree_label"
     };
     constructor() {
         Store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
@@ -46,7 +46,7 @@ export class Tree {
                     case OPERATION.ADD:
                         unit.nodes.push({
                             id: new Date().getTime() + "",
-                            name: "test",
+                            tree_label: "test",
                             nodes: []
                         });
                         break;
@@ -54,7 +54,7 @@ export class Tree {
                         item.splice($index, 1);
                         break;
                     case OPERATION.EDIT:
-                        unit.name = new Date().getTime() + "";
+                        unit.tree_label = new Date().getTime() + "";
                         break;
                 }
                 return;

@@ -134,7 +134,7 @@ export class UserOperation extends Vue {
 
     // init methods
     importNode(node: OrganizationTreeType) {
-        this.form.company = node.name;
+        this.form.company = node.tree_label;
         this.dialogVisible = false;
     }
     addOrganization() {

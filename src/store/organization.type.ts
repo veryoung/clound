@@ -8,7 +8,7 @@ export enum ORGANIZATION {
 
 export interface OrganizationTreeType {
     id: string;
-    name: string;
+    tree_label: string;
     nodes: Array<OrganizationTreeType>;
 }
 

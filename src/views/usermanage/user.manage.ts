@@ -62,7 +62,7 @@ export class UserManagement extends Vue {
         let id1 = EventBus.register(CONSTANT.TABLEALL, (event: string, info: any) => {
             that.clickNode({
                 id: "",
-                name: "全部组织机构",
+                tree_label: "全部组织机构",
                 nodes: []
             });
         });
@@ -158,7 +158,7 @@ export class UserManagement extends Vue {
     clickNode(opt: OrganizationTreeType) {
         this.ori_id = opt.id;
         this.filter = (<any>Object).assign({}, filterData);
-        this.titles.splice(1, 1, opt.name);
+        this.titles.splice(1, 1, opt.tree_label);
         this.$store.dispatch(USER.GETUSERLIST, {
             ori_id: opt.id,
             page: 1,

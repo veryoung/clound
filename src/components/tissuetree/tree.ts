@@ -60,7 +60,7 @@ export class TissueTree extends Vue {
 
     filterNode(value: any, data: any) {
         if (!value) return true;
-        return data.name.indexOf(value) !== -1;
+        return data.tree_label.indexOf(value) !== -1;
     }
 
     clickNode(key: OrganizationTreeType) {

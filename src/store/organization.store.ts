@@ -16,7 +16,7 @@ export const OrganizationStore: Module<OrganizationType, any> = {
         let organization: Array<OrganizationTreeType> = [
             {
                 id: "",
-                name: "全部组织机构",
+                tree_label: "全部组织机构",
                 nodes: []
             }
         ];
