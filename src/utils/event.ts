@@ -26,7 +26,11 @@ interface ListenerType {
 }
 
 
-export const CONSTANT = {
+interface ConstantType {
+    [extra: string]: string;
+}
+
+export const CONSTANT: ConstantType = {
     USERMESSAGE: "获取用户信息",
     USERLISTMESSAGE: "获取用户列表",
     TABLEALL: "获取用户列表所有配置",
@@ -39,19 +43,21 @@ export const CONSTANT = {
  */
 export class Event {
     public listeners: ListenerType[] = new Array<ListenerType>();
-    public constant: any = "";
+    public constant: ConstantType = { init: "init" };
 
-    constructor(constant: any) {
+    constructor(constant: ConstantType) {
         this.constant = constant;
     }
 
-    public register(listener: string, event: string, fn: Function) {
+    public register(event: string, fn: Function): string {
+        let listener: string = new Date().getTime() + "WJT";
         if (this.isConstantExist(event)) {
             this.listeners.push({ listener: listener, event: event, fn: fn });
         } else {
             // 事件未定义
             console.error("register event is not exist:" + event);
         }
+        return listener;
     }
 
     unRegister(listener: string) {

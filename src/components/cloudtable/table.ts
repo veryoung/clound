@@ -5,7 +5,10 @@ import { mapGetters } from "vuex";
 import { TableConfigType, ColumnType, Config, TABLECONFIG } from "@store/table.type";
 import { TableServer } from "@server/table";
 import { EventBus, CONSTANT } from "@utils/event";
+import { Auxiliary } from "@utils/auxiliary";
 
+
+const Aux = new Auxiliary<string>();
 require("./table.styl");
 @Component({
     name: "cloudtable",
@@ -34,13 +37,16 @@ export class CloudTable extends Vue {
     created() {
         this.$store.dispatch(TABLECONFIG.TABLEALL, { moduleName: this.moduleName });
         let that = this;
-        EventBus.register(new Date().getTime() + "", CONSTANT.TABLEALL, (event: string, info: any) => {
+        let id = EventBus.register(CONSTANT.TABLEALL, (event: string, info: any) => {
             that.obj = that.tableConfig[that.moduleName];
         });
+        Aux.insertId(id);
     }
 
     beforeDestroy() {
-        EventBus.unRegister(CONSTANT.TABLEALL);
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
         TableServer.setConfig(this.tableConfig[this.moduleName]);
     }
 

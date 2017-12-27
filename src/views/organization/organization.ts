@@ -14,9 +14,10 @@ import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
+import { Auxiliary } from "@utils/auxiliary";
 
 
-
+const Aux = new Auxiliary<string>();
 require("./organization.styl");
 @Component({
     name: "organization",
@@ -64,12 +65,16 @@ export class OrganizationComponent extends Vue {
     // lifecycle hook
     created() {
         let that = this;
-        EventBus.register(new Date().getTime() + "", CONSTANT.ADDORGANIZATIONMESSAGE, function (event: string, info: any) {
+        let id = EventBus.register(CONSTANT.ADDORGANIZATIONMESSAGE, function (event: string, info: any) {
             that.form = that.OrganizationMessage[info.id];
         });
+        Aux.insertId(id);
     }
     destroyed() {
-        EventBus.unRegister(CONSTANT.ADDORGANIZATIONMESSAGE);
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
+
     }
 
     // init methods

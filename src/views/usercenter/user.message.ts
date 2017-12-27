@@ -6,8 +6,9 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER } from "@store/user.center.type";
 import { USERMANAGEEVENT, vm, EventBus, CONSTANT } from "@utils/event";
+import { Auxiliary } from "@utils/auxiliary";
 
-
+const Aux = new Auxiliary<string>();
 require("./user.message.styl");
 @Component({
     name: "usermessage",
@@ -56,12 +57,15 @@ export class UserMessage extends Vue {
         } else {
             this.userMessage = this.personInfo.default;
         }
-        EventBus.register(new Date().getTime() + "", CONSTANT.USERMESSAGE, function (event: string, info: any) {
+        let eventId = EventBus.register(CONSTANT.USERMESSAGE, function (event: string, info: any) {
             that.userMessage = that.personInfo[id];
         });
+        Aux.insertId(eventId);
     }
 
     beforeDestroy() {
-        EventBus.unRegister(CONSTANT.USERMESSAGE);
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
     }
 }

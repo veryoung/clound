@@ -17,9 +17,10 @@ import { OrganizationTreeType } from "@store/organization.type";
 import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
 import { filterPipe } from "@utils/filters";
 import { EventBus, CONSTANT } from "@utils/event";
+import { Auxiliary } from "@utils/auxiliary";
 
 
-
+const Aux = new Auxiliary<string>();
 require("./user.manage.styl");
 @Component({
     name: "usermanagement",
@@ -53,17 +54,19 @@ export class UserManagement extends Vue {
     // lifecircle hook 
     created() {
         let that = this;
-        EventBus.register(new Date().getTime() + "", CONSTANT.TABLEALL, (event: string, info: any) => {
+        let id1 = EventBus.register(CONSTANT.TABLEALL, (event: string, info: any) => {
             that.clickNode({
                 id: "",
                 name: "全部组织机构",
                 nodes: []
             });
         });
-        EventBus.register(new Date().getTime() + "", CONSTANT.USERLISTMESSAGE, function (event: string, info: any) {
+        let id2 = EventBus.register(CONSTANT.USERLISTMESSAGE, function (event: string, info: any) {
             that.tableData = that.userlist[info.id].data[that.tableConfig.usertable.page - 1];
         });
 
+        Aux.insertId(id1);
+        Aux.insertId(id2);
         this.unwatch = vm.$watch(
             () => {
                 return this.filter;
@@ -82,7 +85,9 @@ export class UserManagement extends Vue {
     }
 
     destroyed() {
-        EventBus.unRegister(CONSTANT.USERLISTMESSAGE);
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
         this.unwatch();
     }
 

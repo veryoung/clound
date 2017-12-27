@@ -14,8 +14,9 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { vm, EventBus, CONSTANT } from "@utils/event";
+import { Auxiliary } from "@utils/auxiliary";
 
-
+const Aux = new Auxiliary<string>();
 interface RoleType {
     name: string;
     role_id: number;
@@ -106,9 +107,10 @@ export class UserOperation extends Vue {
         } else {
             this.form = this.personInfo.init;
         }
-        EventBus.register(new Date().getTime() + "", CONSTANT.USERMESSAGE, function (event: string, info: any) {
+        let eventId = EventBus.register(CONSTANT.USERMESSAGE, function (event: string, info: any) {
             that.form = that.personInfo[id];
         });
+        Aux.insertId(eventId);
 
         UserServer.getUserRole().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
@@ -123,7 +125,9 @@ export class UserOperation extends Vue {
     }
 
     destroyed() {
-        EventBus.unRegister(CONSTANT.USERMESSAGE);
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
     }
 
 
