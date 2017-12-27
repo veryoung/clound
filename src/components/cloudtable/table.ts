@@ -32,7 +32,6 @@ export class CloudTable extends Vue {
 
     // lifecircle hook
     created() {
-        // this.obj = this.tableConfig[this.moduleName];
         this.$store.dispatch(TABLECONFIG.TABLEALL, { moduleName: this.moduleName });
         let that = this;
         EventBus.register(new Date().getTime() + "", CONSTANT.TABLEALL, (event: string, info: any) => {

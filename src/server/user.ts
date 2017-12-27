@@ -33,16 +33,6 @@ export class User extends Restful {
         });
     }
 
-    public exportUser(ids: Array<string>, opt: SearchType) {
-        return this.post({
-            url: "/api/v20/account/user/excel_out/",
-            params: {
-                ids: ids,
-                search: opt
-            }
-        });
-    }
-
     public resetPwd(opts: RestPwdType) {
         return this.put({
             url: "/api/v20/account/pwd/reset/",

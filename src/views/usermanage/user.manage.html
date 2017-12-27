@@ -49,13 +49,13 @@
                     <span class="iconfont">&#xe61b;</span>
                     导入
                 </el-button>
-                <el-button type="primary" @click="exportUser" size="small">
+                <el-button type="primary" size="small">
                     <span class="iconfont">&#xe61e;</span>
-                    导出
+                    <a :href="exportLink" target="_blank">导出</a>
                 </el-button>
-                <el-button type="primary" @click="exportAll" size="small">
+                <el-button type="primary" size="small">
                     <span class="iconfont">&#xe61e;</span>
-                    导出所有
+                    <a :href="exportLink" target="_blank">导出所有</a>
                 </el-button>
             </div>
             <div class="btn-last">

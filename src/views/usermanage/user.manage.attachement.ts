@@ -43,38 +43,6 @@ export const filterData: SearchType = {
 };
 
 export class UserManager {
-    public exportUser(ids: string[], opt: SearchType) {
-        UserServer.exportUser(ids, opt).then((response: AxiosResponse<ResType>) => {
-            let res: ResType = response.data;
-            switch (res.status) {
-                case "suc":
-                    ElementUI.Message({
-                        message: "导出成功",
-                        type: "success"
-                    });
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
-
-    exportAll(opt: SearchType) {
-        UserServer.exportUser([], opt).then((response: AxiosResponse<ResType>) => {
-            let res: ResType = response.data;
-            switch (res.status) {
-                case "suc":
-                    ElementUI.Message({
-                        message: "导出成功",
-                        type: "success"
-                    });
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
-
     handleDel(row: UserListColumnType) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
             UserServer.delUser(row.uid).then((response: AxiosResponse<ResType>) => {

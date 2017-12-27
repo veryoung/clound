@@ -132,7 +132,6 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                     default:
                         break;
                 }
-
             });
         }
     },

@@ -40,7 +40,6 @@ export class SetCol extends Vue {
     // lifecircle hook
     created() {
         let that = this;
-        this.$store.dispatch(TABLECONFIG.TABLEALL, { moduleName: this.moduleName });
         EventBus.register(new Date().getTime() + "", CONSTANT.TABLEALL, (event: string, info: any) => {
             that.columns = (<any>Object).assign({}, that.tableConfig[that.moduleName].columns);
         });

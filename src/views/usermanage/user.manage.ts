@@ -14,7 +14,7 @@ import { USER, UserCompanyListType, UserListColumnType, UserMessageType } from "
 import { vm, USERMANAGEEVENT } from "@utils/index";
 import SearchType, { filterData, UserManagerController } from "./user.manage.attachement";
 import { OrganizationTreeType } from "@store/organization.type";
-import { Config, TableConfigType } from "@store/table.type";
+import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
 import { filterPipe } from "@utils/filters";
 import { EventBus, CONSTANT } from "@utils/event";
 
@@ -46,28 +46,51 @@ export class UserManagement extends Vue {
     public ids: string[] = [];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public tableData: UserListColumnType[] = new Array<UserListColumnType>();
+    public unwatch: any = "";
+    public serialize: string = "&";
+    public exportLink: string = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
     // public tableDefault: = 
     // lifecircle hook 
     created() {
         let that = this;
-        this.clickNode({
-            id: "",
-            name: "全部组织机构",
-            nodes: []
+        EventBus.register(new Date().getTime() + "", CONSTANT.TABLEALL, (event: string, info: any) => {
+            that.clickNode({
+                id: "",
+                name: "全部组织机构",
+                nodes: []
+            });
         });
         EventBus.register(new Date().getTime() + "", CONSTANT.USERLISTMESSAGE, function (event: string, info: any) {
             that.tableData = that.userlist[info.id].data[that.tableConfig.usertable.page - 1];
         });
+
+        this.unwatch = vm.$watch(
+            () => {
+                return this.filter;
+            }, (val, oldval) => {
+                console.log(val);
+                let temp: any = val;
+                this.serialize = "&";
+                for (let $index in temp) {
+                    this.serialize += $index + "=" + temp[$index] + "&";
+                }
+                this.serialize = this.serialize.substring(0, this.serialize.length - 1);
+                this.exportLink = `/api/v20/account/user/excel/?ids=${this.ids}${this.serialize}`;
+            }, {
+                deep: true
+            });
     }
 
     destroyed() {
         EventBus.unRegister(CONSTANT.USERLISTMESSAGE);
+        this.unwatch();
     }
 
 
     // init method
     mergeData(opt: Config) {
         const { page_size, page } = opt;
+        console.log(opt);
         this.filter.expiry_date = filterPipe.date(this.filter.expiry_date);
         this.filter.ctime = filterPipe.date(this.filter.ctime);
         return (<any>Object).assign({}, this.filter, {
@@ -115,16 +138,6 @@ export class UserManagement extends Vue {
             page_size: this.tableConfig.usertable.page_size
         });
     }
-    exportUser() {
-        if (this.ids.length === 0) {
-            return false;
-        }
-        UserManagerController.exportUser(this.ids, this.filter);
-    }
-
-    exportAll() {
-        UserManagerController.exportAll(this.filter);
-    }
 
     search() {
         this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
@@ -138,12 +151,10 @@ export class UserManagement extends Vue {
     handleSizeChange(val: number) {
         this.tableConfig.usertable.page_size = val;
         this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
-        console.log(`每页 ${val} 条`);
     }
     handleCurrentChange(val: number) {
         this.tableConfig.usertable.page = val;
         this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
-        console.log(`当前页: ${val}`);
     }
 
     handleSelectionChange(options: UserMessageType[]) {
@@ -151,5 +162,6 @@ export class UserManagement extends Vue {
         options.map((item: UserMessageType, $index: number) => {
             this.ids.push(item.uid);
         });
+        this.exportLink = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
     }
 }
