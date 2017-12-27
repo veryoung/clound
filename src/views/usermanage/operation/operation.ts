@@ -43,13 +43,13 @@ require("./operation.styl");
 })
 export class UserOperation extends Vue {
     // init props
-    public dialogVisible: boolean = false;
     public operation: "add" | "editor";
 
     // init computed
     public personInfo: UserCenterType;
 
     // init data
+    public dialogVisible: boolean = false;
     public form: UserMessageType = {
         uid: "0",
         user_name: "",

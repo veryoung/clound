@@ -16,8 +16,9 @@ require("./add.organization.frame.styl");
     },
 })
 export class AddOrganizationFrame extends Vue {
+    // init props
+    public dialogVisible: boolean;
     // init data
-    public dialogVisible: Boolean = false;
     public selectNode: OrganizationTreeType | "" = "";
 
 

@@ -1,5 +1,5 @@
 <div class="user-manage">
-    <ImportUserFrame :dialogVisible="dialogVisible" @close="close" />
+    <ImportUserFrame v-if="dialogVisible" :dialogVisible="dialogVisible" @close="close" />
     <ResetPwd :dialogVisible="dialogVisiblePwd" @close="closePwd" :uid="uid" />
     <div class="select-part">
         <ModuleTitle :titles="['组织机构列表']" />

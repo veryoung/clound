@@ -1,5 +1,5 @@
 <div class="user-operation">
-    <AddOrganizationFrame :dialogVisible="dialogVisible" @close="close" @importNode="importNode" />
+    <AddOrganizationFrame v-if="dialogVisible" :dialogVisible="dialogVisible" @close="close" @importNode="importNode" />
     <div class="panel">
         <ModuleTitle :titles="['添加用户']" />
         <el-form :model="form" :rules="rules" ref="formbasic" label-width="100px" class="demo-form">

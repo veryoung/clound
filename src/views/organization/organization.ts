@@ -67,10 +67,8 @@ export class OrganizationComponent extends Vue {
         let that = this;
         let id = EventBus.register(CONSTANT.ADDORGANIZATIONMESSAGE, function (event: string, info: any) {
             that.form = that.OrganizationMessage[info.id];
-            console.log(that.form);
         });
         Aux.insertId(id);
-        console.log(that.form);
     }
     destroyed() {
         Aux.getIds().map((id, $index) => {
