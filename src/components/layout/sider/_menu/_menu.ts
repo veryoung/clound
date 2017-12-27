@@ -34,8 +34,7 @@ export class LeftMenu extends Vue {
         let that = this;
         this.unwatch = vm.$watch(() => {
             return this.defaultIndex;
-        }, (to, from) => {
-            console.warn("watch", to, from);
+        }, (to, from) => {          
         }, {
                 deep: true
             });

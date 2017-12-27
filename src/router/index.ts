@@ -33,8 +33,8 @@ export const entry: RouteConfig[] = [
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        next("/home");
                         Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
+                        next("/home");
                         break;
                     default:
                         break;

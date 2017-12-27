@@ -31,7 +31,7 @@ export class Login extends Vue {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
-                    this.$router.push("/home");
+                    this.$router.push("/");
                     break;
                 default:
                     break;

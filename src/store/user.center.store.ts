@@ -77,6 +77,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             } else {
                 state.personInfo[payload.uid] = (<any>Object).assign({}, payload.message);
             }
+            session.setItem("personInfo", state.personInfo);
         },
         [USER.GETUSERLIST]: (state: UserStoreType, payload) => {
             if (!state.userlist[payload.ori_id]) {
