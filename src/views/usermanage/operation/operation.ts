@@ -51,7 +51,7 @@ export class UserOperation extends Vue {
     // init data
     public dialogVisible: boolean = false;
     public form: UserMessageType = {
-        uid: "0",
+        uid: "",
         user_name: "",
         pwd: "",
         role: "",

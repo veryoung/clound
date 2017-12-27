@@ -30,7 +30,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             ads_enable: "1",
             mirror_enable: "1",
             cdn_enable: "1",
-            expiry_date: "2017/12/27",
+            expiry_date: "",
         };
         let personInfo: UserCenterType = {
             "init": message
