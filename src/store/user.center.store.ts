@@ -12,7 +12,7 @@ import { EventBus, CONSTANT } from "@utils/event";
 export const UserCenterStore: Module<UserStoreType, any> = {
     state: (): UserStoreType => {
         let message: UserMessageType = {
-            uid: "0",
+            uid: "",
             user_name: "",
             pwd: "",
             role: "",
@@ -30,7 +30,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             ads_enable: "1",
             mirror_enable: "1",
             cdn_enable: "1",
-            expiry_date: new Date() + "",
+            expiry_date: "2017/12/27",
         };
         let personInfo: UserCenterType = {
             "init": message

@@ -57,7 +57,8 @@
                 </div>
             </el-form-item>
             <el-form-item label="到期时间">
-                <el-input v-model="form.expiry_date" size="small"></el-input>
+                <el-date-picker value-format="yyyyMMDD" v-model="form.expiry_date" type="date" size="small" placeholder="选择到期时间">
+                </el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-button size="small" type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
