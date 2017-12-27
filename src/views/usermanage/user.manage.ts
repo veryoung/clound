@@ -10,7 +10,7 @@ import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { ResetPwd } from "@views/usermanage/dialogbox/reset.pwd";
 import { ImportUserFrame } from "@views/usermanage/dialogbox/import.user";
-import { USER, UserCompanyListType, UserListColumnType, UserMessageType } from "@store/user.center.type";
+import { USER, UserCompanyListType, UserListColumnType, UserMessageType, RoleType } from "@store/user.center.type";
 import { vm, USERMANAGEEVENT } from "@utils/index";
 import SearchType, { filterData, UserManagerController } from "./user.manage.attachement";
 import { OrganizationTreeType } from "@store/organization.type";
@@ -18,6 +18,9 @@ import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
 import { filterPipe } from "@utils/filters";
 import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { UserServer } from "@server/user";
+import { ResType } from "server";
+import { AxiosResponse } from "axios";
 
 
 const Aux = new Auxiliary<string>();
@@ -50,6 +53,8 @@ export class UserManagement extends Vue {
     public unwatch: any = "";
     public serialize: string = "&";
     public exportLink: string = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
+    public roles: Array<RoleType> = new Array<RoleType>();
+    public ori_id: string = "";
     // public tableDefault: = 
     // lifecircle hook 
     created() {
@@ -85,6 +90,18 @@ export class UserManagement extends Vue {
             }, {
                 deep: true
             });
+
+
+        UserServer.getUserRole().then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
+            switch (res.status) {
+                case "suc":
+                    this.roles = res.data;
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     destroyed() {
@@ -102,7 +119,8 @@ export class UserManagement extends Vue {
         // this.filter.ctime = filterPipe.date(this.filter.ctime);
         return (<any>Object).assign({}, this.filter, {
             page: page,
-            page_size: page_size
+            page_size: page_size,
+            ori_id: this.ori_id
         });
     }
 
@@ -138,6 +156,7 @@ export class UserManagement extends Vue {
         this.dialogVisible = false;
     }
     clickNode(opt: OrganizationTreeType) {
+        this.ori_id = opt.id;
         this.filter = (<any>Object).assign({}, filterData);
         this.titles.splice(1, 1, opt.name);
         this.$store.dispatch(USER.GETUSERLIST, {

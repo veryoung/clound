@@ -122,9 +122,10 @@ export class OrganizationComponent extends Vue {
                     switch (res.status) {
                         case "suc":
                             ElementUI.Message({
-                                message: res.message,
+                                message: res.message || "修改成功",
                                 type: "success"
                             });
+                            this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
                             this.create = false;
                             break;
                         default:

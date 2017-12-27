@@ -12,7 +12,9 @@
                 <el-input v-model="filter.name" placeholder="用户名" size="small"></el-input>
             </el-form-item>
             <el-form-item label="用户角色">
-                <el-input v-model="filter.role_id" placeholder="用户角色" size="small"></el-input>
+                <el-select v-model="filter.role_id" placeholder="用户角色" size="small">
+                    <el-option :key="role.role_id" v-for="role in roles" :label="role.name" :value="role.role_id"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="手机号码">
                 <el-input v-model="filter.phone" placeholder="手机号码" size="small"></el-input>
@@ -72,10 +74,10 @@
                     <i style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
                     <i style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
                     <i style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i> -->
-                    <i style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
-                    <i v-if="scope.row.is_edite==='1'" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
-                    <i style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
-                    <i v-if="scope.row.is_delete==='1'" style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
+                    <i title="查看用户详情" style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
+                    <i title="编辑用户详情" v-if="scope.row.is_edite==='1'" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
+                    <i title="重置密码" style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
+                    <i title="删除用户" v-if="scope.row.is_delete==='1'" style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
                 </template>
             </el-table-column>
         </CloudTable>
