@@ -17,6 +17,7 @@ import { AxiosResponse } from "axios";
 import { ResType } from "server";
 import { USER } from "@store/user.center.type";
 import { Store } from "@store/store";
+import { UserStatus } from "@utils/monitor";
 
 
 Vue.use(Router);
@@ -29,17 +30,7 @@ export const entry: RouteConfig[] = [
             hidden: true
         },
         beforeEnter(to: Route, from: Route, next: Function) {
-            GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                switch (res.status) {
-                    case "suc":
-                        Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
-                        next("/home");
-                        break;
-                    default:
-                        break;
-                }
-            });
+            new UserStatus(next);
         }
     },
     {
@@ -48,6 +39,9 @@ export const entry: RouteConfig[] = [
             hidden: true
         },
         component: Login,
+        beforeEnter(to: Route, from: Route, next: Function) {
+            new UserStatus(next);
+        }
     },
     {
         path: "/home",
