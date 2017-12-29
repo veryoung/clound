@@ -203,6 +203,23 @@ export class UserManagement extends Vue {
         this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
     }
 
+    sortChange(opt: any) {
+        if (opt.prop === "ctime") {
+            if (opt.order === "descending") {
+                this.filter.sort_ctime = "0";
+            } else {
+                this.filter.sort_ctime = "1";
+            }
+        } else if (opt.prop === "expiry_date") {
+            if (opt.order === "descending") {
+                this.filter.sort_expiry_date = "0";
+            } else {
+                this.filter.sort_expiry_date = "1";
+            }
+        }
+        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
+    }
+
     handleSelectionChange(options: UserMessageType[]) {
         this.ids = [];
         options.map((item: UserMessageType, $index: number) => {

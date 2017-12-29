@@ -101,6 +101,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 commit(USER.DEFAULTUSER, { uid: payload.uid, message: res.data });
+                EventBus.doNotify(CONSTANT.DEFAULTMESSAGE);
             });
         },
         [USER.GETOTHERUSER]: ({ state, commit, rootState }, payload) => {

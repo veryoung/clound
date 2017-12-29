@@ -69,8 +69,6 @@ export class TissueTree extends Vue {
 
     renderContent(h: Function, options: any) {
         const { node, data, store } = options;
-        console.log(node);
-        console.log(data);
         return (
             h("li", {
                 "class": {

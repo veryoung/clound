@@ -35,6 +35,7 @@ export const CONSTANT: ConstantType = {
     USERLISTMESSAGE: "获取用户列表",
     TABLEALL: "获取用户列表所有配置",
     ADDORGANIZATIONMESSAGE: "增加组织信息",
+    DEFAULTMESSAGE: "获取登录用户",
 };
 /**
  *Author wjt

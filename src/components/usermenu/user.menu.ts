@@ -9,6 +9,7 @@ import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
 import { UserCenterType, USER } from "@store/user.center.type";
 import { AxiosResponse } from "axios";
+import { EventBus, CONSTANT } from "@utils/event";
 
 
 require("./user.menu.styl");
@@ -25,11 +26,16 @@ export class UserMenu extends Vue {
     // init data
     public Routers: Array<RouteConfig> = userCenterRouter;
     public user_name: string = "";
+    public locolPerson: UserCenterType;
     // init computed
     public personInfo: UserCenterType;
     // lifecircle hook
     created() {
-        this.user_name = this.personInfo.default.user_name;
+        this.locolPerson = this.personInfo;
+        // let that = this;
+        // EventBus.register(CONSTANT.DEFAULTMESSAGE, function () {
+        //     that.user_name = that.personInfo.default.user_name;
+        // });
     }
     logout() {
         GeneralServer.logout().then((response) => {

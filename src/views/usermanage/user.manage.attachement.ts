@@ -27,8 +27,8 @@ export default interface SearchType {
     expiry_date: string;
     is_active: string;
     ori_id?: string;
-    sort_ctime?: boolean;
-    sort_expiry_date?: boolean;
+    sort_ctime?: string;
+    sort_expiry_date?: string;
 }
 
 export const filterData: SearchType = {
@@ -40,6 +40,8 @@ export const filterData: SearchType = {
     expiry_date: "",
     is_active: "",
     ori_id: "",
+    sort_ctime: "",
+    sort_expiry_date: ""
 };
 
 export class UserManager {

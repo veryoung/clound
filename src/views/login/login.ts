@@ -27,14 +27,13 @@ export class Login extends Vue {
     created() {
         GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
-            if (res.data.uid === "") {
-                return;
-            }
             switch (res.status) {
                 case "suc":
                     Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
                     this.$router.push("/home");
                     break;
+                case "red":
+                    return;
                 default:
                     break;
             }

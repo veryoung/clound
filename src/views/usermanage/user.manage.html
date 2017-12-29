@@ -65,7 +65,8 @@
             </div>
         </div>
         <CloudTable moduleName="usertable" :datas="tableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
-            @handleSelectionChange="handleSelectionChange">
+            @handleSelectionChange="handleSelectionChange"
+            @sortChange="sortChange">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
             </el-table-column>
             <el-table-column label="操作" align="center">
