@@ -12,8 +12,8 @@ module.exports = function (env) {
             noInfo: true,
             proxy: {
                 "/api/v20/": {
-                    // target: "http://10.10.200.232:8080",                    
-                    target: "http://10.4.5.221:8080",
+                    target: "http://10.10.200.232:8080",                    
+                    // target: "http://10.4.5.221:8080",
                     changeOrigin: true,
                     secure: false,
                     // port: 8080

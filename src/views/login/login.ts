@@ -6,6 +6,9 @@ import ElementUI from "element-ui";
 import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
+import { UserStatus } from "@utils/monitor";
+import { Store } from "@store/store";
+import { USER } from "@store/user.center.type";
 
 
 
@@ -20,6 +23,23 @@ export class Login extends Vue {
         pwd: ""
     };
 
+    // lifecircle hook
+    created() {
+        GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
+            if (res.data.uid === "") {
+                return;
+            }
+            switch (res.status) {
+                case "suc":
+                    Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
+                    this.$router.push("/home");
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
     // computed
     get style() {
         return style;
