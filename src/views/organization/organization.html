@@ -25,7 +25,7 @@
                 <el-button size="small" @click="()=>create=false">取消</el-button>
             </el-form-item> -->
             <el-form-item>
-                <el-button size="small" type="primary" @click="onSubmit('form')">确定</el-button>
+                <el-button v-if="create" size="small" type="primary" @click="onSubmit('form')">确定</el-button>
             </el-form-item>
         </el-form>
     </div>

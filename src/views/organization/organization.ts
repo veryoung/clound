@@ -15,6 +15,7 @@ import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { create } from "domain";
 
 
 const Aux = new Auxiliary<string>();
@@ -67,6 +68,7 @@ export class OrganizationComponent extends Vue {
         let that = this;
         let id = EventBus.register(CONSTANT.ADDORGANIZATIONMESSAGE, function (event: string, info: any) {
             that.form = that.OrganizationMessage[info.id];
+            that.create = info.id === "" ? false : true;
         });
         Aux.insertId(id);
     }
@@ -106,9 +108,6 @@ export class OrganizationComponent extends Vue {
     }
 
     clickNode(data: OrganizationTreeType) {
-        if (data.id === "") {
-            return false;
-        }
         this.$store.dispatch(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: data.id });
     }
 
@@ -129,7 +128,6 @@ export class OrganizationComponent extends Vue {
                                 type: "success"
                             });
                             this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
-                            this.create = false;
                             break;
                         default:
                             break;

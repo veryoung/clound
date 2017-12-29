@@ -63,6 +63,10 @@ export const OrganizationStore: Module<OrganizationType, any> = {
             });
         },
         [ORGANIZATION.ADDORGANIZATIONMESSAGE]: ({ state, commit, rootState }, payload) => {
+            if (payload.id === "") {
+                EventBus.doNotify(CONSTANT.ADDORGANIZATIONMESSAGE, { id: payload.id });
+                return;
+            }
             if (payload.id in state.message) {
                 EventBus.doNotify(CONSTANT.ADDORGANIZATIONMESSAGE, { id: payload.id });
             }
