@@ -95,6 +95,10 @@ export class UserOperation extends Vue {
         pwd: [
             { required: true, message: "密码不能为空", trigger: "blur" },
         ],
+        max_domain_num: [
+            { required: true, message: "网站总数不能为空", trigger: "blur" },
+            { type: "number", message: "年龄必须为数字值", trigger: "blur" }
+        ],
         expiry_date: [
             { required: true, message: "请填写到期日期", trigger: "blur" },
         ]
@@ -162,7 +166,7 @@ export class UserOperation extends Vue {
     close() {
         this.dialogVisible = false;
     }
-    // 'formbasic','formserver'
+    // "formbasic","formserver"
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
         let temp1: any = this.$refs[formServer];

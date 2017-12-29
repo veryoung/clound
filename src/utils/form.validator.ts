@@ -38,6 +38,7 @@ export interface SingleRule {
     validator?: Function;
     min?: number;
     max?: number;
+    type?: string;
 }
 export interface FormRuleType {
     [extra: string]: SingleRule[];
