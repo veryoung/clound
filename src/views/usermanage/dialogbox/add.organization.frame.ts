@@ -19,7 +19,11 @@ export class AddOrganizationFrame extends Vue {
     // init props
     public dialogVisible: boolean;
     // init data
-    public selectNode: OrganizationTreeType | "" = "";
+    public selectNode: OrganizationTreeType = {
+        id: "",
+        tree_label: "",
+        nodes: []
+    };
 
 
     // lifecycle hook
@@ -34,6 +38,13 @@ export class AddOrganizationFrame extends Vue {
         this.selectNode = opt;
     }
     importOrganization() {
+        if (this.selectNode.id === "") {
+            this.$message({
+                message: "不能选择全部组织机构",
+                type: "info"
+            });
+            return;
+        }
         this.$emit("importNode", this.selectNode);
     }
 

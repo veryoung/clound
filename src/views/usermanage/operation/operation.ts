@@ -60,6 +60,7 @@ export class UserOperation extends Vue {
         ctime: "",
         state: "",
         company_id: "",
+        company: "",
         phone: "",
         email: "",
         remark: "",
@@ -151,7 +152,8 @@ export class UserOperation extends Vue {
 
     // init methods
     importNode(node: OrganizationTreeType) {
-        this.form.company_id = node.tree_label;
+        this.form.company_id = node.id;
+        this.form.company = node.tree_label;
         this.dialogVisible = false;
     }
     addOrganization() {
