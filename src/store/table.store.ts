@@ -54,11 +54,13 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                     {
                         prop: "ctime",
                         label: "创建时间",
+                        type: "date",
                         show: true
                     },
                     {
                         prop: "expiry_date",
                         label: "到期时间",
+                        type: "date",
                         show: true
                     },
                     {

@@ -2,13 +2,13 @@ import Vue from "vue";
 import * as moment from "moment";
 
 
-export class DateFilter {
+export class NoneFilter {
     constructor() {
         Vue.filter(
-            "date",
+            "none",
             function (value: string) {
-                if (value === "") return value;
-                return moment(value).format("YYYY-MM-DD");
+                if (value === "" || value === null) return "----";
+                return value;
             }
         );
     }

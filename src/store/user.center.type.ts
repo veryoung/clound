@@ -27,6 +27,7 @@ export interface UserMessageType {
     ctime: string;
     state: string;
     company_id: string;
+    company?: string;
     phone: string;
     email: string;
     remark: string;

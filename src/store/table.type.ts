@@ -37,6 +37,8 @@ export interface ColumnType {
     show?: boolean;
     // 代表该列是必须显示的，不能被删除
     disable?: boolean;
+    // 类型，代表使用何种的类型
+    type?: string;
 }
 
 export interface PageConfig {

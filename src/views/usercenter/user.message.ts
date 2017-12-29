@@ -34,6 +34,7 @@ export class UserMessage extends Vue {
         ctime: "",
         state: "",
         company: "",
+        company_id: "",
         phone: "",
         email: "",
         remark: "",

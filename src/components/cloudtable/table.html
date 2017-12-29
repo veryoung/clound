@@ -15,7 +15,8 @@
                 header-align="center"
                 :key="$index">
                 <template slot-scope="scope">
-                    <span class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop]}}</span>     
+                    <span v-if="column.type==='date'" class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | date}}</span>     
+                    <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>
             </el-table-column>
             <slot></slot>

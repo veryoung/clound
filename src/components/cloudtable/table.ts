@@ -2,7 +2,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
 
-import { TableConfigType, ColumnType, Config, TABLECONFIG } from "@store/table.type";
+import { TableConfigType, Config, TABLECONFIG } from "@store/table.type";
 import { TableServer } from "@server/table";
 import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
