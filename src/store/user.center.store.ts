@@ -19,7 +19,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             role_id: "",
             cperson: "",
             ctime: "",
-            state: "",
+            is_active: "",
             company_id: "",
             phone: "",
             email: "",

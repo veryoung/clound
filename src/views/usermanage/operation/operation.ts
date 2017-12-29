@@ -58,7 +58,7 @@ export class UserOperation extends Vue {
         role_id: "",
         cperson: "",
         ctime: "",
-        state: "",
+        is_active: "",
         company_id: "",
         company: "",
         phone: "",
