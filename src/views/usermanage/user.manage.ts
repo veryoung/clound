@@ -43,7 +43,7 @@ export class UserManagement extends Vue {
     public userlist: UserCompanyListType;
     public tableConfig: TableConfigType;
     // init data
-    public titles: string[] = ["企业详情"];
+    public titles: string[] = ["用户列表"];
     public dialogVisible: boolean = false;
     public dialogVisiblePwd: boolean = false;
     public uid: string = "0";
