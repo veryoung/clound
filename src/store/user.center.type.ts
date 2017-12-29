@@ -32,10 +32,10 @@ export interface UserMessageType {
     remark: string;
     used_domain_num: string;
     max_domain_num: string;
-    waf_enable: string;
-    ads_enable: string;
-    mirror_enable: string;
-    cdn_enable: string;
+    waf_enable: string | boolean;
+    ads_enable: string | boolean;
+    mirror_enable: string | boolean;
+    cdn_enable: string | boolean;
     expiry_date: string;
 }
 

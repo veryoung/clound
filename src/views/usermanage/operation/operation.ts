@@ -96,7 +96,19 @@ export class UserOperation extends Vue {
         ]
     };
 
+    stringToBoolean() {
+        this.form.ads_enable = this.form.ads_enable === "1" ? true : false;
+        this.form.ads_enable = this.form.cdn_enable === "1" ? true : false;
+        this.form.ads_enable = this.form.waf_enable === "1" ? true : false;
+        this.form.ads_enable = this.form.mirror_enable === "1" ? true : false;
+    }
 
+    booleanToString() {
+        this.form.ads_enable = this.form.ads_enable === true ? "1" : "0";
+        this.form.ads_enable = this.form.cdn_enable === true ? "1" : "0";
+        this.form.ads_enable = this.form.waf_enable === true ? "1" : "0";
+        this.form.ads_enable = this.form.mirror_enable === true ? "1" : "0";
+    }
 
     // init lifecircle hook
     created() {
@@ -106,9 +118,11 @@ export class UserOperation extends Vue {
             this.$store.dispatch(USER.GETOTHERUSER, { uid: id, operation: this.operation });
         } else {
             this.form = (<any>Object).assign({}, this.personInfo.init);
+            this.stringToBoolean();
         }
         let eventId = EventBus.register(CONSTANT.USERMESSAGE, function (event: string, info: any) {
             that.form = (<any>Object).assign({}, that.personInfo[id]);
+            that.stringToBoolean();
         });
         Aux.insertId(eventId);
 
@@ -146,9 +160,11 @@ export class UserOperation extends Vue {
     // 'formbasic','formserver'
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
+        let temp1: any = this.$refs[formServer];
         this.form.role_id = this.form.role;
         temp.validate((valid: any) => {
             if (valid) {
+                this.booleanToString();
                 switch (this.operation) {
                     case "add":
                         UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
@@ -186,6 +202,9 @@ export class UserOperation extends Vue {
             } else {
                 return false;
             }
+        });
+        temp1.validate((valid: boolean) => {
+            console.log(valid);
         });
     }
 
