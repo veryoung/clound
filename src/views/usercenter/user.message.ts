@@ -32,7 +32,7 @@ export class UserMessage extends Vue {
         role_id: "",
         cperson: "",
         ctime: "",
-        state: "",
+        is_active: "",
         company: "",
         company_id: "",
         phone: "",

@@ -25,9 +25,9 @@ export interface UserMessageType {
     role_id?: string;
     cperson: string;
     ctime: string;
-    state: string;
     company_id: string;
     company?: string;
+    is_active?: string;
     phone: string;
     email: string;
     remark: string;

@@ -14,6 +14,7 @@ export class UserStatus {
                     next("/home");
                     break;
                 default:
+                    next("/login");
                     break;
             }
         });
