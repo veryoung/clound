@@ -21,7 +21,7 @@ const extractCss = new ExtractTextPlugin({
 });
 const moduleCss = new ExtractTextPlugin({
     allChunks: true,
-    filename: "css.[name].[contenthash].css",
+    filename: "module.[name].[contenthash].css",
     disable: process.env.NODE_ENV === "development"
 });
 
