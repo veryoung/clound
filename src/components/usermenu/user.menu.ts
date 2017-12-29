@@ -26,12 +26,10 @@ export class UserMenu extends Vue {
     // init data
     public Routers: Array<RouteConfig> = userCenterRouter;
     public user_name: string = "";
-    public locolPerson: UserCenterType;
     // init computed
     public personInfo: UserCenterType;
     // lifecircle hook
     created() {
-        this.locolPerson = this.personInfo;
         let that = this;
         EventBus.register(CONSTANT.DEFAULTMESSAGE, function () {
             that.user_name = that.personInfo.default.user_name;

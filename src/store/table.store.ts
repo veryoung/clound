@@ -97,8 +97,10 @@ export const TableConfigStore: Module<TableConfigType, any> = {
         [TABLECONFIG.TABLEALL]: (state: TableConfigType, payload) => {
             if (payload.all === "") {
                 return false;
+            } else {
+                state[payload.moduleName] = (<any>Object).assign({}, payload.all, state[payload.moduleName]);
             }
-            state[payload.moduleName] = payload.all;
+
         },
     },
     actions: {
