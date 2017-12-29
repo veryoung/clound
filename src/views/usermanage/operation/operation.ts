@@ -184,10 +184,6 @@ export class UserOperation extends Vue {
                 }
 
             } else {
-                ElementUI.Message({
-                    message: "表单格式不正确",
-                    type: "error"
-                });
                 return false;
             }
         });
