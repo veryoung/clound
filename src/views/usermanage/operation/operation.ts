@@ -105,10 +105,10 @@ export class UserOperation extends Vue {
         if (id) {
             this.$store.dispatch(USER.GETOTHERUSER, { uid: id, operation: this.operation });
         } else {
-            this.form = this.personInfo.init;
+            this.form = (<any>Object).assign({}, this.personInfo.init);
         }
         let eventId = EventBus.register(CONSTANT.USERMESSAGE, function (event: string, info: any) {
-            that.form = that.personInfo[id];
+            that.form = (<any>Object).assign({}, that.personInfo[id]);
         });
         Aux.insertId(eventId);
 
