@@ -39,9 +39,9 @@ export const entry: RouteConfig[] = [
             hidden: true
         },
         component: Login,
-        // beforeEnter(to: Route, from: Route, next: Function) {
-        //     new UserStatus(next);
-        // }
+        beforeEnter(to: Route, from: Route, next: Function) {
+            new UserStatus(next);
+        }
     },
     {
         path: "/home",
