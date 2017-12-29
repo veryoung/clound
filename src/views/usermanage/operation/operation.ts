@@ -59,7 +59,7 @@ export class UserOperation extends Vue {
         cperson: "",
         ctime: "",
         state: "",
-        company: "",
+        company_id: "",
         phone: "",
         email: "",
         remark: "",
@@ -76,6 +76,9 @@ export class UserOperation extends Vue {
         user_name: [
             { required: true, message: "真实姓名不能为空", trigger: "blur" },
             { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
+        ],
+        role: [
+            { required: true, message: "请添加用户角色", trigger: "blur" },
         ],
         phone: [
             { required: true, message: "手机号码不能为空", trigger: "blur" },
@@ -98,16 +101,16 @@ export class UserOperation extends Vue {
 
     stringToBoolean() {
         this.form.ads_enable = this.form.ads_enable === "1" ? true : false;
-        this.form.ads_enable = this.form.cdn_enable === "1" ? true : false;
-        this.form.ads_enable = this.form.waf_enable === "1" ? true : false;
-        this.form.ads_enable = this.form.mirror_enable === "1" ? true : false;
+        this.form.cdn_enable = this.form.cdn_enable === "1" ? true : false;
+        this.form.waf_enable = this.form.waf_enable === "1" ? true : false;
+        this.form.mirror_enable = this.form.mirror_enable === "1" ? true : false;
     }
 
     booleanToString() {
         this.form.ads_enable = this.form.ads_enable === true ? "1" : "0";
-        this.form.ads_enable = this.form.cdn_enable === true ? "1" : "0";
-        this.form.ads_enable = this.form.waf_enable === true ? "1" : "0";
-        this.form.ads_enable = this.form.mirror_enable === true ? "1" : "0";
+        this.form.cdn_enable = this.form.cdn_enable === true ? "1" : "0";
+        this.form.waf_enable = this.form.waf_enable === true ? "1" : "0";
+        this.form.mirror_enable = this.form.mirror_enable === true ? "1" : "0";
     }
 
     // init lifecircle hook
@@ -148,7 +151,7 @@ export class UserOperation extends Vue {
 
     // init methods
     importNode(node: OrganizationTreeType) {
-        this.form.company = node.tree_label;
+        this.form.company_id = node.tree_label;
         this.dialogVisible = false;
     }
     addOrganization() {

@@ -23,11 +23,11 @@
                 <el-input v-model="filter.email" placeholder="邮箱" ></el-input>
             </el-form-item>
             <el-form-item label="创建时间">
-                <el-date-picker value-format="yyyyMMDD" v-model="filter.ctime" type="date" placeholder="选择创建时间">
+                <el-date-picker :editable="false"  v-model="filter.ctime" type="date" placeholder="选择创建时间">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="到期时间">
-                <el-date-picker value-format="yyyyMMDD" v-model="filter.expiry_date" type="date"  placeholder="选择到期时间">
+                <el-date-picker :editable="false"  v-model="filter.expiry_date" type="date"  placeholder="选择到期时间">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="状态">

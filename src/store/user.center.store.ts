@@ -20,7 +20,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             cperson: "",
             ctime: "",
             state: "",
-            company: "",
+            company_id: "",
             phone: "",
             email: "",
             remark: "",
