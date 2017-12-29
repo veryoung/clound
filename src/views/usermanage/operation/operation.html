@@ -11,7 +11,7 @@
                     <el-option :key="role.role_id" v-for="role in roles" :label="role.name" :value="role.role_id"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="企业名称">
+            <el-form-item label="企业名称" prop="company">
                 <el-input :disabled="true" v-model="form.company"  style="width:230px;margin-right:10px"></el-input>
                 <el-button  @click="addOrganization">选择</el-button>
             </el-form-item>
