@@ -15,13 +15,22 @@ require("./user.menu.styl");
 @Component({
     name: "usermenu",
     template: require("./user.menu.html"),
+    computed: {
+        ...mapGetters([
+            "personInfo"
+        ])
+    }
 })
 export class UserMenu extends Vue {
+    // init data
     public Routers: Array<RouteConfig> = userCenterRouter;
+    public user_name: string = "";
     // init computed
     public personInfo: UserCenterType;
     // lifecircle hook
-
+    created() {
+        this.user_name = this.personInfo.default.user_name;
+    }
     logout() {
         GeneralServer.logout().then((response) => {
             let res: ResType = response.data;
