@@ -124,6 +124,24 @@ export class UserManagement extends Vue {
         });
     }
 
+    exportUser(type: string) {
+        let dom = document.createElement("a");
+        dom.href = `${this.exportLink}`;
+        dom.target = "_blank";
+        if (type === "all") {
+            dom.click();
+        } else {
+            if (this.ids.length === 0) {
+                this.$message({
+                    message: "请选择删除项",
+                    type: "info"
+                });
+            } else {
+                dom.click();
+            }
+        }
+    }
+
     handle(type: "look" | "add" | "editor" | "changepwd" | "del", rowObj?: any) {
         if (rowObj) {
             const { $index, row } = rowObj;
