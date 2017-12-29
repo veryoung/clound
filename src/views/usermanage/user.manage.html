@@ -1,6 +1,6 @@
 <div class="user-manage">
     <ImportUserFrame v-if="dialogVisible" :dialogVisible="dialogVisible" @close="close" />
-    <ResetPwd :dialogVisible="dialogVisiblePwd" @close="closePwd" :uid="uid" />
+    <ResetPwd v-if="dialogVisiblePwd" :dialogVisible="dialogVisiblePwd" @close="closePwd" :uid="uid" />
     <div class="select-part">
         <ModuleTitle :titles="['组织机构列表']" />
         <TissueTree :editor="false" @clickNode="clickNode" />
