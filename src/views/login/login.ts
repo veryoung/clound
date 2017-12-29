@@ -29,7 +29,6 @@ export class Login extends Vue {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
-                    Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
                     this.$router.push("/home");
                     break;
                 case "red":
