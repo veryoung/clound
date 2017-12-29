@@ -32,10 +32,10 @@ export class UserMenu extends Vue {
     // lifecircle hook
     created() {
         this.locolPerson = this.personInfo;
-        // let that = this;
-        // EventBus.register(CONSTANT.DEFAULTMESSAGE, function () {
-        //     that.user_name = that.personInfo.default.user_name;
-        // });
+        let that = this;
+        EventBus.register(CONSTANT.DEFAULTMESSAGE, function () {
+            that.user_name = that.personInfo.default.user_name;
+        });
     }
     logout() {
         GeneralServer.logout().then((response) => {

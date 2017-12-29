@@ -99,6 +99,7 @@ module.exports = function (env) {
             }),
             extractStylus,
             extractCss,
+            moduleCss,
             new CopyWebpackPlugin([
                 {
                     from: path.resolve(__dirname, '../users_template_opc.xls'),
