@@ -175,6 +175,7 @@ export class UserOperation extends Vue {
                                         message: "添加用户成功",
                                         type: "success"
                                     });
+                                    this.$router.push("/SystemManagement/UserManagement");
                                     break;
                                 default:
                                     break;
@@ -190,6 +191,7 @@ export class UserOperation extends Vue {
                                         message: "编辑用户成功",
                                         type: "success"
                                     });
+                                    this.$router.push("/SystemManagement/UserManagement");
                                     break;
                                 default:
                                     break;
