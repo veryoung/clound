@@ -47,6 +47,7 @@ export class UserOperation extends Vue {
     public roleList: RoleType[];
 
     // init data
+    public defaultTime: Date = new Date();
     public unwatch: Function = () => { };
     public roles: RoleType[] = new Array<RoleType>();
     public dialogVisible: boolean = false;
@@ -93,26 +94,13 @@ export class UserOperation extends Vue {
         ],
         max_domain_num: [
             { required: true, message: "网站总数不能为空", trigger: "blur" },
-            { type: "number", message: "年龄必须为数字值", trigger: "blur" }
+            { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
+            { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
         ],
         expiry_date: [
             { required: true, message: "请填写到期日期", trigger: "blur" },
         ],
     };
-
-    stringToBoolean() {
-        this.form.ads_enable = this.form.ads_enable === "1" ? true : false;
-        this.form.cdn_enable = this.form.cdn_enable === "1" ? true : false;
-        this.form.waf_enable = this.form.waf_enable === "1" ? true : false;
-        this.form.mirror_enable = this.form.mirror_enable === "1" ? true : false;
-    }
-
-    booleanToString() {
-        this.form.ads_enable = this.form.ads_enable === true ? "1" : "0";
-        this.form.cdn_enable = this.form.cdn_enable === true ? "1" : "0";
-        this.form.waf_enable = this.form.waf_enable === true ? "1" : "0";
-        this.form.mirror_enable = this.form.mirror_enable === true ? "1" : "0";
-    }
 
     // init lifecircle hook
     created() {
@@ -148,11 +136,6 @@ export class UserOperation extends Vue {
             }
         });
     }
-    /**
-     * , {
-                deep: true
-            }
-     */
 
     destroyed() {
         Aux.getIds().map((id, $index) => {
@@ -164,6 +147,26 @@ export class UserOperation extends Vue {
 
 
     // init methods
+    stringToBoolean() {
+        this.form.ads_enable = this.form.ads_enable === "1" ? true : false;
+        this.form.cdn_enable = this.form.cdn_enable === "1" ? true : false;
+        this.form.waf_enable = this.form.waf_enable === "1" ? true : false;
+        this.form.mirror_enable = this.form.mirror_enable === "1" ? true : false;
+    }
+
+    booleanToString() {
+        this.form.ads_enable = this.form.ads_enable === true ? "1" : "0";
+        this.form.cdn_enable = this.form.cdn_enable === true ? "1" : "0";
+        this.form.waf_enable = this.form.waf_enable === true ? "1" : "0";
+        this.form.mirror_enable = this.form.mirror_enable === true ? "1" : "0";
+    }
+    GE(rule: FormRuleType, value: string, callback: Function) {
+        if (parseInt(value) >= 0) {
+            callback();
+        } else {
+            callback(new Error("总数必须大于等于0"));
+        }
+    }
     importNode(node: OrganizationTreeType) {
         this.form.company_id = node.id;
         this.form.company = node.tree_label;

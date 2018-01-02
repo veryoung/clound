@@ -7,10 +7,13 @@ import { Store } from "@store/store";
 import { TABLECONFIG } from "@store/table.type";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
+import * as moment from "moment";
 
 
 export const UserCenterStore: Module<UserStoreType, any> = {
     state: (): UserStoreType => {
+        let now = new Date();
+        now.setFullYear(now.getFullYear() + 1);
         let roleList: RoleType[] = [{
             name: "",
             role_id: "",
@@ -35,7 +38,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             ads_enable: "1",
             mirror_enable: "1",
             cdn_enable: "1",
-            expiry_date: "",
+            expiry_date: moment(now).format("YYYYMMDD") + "",
         };
         let personInfo: UserCenterType = {
             "init": message
