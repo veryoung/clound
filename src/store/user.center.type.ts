@@ -1,3 +1,5 @@
+import { EventType } from "@store/store";
+
 /**
 
 ads_enable	是否CC攻击	string	@mock=ads_enable
@@ -76,15 +78,15 @@ export interface UserListColumnType {
     uid: string;
 }
 
-export enum USER {
-    ADDUSERMESSAGE = "addusermessage",
-    UPDATEMESSAGE = "updatemessage",
-    CHANGEPWD = "changepwd",
-    DEFAULTUSER = "defaultuser",
-    GETUSERLIST = "getuserlist",
-    GETOTHERUSER = "getotheruser",
-    GETUSERROLES = "获取该用户能看到的角色列表",
-}
+export const USER: EventType = {
+    ADDUSERMESSAGE: "新增用户信息",
+    // UPDATEMESSAGE: "更新用户信息",
+    // CHANGEPWD: "修改用户密码",
+    DEFAULTUSER: "登录系统的用户信息",
+    GETUSERLIST: "获取用户列表",
+    GETOTHERUSER: "获取其他用户详细信息",
+    GETUSERROLES: "获取该用户能看到的角色列表",
+};
 
 // sm = 系统管理员， om = 运营， am = 审计， em = 企业， nu = 普通
 export interface RoleType {

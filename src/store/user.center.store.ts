@@ -2,7 +2,7 @@ import { Module } from "vuex";
 import { UserCenterType, UserStoreType, UserMessageType, USER, UserListType, UserCompanyListType, RoleType } from "./user.center.type";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
-import { session, vm, USERMANAGEEVENT } from "@utils/index";
+import { session, vm } from "@utils/index";
 import { Store } from "@store/store";
 import { TABLECONFIG } from "@store/table.type";
 import { AxiosResponse } from "axios";
@@ -110,24 +110,24 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 commit(USER.DEFAULTUSER, { uid: payload.uid, message: res.data });
-                EventBus.doNotify(CONSTANT.DEFAULTMESSAGE);
+                EventBus.doNotify(CONSTANT.DEFAULTUSER);
             });
         },
         [USER.GETOTHERUSER]: ({ state, commit, rootState }, payload) => {
             if (payload.uid in state.personInfo) {
-                EventBus.doNotify(CONSTANT.USERMESSAGE);
+                EventBus.doNotify(CONSTANT.GETOTHERUSER);
             }
             if (payload.operation && payload.operation === "editor") {
                 UserServer.getPersonEdit(payload.uid).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
                     commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
-                    EventBus.doNotify(CONSTANT.USERMESSAGE);
+                    EventBus.doNotify(CONSTANT.GETOTHERUSER);
                 });
             } else {
                 UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
                     commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
-                    EventBus.doNotify(CONSTANT.USERMESSAGE);
+                    EventBus.doNotify(CONSTANT.GETOTHERUSER);
                 });
             }
         },
@@ -138,7 +138,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                     case "suc":
                         commit(USER.GETUSERLIST, { ori_id: payload.ori_id, page: payload.page, message: res.data });
                         Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "usertable", total: res.data.total });
-                        EventBus.doNotify(CONSTANT.USERLISTMESSAGE, { id: payload.ori_id });
+                        EventBus.doNotify(CONSTANT.GETUSERLIST, { id: payload.ori_id });
                         break;
                     default:
                         break;

@@ -1,4 +1,8 @@
 import Vue from "vue";
+import { EventType } from "@store/store";
+import { USER } from "@store/user.center.type";
+import { TABLECONFIG } from "@store/table.type";
+import { ORGANIZATION } from "@store/organization.type";
 
 export const vm = new Vue({
     filters: {
@@ -8,14 +12,6 @@ export const vm = new Vue({
     }
 });
 
-export enum ORGANIZATIONEVENT {
-    GETORGANIZATION = "getorganization"
-}
-
-export enum USERMANAGEEVENT {
-    GETUSERLIST = "getuserlist",
-    GETUSER = "getuser"
-}
 
 
 
@@ -25,19 +21,10 @@ interface ListenerType {
     fn: Function;
 }
 
-
-interface ConstantType {
-    [extra: string]: string;
-}
-
-export const CONSTANT: ConstantType = {
-    USERMESSAGE: "获取用户信息",
-    USERLISTMESSAGE: "获取用户列表",
-    TABLEALL: "获取用户列表所有配置",
-    ADDORGANIZATIONMESSAGE: "增加组织信息",
-    DEFAULTMESSAGE: "获取登录用户",
-    GETUSERROLES: "获取该用户能看到的角色列表",
-};
+export const CONSTANT: EventType = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION);
+// export const CONSTANT: EventType = {
+//     ADDORGANIZATIONMESSAGE: "增加组织信息",
+// };
 /**
  *Author wjt
  *Date 2017-12-26
@@ -45,9 +32,9 @@ export const CONSTANT: ConstantType = {
  */
 export class Event {
     public listeners: ListenerType[] = new Array<ListenerType>();
-    public constant: ConstantType = { init: "init" };
+    public constant: EventType = { init: "init" };
 
-    constructor(constant: ConstantType) {
+    constructor(constant: EventType) {
         this.constant = constant;
     }
 

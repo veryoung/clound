@@ -1,3 +1,5 @@
+import { EventType } from "@store/store";
+
 /**
  * type	对应列的类型。如果设置了 selection 则显示多选框；如果设置了 index 则显示该行的索引（从 1 开始计算）；如果设置了 expand 则显示为一个可展开的按钮	string	selection/index/expand	—
 index	如果设置了 type=index，可以通过传递 index 属性来自定义索引	string, Function(index)	-	-
@@ -59,10 +61,10 @@ export interface TableConfigType {
 }
 
 
-export enum TABLECONFIG {
-    CHANGECOLUMNS = "changecolumns",
-    CHANGEPAGE = "changepage",
-    CHANGEPAGESIZE = "changepagesize",
-    TOTAL = "total",
-    TABLEALL = "tableall"
-}
+export const TABLECONFIG: EventType = {
+    CHANGECOLUMNS: "修改列表配置列",
+    CHANGEPAGE: "修改列表配置当前页",
+    CHANGEPAGESIZE: "修改列表当前显示的条数",
+    TOTAL: "修改列表返回总数",
+    TABLEALL: "修改列表所有的配置"
+};

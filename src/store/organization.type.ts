@@ -1,9 +1,9 @@
-export enum ORGANIZATION {
-    ADDORGANIZATION = "addOrganization",
-    INITORGANIZATIONTREE = "initOrganizationtree",
-    ADDORGANIZATIONMESSAGE = "addOrganizationMessage",
-    SAVEORGANIZATION = "保存组织机构",
-}
+import { EventType } from "@store/store";
+
+export const ORGANIZATION: EventType = {
+    INITORGANIZATIONTREE: "初始化组织机构树",
+    ADDORGANIZATIONMESSAGE: "增加组织机构信息",
+};
 
 
 export interface OrganizationTreeType {

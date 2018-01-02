@@ -8,7 +8,7 @@ import ElementUI from "element-ui";
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { TipBox } from "@views/organization/dialogbox/tip.box";
-import { vm, ORGANIZATIONEVENT, FormRuleType } from "@utils/index";
+import { vm, FormRuleType } from "@utils/index";
 import { OrganizationTreeType, Organization, MessageType, ORGANIZATION } from "@store/organization.type";
 import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";

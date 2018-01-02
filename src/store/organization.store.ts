@@ -4,7 +4,7 @@ import { ORGANIZATION, OrganizationType, OrganizationTreeType, Organization } fr
 import { ResType } from "server";
 import { OrganizationServer } from "@server/organization";
 import { treeAttchment } from "@components/tissuetree/tree.attachment";
-import { vm, ORGANIZATIONEVENT } from "@utils/index";
+import { vm } from "@utils/index";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 
@@ -36,9 +36,6 @@ export const OrganizationStore: Module<OrganizationType, any> = {
     },
 
     mutations: {
-        [ORGANIZATION.ADDORGANIZATION]: (state: OrganizationType, payload) => {
-            console.log(state);
-        },
         [ORGANIZATION.INITORGANIZATIONTREE]: (state: OrganizationType, payload) => {
             state.tree[0].nodes = payload.data;
         },
@@ -47,9 +44,6 @@ export const OrganizationStore: Module<OrganizationType, any> = {
         },
     },
     actions: {
-        [ORGANIZATION.ADDORGANIZATION]: ({ state, commit, rootState }, payload) => {
-            commit(ORGANIZATION.ADDORGANIZATION, payload);
-        },
         [ORGANIZATION.INITORGANIZATIONTREE]: ({ state, commit, rootState }) => {
             OrganizationServer.getTree().then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
@@ -76,8 +70,6 @@ export const OrganizationStore: Module<OrganizationType, any> = {
                 EventBus.doNotify(CONSTANT.ADDORGANIZATIONMESSAGE, { id: payload.id, message: state.message });
             });
         },
-        // [ORGANIZATION.SAVEORGANIZATION]: ({ state, commit, rootState }, payload) => {
-        // }
     },
     getters: {
         OrganizationTree: function (state) {

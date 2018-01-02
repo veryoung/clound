@@ -34,7 +34,7 @@ export class UserMenu extends Vue {
         if (this.personInfo.default) {
             this.user_name = this.personInfo.default.user_name;
         }
-        EventBus.register(CONSTANT.DEFAULTMESSAGE, function () {
+        EventBus.register(CONSTANT.DEFAULTUSER, function () {
             that.user_name = that.personInfo.default.user_name;
         });
     }

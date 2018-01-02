@@ -125,7 +125,7 @@ export class UserOperation extends Vue {
             this.form = (<any>Object).assign({}, this.personInfo.init);
             this.stringToBoolean();
         }
-        let eventId = EventBus.register(CONSTANT.USERMESSAGE, function (event: string, info: any) {
+        let eventId = EventBus.register(CONSTANT.GETOTHERUSER, function (event: string, info: any) {
             that.form = (<any>Object).assign({}, that.personInfo[id]);
             that.stringToBoolean();
         });

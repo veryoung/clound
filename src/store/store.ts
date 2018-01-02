@@ -15,3 +15,7 @@ export const Store = new Vuex.Store({
         TableConfigStore: TableConfigStore
     }
 });
+
+export interface EventType {
+    [extra: string]: string;
+}

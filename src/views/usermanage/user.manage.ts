@@ -11,7 +11,7 @@ import { SetCol } from "@components/setcol/setcol";
 import { ResetPwd } from "@views/usermanage/dialogbox/reset.pwd";
 import { ImportUserFrame } from "@views/usermanage/dialogbox/import.user";
 import { USER, UserCompanyListType, UserListColumnType, UserMessageType, RoleType } from "@store/user.center.type";
-import { vm, USERMANAGEEVENT } from "@utils/index";
+import { vm } from "@utils/index";
 import SearchType, { filterData, UserManagerController } from "./user.manage.attachement";
 import { OrganizationTreeType } from "@store/organization.type";
 import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
@@ -68,7 +68,7 @@ export class UserManagement extends Vue {
                 nodes: []
             });
         });
-        let id2 = EventBus.register(CONSTANT.USERLISTMESSAGE, function (event: string, info: any) {
+        let id2 = EventBus.register(CONSTANT.GETUSERLIST, function (event: string, info: any) {
             that.tableData = that.userlist[info.id].data[that.tableConfig.usertable.page - 1];
         });
 
