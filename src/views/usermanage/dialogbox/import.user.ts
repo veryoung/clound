@@ -25,6 +25,9 @@ export class ImportUserFrame extends Vue {
     importUser() {
         let temp: any = this.$refs.upload;
         temp.submit();
+    }
+
+    uploader(file: any) {
         this.loading = true;
     }
 

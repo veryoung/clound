@@ -28,7 +28,8 @@
                 action="/api/v20/account/user/excel/" 
                 :limit="1" 
                 :auto-upload="false"
-                :on-success="success">
+                :on-success="success"
+                :before-upload="uploader">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或
                     <em>点击上传</em>
