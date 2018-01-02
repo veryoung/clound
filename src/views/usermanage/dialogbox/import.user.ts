@@ -28,7 +28,15 @@ export class ImportUserFrame extends Vue {
     }
 
     uploader(file: any) {
-        this.loading = true;
+        if (/\.xls$/.test(file.name) || /\.xlsx$/.test(file.name)) {
+            this.loading = true;
+        } else {
+            this.$message({
+                message: "请导入指定的模板文件",
+                type: "info"
+            });
+            return false;
+        }
     }
 
     success(response: ResType) {
