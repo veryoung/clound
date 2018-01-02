@@ -133,7 +133,7 @@ export class UserManagement extends Vue {
         } else {
             if (this.ids.length === 0) {
                 this.$message({
-                    message: "请选择删除项",
+                    message: "请选择导出项",
                     type: "info"
                 });
             } else {
