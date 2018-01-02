@@ -111,9 +111,10 @@ export class UserManagement extends Vue {
     // init method
     mergeData(opt: Config) {
         const { page_size, page } = opt;
-        // this.filter.expiry_date = filterPipe.date(this.filter.expiry_date);
-        // this.filter.ctime = filterPipe.date(this.filter.ctime);
-        return (<any>Object).assign({}, this.filter, {
+        let tempFilter = (<any>Object).assign({}, this.filter);
+        tempFilter.expiry_date = filterPipe.date(tempFilter.expiry_date);
+        tempFilter.ctime = filterPipe.date(tempFilter.ctime);
+        return (<any>Object).assign({}, tempFilter, {
             page: page,
             page_size: page_size,
             ori_id: this.ori_id
