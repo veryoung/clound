@@ -86,6 +86,7 @@ export const USER: EventType = {
     GETUSERLIST: "获取用户列表",
     GETOTHERUSER: "获取其他用户详细信息",
     GETUSERROLES: "获取该用户能看到的角色列表",
+    GETUSERFILTERROLES: "获取用户能筛选的用户角色",
 };
 
 // sm = 系统管理员， om = 运营， am = 审计， em = 企业， nu = 普通

@@ -92,9 +92,8 @@ export class UserManagement extends Vue {
             }, {
                 deep: true
             });
-
-        this.$store.dispatch(USER.GETUSERROLES);
-        let id3 = EventBus.register(CONSTANT.GETUSERROLES, function () {
+        this.$store.dispatch(USER.GETUSERFILTERROLES);
+        let id3 = EventBus.register(CONSTANT.GETUSERFILTERROLES, function () {
             that.roles = that.roleList;
         });
         Aux.insertId(id3);

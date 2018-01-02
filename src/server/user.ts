@@ -46,10 +46,21 @@ export class User extends Restful {
             params: opts
         });
     }
-
+    /**
+     * 添加需要的用户角色
+     */
     public getUserRole() {
         return this.get({
             url: "/api/v20/account/role/info/",
+            params: {}
+        });
+    }
+    /**
+     * 删选需要的用户角色
+     */
+    public getRoles() {
+        return this.get({
+            url: "/api/v20/account/role/select/",
             params: {}
         });
     }

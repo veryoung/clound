@@ -160,7 +160,20 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                         break;
                 }
             });
-        }
+        },
+        [USER.GETUSERFILTERROLES]: ({ state, commit, rootState }, payload) => {
+            UserServer.getRoles().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        commit(USER.GETUSERROLES, res.data);
+                        EventBus.doNotify(CONSTANT.GETUSERFILTERROLES);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        },
     },
     getters: {
         personInfo: function (state) {
