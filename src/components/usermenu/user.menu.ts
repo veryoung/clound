@@ -31,6 +31,9 @@ export class UserMenu extends Vue {
     // lifecircle hook
     created() {
         let that = this;
+        if (this.personInfo.default) {
+            this.user_name = this.personInfo.default.user_name;
+        }
         EventBus.register(CONSTANT.DEFAULTMESSAGE, function () {
             that.user_name = that.personInfo.default.user_name;
         });
