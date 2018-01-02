@@ -8,10 +8,11 @@
             </el-form-item>
             <el-form-item label="用户角色" prop="role">
                 <el-select v-model="form.role" placeholder="请选择用户角色" >
-                    <el-option :key="role.role_id" v-for="role in roles" :label="role.name" :value="role.role_id"></el-option>
+                    <el-option :key="role.role_id" v-for="role in roles" :label="role.name" :value="role.ufcode"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="企业名称" prop="company">
+            <!--  sm = 系统管理员， om = 运营 -->
+            <el-form-item prop="company" v-if="form.role !== 'sm' && form.role !== 'om'" label="企业名称">
                 <el-input :disabled="true" v-model="form.company"  style="width:230px;margin-right:10px"></el-input>
                 <el-button  @click="addOrganization">选择</el-button>
             </el-form-item>

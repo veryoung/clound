@@ -5,7 +5,7 @@ import ElementUI from "element-ui";
 
 
 import { ModuleTitle } from "@components/title/module.title";
-import { UserMessageType, USER, UserCenterType } from "@store/user.center.type";
+import { UserMessageType, USER, UserCenterType, RoleType } from "@store/user.center.type";
 import { OrganizationTreeType, Organization } from "@store/organization.type";
 import { FromValidator, FormRuleType } from "@utils/form.validator";
 import { AddOrganizationFrame } from "@views/usermanage/dialogbox/add.organization.frame";
@@ -17,10 +17,6 @@ import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 
 const Aux = new Auxiliary<string>();
-interface RoleType {
-    name: string;
-    role_id: number;
-}
 
 require("./operation.styl");
 @Component({
@@ -34,7 +30,8 @@ require("./operation.styl");
     },
     computed: {
         ...mapGetters([
-            "personInfo"
+            "personInfo",
+            "roleList"
         ])
     },
     components: {
@@ -47,8 +44,11 @@ export class UserOperation extends Vue {
 
     // init computed
     public personInfo: UserCenterType;
+    public roleList: RoleType[];
 
     // init data
+    public unwatch: Function = () => { };
+    public roles: RoleType[] = new Array<RoleType>();
     public dialogVisible: boolean = false;
     public form: UserMessageType = {
         uid: "",
@@ -72,7 +72,6 @@ export class UserOperation extends Vue {
         cdn_enable: "1",
         expiry_date: "",
     };
-    public roles: Array<RoleType> = new Array<RoleType>();
     public rules: FormRuleType = {
         user_name: [
             { required: true, message: "真实姓名不能为空", trigger: "blur" },
@@ -89,9 +88,6 @@ export class UserOperation extends Vue {
             { required: true, message: "邮箱不能为空", trigger: "blur" },
             { validator: FromValidator.email, trigger: "blur", message: "请填写正确邮箱" }
         ],
-        company: [
-            { required: true, message: "企业名称不能为空", trigger: "blur" },
-        ],
         pwd: [
             { required: true, message: "密码不能为空", trigger: "blur" },
         ],
@@ -101,7 +97,7 @@ export class UserOperation extends Vue {
         ],
         expiry_date: [
             { required: true, message: "请填写到期日期", trigger: "blur" },
-        ]
+        ],
     };
 
     stringToBoolean() {
@@ -122,6 +118,7 @@ export class UserOperation extends Vue {
     created() {
         let that = this;
         let id = this.$route.params.id;
+        this.$store.dispatch(USER.GETUSERROLES);
         if (id) {
             this.$store.dispatch(USER.GETOTHERUSER, { uid: id, operation: this.operation });
         } else {
@@ -134,22 +131,34 @@ export class UserOperation extends Vue {
         });
         Aux.insertId(eventId);
 
-        UserServer.getUserRole().then((response: AxiosResponse<ResType>) => {
-            let res: ResType = response.data;
-            switch (res.status) {
-                case "suc":
-                    this.roles = res.data;
-                    break;
-                default:
-                    break;
+
+        let eventId1 = EventBus.register(CONSTANT.GETUSERROLES, function () {
+            that.roles = that.roleList;
+        });
+        Aux.insertId(eventId1);
+
+        this.unwatch = vm.$watch(() => {
+            return this.form.role;
+        }, (val, oldVal) => {
+            if (val !== "sm" && val !== "om") {
+                this.rules.company = [];
+                this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
+            } else {
+                delete this.rules.company;
             }
         });
     }
+    /**
+     * , {
+                deep: true
+            }
+     */
 
     destroyed() {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
         });
+        this.unwatch();
     }
 
 
@@ -170,7 +179,11 @@ export class UserOperation extends Vue {
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
         let temp1: any = this.$refs[formServer];
-        this.form.role_id = this.form.role;
+        for (let item of this.roleList) {
+            if (item.ufcode === this.form.role) {
+                this.form.role_id = item.role_id;
+            }
+        }
         temp.validate((valid: any) => {
             if (valid) {
                 this.booleanToString();

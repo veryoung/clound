@@ -47,6 +47,7 @@ export interface UserCenterType {
 export interface UserStoreType {
     personInfo: UserCenterType;
     userlist: UserCompanyListType;
+    roleList: RoleType[];
 }
 
 
@@ -81,10 +82,13 @@ export enum USER {
     CHANGEPWD = "changepwd",
     DEFAULTUSER = "defaultuser",
     GETUSERLIST = "getuserlist",
-    GETOTHERUSER = "getotheruser"
+    GETOTHERUSER = "getotheruser",
+    GETUSERROLES = "获取该用户能看到的角色列表",
 }
 
-
+// sm = 系统管理员， om = 运营， am = 审计， em = 企业， nu = 普通
 export interface RoleType {
-
+    name: string;
+    role_id: string;
+    ufcode: "sm" | "om" | "am" | "em" | "nu" | "";
 }

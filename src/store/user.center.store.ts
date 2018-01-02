@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { UserCenterType, UserStoreType, UserMessageType, USER, UserListType, UserCompanyListType } from "./user.center.type";
+import { UserCenterType, UserStoreType, UserMessageType, USER, UserListType, UserCompanyListType, RoleType } from "./user.center.type";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
 import { session, vm, USERMANAGEEVENT } from "@utils/index";
@@ -11,6 +11,11 @@ import { EventBus, CONSTANT } from "@utils/event";
 
 export const UserCenterStore: Module<UserStoreType, any> = {
     state: (): UserStoreType => {
+        let roleList: RoleType[] = [{
+            name: "",
+            role_id: "",
+            ufcode: ""
+        }];
         let message: UserMessageType = {
             uid: "",
             user_name: "",
@@ -59,7 +64,8 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         };
         return {
             personInfo: personCache !== null ? personCache : personInfo,
-            userlist: userlist
+            userlist: userlist,
+            roleList: roleList,
         };
     },
 
@@ -88,6 +94,9 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             }
             state.userlist[payload.ori_id].data[Math.floor(payload.page) - 1] = payload.message.data;
             state.userlist[payload.ori_id].total = payload.message.total;
+        },
+        [USER.GETUSERROLES]: (state: UserStoreType, payload) => {
+            state.roleList = payload;
         }
     },
     actions: {
@@ -135,6 +144,19 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                         break;
                 }
             });
+        },
+        [USER.GETUSERROLES]: ({ state, commit, rootState }, payload) => {
+            UserServer.getUserRole().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        commit(USER.GETUSERROLES, res.data);
+                        EventBus.doNotify(CONSTANT.GETUSERROLES);
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
     },
     getters: {
@@ -143,6 +165,9 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         },
         userlist: function (state) {
             return state.userlist;
+        },
+        roleList: function (state) {
+            return state.roleList;
         }
     }
 };
