@@ -34,7 +34,8 @@ require("./user.manage.styl");
     computed: {
         ...mapGetters([
             "userlist",
-            "tableConfig"
+            "tableConfig",
+            "roleList"
         ])
     }
 })
@@ -42,6 +43,7 @@ export class UserManagement extends Vue {
     // init computed
     public userlist: UserCompanyListType;
     public tableConfig: TableConfigType;
+    public roleList: RoleType[];
     // init data
     public titles: string[] = ["用户列表"];
     public dialogVisible: boolean = false;
@@ -91,17 +93,11 @@ export class UserManagement extends Vue {
                 deep: true
             });
 
-
-        UserServer.getUserRole().then((response: AxiosResponse<ResType>) => {
-            let res: ResType = response.data;
-            switch (res.status) {
-                case "suc":
-                    this.roles = res.data;
-                    break;
-                default:
-                    break;
-            }
+        this.$store.dispatch(USER.GETUSERROLES);
+        let id3 = EventBus.register(CONSTANT.GETUSERROLES, function () {
+            that.roles = that.roleList;
         });
+        Aux.insertId(id3);
     }
 
     destroyed() {
