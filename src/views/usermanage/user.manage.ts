@@ -200,6 +200,8 @@ export class UserManagement extends Vue {
     }
 
     sortChange(opt: any) {
+        this.filter.sort_ctime = "";
+        this.filter.sort_expiry_date = "";
         if (opt.prop === "ctime") {
             if (opt.order === "descending") {
                 this.filter.sort_ctime = "0";
