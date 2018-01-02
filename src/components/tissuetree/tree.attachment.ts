@@ -14,7 +14,6 @@ export class Tree {
         label: "tree_label"
     };
     constructor() {
-        Store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
     }
 
     public addNode(item: OrganizationTreeType & "") {

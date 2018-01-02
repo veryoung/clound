@@ -5,7 +5,7 @@ import { mapGetters } from "vuex";
 
 
 import { treeAttchment } from "@components/tissuetree/tree.attachment";
-import { OrganizationTreeType } from "@store/organization.type";
+import { OrganizationTreeType, ORGANIZATION } from "@store/organization.type";
 
 
 
@@ -42,6 +42,7 @@ export class TissueTree extends Vue {
     public OrganizationTree: Array<OrganizationTreeType>;
     // lifecircle hook
     created() {
+        this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
         this.data = this.OrganizationTree;
     }
     // init methods
