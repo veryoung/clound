@@ -64,20 +64,27 @@ export class TipBox extends Vue {
     // init methods
     addCompany() {
         this.form.pid = this.pid;
-        OrganizationServer.addOrganization(this.form).then((response: AxiosResponse<ResType>) => {
-            let res: ResType = response.data;
-            switch (res.status) {
-                case "suc":
-                    // 'success' | 'warning' | 'info' | 'error'
-                    ElementUI.Message({
-                        message: res.message || "组织机构添加成功",
-                        type: "success"
-                    });
-                    this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
-                    this.$emit("close", false);
-                    break;
-                default:
-                    break;
+        let temp: any = this.$refs.form;
+        temp.validate((valid: boolean) => {
+            if (valid) {
+                OrganizationServer.addOrganization(this.form).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            // 'success' | 'warning' | 'info' | 'error'
+                            ElementUI.Message({
+                                message: res.message || "组织机构添加成功",
+                                type: "success"
+                            });
+                            this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
+                            this.$emit("close", false);
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            } else {
+
             }
         });
     }
