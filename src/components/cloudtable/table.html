@@ -11,6 +11,7 @@
                 v-for="(column,$index) in obj.columns" 
                 :label="column.label" :prop="column.prop" 
                 v-if="column.show"
+                :width="column.width?column.width:'auto'"
                 :sortable="column.sortable?column.sortable:false"
                 align="center"
                 header-align="center"

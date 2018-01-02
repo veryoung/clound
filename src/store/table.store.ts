@@ -56,14 +56,16 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         label: "创建时间",
                         type: "date",
                         show: true,
-                        sortable: "custom"
+                        sortable: "custom",
+                        width: "125px"
                     },
                     {
                         prop: "expiry_date",
                         label: "到期时间",
                         type: "date",
                         show: true,
-                        sortable: "custom"
+                        sortable: "custom",
+                        width: "125px"
                     },
                     {
                         prop: "is_active",
