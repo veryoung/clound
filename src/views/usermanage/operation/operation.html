@@ -12,7 +12,7 @@
                 </el-select>
             </el-form-item>
             <!--  sm = 系统管理员， om = 运营 -->
-            <el-form-item prop="company" v-if="form.role !== 'sm' && form.role !== 'om'" label="企业名称">
+            <el-form-item prop="company" v-if="form.role !== 'sm' && form.role !== 'om' && form.role !== 'am'" label="企业名称">
                 <el-input :disabled="true" v-model="form.company"  style="width:230px;margin-right:10px"></el-input>
                 <el-button  @click="addOrganization">选择</el-button>
             </el-form-item>

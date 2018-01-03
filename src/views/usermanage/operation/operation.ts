@@ -128,7 +128,7 @@ export class UserOperation extends Vue {
         this.unwatch = vm.$watch(() => {
             return this.form.role;
         }, (val, oldVal) => {
-            if (val !== "sm" && val !== "om") {
+            if (val !== "sm" && val !== "om" && val !== "am") {
                 this.rules.company = [];
                 this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
             } else {
