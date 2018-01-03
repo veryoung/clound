@@ -182,57 +182,57 @@ export class UserOperation extends Vue {
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
         let temp1: any = this.$refs[formServer];
+        let flag: boolean = false;
+        let flag1: boolean = false;
         for (let item of this.roleList) {
             if (item.ufcode === this.form.role) {
                 this.form.role_id = item.role_id;
             }
         }
         temp.validate((valid: any) => {
-            if (valid) {
-                this.booleanToString();
-                switch (this.operation) {
-                    case "add":
-                        UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
-                            let res: ResType = response.data;
-                            switch (res.status) {
-                                case "suc":
-                                    ElementUI.Message({
-                                        message: "添加用户成功",
-                                        type: "success"
-                                    });
-                                    this.$router.push("/SystemManagement/UserManagement");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                        break;
-                    case "editor":
-                        UserServer.editUser(this.form).then((response: AxiosResponse<ResType>) => {
-                            let res: ResType = response.data;
-                            switch (res.status) {
-                                case "suc":
-                                    ElementUI.Message({
-                                        message: "编辑用户成功",
-                                        type: "success"
-                                    });
-                                    this.$router.push("/SystemManagement/UserManagement");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                    default:
-                        break;
-                }
-
-            } else {
-                return false;
-            }
+            flag = valid;
         });
         temp1.validate((valid: boolean) => {
-            console.log(valid);
+            flag1 = valid;
         });
+        if (flag && flag1) {
+            this.booleanToString();
+            switch (this.operation) {
+                case "add":
+                    UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Message({
+                                    message: "添加用户成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/SystemManagement/UserManagement");
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                    break;
+                case "editor":
+                    UserServer.editUser(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Message({
+                                    message: "编辑用户成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/SystemManagement/UserManagement");
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                default:
+                    break;
+            }
+        }
     }
 
     back() {

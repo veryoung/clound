@@ -16,7 +16,7 @@ import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { create } from "domain";
-
+import { Permissions } from "@directives/permissions";
 
 const Aux = new Auxiliary<string>();
 require("./organization.styl");
@@ -40,6 +40,8 @@ require("./organization.styl");
 })
 export class OrganizationComponent extends Vue {
     // init data
+    public add: boolean = Permissions.judge("SystemManagement.Organization.Add");
+    public del: boolean = Permissions.judge("SystemManagement.Organization.Delete");
     public pid: string = "";
     public dialogVisible: boolean = false;
     public create: boolean = false;
@@ -113,7 +115,9 @@ export class OrganizationComponent extends Vue {
     }
 
     clickNode(data: OrganizationTreeType) {
-        this.$store.dispatch(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: data.id });
+        if (Permissions.judge("SystemManagement.Organization.Check")) {
+            this.$store.dispatch(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: data.id });
+        }
     }
 
     close() {

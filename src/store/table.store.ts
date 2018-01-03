@@ -71,7 +71,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "is_active",
                         label: "状态",
                         show: true,
-                        disable: true
+                        disable: true,
+                        width: "130px"
                     },
                 ],
                 pageSizes: [10, 20, 30, 40, 50],

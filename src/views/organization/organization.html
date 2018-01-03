@@ -2,7 +2,7 @@
     <TipBox v-if="dialogVisible" :dialogVisible="dialogVisible" @close="close" :pid="pid" />
     <div class="select-part">
         <ModuleTitle :titles="['组织机构列表']" />
-        <TissueTree :editor="true" @addNode="addNode" @clickNode="clickNode" @delNode="delNode" />
+        <TissueTree :add="add" :del="del" @addNode="addNode" @clickNode="clickNode" @delNode="delNode" />
     </div>
     <div class="form-part" v-if="create">
         <ModuleTitle :titles="['企业详情']" />

@@ -14,9 +14,13 @@ require("./tree.styl");
     name: "TissueTree",
     template: require("./tree.html"),
     props: {
-        editor: {
+        add: {
             type: Boolean,
-            default: true
+            default: false
+        },
+        del: {
+            type: Boolean,
+            default: false
         }
     },
     watch: {
@@ -33,7 +37,8 @@ require("./tree.styl");
 })
 export class TissueTree extends Vue {
     // init props
-    public editor: boolean;
+    public add: boolean;
+    public del: boolean;
     // init data
     public defaultProps: any = treeAttchment.defaultProps;
     public data: Array<OrganizationTreeType>;
@@ -74,7 +79,7 @@ export class TissueTree extends Vue {
             h("li", {
                 "class": {
                     "treeli": true,
-                    "editor": this.editor
+                    "editor": this.add || this.del
                 },
             },
                 [
@@ -89,7 +94,7 @@ export class TissueTree extends Vue {
                         }
                     },
                         [
-                            h("i", {
+                            this.add ? h("i", {
                                 "class": {
                                     "iconfont": true,
                                     "icon-tianjia": true
@@ -97,8 +102,8 @@ export class TissueTree extends Vue {
                                 on: {
                                     click: (e: any) => { this.addNode(data); e.stopPropagation(); }
                                 },
-                            }, ""),
-                            `${data.id}` === "" ? [] : h("i", {
+                            }, "") : [],
+                            `${data.id}` === "" ? [] : this.del ? h("i", {
                                 "class": {
                                     "iconfont": true,
                                     "icon-shanchu": true
@@ -106,7 +111,7 @@ export class TissueTree extends Vue {
                                 on: {
                                     click: (e: any) => { this.delNode(data); e.stopPropagation(); }
                                 },
-                            }, "")
+                            }, "") : []
                         ]),
                 ])
         );

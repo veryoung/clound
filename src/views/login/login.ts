@@ -9,7 +9,8 @@ import { AxiosResponse } from "axios";
 import { UserStatus } from "@utils/monitor";
 import { Store } from "@store/store";
 import { USER } from "@store/user.center.type";
-
+import { session } from "@utils/sessionstorage";
+import { Permissions } from "@directives/permissions";
 
 
 const style = require("./login.m.css");
@@ -27,6 +28,9 @@ export class Login extends Vue {
     created() {
         GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
+            if (res.data && res.data.pcode) {
+                session.setItem("pcode", Permissions.trans(res.data.pcode));
+            }
             switch (res.status) {
                 case "suc":
                     this.$router.push("/home");

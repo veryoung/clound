@@ -1,11 +1,11 @@
 import { Hide } from "./hide";
-import { Permissions } from "@directives/permissions";
+import { PermissionsDirective } from "@directives/permissions";
 
 
 export class InitDirective {
     constructor() {
         new Hide();
-        new Permissions();
+        new PermissionsDirective();
     }
 }
 
