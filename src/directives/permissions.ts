@@ -42,6 +42,12 @@ export const PermissionsSet: any = {
             Delete: "SystemManagement.Organization.Delete",
             // 更新组织信息
             Edit: "SystemManagement.Organization.Edit"
+        },
+        // 个人中心
+        Personal: {
+            // 公告通知
+            Check: "Personal.Announcement.Check",
+            Modify: "Personal.Announcement.Modify"
         }
     }
 };
