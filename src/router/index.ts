@@ -18,7 +18,7 @@ import { ResType } from "server";
 import { USER } from "@store/user.center.type";
 import { Store } from "@store/store";
 import { UserStatus } from "@utils/monitor";
-import { WiteManageRouter } from "@router/wite.manage";
+import { WebsiteManageRouter } from "@router/website.manage";
 
 
 Vue.use(Router);
@@ -75,7 +75,7 @@ export const entry: RouteConfig[] = [
     },
     {
         path: "/WebsiteManagement",
-        redirect: "/WebsiteManagement/myWite",
+        redirect: "/WebsiteManagement/myWebsite",
         name: "网站管理",
         components: {
             header: HeaderComponent,
@@ -84,13 +84,13 @@ export const entry: RouteConfig[] = [
         },
         props: {
             sider: {
-                menus: WiteManageRouter 
+                menus: WebsiteManageRouter 
             }
         },
         meta: {
             hidden: false,
         },
-        children: WiteManageRouter
+        children: WebsiteManageRouter
     },
     {
         path: "/ReportManagement",
