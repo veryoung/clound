@@ -1,0 +1,70 @@
+<div class="user-operation">
+    <AddOrganizationFrame v-if="dialogVisible" :dialogVisible="dialogVisible" @close="close" @importNode="importNode" />
+    <div class="panel">
+        <ModuleTitle :titles="['添加用户']" />
+        <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="demo-form">
+            <el-form-item label="用户名" prop="user_name">
+                <el-input v-model="form.user_name" ></el-input>
+            </el-form-item>
+            <el-form-item label="用户角色" prop="role">
+                <el-select v-model="form.role" placeholder="请选择用户角色" >
+                    <el-option :key="role.role_id" v-for="role in roles" :label="role.name" :value="role.ufcode"></el-option>
+                </el-select>
+            </el-form-item>
+            <!--  sm = 系统管理员， om = 运营 -->
+            <el-form-item prop="company" v-if="form.role !== 'sm' && form.role !== 'om'" label="企业名称">
+                <el-input :disabled="true" v-model="form.company"  style="width:230px;margin-right:10px"></el-input>
+                <el-button  @click="addOrganization">选择</el-button>
+            </el-form-item>
+            <el-form-item label="手机号码" prop="phone">
+                <el-input v-model="form.phone" ></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+                <el-input v-model="form.email"></el-input>
+            </el-form-item>
+            <el-form-item v-if="operation==='add'" label="密码" prop="pwd">
+                <el-input type="password" v-model="form.pwd" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注">
+                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="form.remark">
+                </el-input>
+            </el-form-item>
+        </el-form>
+        <ModuleTitle :titles="['服务权限']" />
+        <el-form size="small" :model="form" :rules="rules" ref="formserver" label-width="100px" class="demo-form">
+            <el-form-item label="网站总数" prop="max_domain_num">
+                <el-input type="age" v-model.number="form.max_domain_num" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="服务项">
+                <div class="switch">
+                    WEB应用防火墙
+                    <el-switch v-model="form.waf_enable">
+                    </el-switch>
+                </div>
+                <div class="switch">
+                    CC防御
+                    <el-switch v-model="form.cdn_enable">
+                    </el-switch>
+                </div>
+                <div class="switch">
+                    网站替身
+                    <el-switch v-model="form.mirror_enable">
+                    </el-switch>
+                </div>
+                <div class="switch">
+                    网站加速
+                    <el-switch v-model="form.ads_enable">
+                    </el-switch>
+                </div>
+            </el-form-item>
+            <el-form-item label="到期时间" prop="expiry_date" >
+                <el-date-picker :editable="false" value-format="yyyyMMdd" v-model="form.expiry_date"  placeholder="选择到期时间"  type="date">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
+                <el-button @click="back()">取消</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>

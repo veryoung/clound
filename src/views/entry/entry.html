@@ -1,0 +1,11 @@
+<div class="panel">
+    <transition name="slide">
+        <router-view></router-view>
+    </transition>
+    <router-view name="header"></router-view>
+    <div class="same-level">
+        <router-view name="sider"></router-view>
+        <router-view name="main"></router-view>
+    </div>
+    <Custom></Custom>
+</div>

@@ -1,0 +1,23 @@
+<div class="user-menu">
+    <div class="notice">
+        <el-badge :value="12" class="item">
+            <span class="iconfont">&#xe609;</span>
+        </el-badge>
+    </div>
+    <div class="down-menu">
+        <el-dropdown :hide-on-click="false">
+            <span class="el-dropdown-link">
+                {{user_name|none}}
+                <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item v-for="(router,$index) in Routers" :key="$index">
+                    <router-link :to="router.path" tag="span">{{router.name}}</router-link>
+                </el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+    </div>
+    <div class="exit" @click="logout">
+        <span class="iconfont">&#xe60a;</span>
+    </div>
+</div>

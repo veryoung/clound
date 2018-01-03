@@ -1,0 +1,21 @@
+<div class="tree-part">
+    <!-- <div class="btn-group" v-if="editor">
+        <el-button @click="addNode">添加</el-button>
+        <el-button @click="editNode">编辑</el-button>
+        <el-button @click="delNode" type="danger">删除</el-button>
+    </div> -->
+    <el-input placeholder="输入关键字进行过滤" v-model="filterText" size="small">
+    </el-input>
+    <div class="tree-panel">
+        <el-tree 
+            class="filter-tree" 
+            :data="data" 
+            :props="defaultProps" 
+            default-expand-all 
+            :render-content="renderContent"
+            :filter-node-method="filterNode" 
+            @current-change="clickNode"
+            ref="tree">
+        </el-tree>
+    </div>
+</div>

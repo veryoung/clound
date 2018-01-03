@@ -1,0 +1,86 @@
+<div class="user-manage">
+    <ImportUserFrame v-if="dialogVisible" :dialogVisible="dialogVisible" @close="close" />
+    <ResetPwd v-if="dialogVisiblePwd" :dialogVisible="dialogVisiblePwd" @close="closePwd" :uid="uid" />
+    <div class="select-part">
+        <ModuleTitle :titles="['组织机构列表']" />
+        <TissueTree :editor="false" @clickNode="clickNode" />
+    </div>
+    <div class="form-part">
+        <ModuleTitle :titles="titles" />
+        <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
+            <el-form-item label="用户名">
+                <el-input v-model="filter.name" placeholder="用户名"></el-input>
+            </el-form-item>
+            <el-form-item label="用户角色">
+                <el-select v-model="filter.role_id" placeholder="用户角色">
+                    <el-option :key="role.role_id" v-for="role in roles" :label="role.name" :value="role.role_id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="手机号码">
+                <el-input v-model="filter.phone" placeholder="手机号码"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+                <el-input v-model="filter.email" placeholder="邮箱" ></el-input>
+            </el-form-item>
+            <el-form-item label="创建时间">
+                <el-date-picker :editable="false"  v-model="filter.ctime" type="date" placeholder="选择创建时间">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="到期时间">
+                <el-date-picker :editable="false"  v-model="filter.expiry_date" type="date"  placeholder="选择到期时间">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="状态">
+                <el-select v-model="filter.is_active" placeholder="状态" >
+                    <el-option label="到期" value="0"></el-option>
+                    <el-option label="使用中" value="1"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button  type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                <el-button  @click="reset">重置</el-button>
+            </el-form-item>
+        </el-form>
+        <div class="btn-group">
+            <div class="btn-first">
+                <el-button type="primary" @click="handle('add')" size="small">
+                    <span class="iconfont">&#xe61a;</span>
+                    添加
+                </el-button>
+                <el-button type="primary" @click="importUser()" size="small">
+                    <span class="iconfont">&#xe61b;</span>
+                    导入
+                </el-button>
+                <el-button type="primary" size="small" @click="exportUser('selected')">
+                    <span class="iconfont">&#xe61e;</span>
+                    <span>导出</span>
+                </el-button>
+                <el-button type="primary" size="small" @click="exportUser('all')">
+                    <span class="iconfont">&#xe61e;</span>
+                    <span>导出所有</span>
+                </el-button>
+            </div>
+            <div class="btn-last">
+                <SetCol moduleName="usertable" />
+            </div>
+        </div>
+        <CloudTable moduleName="usertable" :datas="tableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+            @handleSelectionChange="handleSelectionChange"
+            @sortChange="sortChange">
+            <el-table-column fixed type="selection" width="55" slot="type" align="center">
+            </el-table-column>
+            <el-table-column label="操作" align="center">
+                <template slot-scope="scope">
+                    <!-- <i style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
+                    <i style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i> -->
+                    <i title="查看用户详情" style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
+                    <i title="编辑用户详情" v-if="scope.row.is_edite==='1'" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
+                    <i title="重置密码" style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
+                    <i title="删除用户" v-if="scope.row.is_delete==='1'" style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
+                </template>
+            </el-table-column>
+        </CloudTable>
+    </div>
+</div>

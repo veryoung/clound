@@ -11,10 +11,12 @@ module.exports = function (env) {
             historyApiFallback: true,
             noInfo: true,
             proxy: {
-                "/intelligence": {
-                    target: "http://10.4.5.134",
+                "/api/v20/": {
+                    target: "http://10.10.200.232:8080",                    
+                    // target: "http://10.4.5.221:8080",
                     changeOrigin: true,
-                    secure: false
+                    secure: false,
+                    // port: 8080
                 }
             },
             // hot: true
@@ -53,12 +55,42 @@ module.exports = function (env) {
                             }
                         }
                     ],
+<<<<<<< HEAD
+=======
+                    exclude:/\.m\.css$/
+                },
+                {
+                    test: /\.m\.css$/,
+                    use: [{
+                            loader: 'style-loader'
+                        },
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules:true,
+                                importLoaders:1,
+                                localIdentName:'[path]___[name]__[local]___[hash:base64:5]'
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: () => [autoprefixer]
+                            }
+                        }
+                    ],
+>>>>>>> 5885c28f6b8d903da62855dcd6e978ea68f2d360
                 }
             ]
         },
         // plugins: [
+<<<<<<< HEAD
             // new webpack.NamedModulesPlugin(),
             // new webpack.HotModuleReplacementPlugin()
+=======
+        // new webpack.NamedModulesPlugin(),
+        // new webpack.HotModuleReplacementPlugin()
+>>>>>>> 5885c28f6b8d903da62855dcd6e978ea68f2d360
         // ]
     })
 }
