@@ -87,7 +87,6 @@ export class UserPwd extends Vue {
                     }
                 });
             } else {
-                ElementUI.Message.info("修改密码错误,表单验证不成功");
                 return false;
             }
         });
