@@ -13,4 +13,4 @@ export const WiteManageRouter: RouteConfig[] = [
         },
         component: WiteManagement,
     },
-];
+]; 
