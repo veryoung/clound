@@ -10,7 +10,7 @@ import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { ResetPwd } from "@views/usermanage/dialogbox/reset.pwd";
 import { ImportUserFrame } from "@views/usermanage/dialogbox/import.user";
-import { USER, UserCompanyListType, UserListColumnType, UserMessageType, RoleType } from "@store/user.center.type";
+import { USER, UserListColumnType, UserMessageType, RoleType, UserListType } from "@store/user.center.type";
 import { vm } from "@utils/index";
 import SearchType, { filterData, UserManagerController } from "./user.manage.attachement";
 import { OrganizationTreeType } from "@store/organization.type";
@@ -41,7 +41,7 @@ require("./user.manage.styl");
 })
 export class UserManagement extends Vue {
     // init computed
-    public userlist: UserCompanyListType;
+    public userlist: UserListType;
     public tableConfig: TableConfigType;
     public roleList: RoleType[];
     // init data
@@ -69,7 +69,7 @@ export class UserManagement extends Vue {
             });
         });
         let id2 = EventBus.register(CONSTANT.GETUSERLIST, function (event: string, info: any) {
-            that.tableData = that.userlist[info.id].data[that.tableConfig.usertable.page - 1];
+            that.tableData = that.userlist[info.id][that.tableConfig.usertable.page - 1];
         });
 
         Aux.insertId(id1);

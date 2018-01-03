@@ -74,7 +74,7 @@ export class TissueTree extends Vue {
     }
 
     renderContent(h: Function, options: any) {
-        const { node, data, store } = options;
+        const { node, data, store } = options;  
         return (
             h("li", {
                 "class": {
@@ -103,7 +103,7 @@ export class TissueTree extends Vue {
                                     click: (e: any) => { this.addNode(data); e.stopPropagation(); }
                                 },
                             }, "") : [],
-                            node.id === 1 ? [] : this.del ? h("i", {
+                            node.parent.parent === null ? [] : this.del ? h("i", {
                                 "class": {
                                     "iconfont": true,
                                     "icon-shanchu": true

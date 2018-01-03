@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { UserCenterType, UserStoreType, UserMessageType, USER, UserListType, UserCompanyListType, RoleType } from "./user.center.type";
+import { UserCenterType, UserStoreType, UserMessageType, USER, RoleType, UserListType } from "./user.center.type";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
 import { session, vm } from "@utils/index";
@@ -44,25 +44,22 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             "init": message
         };
         let personCache = session.getItem("personInfo");
-        let userlist: UserCompanyListType = {
+        let userlist: UserListType = {
             "init": {
-                data: {
-                    "0": [{
-                        company: "",
-                        cperson: "",
-                        ctime: "",
-                        email: "",
-                        expiry_date: "",
-                        is_active: "",
-                        is_delete: "",
-                        is_edite: "",
-                        phone: "",
-                        role: "",
-                        user_name: "",
-                        uid: "",
-                    }]
-                },
-                total: 1
+                "0": [{
+                    company: "",
+                    cperson: "",
+                    ctime: "",
+                    email: "",
+                    expiry_date: "",
+                    is_active: "",
+                    is_delete: "",
+                    is_edite: "",
+                    phone: "",
+                    role: "",
+                    user_name: "",
+                    uid: "",
+                }]
             }
         };
         return {
@@ -90,13 +87,12 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         },
         [USER.GETUSERLIST]: (state: UserStoreType, payload) => {
             if (!state.userlist[payload.ori_id]) {
-                state.userlist[payload.ori_id] = { data: {}, total: 0 };
+                state.userlist[payload.ori_id] = {};
             }
-            if (!state.userlist[payload.ori_id].data[Math.floor(payload.page) - 1]) {
-                state.userlist[payload.ori_id].data[Math.floor(payload.page) - 1] = [];
+            if (!state.userlist[payload.ori_id][Math.floor(payload.page) - 1]) {
+                state.userlist[payload.ori_id][Math.floor(payload.page) - 1] = [];
             }
-            state.userlist[payload.ori_id].data[Math.floor(payload.page) - 1] = payload.message.data;
-            state.userlist[payload.ori_id].total = payload.message.total;
+            state.userlist[payload.ori_id][Math.floor(payload.page) - 1] = [].concat(payload.message.data);
         },
         [USER.GETUSERROLES]: (state: UserStoreType, payload) => {
             state.roleList = payload;
@@ -135,6 +131,9 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             }
         },
         [USER.GETUSERLIST]: ({ state, commit, rootState }, payload) => {
+            if (payload.ori_id in state.userlist && (Math.floor(payload.page) - 1) in state.userlist.ori_id) {
+                EventBus.doNotify(CONSTANT.GETUSERLIST, { id: payload.ori_id });
+            }
             UserServer.getUserList(payload).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {

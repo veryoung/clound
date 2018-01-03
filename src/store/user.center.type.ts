@@ -48,17 +48,11 @@ export interface UserCenterType {
 
 export interface UserStoreType {
     personInfo: UserCenterType;
-    userlist: UserCompanyListType;
+    userlist: UserListType;
     roleList: RoleType[];
 }
-
-
-export interface UserCompanyListType {
-    [extra: string]: UserListType;
-}
 export interface UserListType {
-    data: UserListStructure;
-    total: number;
+    [extra: string]: UserListStructure;
 }
 export interface UserListStructure {
     [extra: number]: Array<UserListColumnType>;
