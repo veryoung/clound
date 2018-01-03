@@ -98,7 +98,7 @@ export class PermissionsObj {
     public judge(value: string): boolean {
         let permissions: string[] = session.getItem("pcode");
         for (let permission of permissions) {
-            if (value === permission) {
+            if (permission.indexOf(value) !== -1) {
                 return true;
             }
         }

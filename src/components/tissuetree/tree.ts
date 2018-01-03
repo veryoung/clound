@@ -103,7 +103,7 @@ export class TissueTree extends Vue {
                                     click: (e: any) => { this.addNode(data); e.stopPropagation(); }
                                 },
                             }, "") : [],
-                            `${data.id}` === "" ? [] : this.del ? h("i", {
+                            node.id === 1 ? [] : this.del ? h("i", {
                                 "class": {
                                     "iconfont": true,
                                     "icon-shanchu": true
