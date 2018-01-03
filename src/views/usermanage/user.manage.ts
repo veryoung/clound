@@ -149,7 +149,7 @@ export class UserManagement extends Vue {
             } else if (type === "look") {
                 this.$router.push(`/SystemManagement/UserManagement/look/${row.uid}`);
             } else if (type === "del") {
-                UserManagerController.handleDel(row);
+                UserManagerController.handleDel(row, { ori_id: this.ori_id, page: this.tableConfig.usertable.page });
             }
             return;
         }
