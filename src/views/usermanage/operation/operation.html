@@ -32,7 +32,7 @@
         </el-form>
         <ModuleTitle :titles="['服务权限']" />
         <el-form size="small" :model="form" :rules="rules" ref="formserver" label-width="100px" class="demo-form">
-            <el-form-item label="网站总数" prop="max_domain_num">
+            <el-form-item label="网站总数" prop="max_domain_num" v-if="form.role !== 'am'">
                 <el-input type="age" v-model.number="form.max_domain_num" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="服务项">

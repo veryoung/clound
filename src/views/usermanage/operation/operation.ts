@@ -92,11 +92,6 @@ export class UserOperation extends Vue {
         pwd: [
             { required: true, message: "密码不能为空", trigger: "blur" },
         ],
-        max_domain_num: [
-            { required: true, message: "网站总数不能为空", trigger: "blur" },
-            { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
-            { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
-        ],
         expiry_date: [
             { required: true, message: "请填写到期日期", trigger: "blur" },
         ],
@@ -133,6 +128,17 @@ export class UserOperation extends Vue {
                 this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
             } else {
                 delete this.rules.company;
+            }
+
+            if (val !== "am") {
+                this.rules.max_domain_num = [];
+                this.rules.max_domain_num = [
+                    { required: true, message: "网站总数不能为空", trigger: "blur" },
+                    { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
+                    { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
+                ];
+            } else {
+                delete this.rules.max_domain_num;
             }
         });
     }
