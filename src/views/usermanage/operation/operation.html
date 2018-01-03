@@ -12,7 +12,7 @@
                 </el-select>
             </el-form-item>
             <!--  sm = 系统管理员， om = 运营 -->
-            <el-form-item prop="company" v-if="form.role !== 'sm' && form.role !== 'om'" label="企业名称">
+            <el-form-item prop="company" v-if="form.role !== 'sm' && form.role !== 'om' && form.role !== 'am'" label="企业名称">
                 <el-input :disabled="true" v-model="form.company"  style="width:230px;margin-right:10px"></el-input>
                 <el-button  @click="addOrganization">选择</el-button>
             </el-form-item>
@@ -32,7 +32,7 @@
         </el-form>
         <ModuleTitle :titles="['服务权限']" />
         <el-form size="small" :model="form" :rules="rules" ref="formserver" label-width="100px" class="demo-form">
-            <el-form-item label="网站总数" prop="max_domain_num">
+            <el-form-item label="网站总数" prop="max_domain_num" v-if="form.role !== 'am'">
                 <el-input type="age" v-model.number="form.max_domain_num" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="服务项">

@@ -19,7 +19,7 @@ import { AxiosResponse } from "axios";
 // sort_ctime	创建时间排序	boolean	
 // sort_expiry_date	过期日期排序	boolean	
 export default interface SearchType {
-    name: string;
+    user_name: string;
     role_id?: string;
     phone: string;
     email: string;
@@ -32,7 +32,7 @@ export default interface SearchType {
 }
 
 export const filterData: SearchType = {
-    name: "",
+    user_name: "",
     role_id: "",
     phone: "",
     email: "",

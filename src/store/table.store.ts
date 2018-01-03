@@ -71,7 +71,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "is_active",
                         label: "状态",
                         show: true,
-                        disable: true
+                        disable: true,
+                        width: "130px"
                     },
                 ],
                 pageSizes: [10, 20, 30, 40, 50],
@@ -79,6 +80,67 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                 page: 1,
                 total: 1
             },
+            "mywebsitetable": {
+                columns: [
+                    {
+                        prop: "label",
+                        label: "网站名称",
+                    },
+                    {
+                        prop: "domain",
+                        label: "网站域名",
+                    },
+                    {
+                        prop: "organization",
+                        label: "所属组织",
+                    },
+                    {
+                        prop: "port",
+                        label: "协议类型",
+                        type: "protocoltype"
+                    },
+                    {
+                        prop: "source_type",
+                        label: "回源方式",
+                        show: true
+                    },
+                    {
+                        prop: "source_info",
+                        label: "回源地址",
+                        show: true
+                    },
+                    {
+                        prop: "cname",
+                        label: "CNAME别名",
+                        show: true
+                    },
+                    {
+                        prop: "ctime",
+                        label: "创建时间",
+                        show: true,
+                    },
+                    {
+                        prop: "state",
+                        label: "接入状态",
+                        show: true,
+                    },
+                    {
+                        prop: "open_waf",
+                        label: "防御状态",
+                        show: true,
+                    },
+                    {
+                        prop: "service",
+                        label: "服务项",
+                        show: true,
+                        type: "websiteService"
+                    },
+                ],
+                pageSizes: [10, 20, 30, 40, 50],
+                page_size: 10,
+                page: 1,
+                total: 1
+            }
         };
         return systemTable;
     },

@@ -92,11 +92,6 @@ export class UserOperation extends Vue {
         pwd: [
             { required: true, message: "密码不能为空", trigger: "blur" },
         ],
-        max_domain_num: [
-            { required: true, message: "网站总数不能为空", trigger: "blur" },
-            { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
-            { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
-        ],
         expiry_date: [
             { required: true, message: "请填写到期日期", trigger: "blur" },
         ],
@@ -128,11 +123,22 @@ export class UserOperation extends Vue {
         this.unwatch = vm.$watch(() => {
             return this.form.role;
         }, (val, oldVal) => {
-            if (val !== "sm" && val !== "om") {
+            if (val !== "sm" && val !== "om" && val !== "am") {
                 this.rules.company = [];
                 this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
             } else {
                 delete this.rules.company;
+            }
+
+            if (val !== "am") {
+                this.rules.max_domain_num = [];
+                this.rules.max_domain_num = [
+                    { required: true, message: "网站总数不能为空", trigger: "blur" },
+                    { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
+                    { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
+                ];
+            } else {
+                delete this.rules.max_domain_num;
             }
         });
     }
@@ -182,57 +188,57 @@ export class UserOperation extends Vue {
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
         let temp1: any = this.$refs[formServer];
+        let flag: boolean = false;
+        let flag1: boolean = false;
         for (let item of this.roleList) {
             if (item.ufcode === this.form.role) {
                 this.form.role_id = item.role_id;
             }
         }
         temp.validate((valid: any) => {
-            if (valid) {
-                this.booleanToString();
-                switch (this.operation) {
-                    case "add":
-                        UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
-                            let res: ResType = response.data;
-                            switch (res.status) {
-                                case "suc":
-                                    ElementUI.Message({
-                                        message: "添加用户成功",
-                                        type: "success"
-                                    });
-                                    this.$router.push("/SystemManagement/UserManagement");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                        break;
-                    case "editor":
-                        UserServer.editUser(this.form).then((response: AxiosResponse<ResType>) => {
-                            let res: ResType = response.data;
-                            switch (res.status) {
-                                case "suc":
-                                    ElementUI.Message({
-                                        message: "编辑用户成功",
-                                        type: "success"
-                                    });
-                                    this.$router.push("/SystemManagement/UserManagement");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                    default:
-                        break;
-                }
-
-            } else {
-                return false;
-            }
+            flag = valid;
         });
         temp1.validate((valid: boolean) => {
-            console.log(valid);
+            flag1 = valid;
         });
+        if (flag && flag1) {
+            this.booleanToString();
+            switch (this.operation) {
+                case "add":
+                    UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Message({
+                                    message: "添加用户成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/SystemManagement/UserManagement");
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                    break;
+                case "editor":
+                    UserServer.editUser(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Message({
+                                    message: "编辑用户成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/SystemManagement/UserManagement");
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                default:
+                    break;
+            }
+        }
     }
 
     back() {

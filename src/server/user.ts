@@ -1,6 +1,5 @@
 import { axios, Restful } from "@server/index";
 import { UserMessageType } from "@store/user.center.type";
-import SearchType from "@views/usermanage/user.manage.attachement";
 
 
 export class User extends Restful {

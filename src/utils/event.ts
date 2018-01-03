@@ -3,14 +3,9 @@ import { EventType } from "@store/store";
 import { USER } from "@store/user.center.type";
 import { TABLECONFIG } from "@store/table.type";
 import { ORGANIZATION } from "@store/organization.type";
+import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 
-export const vm = new Vue({
-    filters: {
-        "date": function () {
-
-        }
-    }
-});
+export const vm = new Vue({});
 
 
 
@@ -21,7 +16,7 @@ interface ListenerType {
     fn: Function;
 }
 
-export const CONSTANT: EventType = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION);
+export const CONSTANT: EventType = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION, MYWEBSITEEVENT);
 // export const CONSTANT: EventType = {
 //     ADDORGANIZATIONMESSAGE: "增加组织信息",
 // };
