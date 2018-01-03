@@ -76,7 +76,7 @@ export class UserOperation extends Vue {
     public rules: FormRuleType = {
         user_name: [
             { required: true, message: "真实姓名不能为空", trigger: "blur" },
-            { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
+            { min: 2, max: 15, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
         ],
         role: [
             { required: true, message: "请添加用户角色", trigger: "blur" },

@@ -4,7 +4,7 @@ import Vue from "vue";
 
 require("./footer.styl");
 @Component({
-    name: "footer",
+    name: "headercomponent",
     template: require("./footer.html"),
     props: {
         message: {
