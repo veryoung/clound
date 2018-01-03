@@ -1,16 +1,16 @@
-import { WiteManagement } from "@views/witemanage/wite.manage";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
+import { WebsiteManagement } from "@views/websitemanage/website.manage";
 
 
 
-export const WiteManageRouter: RouteConfig[] = [
+export const WebsiteManageRouter: RouteConfig[] = [
     {
-        path: "myWite",
+        path: "myWebsite",
         name: "我的网站",
         meta: {
             icon: "icon-yonghuguanli",
         },
-        component: WiteManagement,
+        component: WebsiteManagement,
     },
 ]; 

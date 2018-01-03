@@ -10,15 +10,15 @@ import { SetCol } from "@components/setcol/setcol";
 
 
 
-require("./wite.manage.styl");
+require("./website.manage.styl");
 @Component({
-    name: "witemanagement",
-    template: require("./wite.manage.html"),
+    name: "websitemanagement",
+    template: require("./website.manage.html"),
     components: {
         ModuleTitle, TissueTree, SetCol,  
     },
 })
-export class WiteManagement extends Vue {
+export class WebsiteManagement extends Vue {
     // init computed
 
 
@@ -28,7 +28,7 @@ export class WiteManagement extends Vue {
     // public tableDefault: = 
     // lifecircle hook 
     created() {
-        console.log("i am Wite ");
+        console.log("i am website ");
     }
 
     destroyed() {
