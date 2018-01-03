@@ -55,8 +55,6 @@ module.exports = function (env) {
                             }
                         }
                     ],
-<<<<<<< HEAD
-=======
                     exclude:/\.m\.css$/
                 },
                 {
@@ -79,18 +77,12 @@ module.exports = function (env) {
                             }
                         }
                     ],
->>>>>>> 5885c28f6b8d903da62855dcd6e978ea68f2d360
                 }
             ]
         },
         // plugins: [
-<<<<<<< HEAD
-            // new webpack.NamedModulesPlugin(),
-            // new webpack.HotModuleReplacementPlugin()
-=======
         // new webpack.NamedModulesPlugin(),
         // new webpack.HotModuleReplacementPlugin()
->>>>>>> 5885c28f6b8d903da62855dcd6e978ea68f2d360
         // ]
     })
 }
