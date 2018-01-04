@@ -96,7 +96,11 @@ export class UserOperation extends Vue {
             { required: true, message: "请填写到期日期", trigger: "blur" },
         ],
     };
-
+    public expiryOption: any = {
+        disabledDate(time: any) {
+            return time.getTime() <= new Date(new Date().getTime() - 86400000);
+        },
+    };
     // init lifecircle hook
     created() {
         let that = this;

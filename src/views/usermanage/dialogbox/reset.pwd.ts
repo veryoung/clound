@@ -64,6 +64,7 @@ export class ResetPwd extends Vue {
                                 message: "修改成功",
                                 type: "success"
                             });
+                            this.cancel();
                             break;
                         default:
                             break;
