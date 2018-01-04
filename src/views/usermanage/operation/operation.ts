@@ -15,6 +15,7 @@ import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { roleDict } from "@utils/role.fn";
 
 const Aux = new Auxiliary<string>();
 
@@ -47,6 +48,7 @@ export class UserOperation extends Vue {
     public roleList: RoleType[];
 
     // init data
+    public roleType: string = "";
     public titles: string[] = [];
     public defaultTime: Date = new Date();
     public unwatch: Function = () => { };
@@ -127,24 +129,14 @@ export class UserOperation extends Vue {
         Aux.insertId(eventId1);
 
         this.unwatch = vm.$watch(() => {
-            return this.form.role;
-        }, (val, oldVal) => {
-            if (val !== "sm" && val !== "om" && val !== "am") {
-                this.rules.company = [];
-                this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
+            if (that.form.role) {
+                return roleDict.ufcode(that.form.role);
             } else {
-                delete this.rules.company;
+                return that.form.role;
             }
-
-            if (val !== "am") {
-                this.rules.max_domain_num = [];
-                this.rules.max_domain_num = [
-                    { required: true, message: "网站总数不能为空", trigger: "blur" },
-                    { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
-                    { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
-                ];
-            } else {
-                delete this.rules.max_domain_num;
+        }, (val, oldVal) => {
+            if (val) {
+                this.changeRules(val);
             }
         });
     }
@@ -159,6 +151,27 @@ export class UserOperation extends Vue {
 
 
     // init methods
+    changeRules(val: string) {
+        if (val !== "sm" && val !== "om" && val !== "am") {
+            this.rules.company = [];
+            this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
+        } else {
+            delete this.rules.company;
+        }
+
+        if (val !== "am") {
+            this.rules.max_domain_num = [];
+            this.rules.max_domain_num = [
+                { required: true, message: "网站总数不能为空", trigger: "blur" },
+                { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
+                { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
+            ];
+        } else {
+            delete this.rules.max_domain_num;
+        }
+        this.roleType = val;
+    }
+
     stringToBoolean() {
         this.form.ads_enable = this.form.ads_enable === "1" ? true : false;
         this.form.cdn_enable = this.form.cdn_enable === "1" ? true : false;
