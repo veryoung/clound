@@ -58,7 +58,14 @@
                 </div>
             </el-form-item>
             <el-form-item label="到期时间" prop="expiry_date" >
-                <el-date-picker :editable="false" value-format="yyyyMMdd" v-model="form.expiry_date"  placeholder="选择到期时间"  type="date">
+                <el-date-picker 
+                :editable="false" 
+                value-format="yyyyMMdd" 
+                v-model="form.expiry_date"  
+                placeholder="选择到期时间"  
+                type="date"
+                :picker-options="expiryOption"
+                >
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
