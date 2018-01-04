@@ -222,6 +222,7 @@ export class UserOperation extends Vue {
                                 this.$router.push("/SystemManagement/UserManagement");
                                 break;
                             default:
+                                this.stringToBoolean();
                                 break;
                         }
                     });
@@ -238,6 +239,7 @@ export class UserOperation extends Vue {
                                 this.$router.push("/SystemManagement/UserManagement");
                                 break;
                             default:
+                                this.stringToBoolean();
                                 break;
                         }
                     });
