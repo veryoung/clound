@@ -24,6 +24,7 @@ require("./user.message.styl");
 })
 export class UserMessage extends Vue {
     // init data
+    public unwatch: any = "";
     public userMessage: UserMessageType = {
         uid: "0",
         user_name: "",
@@ -58,6 +59,16 @@ export class UserMessage extends Vue {
         } else {
             this.userMessage = this.personInfo.default;
         }
+        this.unwatch = vm.$watch(function() {
+            return that.$route.params.id;
+        }, (id, oldid) => {
+            if (id) {
+                that.$store.dispatch(USER.GETOTHERUSER, { uid: id });
+            } else {
+                that.userMessage = that.personInfo.default;
+            }
+        });
+
         let eventId = EventBus.register(CONSTANT.GETOTHERUSER, function (event: string, info: any) {
             that.userMessage = that.personInfo[id];
         });
@@ -68,5 +79,6 @@ export class UserMessage extends Vue {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
         });
+        this.unwatch();
     }
 }
