@@ -59,17 +59,12 @@ export class ImportUserFrame extends Vue {
         ElementUI.MessageBox.alert(`<div>${message}</div>`, "提示", {
             dangerouslyUseHTMLString: true
         }).then(() => {
+            let temp: any = this.$refs.upload;
+            temp.clearFiles();
             if (response.status === "suc") {
-
-            } else if (response.status === "error") {
-
+            } else if (response.status === "error") {    
             }
         });
-        /**
-         *         this.$alert("<strong>这是 <i>HTML</i> 片段</strong>", "HTML 片段", {
-          dangerouslyUseHTMLString: true
-        });
-         */
 
     }
     handleClose(done: Function) {

@@ -106,7 +106,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             });
         },
         [USER.DEFAULTUSER]: ({ state, commit, rootState }, payload) => {
-            UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
+            UserServer.getDefaultUser(payload.uid).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 commit(USER.DEFAULTUSER, { uid: payload.uid, message: res.data });
                 EventBus.doNotify(CONSTANT.DEFAULTUSER);
@@ -131,8 +131,10 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             }
         },
         [USER.GETUSERLIST]: ({ state, commit, rootState }, payload) => {
-            if (payload.ori_id in state.userlist && (Math.floor(payload.page) - 1) in state.userlist.ori_id) {
-                EventBus.doNotify(CONSTANT.GETUSERLIST, { id: payload.ori_id });
+            if (payload.ori_id in state.userlist) {
+                if ((Math.floor(payload.page) - 1) in state.userlist[payload.ori_id]) {
+                    EventBus.doNotify(CONSTANT.GETUSERLIST, { id: payload.ori_id });
+                }
             }
             UserServer.getUserList(payload).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;

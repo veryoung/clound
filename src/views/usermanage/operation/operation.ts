@@ -47,6 +47,7 @@ export class UserOperation extends Vue {
     public roleList: RoleType[];
 
     // init data
+    public titles: string[] = [];
     public defaultTime: Date = new Date();
     public unwatch: Function = () => { };
     public roles: RoleType[] = new Array<RoleType>();
@@ -103,6 +104,7 @@ export class UserOperation extends Vue {
     };
     // init lifecircle hook
     created() {
+        this.titles = this.operation === "add" ? ["添加用户"] : ["编辑用户"];
         let that = this;
         let id = this.$route.params.id;
         this.$store.dispatch(USER.GETUSERROLES);

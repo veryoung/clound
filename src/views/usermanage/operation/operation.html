@@ -1,20 +1,20 @@
 <div class="user-operation">
     <AddOrganizationFrame v-if="dialogVisible" :dialogVisible="dialogVisible" @close="close" @importNode="importNode" />
     <div class="panel">
-        <ModuleTitle :titles="['添加用户']" />
+        <ModuleTitle :titles="titles" />
         <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="demo-form">
             <el-form-item label="用户名" prop="user_name">
                 <el-input v-model="form.user_name" ></el-input>
             </el-form-item>
             <el-form-item label="用户角色" prop="role">
-                <el-select v-model="form.role" placeholder="请选择用户角色" >
+                <el-select v-model="form.role" placeholder="请选择用户角色" :disabled="operation === 'editor'">
                     <el-option :key="role.role_id" v-for="role in roles" :label="role.name" :value="role.ufcode"></el-option>
                 </el-select>
             </el-form-item>
-            <!--  sm = 系统管理员， om = 运营 -->
+            <!--  sm = 系统管理员， om = 运营  am = 审计-->
             <el-form-item prop="company" v-if="form.role !== 'sm' && form.role !== 'om' && form.role !== 'am'" label="企业名称">
                 <el-input :disabled="true" v-model="form.company"  style="width:230px;margin-right:10px"></el-input>
-                <el-button  @click="addOrganization">选择</el-button>
+                <el-button  @click="addOrganization" :disabled="operation === 'editor'">选择</el-button>
             </el-form-item>
             <el-form-item label="手机号码" prop="phone">
                 <el-input v-model="form.phone" ></el-input>
@@ -35,7 +35,7 @@
             <el-form-item label="网站总数" prop="max_domain_num" v-if="form.role !== 'am'">
                 <el-input type="age" v-model.number="form.max_domain_num" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="服务项">
+            <el-form-item label="服务项" v-if="form.role !== 'am'">
                 <div class="switch">
                     WEB应用防火墙
                     <el-switch v-model="form.waf_enable">
