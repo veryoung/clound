@@ -108,8 +108,8 @@ module.exports = function (env) {
             moduleCss,
             new CopyWebpackPlugin([
                 {
-                    from: path.resolve(__dirname, '../users_template_opc.xls'),
-                    to: './download/users_template_opc.xls'
+                    from: path.resolve(__dirname, '../users_template_opc.xlsx'),
+                    to: './download/users_template_opc.xlsx'
                 },
             ]),
             new webpack.optimize.UglifyJsPlugin({

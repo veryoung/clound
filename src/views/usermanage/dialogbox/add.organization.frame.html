@@ -1,13 +1,13 @@
 <el-dialog :visible="dialogVisible" width="340px" top="10%" :before-close="handleClose" class="dialog-usermanage">
     <span slot="title" class="dialog-title">
         <span class="iconfont">&#xe63b;</span>
-        导入组织机构
+        选择组织机构
     </span>
     <div class="content-box">
         <TissueTree @clickNode="clickNode"/>
     </div>
     <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="importOrganization()">导入</el-button>
+        <el-button type="primary" @click="importOrganization()">确定</el-button>
         <el-button @click="handleClose()">取消</el-button>
     </span>
 </el-dialog>
