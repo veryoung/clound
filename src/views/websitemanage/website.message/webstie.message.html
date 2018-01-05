@@ -1,0 +1,69 @@
+<div class="website-message">
+    <div class="panel">
+        <ModuleTitle :titles="['网站详情']" />
+        <ul class="basicmessage">
+            <li>
+                <div class="label">网站名称:</div>
+                <div class="message">{{ userMessage.user_name }}</div>
+            </li>
+            <li>
+                <div class="label">网站域名:</div>
+                <div class="message">{{ userMessage.role }}</div>
+            </li>
+            <li>
+                <div class="label">创建人:</div>
+                <div class="message">{{ userMessage.cperson }}</div>
+            </li>
+            <li>
+                <div class="label">所属行业:</div>
+                <div class="message">{{ userMessage.company }}</div>
+            </li>
+            <li>
+                <div class="label">协议类型:</div>
+                <div class="message">{{ userMessage.phone }}</div>
+            </li>
+            <li>
+                <div class="label">回源方式:</div>
+                <div class="message">{{ userMessage.email }}</div>
+            </li>
+            <li>
+                <div class="label">回源地址:</div>
+                <div class="message">{{ userMessage.email }}</div>
+            </li>
+            <li>
+                <div class="label">CNAME别名:</div>
+                <div class="message">{{ userMessage.email }}</div>
+            </li>
+            <li>
+                <div class="label">接入时间:</div>
+                <div class="message">{{ 
+                    userMessage.ctime.substring(0,4)+"-"+
+                    userMessage.ctime.substring(4,6)+"-"+
+                    userMessage.ctime.substring(6,8) 
+                }}</div>
+            </li>
+            <li>
+                <div class="label">接入状态:</div>
+                <div class="message">{{ userMessage.is_active==1?"使用中":"已到期" }}</div>
+            </li>
+            <li>
+                <div class="label">防御状态:</div>
+                <div class="message">{{ userMessage.is_active==1?"使用中":"已到期" }}</div>
+            </li>
+        </ul>
+
+        <ModuleTitle :titles="['服务信息']" />
+
+        <ul class="basicmessage">
+            <li>
+                <div class="label">服务项:</div>
+                <div class="server" style="color:#999">
+                    <div>Web应用防火墙:{{ userMessage.waf_enable==="1"?"开启":"关闭" }}</div>
+                    <div>CC防御:{{ userMessage.ads_enable==="1"?"开启":"关闭" }}</div>
+                    <div>网站替身:{{ userMessage.mirror_enable==="1"?"开启":"关闭" }}</div>
+                    <div>网站加速:{{ userMessage.cdn_enable==="1"?"开启":"关闭" }}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

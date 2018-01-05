@@ -1,0 +1,137 @@
+@import "../../../resource/mixins.styl"
+
+.website-operation
+    common-panel(0,20px)
+    flex-direction column
+    padding-left 40px
+    overflow auto
+    position relative
+    >.panel
+        position absolute
+        width 100%
+        >.website-form
+            width 1000px
+            >.el-form-item
+                >.el-form-item__content
+                    display flex
+                    justify-content flex-start
+                    align-items center
+                    >.switch
+                        margin-right 20px
+                        display flex
+                        align-items baseline
+            .el-input
+                width 300px
+            .el-textarea
+                width 300px
+            .httpTpye 
+                .el-form-item__content
+                    display flex
+                    flex-direction row
+                    .websiteHttp
+                        align-self flex-start
+                        .http
+                            display flex
+                            flex-direction row
+                            .el-checkbox
+                                margin-top 0px
+                            label
+                                margin-top 10px
+                            .httptext 
+                                margin-left 15px 
+                                width 225px
+                        .https
+                            display flex
+                            flex-direction row
+                            margin-top 20px
+                            .el-checkbox
+                                margin-top 0px
+                            label
+                                margin-top 10px
+                            .httpstext 
+                                margin-left 6px
+                                width 225px
+                    .websiteHttpRemark
+                        display flex
+                        flex-direction column
+                        height 85px
+                        margin-left 20px
+                        .httpTpyeRemarkBox
+                            display flex
+                            flex-direction column
+                            span
+                                font-size 10px
+                                line-height 15px
+                                height 24px
+                            .httpTpyeRemark
+                                margin-left 10px 
+                        button
+                            width 88px
+                            margin-top 5px
+            .sourceWay
+                .el-form-item__content
+                    display flex
+                    flex-direction row
+                    .sourceContent
+                        display flex
+                        flex-direction column
+                        .el-radio-group
+                            align-self flex-start
+                            margin-top 10px 
+                        .sourceTag
+                            margin-top 10px
+                            align-self flex-start
+                            display flex
+                            .el-textarea__inner
+                                height 75px
+                            .el-tag
+                                margin-left 10px
+                                overflow hidden
+                                width 120px 
+                                text-overflow ellipsis 
+                                white-space: nowrap
+                                position relative
+                                .el-tag__close
+                                    position absolute
+                                    top 8px
+                                    right  5px
+
+                            .button-new-tag 
+                                margin-left 10px
+                                height 32px
+                                line-height 30px
+                                padding-top 0
+                                padding-bottom 0
+                            .input-new-tag 
+                                width 90px
+                                margin-left 10px
+                                vertical-align bottom
+                    // .sourceRemark
+                    //     height 60px
+                    //     margin-left 20px
+                    //     font-size 10px
+            .defenStatus
+                .el-form-item__content
+                    display flex
+                    flex-direction row
+                    .defenContent
+                        display flex
+                        flex-direction column
+                        .el-radio-group
+                            align-self flex-start
+                            margin-top 10px 
+                        .el-textarea
+                            margin-top 10px
+                            align-self flex-start
+                            height 75px
+                            .el-textarea__inner
+                                height 75px
+                    .defenRemark
+                        height 26px
+                        margin-left 185px
+                        font-size 10px
+            .website-remark
+                .el-textarea
+                    .el-textarea__inner
+                        height 75px
+                                                    

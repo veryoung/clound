@@ -1,0 +1,99 @@
+<div class="website-operation">
+    <UpdateDiploma :dialogVisible="dialogVisibleDiploma" :types = "listType" @close="closeDiploma"/>
+    <div class="panel">
+        <ModuleTitle :titles="['添加网站']" />
+        <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="website-form">
+            <el-form-item label="网站名称" prop="name">
+                <el-input v-model="form.name" placeholder="请输入网站名称"></el-input>
+            </el-form-item>
+            <el-form-item label="网站域名">
+                <el-input v-model="form.domain" placeholder="请输入网站域名"></el-input>
+            </el-form-item>
+            <el-form-item label="所属行业">
+                <div>
+                    <el-radio-group v-model="form.industry" size="medium">
+                        <el-radio-button label="金融" name="金融"></el-radio-button>
+                        <el-radio-button label="能源"></el-radio-button>
+                        <el-radio-button label="电力"></el-radio-button>
+                        <el-radio-button label="军工"></el-radio-button>
+                        <el-radio-button label="党政"></el-radio-button>
+                        <el-radio-button label="交通"></el-radio-button>
+                        <el-radio-button label="广电"></el-radio-button>
+                        <el-radio-button label="通信"></el-radio-button>
+                        <el-radio-button label="企业"></el-radio-button>
+                        <el-radio-button label="其他"></el-radio-button>
+                    </el-radio-group>
+                </div>
+            </el-form-item>
+            <el-form-item label="协议类型" class="httpTpye">
+                <div class="websiteHttp">
+                    <div class="http">
+                        <el-checkbox v-model="httpTpye">HTTP</el-checkbox>
+                        <el-input class="httptext" :disabled= !httpTpye></el-input>
+                    </div>
+                    <div class="https">
+                        <el-checkbox v-model="httpsTpye">HTTPS</el-checkbox>
+                        <el-input class="httpstext" :disabled= !httpsTpye></el-input>
+                    </div>
+                </div>
+                <div class="websiteHttpRemark">
+                    <div class="httpTpyeRemarkBox">
+                        <span>
+                            注：1、一个端口只能对应一种协议，多个请以英文“,”隔开，不能换行，一种协议最多10个端口
+                        </span>
+                        <span class="httpTpyeRemark">
+                            2、端口支持80、443、2000-65535，其中2812、3071、5141、5989、44366、49258端口除外
+                        </span>
+                    </div>
+                    <el-button type="primary" :disabled= !httpsTpye @click="handle('updateDiploma')">上传证书</el-button>
+                </div>
+
+            </el-form-item>
+            <el-form-item label="回源方式" class="sourceWay">
+                <div class="sourceContent">
+                    <el-radio-group v-model="sourceIP" @change="changeSoure">
+                        <el-radio :label="0">回源IP</el-radio>
+                        <el-radio :label="1">回源域名</el-radio>
+                        <!-- <div class="sourceRemark">
+                                <span>
+                                    注：回源IP最多4个
+                                </span>
+                        </div> -->
+                    </el-radio-group>
+                    <div class="sourceTag">
+                        <el-tag :key="tag" v-for="tag in form.source_info" closable :disable-transitions="false" @close="handleClose(tag)">
+                            {{tag}}
+                        </el-tag>
+                        <el-input class="input-new-tag" v-if="inputVisible" v-model="sourceInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm"
+                            @blur="handleInputConfirm">
+                        </el-input>
+                        <el-button v-else v-show="showTag" class="button-new-tag" size="small" @click="showInput">请输入{{sourceIP===0?"回源IP":"回源域名"}}</el-button>
+                    </div>
+                </div>
+
+            </el-form-item>
+            <el-form-item label="防御状态" class="defenStatus">
+                <div class="defenContent">
+                    <el-radio-group v-model="form.open_waf">
+                        <el-radio :label="1">防御</el-radio>
+                        <el-radio :label="0">回源</el-radio>
+                    </el-radio-group>
+                </div>
+                <div class="defenRemark">
+                    <span>
+                        注：防御状态为回源时，网站将不再被防御
+                    </span>
+                </div>
+            </el-form-item>
+            <el-form-item label="备注" class="website-remark">
+                <el-input type="textarea" :rows="2" placeholder="请输入备注内容" v-model="form.remark">
+                </el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
+                <el-button @click="back()">取消</el-button>
+            </el-form-item>
+
+        </el-form>
+    </div>
+</div>

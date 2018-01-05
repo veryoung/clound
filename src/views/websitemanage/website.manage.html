@@ -1,6 +1,110 @@
 <div class="website-manage">
     <div class="form-part">
         <ModuleTitle :titles="titles" />
-        
+        <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px">
+            <el-form-item label="网站名称">
+                <el-input v-model="filter.user_name" placeholder="请输入网站名称" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="网站域名">
+                <el-input v-model="filter.user_name" placeholder="请输入网站域名" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="创建人">
+                <el-input v-model="filter.user_name" placeholder="请输入创建人" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="所属企业">
+                <el-input v-model="filter.user_name" placeholder="请输入所属企业" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="协议类型">
+                <el-select v-model="filter.state" placeholder="状态" size="small">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="服务到期" value="0"></el-option>
+                    <el-option label="使用中" value="1"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="回源方式">
+                <el-select v-model="filter.state" placeholder="状态" size="small">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="服务到期" value="0"></el-option>
+                    <el-option label="使用中" value="1"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="回源地址">
+                <el-input v-model="filter.user_name" placeholder="请输入网站名称" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="添加时间">
+                <el-date-picker value-format="yyyyMMdd" v-model="filter.expiry_date" type="date" size="small" placeholder="选择添加时间">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="接入状态">
+                <el-select v-model="filter.state" placeholder="状态" size="small">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="服务到期" value="0"></el-option>
+                    <el-option label="使用中" value="1"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="防御状态">
+                <el-select v-model="filter.state" placeholder="状态" size="small">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="回源" value="0"></el-option>
+                    <el-option label="防御" value="1"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                <el-button size="small" @click="reset">重置</el-button>
+            </el-form-item>
+        </el-form>
+        <div class="btn-group">
+            <div class="btn-first">
+                <el-button type="primary" @click="handle('add')" size="small">
+                    <span class="iconfont">&#xe61a;</span>
+                    添加
+                </el-button>
+                <el-button type="primary" @click="importUser()" size="small">
+                    <span class="iconfont">&#xe61b;</span>
+                    开启防御
+                </el-button>
+                <el-button type="primary" @click="importUser()" size="small">
+                    <span class="iconfont">&#xe61b;</span>
+                    批量回源
+                </el-button>
+                <el-button type="primary" size="small" @click="exportUser('selected')">
+                    <span class="iconfont">&#xe61e;</span>
+                    <span>导出</span>
+                </el-button>
+                <el-button type="primary" size="small">
+                    <span class="iconfont">&#xe61e;</span>
+                    <span>导出所有</span>
+                    <!-- <a :href="exportLink" target="_blank">导出所有</a> -->
+                </el-button>
+                <div>
+                    已使用 0 个,剩余 989575 个可用,总共 1000000 个
+                </div>
+            </div>
+            <div class="btn-last">
+                <SetCol moduleName="usertable" />
+            </div>
+        </div>
+        <CloudTable moduleName="usertable" :datas="tableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
+            <el-table-column fixed type="selection" width="55" slot="type" align="center">
+            </el-table-column>
+            <el-table-column label="服务项" align="center">
+                <template slot-scope="scope">
+                    <i title="查看用户详情" style="cursor:pointer" class="iconfont">&#xe602;</i>
+                    <i title="编辑用户详情" style="cursor:pointer" class="iconfont">&#xe604;</i>
+                    <i title="重置密码" style="cursor:pointer" class="iconfont">&#xe603;</i>
+                    <i title="删除用户" style="cursor:pointer" class="iconfont">&#xe601;</i>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" align="center">
+                <template slot-scope="scope">
+                    <i title="设置网站" style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe603;</i>
+                    <i title="查看网站" style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
+                    <i title="编辑网站" style="cursor:pointer" class="iconfont">&#xe604;</i>
+                    <i title="删除网站" style="cursor:pointer" class="iconfont">&#xe601;</i>
+                </template>
+            </el-table-column>
+        </CloudTable>
     </div>
 </div>

@@ -1,0 +1,52 @@
+@import "../../../resource/mixins.styl"
+
+.website-settings
+    common-panel(0,20px)
+    // flex-wrap wrap
+    .setting-row
+        .setting-col
+            margin-top 30px
+            display: flex;
+            flex-direction: column;
+           .setting-childrow
+               background #f4f5f7
+               display table-row
+               height 200px
+               margin 0 !important;
+               .childcol-middle
+                   display flex
+                   flex-direction column
+                   height 200px
+                   justify-content center
+               .childcol-right
+                   display flex
+                   flex-direction column
+                   border-left 1px solid #cccccc
+                   height 200px
+                   justify-content center
+                   .childcol-child
+                        text-align left
+                        padding-left 15px
+                        font-size 15px
+                        padding 7px
+                        cursor pointer
+                        .el-select
+                            width 100px   
+               .childcol-left
+                   display flex
+                   flex-direction column
+                   justify-content center
+                   border-right 1px solid #cccccc
+                   height 200px
+               .childcol-left
+                   .setting-icon
+                       font-size: 60px;
+                       border 2px solid #449dbf
+                       height 68px
+                       width  68px
+                       border-radius 50%
+                       margin: 0 auto;
+                       color #449dbf
+                    .setting-content
+                       margin-top 20px
+                       font-size 20px     

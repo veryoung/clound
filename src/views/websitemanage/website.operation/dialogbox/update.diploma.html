@@ -1,0 +1,61 @@
+<el-dialog :visible="dialogVisible" width="700px" top="10%" :before-close="cancel" class="dialog-plane">
+        <span slot="title" class="dialog-title">
+                <span class="iconfont ">&#xe63b;</span>
+                上传证书
+            </span>
+            <div class="content-box" 
+                v-loading="loading" 
+                element-loading-text="拼命加载中" 
+                element-loading-spinner="el-icon-loading" 
+                element-loading-background="rgba(255, 255, 255, 0.8)">
+                <div class="attetion">
+                    <div>
+                        注意:
+                    </div>
+                    <div>
+                        1、上传文件格式只能支持pem格式。
+                    </div>
+                    <div>
+                            2、上传文件大小只能在1M以内
+                    </div>
+                </div>
+                <div class="improt">
+                    <span>
+                        选择证书
+                    </span>
+                    <el-upload ref="upload" 
+                        drag 
+                        action="/portal/api/v20/account/user/excel/" 
+                        :limit="1" 
+                        :auto-upload="false"
+                        :on-success="success"
+                        :before-upload="uploader">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或
+                            <em>点击上传</em>
+                        </div>
+                    </el-upload>
+                </div>
+                <div class="improt">
+                        <span>
+                           选择私钥
+                        </span>
+                        <el-upload ref="upload" 
+                            drag 
+                            action="/portal/api/v20/account/user/excel/" 
+                            :limit="1" 
+                            :auto-upload="false"
+                            :on-success="success"
+                            :before-upload="uploader">
+                            <i class="el-icon-upload"></i>
+                            <div class="el-upload__text">将文件拖到此处，或
+                                <em>点击上传</em>
+                            </div>
+                        </el-upload>
+                </div>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="importUser" :disabled="loading">导入</el-button>
+                <el-button @click="cancel" :disabled="loading">取消</el-button>
+            </span>
+    </el-dialog>
