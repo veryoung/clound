@@ -8,6 +8,7 @@ import { TABLECONFIG } from "@store/table.type";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 import * as moment from "moment";
+import { GeneralServer } from "@server/general";
 
 
 export const UserCenterStore: Module<UserStoreType, any> = {
@@ -43,7 +44,6 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         let personInfo: UserCenterType = {
             "init": message
         };
-        let personCache = session.getItem("personInfo");
         let userlist: UserListType = {
             "init": {
                 "0": [{
@@ -63,7 +63,7 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             }
         };
         return {
-            personInfo: personCache !== null ? personCache : personInfo,
+            personInfo: personInfo,
             userlist: userlist,
             roleList: roleList,
         };
@@ -75,7 +75,6 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         },
         [USER.DEFAULTUSER]: (state: UserStoreType, payload) => {
             state.personInfo["default"] = payload.message;
-            session.setItem("personInfo", state.personInfo);
         },
         [USER.GETOTHERUSER]: (state: UserStoreType, payload) => {
             if (state.personInfo[payload.uid]) {
@@ -83,7 +82,6 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             } else {
                 state.personInfo[payload.uid] = (<any>Object).assign({}, payload.message);
             }
-            session.setItem("personInfo", state.personInfo);
         },
         [USER.GETUSERLIST]: (state: UserStoreType, payload) => {
             if (!state.userlist[payload.ori_id]) {
@@ -106,11 +104,29 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             });
         },
         [USER.DEFAULTUSER]: ({ state, commit, rootState }, payload) => {
-            UserServer.getDefaultUser(payload.uid).then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                commit(USER.DEFAULTUSER, { uid: payload.uid, message: res.data });
+            if (payload && payload.uid) {
                 EventBus.doNotify(CONSTANT.DEFAULTUSER);
-            });
+                UserServer.getDefaultUser(payload.uid).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    commit(USER.DEFAULTUSER, { uid: res.data.uid, message: res.data });
+                    EventBus.doNotify(CONSTANT.DEFAULTUSER);
+                });
+            } else {
+                GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            UserServer.getDefaultUser(res.data.uid).then((response: AxiosResponse<ResType>) => {
+                                let res: ResType = response.data;
+                                commit(USER.DEFAULTUSER, { uid: res.data.uid, message: res.data });
+                                EventBus.doNotify(CONSTANT.DEFAULTUSER);
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
         },
         [USER.GETOTHERUSER]: ({ state, commit, rootState }, payload) => {
             if (payload.uid in state.personInfo) {

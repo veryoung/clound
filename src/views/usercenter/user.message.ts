@@ -54,25 +54,29 @@ export class UserMessage extends Vue {
     created() {
         let that = this;
         let id = this.$route.params.id;
-        if (id) {
-            this.$store.dispatch(USER.GETOTHERUSER, { uid: id });
-        } else {
-            this.userMessage = this.personInfo.default;
-        }
-        this.unwatch = vm.$watch(function() {
-            return that.$route.params.id;
-        }, (id, oldid) => {
+        this.unwatch = vm.$watch(function () {
+            let id = that.$route.params.id;
             if (id) {
                 that.$store.dispatch(USER.GETOTHERUSER, { uid: id });
             } else {
-                that.userMessage = that.personInfo.default;
+                if (that.personInfo && that.personInfo.default) {
+                    that.$store.dispatch(USER.DEFAULTUSER, { uid: that.personInfo.default.uid });
+                } else {
+                    that.$store.dispatch(USER.DEFAULTUSER);
+                }
             }
+            return id;
+        }, (id, oldid) => {
         });
 
         let eventId = EventBus.register(CONSTANT.GETOTHERUSER, function (event: string, info: any) {
             that.userMessage = that.personInfo[id];
         });
+        let eventId1 = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+            that.userMessage = that.personInfo.default;
+        });
         Aux.insertId(eventId);
+        Aux.insertId(eventId1);
     }
 
     beforeDestroy() {
