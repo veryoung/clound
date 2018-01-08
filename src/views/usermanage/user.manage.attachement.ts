@@ -45,13 +45,8 @@ export const filterData: SearchType = {
     sort_expiry_date: ""
 };
 
-interface OptionType {
-    page: number;
-    ori_id: string;
-}
 export class UserManager {
-    handleDel(row: UserListColumnType, opt: OptionType) {
-        const { ori_id, page } = opt;
+    handleDel(row: UserListColumnType, opt: any) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
             UserServer.delUser(row.uid).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
@@ -61,7 +56,7 @@ export class UserManager {
                             message: "删除成功",
                             type: "success"
                         });
-                        Store.dispatch(USER.GETUSERLIST, { ori_id: ori_id, page: page });
+                        Store.dispatch(USER.GETUSERLIST, opt);
                         break;
                     default:
                         break;
