@@ -44,9 +44,9 @@ export class ImportUserFrame extends Vue {
         switch (response.status) {
             case "suc":
                 message = `
-                    <p>导入成功${response.data.success}条</p>
-                    <p>导入失败${response.data.error}条</p>
-                    <p>${response.data.error_info}</p>
+                    <p style="max-height:100px;overflow:auto;">导入成功${response.data.success}条</p>
+                    <p style="max-height:100px;overflow:auto;">导入失败${response.data.error}条</p>
+                    <p style="max-height:100px;overflow:auto;">${response.data.error_info}</p>
                 `;
                 this.loading = false;
                 break;
@@ -56,14 +56,19 @@ export class ImportUserFrame extends Vue {
             default:
                 break;
         }
+        let temp: any = this.$refs.upload;
         ElementUI.MessageBox.alert(`<div>${message}</div>`, "提示", {
-            dangerouslyUseHTMLString: true
+            dangerouslyUseHTMLString: true,
+            beforeClose: (action, instance, done) => {
+                done();
+            }
         }).then(() => {
-            let temp: any = this.$refs.upload;
             temp.clearFiles();
             if (response.status === "suc") {
-            } else if (response.status === "error") {    
+            } else if (response.status === "error") {
             }
+        }).catch(() => {
+            temp.clearFiles();
         });
 
     }
