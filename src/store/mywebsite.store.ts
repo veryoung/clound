@@ -12,9 +12,35 @@ import { TABLECONFIG } from "@store/table.type";
 
 
 
-export const OrganizationStore: Module<MyWebsiteType, any> = {
+export const MyWebsiteStore: Module<MyWebsiteType, any> = {
     state: (): MyWebsiteType => {
         return {
+            websiteEdit: {
+                "init": {
+                    // 防御状态
+                    defense_state: "",
+                    // 域名	string	@mock=test.test.com
+                    domain: "",
+                    // id
+                    id: "init",
+                    //     行业
+                    industry: "",
+                    // 网站名称	string	@mock=test_name
+                    label: "",
+                    // port
+                    port: "",
+                    // http端口	array < string >;
+                    http_port: [],
+                    // https端口	array < string >
+                    https_port: [],
+                    // 	备注
+                    remark: "",
+                    // 回源地址	array < string >	@mock=www.baidu.com
+                    source_info: [],
+                    // 回源类型	string	@mock=CNAME
+                    source_type: ""
+                }
+            },
             websiteMessage: {
                 "init": {
                     id: "",
@@ -135,6 +161,9 @@ export const OrganizationStore: Module<MyWebsiteType, any> = {
         },
         "tableData": function (state) {
             return state.tableData;
+        },
+        "websiteEdit": function (state) {
+            return state.websiteEdit;
         }
     }
 };

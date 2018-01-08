@@ -40,6 +40,7 @@ require("./organization.styl");
 })
 export class OrganizationComponent extends Vue {
     // init data
+    public btnCan: boolean = true;
     public add: boolean = Permissions.judge("SystemManagement.Organization.Add");
     public del: boolean = Permissions.judge("SystemManagement.Organization.Delete");
     public pid: string = "";
@@ -128,6 +129,10 @@ export class OrganizationComponent extends Vue {
         let temp: any = this.$refs[form];
         temp.validate((valid: any) => {
             if (valid) {
+                this.btnCan = false;
+                window.setTimeout(() => {
+                    this.btnCan = true;
+                }, 3000);
                 OrganizationServer.editOrganizationInfo((<any>Object).assign({}, this.form)).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
                     switch (res.status) {

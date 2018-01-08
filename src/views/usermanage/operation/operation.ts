@@ -48,6 +48,7 @@ export class UserOperation extends Vue {
     public roleList: RoleType[];
 
     // init data
+    public btnFlag: boolean = true;
     public roleType: string = "";
     public titles: string[] = [];
     public defaultTime: Date = new Date();
@@ -220,8 +221,12 @@ export class UserOperation extends Vue {
         temp1.validate((valid: boolean) => {
             flag1 = valid;
         });
-        if (flag && flag1) {
+        if (flag && flag1 && this.btnFlag) {
             this.booleanToString();
+            this.btnFlag = false;
+            window.setTimeout(() => {
+                this.btnFlag = true;
+            }, 5000);
             switch (this.operation) {
                 case "add":
                     UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
@@ -259,6 +264,13 @@ export class UserOperation extends Vue {
                 default:
                     break;
             }
+        }
+
+        if (!this.btnFlag) {
+            ElementUI.Message({
+                message: "请你不要点太快，你会把系统点坏的",
+                type: "error"
+            });
         }
     }
 
