@@ -1,15 +1,18 @@
 <div class="website-operation">
-    <UpdateDiploma :dialogVisible="dialogVisibleDiploma" :types = "listType" @close="closeDiploma"/>
+    <UpdateDiploma :dialogVisible="dialogVisibleDiploma"  @close="closeDiploma"/>
     <div class="panel">
         <ModuleTitle :titles="['添加网站']" />
         <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="website-form">
             <el-form-item label="网站名称" prop="name">
                 <el-input v-model="form.name" placeholder="请输入网站名称"></el-input>
             </el-form-item>
-            <el-form-item label="网站域名">
+            <el-form-item label="网站域名" class="websiteName">
                 <el-input v-model="form.domain" placeholder="请输入网站域名"></el-input>
+                <div class="websiteNameText">
+                    注：如果域名相同，则会同步更新https证书、回源方式、防御状态
+                </div>
             </el-form-item>
-            <el-form-item label="所属行业">
+            <el-form-item label="所属行业" class="webstieIndustry">
                 <div>
                     <el-radio-group v-model="form.industry" size="medium">
                         <el-radio-button label="金融" name="金融"></el-radio-button>
