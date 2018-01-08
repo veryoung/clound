@@ -9,6 +9,7 @@ import { FormRuleType } from "@utils/form.validator";
 import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
+import { SubmitBtn } from "@components/submit/submit";
 
 
 
@@ -16,6 +17,9 @@ require("./tip.box.styl");
 @Component({
     name: "tipbox",
     template: require("./tip.box.html"),
+    components: {
+        SubmitBtn
+    },
     props: {
         dialogVisible: {
             type: Boolean,
@@ -39,7 +43,6 @@ export class TipBox extends Vue {
     // init computed
     public OrganizationMessage: Organization;
     // init datas
-    public btnCan: boolean = true;
     public form: MessageType = {
         name: "",
         sname: "",
@@ -68,10 +71,6 @@ export class TipBox extends Vue {
         let temp: any = this.$refs.form;
         temp.validate((valid: boolean) => {
             if (valid) {
-                this.btnCan = false;
-                window.setTimeout(() => {
-                    this.btnCan = true;
-                }, 3000);
                 OrganizationServer.addOrganization(this.form).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
                     switch (res.status) {

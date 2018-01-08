@@ -18,7 +18,7 @@
             </el-form-item>
             <!-- v-if="create" -->
             <el-form-item>
-                <el-button size="small" type="primary" @click="onSubmit('form')" :disabled="!btnCan">确定</el-button>
+                <SubmitBtn @submit="onSubmit('form')"/>
             </el-form-item>
         </el-form>
     </div>

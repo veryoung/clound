@@ -17,6 +17,8 @@ import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { create } from "domain";
 import { Permissions } from "@directives/permissions";
+import { SubmitBtn } from "@components/submit/submit";
+
 
 const Aux = new Auxiliary<string>();
 require("./organization.styl");
@@ -30,7 +32,7 @@ require("./organization.styl");
         }
     },
     components: {
-        ModuleTitle, TissueTree, TipBox
+        ModuleTitle, TissueTree, TipBox, SubmitBtn
     },
     computed: {
         ...mapGetters([
@@ -40,7 +42,6 @@ require("./organization.styl");
 })
 export class OrganizationComponent extends Vue {
     // init data
-    public btnCan: boolean = true;
     public add: boolean = Permissions.judge("SystemManagement.Organization.Add");
     public del: boolean = Permissions.judge("SystemManagement.Organization.Delete");
     public pid: string = "";
@@ -129,10 +130,6 @@ export class OrganizationComponent extends Vue {
         let temp: any = this.$refs[form];
         temp.validate((valid: any) => {
             if (valid) {
-                this.btnCan = false;
-                window.setTimeout(() => {
-                    this.btnCan = true;
-                }, 3000);
                 OrganizationServer.editOrganizationInfo((<any>Object).assign({}, this.form)).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
                     switch (res.status) {
@@ -152,10 +149,5 @@ export class OrganizationComponent extends Vue {
                 return false;
             }
         });
-    }
-
-    resetForm(form: string) {
-        let temp: any = this.$refs[form];
-        temp.resetFields();
     }
 }
