@@ -8,10 +8,40 @@ export const MYWEBSITEEVENT: EventType = {
 export interface MyWebsiteType {
     tableData: TableType;
     websiteMessage: WebType;
+    websiteEdit: WebEditType;
 }
 
 interface WebType {
     [extra: string]: WebMessageType;
+}
+
+interface WebEditType {
+    [extra: string]: WebEditMessageType;
+}
+
+interface WebEditMessageType {
+    // 防御状态
+    defense_state: string;
+    // 域名	string	@mock=test.test.com
+    domain: string;
+    // id
+    id: string;
+    //     行业
+    industry: string;
+    // 网站名称	string	@mock=test_name
+    label: string;
+    // port
+    port: any;
+    // http端口	array < string >;
+    http_port: string[];
+    // https端口	array < string >
+    https_port: string[];
+    // 	备注
+    remark: string;
+    // 回源地址	array < string >	@mock=www.baidu.com
+    source_info: string[];
+    // 回源类型	string	@mock=CNAME
+    source_type: string;
 }
 interface WebMessageType {
     id?: string;
