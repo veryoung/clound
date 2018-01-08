@@ -47,7 +47,7 @@ export class CloudTable extends Vue {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
         });
-        TableServer.setConfig(this.tableConfig[this.moduleName]);
+        TableServer.setConfig({ code: this.moduleName, value: this.tableConfig[this.moduleName] });
     }
 
     // init computed

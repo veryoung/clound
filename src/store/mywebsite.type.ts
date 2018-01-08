@@ -2,7 +2,8 @@ import { EventType } from "@store/store";
 
 export const MYWEBSITEEVENT: EventType = {
     GETLISTMESSAGE: "获取我的网站列表数据",
-    GETWEBMESSAGE: "获取网站详情"
+    GETWEBMESSAGE: "获取网站详情",
+    GETWEBEDIT: "获取网站编辑信息"
 };
 
 export interface MyWebsiteType {

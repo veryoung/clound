@@ -147,7 +147,23 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                 switch (res.status) {
                     case "suc":
                         commit(MYWEBSITEEVENT.GETWEBMESSAGE, { website_id: payload.website_id, message: res.data });
-                        EventBus.doNotify(CONSTANT.GETLISTMESSAGE, { website_id: payload.website_id });
+                        EventBus.doNotify(CONSTANT.GETWEBMESSAGE, { website_id: payload.website_id });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        },
+        [MYWEBSITEEVENT.GETWEBEDIT]: ({ state, commit, rootState }, payload) => {
+            if (payload.website_id in state.websiteEdit) {
+                EventBus.doNotify(CONSTANT.GETWEBEDIT, { website_id: payload.website_id });
+            }
+            MywebsiteServer.getWebsiteEditDetail(payload.website_id).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        commit(MYWEBSITEEVENT.GETWEBEDIT, { website_id: payload.website_id, message: res.data });
+                        EventBus.doNotify(CONSTANT.GETWEBEDIT, { website_id: payload.website_id });
                         break;
                     default:
                         break;

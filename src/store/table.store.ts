@@ -181,7 +181,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
             commit(TABLECONFIG.TOTAL, { moduleName: payload.moduleName, total: payload.total });
         },
         [TABLECONFIG.TABLEALL]: ({ state, commit, rootState }, payload) => {
-            TableServer.getConfig().then((response: AxiosResponse<ResType>) => {
+            TableServer.getConfig(payload.moduleName).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
