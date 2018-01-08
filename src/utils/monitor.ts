@@ -7,7 +7,7 @@ import { session } from "@utils/sessionstorage";
 import { Permissions } from "@directives/permissions";
 
 export class UserStatus {
-    constructor(next: Function) {
+    constructor(next?: Function) {
         GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             if (res.data && res.data.pcode) {
@@ -16,7 +16,9 @@ export class UserStatus {
             switch (res.status) {
                 case "suc":
                     Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
-                    next("/home");
+                    if (next) {
+                        next("/home");
+                    }
                     break;
                 default:
                     break;

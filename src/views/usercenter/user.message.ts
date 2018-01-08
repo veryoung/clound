@@ -7,6 +7,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER } from "@store/user.center.type";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { UserStatus } from "@utils/monitor";
 
 const Aux = new Auxiliary<string>();
 require("./user.message.styl");
@@ -59,11 +60,7 @@ export class UserMessage extends Vue {
             if (id) {
                 that.$store.dispatch(USER.GETOTHERUSER, { uid: id });
             } else {
-                if (that.personInfo && that.personInfo.default) {
-                    that.$store.dispatch(USER.DEFAULTUSER, { uid: that.personInfo.default.uid });
-                } else {
-                    that.$store.dispatch(USER.DEFAULTUSER);
-                }
+                new UserStatus();
             }
             return id;
         }, (id, oldid) => {
