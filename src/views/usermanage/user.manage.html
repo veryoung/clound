@@ -77,7 +77,7 @@
                     <i style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
                     <i style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i> -->
                     <i title="查看用户详情" style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
-                    <i title="编辑用户详情" v-if="scope.row.is_edite==='1'" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
+                    <i title="编辑用户" v-if="scope.row.is_edite==='1'" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
                     <i title="重置密码" style="cursor:pointer" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;</i>
                     <i title="删除用户" v-if="scope.row.is_delete==='1'" style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
                 </template>
