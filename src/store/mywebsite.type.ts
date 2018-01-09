@@ -21,46 +21,61 @@ interface WebEditType {
 }
 
 interface WebEditMessageType {
-    // 防御状态
+    id?: string;
+    // 别名	string	@mock=bcf30118.waf
+    cname: string;
+    // 创建人	string	
+    cperson: string;
+    // 接入时间	string	@mock=17-12-19 15:48:51
+    ctime: string;
+    // 防御状态	
     defense_state: string;
-    // 域名	string	@mock=test.test.com
+    // 域名	string	@mock=test.test.com	
     domain: string;
-    // id
-    id: string;
-    //     行业
+    // industry
     industry: string;
-    // 网站名称	string	@mock=test_name
+    // 网站名称	string	@mock=test_name		
     label: string;
-    // port
-    port: any;
-    // http端口	array < string >;
-    http_port: string[];
-    // https端口	array < string >
-    https_port: string[];
-    // 	备注
+    //     http_port	http端口	array<string>	
+    // https_port	https端口	array<string>	
+    port: PortType;
+    // remark	备注	string	
     remark: string;
-    // 回源地址	array < string >	@mock=www.baidu.com
+    service: ServerType;
+    // 回源地址	array<string>	@mock=www.baidu.com
     source_info: string[];
     // 回源类型	string	@mock=CNAME
     source_type: string;
+    // 接入状态
+    state: string;
 }
 interface WebMessageType {
-    id?: string;
-    // string	@mock=bcf30118.waf
+    // 别名	string	@mock=bcf30118.waf
     cname: string;
-    // string	@mock=17-12-19 15:48:51
+    // 创建人	string	
+    cperson: string;
+    // 接入时间	string	@mock=17-12-19 15:48:51
+    ctime: string;
+    // 防御状态	
+    defense_state: string;
+    // 域名	string	@mock=test.test.com	
     domain: string;
-    // 	
-    service: ServerType;
-    // array<number>	@mock=80
-    http_port: number[];
-    // array<number>	@mock=443
-    https_port: number[];
-    // string;
+    // industry
+    industry: string;
+    // 网站名称	string	@mock=test_name		
     label: string;
-    organization: string;
-    source_info: string;
+    //     http_port	http端口	array<string>	
+    // https_port	https端口	array<string>	
+    port: PortType;
+    // remark	备注	string	
+    remark: string;
+    service: ServerType;
+    // 回源地址	array<string>	@mock=www.baidu.com
+    source_info: string[];
+    // 回源类型	string	@mock=CNAME
     source_type: string;
+    // 接入状态
+    state: string;
 }
 
 interface TableType {

@@ -17,53 +17,83 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
         return {
             websiteEdit: {
                 "init": {
-                    // 防御状态
+                    id: "",
+                    // 别名	string	@mock=bcf30118.waf
+                    cname: "",
+                    // 创建人	string	
+                    cperson: "",
+                    // 接入时间	string	@mock=17-12-19 15:48:51
+                    ctime: "",
+                    // 防御状态	
                     defense_state: "",
-                    // 域名	string	@mock=test.test.com
+                    // 域名	string	@mock=test.test.com	
                     domain: "",
-                    // id
-                    id: "init",
-                    //     行业
+                    // industry
                     industry: "",
-                    // 网站名称	string	@mock=test_name
+                    // 网站名称	string	@mock=test_name		
                     label: "",
-                    // port
-                    port: "",
-                    // http端口	array < string >;
-                    http_port: [],
-                    // https端口	array < string >
-                    https_port: [],
-                    // 	备注
+                    //     http_port	http端口	array<string>	
+                    // https_port	https端口	array<string>	
+                    port: {
+                        // http端口	array < number > [80, 8081]
+                        http: [0],
+                        // https端口	array < number > [443]
+                        https: [0]
+                    },
+                    // remark	备注	string	
                     remark: "",
-                    // 回源地址	array < string >	@mock=www.baidu.com
-                    source_info: [],
+                    service: {
+                        ads_enable: "",
+                        mirror_enable: "",
+                        cdn_enable: "",
+                        waf_enable: ""
+                    },
+                    // 回源地址	array<string>	@mock=www.baidu.com
+                    source_info: [""],
                     // 回源类型	string	@mock=CNAME
-                    source_type: ""
+                    source_type: "",
+                    // 接入状态
+                    state: "",
                 }
             },
             websiteMessage: {
                 "init": {
-                    id: "",
-                    // string	@mock=bcf30118.waf
+                    // 别名	string	@mock=bcf30118.waf
                     cname: "",
-                    // string	@mock=17-12-19 15:48:51
+                    // 创建人	string	
+                    cperson: "",
+                    // 接入时间	string	@mock=17-12-19 15:48:51
+                    ctime: "",
+                    // 防御状态	
+                    defense_state: "",
+                    // 域名	string	@mock=test.test.com	
                     domain: "",
-                    // 	
+                    // industry
+                    industry: "",
+                    // 网站名称	string	@mock=test_name		
+                    label: "",
+                    //     http_port	http端口	array<string>	
+                    // https_port	https端口	array<string>	
+                    port: {
+                        // http端口	array < number > [80, 8081]
+                        http: [0],
+                        // https端口	array < number > [443]
+                        https: [0]
+                    },
+                    // remark	备注	string	
+                    remark: "",
                     service: {
-                        cdn_enable: "",
                         ads_enable: "",
                         mirror_enable: "",
+                        cdn_enable: "",
                         waf_enable: ""
                     },
-                    // array<number>	@mock=80
-                    http_port: [0],
-                    // array<number>	@mock=443
-                    https_port: [0],
-                    // string;
-                    label: "",
-                    organization: "",
-                    source_info: "",
+                    // 回源地址	array<string>	@mock=www.baidu.com
+                    source_info: [""],
+                    // 回源类型	string	@mock=CNAME
                     source_type: "",
+                    // 接入状态
+                    state: "",
                 }
             },
             tableData: {
