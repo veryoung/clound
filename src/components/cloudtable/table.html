@@ -18,6 +18,23 @@
                 :key="$index">
                 <template slot-scope="scope">
                     <span v-if="column.type==='date'" class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | date | none}}</span>     
+                    <span v-else-if="column.type==='website_server'">
+                        <pre>
+                            Web应用防火墙:{{scope.row[column.prop].waf_enable==="1"?"开启":"关闭" }}
+                            CC防御:{{scope.row[column.prop].ads_enable==="1"?"开启":"关闭"}}
+                            网站替身:{{scope.row[column.prop].mirror_enable==="1"?"开启":"关闭"}}
+                            网站加速:{{scope.row[column.prop].cdn_enable==="1"?"开启":"关闭"}}
+                        </pre>
+                    </span>
+                    <span v-else-if="column.type==='website_port'">
+                        <span>
+                            http:
+                            <i v-for="port in scope.row[column.prop].http_port">{{port}}</i>
+                        </span>
+                            https:
+                            <i v-for="port in scope.row[column.prop].https_port">{{port}}</i>
+                        </pre>
+                    </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>
             </el-table-column>
