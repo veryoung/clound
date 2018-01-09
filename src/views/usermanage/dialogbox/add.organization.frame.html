@@ -1,9 +1,9 @@
-<el-dialog :visible="dialogVisible" width="340px" top="10%" :before-close="handleClose" class="dialog-usermanage">
+<el-dialog :visible="dialogVisible" width="340px" top="10%" :before-close="handleClose" class="dialog-plane">
     <span slot="title" class="dialog-title">
         <span class="iconfont">&#xe63b;</span>
         选择组织机构
     </span>
-    <div class="content-box">
+    <div class="dialog-usermanage">
         <TissueTree @clickNode="clickNode"/>
     </div>
     <span slot="footer" class="dialog-footer">
