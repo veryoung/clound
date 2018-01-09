@@ -106,13 +106,12 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         [USER.DEFAULTUSER]: ({ state, commit, rootState }, payload) => {
             if ("default" in state.personInfo) {
                 EventBus.doNotify(CONSTANT.DEFAULTUSER);
-            } else {
-                UserServer.getDefaultUser(payload.uid).then((response: AxiosResponse<ResType>) => {
-                    let res: ResType = response.data;
-                    commit(USER.DEFAULTUSER, { uid: res.data.uid, message: res.data });
-                    EventBus.doNotify(CONSTANT.DEFAULTUSER);
-                });
             }
+            UserServer.getDefaultUser(payload.uid).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                commit(USER.DEFAULTUSER, { uid: res.data.uid, message: res.data });
+                EventBus.doNotify(CONSTANT.DEFAULTUSER);
+            });
         },
         [USER.GETOTHERUSER]: ({ state, commit, rootState }, payload) => {
             if (payload.uid in state.personInfo) {
