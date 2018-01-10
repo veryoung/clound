@@ -12,11 +12,11 @@ export interface MyWebsiteType {
     websiteEdit: WebEditType;
 }
 
-interface WebType {
+export interface WebType {
     [extra: string]: WebMessageType;
 }
 
-interface WebEditType {
+export interface WebEditType {
     [extra: string]: WebEditMessageType;
 }
 
