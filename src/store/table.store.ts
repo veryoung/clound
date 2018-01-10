@@ -97,7 +97,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                     {
                         prop: "port",
                         label: "协议类型",
-                        type: "protocoltype"
+                        type: "website_port",
                     },
                     {
                         prop: "source_type",
@@ -107,7 +107,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                     {
                         prop: "source_info",
                         label: "回源地址",
-                        show: true
+                        show: true,
+                        type: "source_info"
                     },
                     {
                         prop: "cname",
@@ -133,7 +134,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "service",
                         label: "服务项",
                         show: true,
-                        type: "websiteService"
+                        type: "website_server"
                     },
                 ],
                 pageSizes: [10, 20, 30, 40, 50],
