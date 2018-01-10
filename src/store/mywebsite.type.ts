@@ -64,13 +64,13 @@ interface WebEditMessageType {
     // 接入时间	string	@mock=17-12-19 15:48:51
     ctime: string;
     // 防御状态	
-    defense_state: string;
+    open_waf: string;
     // 域名	string	@mock=test.test.com	
     domain: string;
     // industry
     industry: string;
     // 网站名称	string	@mock=test_name		
-    label: string;
+    name: string;
     //     http_port	http端口	array<string>	
     // https_port	https端口	array<string>	
     port: PortType;
@@ -92,7 +92,7 @@ interface WebMessageType {
     // 接入时间	string	@mock=17-12-19 15:48:51
     ctime: string;
     // 防御状态	
-    defense_state: string;
+    open_waf: string;
     // 域名	string	@mock=test.test.com	
     domain: string;
     // industry
@@ -152,11 +152,11 @@ interface ObjType {
 }
 interface PortType {
     // http端口	array < string > [80, 8081]
-    http_port?: string[];
+    http_port?: number[];
     // https端口	array < string > [443]
-    https_port?: string[];
-    http?: string[];
-    https?: string[];
+    https_port?: number[];
+    http?: number[];
+    https?: number[];
 }
 interface ServerType {
     // cc / ddos 防御		0 - 关闭; 1 - 开启

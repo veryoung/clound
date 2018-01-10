@@ -25,20 +25,20 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // 接入时间	string	@mock=17-12-19 15:48:51
                     ctime: "",
                     // 防御状态	
-                    defense_state: "",
+                    open_waf: "",
                     // 域名	string	@mock=test.test.com	
                     domain: "",
                     // industry
                     industry: "",
                     // 网站名称	string	@mock=test_name		
-                    label: "",
+                    name: "",
                     //     http_port	http端口	array<string>	
                     // https_port	https端口	array<string>	
                     port: {
                         // http端口	array < number > [80, 8081]
-                        https_port: [""],
+                        https_port: [0],
                         // https端口	array < number > [443]
-                        http_port: [""]
+                        http_port: [0]
                     },
                     // remark	备注	string	
                     remark: "",
@@ -65,7 +65,7 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // 接入时间	string	@mock=17-12-19 15:48:51
                     ctime: "",
                     // 防御状态	
-                    defense_state: "",
+                    open_waf: "",
                     // 域名	string	@mock=test.test.com	
                     domain: "",
                     // industry
@@ -76,9 +76,9 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // https_port	https端口	array<string>	
                     port: {
                         // http端口	array < number > [80, 8081]
-                        http_port: [""],
+                        http_port: [0],
                         // https端口	array < number > [443]
-                        https_port: [""]
+                        https_port: [0]
                     },
                     // remark	备注	string	
                     remark: "",
@@ -125,8 +125,8 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // 	接入状态		直接显示
                     state: "",
                     port: {
-                        http: [""],
-                        https: [""]
+                        http: [0],
+                        https: [0]
                     },
                     service: {
                         cdn_enable: "",
