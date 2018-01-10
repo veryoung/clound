@@ -36,9 +36,9 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // https_port	https端口	array<string>	
                     port: {
                         // http端口	array < number > [80, 8081]
-                        http: [0],
+                        https_port: [""],
                         // https端口	array < number > [443]
-                        https: [0]
+                        http_port: [""]
                     },
                     // remark	备注	string	
                     remark: "",
@@ -76,9 +76,9 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // https_port	https端口	array<string>	
                     port: {
                         // http端口	array < number > [80, 8081]
-                        http: [0],
+                        http_port: [""],
                         // https端口	array < number > [443]
-                        https: [0]
+                        https_port: [""]
                     },
                     // remark	备注	string	
                     remark: "",
@@ -125,8 +125,8 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // 	接入状态		直接显示
                     state: "",
                     port: {
-                        http: [0],
-                        https: [0]
+                        http: [""],
+                        https: [""]
                     },
                     service: {
                         cdn_enable: "",

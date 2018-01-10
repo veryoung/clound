@@ -151,10 +151,12 @@ interface ObjType {
     [extra: string]: string;
 }
 interface PortType {
-    // http端口	array < number > [80, 8081]
-    http: number[];
-    // https端口	array < number > [443]
-    https: number[];
+    // http端口	array < string > [80, 8081]
+    http_port?: string[];
+    // https端口	array < string > [443]
+    https_port?: string[];
+    http?: string[];
+    https?: string[];
 }
 interface ServerType {
     // cc / ddos 防御		0 - 关闭; 1 - 开启
