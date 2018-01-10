@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 import { ModuleTitle } from "@components/title/module.title";
@@ -76,7 +75,7 @@ export class UserPwd extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            ElementUI.Message({
+                            this.$message({
                                 message: res.message || "修改密码成功",
                                 type: "success"
                             });

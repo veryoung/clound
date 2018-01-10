@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 import { ModuleTitle } from "@components/title/module.title";
@@ -230,7 +229,7 @@ export class UserOperation extends Vue {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                ElementUI.Message({
+                                this.$message({
                                     message: "添加用户成功",
                                     type: "success"
                                 });
@@ -247,7 +246,7 @@ export class UserOperation extends Vue {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                ElementUI.Message({
+                                this.$message({
                                     message: "编辑用户成功",
                                     type: "success"
                                 });

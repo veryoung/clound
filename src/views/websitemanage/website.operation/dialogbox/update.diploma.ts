@@ -1,10 +1,9 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import {UserServer} from "@server/user";
-import {ResType} from "server";
-import ElementUI from "element-ui";
-import {FormRuleType, FromValidator} from "@utils/form.validator";
-import {AxiosResponse} from "axios";
+import { UserServer } from "@server/user";
+import { ResType } from "server";
+import { FormRuleType, FromValidator } from "@utils/form.validator";
+import { AxiosResponse } from "axios";
 
 const style = require("./update.m.css");
 
@@ -23,7 +22,7 @@ export class UpdateDiploma extends Vue {
     public dialogVisible: boolean;
     public loading: boolean = false;
     // lifecycle hook
-    created() {}
+    created() { }
 
     // init method
 
@@ -36,7 +35,7 @@ export class UpdateDiploma extends Vue {
         if (/\.xls$/.test(file.name) || /\.xlsx$/.test(file.name)) {
             this.loading = true;
         } else {
-            this.$message({message: "请导入指定的模板文件", type: "info"});
+            this.$message({ message: "请导入指定的模板文件", type: "info" });
             return false;
         }
     }
@@ -58,17 +57,9 @@ export class UpdateDiploma extends Vue {
             default:
                 break;
         }
-        ElementUI
-            .MessageBox
-            .alert(`<div>${message}</div>`, "提示", {dangerouslyUseHTMLString: true})
-            .then(() => {
-                if (response.status === "suc") {} else if (response.status === "error") {}
-            });
-        /**
-       *         this.$alert("<strong>这是 <i>HTML</i> 片段</strong>", "HTML 片段", {
-        dangerouslyUseHTMLString: true
-      });
-       */
+        this.$msgbox.alert(`<div>${message}</div>`, "提示", { dangerouslyUseHTMLString: true }).then(() => {
+            if (response.status === "suc") { } else if (response.status === "error") { }
+        });
 
     }
     cancel(done: Function) {

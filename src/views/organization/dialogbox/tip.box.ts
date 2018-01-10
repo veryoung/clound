@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 import { MessageType, Organization, ORGANIZATION } from "@store/organization.type";
@@ -76,7 +75,7 @@ export class TipBox extends Vue {
                     switch (res.status) {
                         case "suc":
                             // 'success' | 'warning' | 'info' | 'error'
-                            ElementUI.Message({
+                            this.$message({
                                 message: res.message || "组织机构添加成功",
                                 type: "success"
                             });

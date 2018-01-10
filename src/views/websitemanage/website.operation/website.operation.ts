@@ -3,7 +3,6 @@ import { FormRuleType } from "@utils/form.validator";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 import { ModuleTitle } from "@components/title/module.title";

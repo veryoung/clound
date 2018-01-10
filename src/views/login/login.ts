@@ -1,6 +1,5 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-import ElementUI from "element-ui";
 
 
 import { GeneralServer } from "@server/general";

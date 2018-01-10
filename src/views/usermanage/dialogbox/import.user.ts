@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { ResType } from "server";
-import ElementUI from "element-ui";
 
 require("./import.user.styl");
 @Component({
@@ -57,7 +56,7 @@ export class ImportUserFrame extends Vue {
                 break;
         }
         let temp: any = this.$refs.upload;
-        ElementUI.MessageBox.alert(`<div>${message}</div>`, "提示", {
+        this.$msgbox.alert(`<div>${message}</div>`, "提示", {
             dangerouslyUseHTMLString: true,
             beforeClose: (action, instance, done) => {
                 done();
