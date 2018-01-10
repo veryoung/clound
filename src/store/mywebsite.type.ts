@@ -7,7 +7,7 @@ export const MYWEBSITEEVENT: EventType = {
 };
 
 export interface MyWebsiteType {
-    tableData: TableType;
+    tableData: WebsiteTableType;
     websiteMessage: WebType;
     websiteEdit: WebEditType;
 }
@@ -78,7 +78,7 @@ interface WebMessageType {
     state: string;
 }
 
-interface TableType {
+interface WebsiteTableType {
     [extra: string]: TableCloums[];
 }
 interface TableCloums {
