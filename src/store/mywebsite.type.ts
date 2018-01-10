@@ -3,13 +3,15 @@ import { EventType } from "@store/store";
 export const MYWEBSITEEVENT: EventType = {
     GETLISTMESSAGE: "获取我的网站列表数据",
     GETWEBMESSAGE: "获取网站详情",
-    GETWEBEDIT: "获取网站编辑信息"
+    GETWEBEDIT: "获取网站编辑信息",
+    GETWEBSITECONFIG: "获取网站配置信息"
 };
 
 export interface MyWebsiteType {
     tableData: WebsiteTableType;
     websiteMessage: WebType;
     websiteEdit: WebEditType;
+    websiteConfig: WebSiteConfig;
 }
 
 export interface WebType {
@@ -18,6 +20,39 @@ export interface WebType {
 
 export interface WebEditType {
     [extra: string]: WebEditMessageType;
+}
+
+export interface WebSiteConfig {
+    [extra: string]: WebSiteConfigType;
+}
+
+interface WebSiteConfigType {
+    // CC开关	string	0-关闭;1-开启;不是该操作则不传
+    ads_enable: string;
+    // 缓存黑名单	string	@mock=cache_url_black
+    cache_url_black: string;
+    // 缓存url列表	array<string>	
+    cache_urls: string[];
+    // cdn开关	string	0-关闭;1-开启;不是该操作则不传
+    cdn_enable: string;
+    // 镜像开关	string	0-关闭;1-开启;不是该操作则不传	
+    mirror_enable: string;
+    // 	镜像周期		没有设置为-1
+    mirror_interval: number;
+    // 镜像URL列表	array<string>	
+    mirror_urls: string[];
+    // waf开关	string	0-关闭;1-开启;不是该操作则不传
+    waf_enable: string;
+    // 防盗链白名单	array<string>	@mock=waf_hotlink_white
+    waf_hotlink_white: string[];
+    // 防火墙ip黑名单	array<string>	@mock=waf_ip_black
+    waf_ip_black: string[];
+    // 防火墙ip白名单	array<string>	@mock=waf_ip_white
+    waf_ip_white: string[];
+    // 防火墙url白名单	array<string>	@mock=waf_url_black
+    waf_url_black: string[];
+    // 防火墙url黑名单	array<string>	@mock=waf_url_white
+    waf_url_white: string[];
 }
 
 interface WebEditMessageType {
@@ -78,7 +113,7 @@ interface WebMessageType {
     state: string;
 }
 
-interface WebsiteTableType {
+export interface WebsiteTableType {
     [extra: string]: TableCloums[];
 }
 interface TableCloums {
@@ -97,7 +132,7 @@ interface TableCloums {
     // 可编辑		0-关闭;1-开启
     is_update: string;
     // 网站名称	string	@mock=test_name
-    label: string;
+    name: string;
     // 防御状态		直接显示
     open_waf: string;
     // 	所属组织	string	@mock=org
