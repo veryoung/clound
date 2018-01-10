@@ -17,7 +17,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "uid",
                         label: "用户id",
                         show: false,
-                        disable: true
+                        disable: true,
+                        nonexit: true
                     },
                     {
                         prop: "user_name",

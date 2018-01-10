@@ -6,7 +6,7 @@
         </el-button>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item v-for="(item,index) in columns" :key='index'>
-                <el-checkbox v-model="item.show" :disabled="item.disable">{{item[keyName]}}</el-checkbox>
+                <el-checkbox v-model="item.show" :disabled="item.disable" v-if="!item.nonexit">{{item[keyName]}}</el-checkbox>
             </el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
