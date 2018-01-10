@@ -25,20 +25,20 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // 接入时间	string	@mock=17-12-19 15:48:51
                     ctime: "",
                     // 防御状态	
-                    defense_state: "",
+                    open_waf: "",
                     // 域名	string	@mock=test.test.com	
                     domain: "",
                     // industry
                     industry: "",
                     // 网站名称	string	@mock=test_name		
-                    label: "",
+                    name: "",
                     //     http_port	http端口	array<string>	
                     // https_port	https端口	array<string>	
                     port: {
                         // http端口	array < number > [80, 8081]
-                        http: [0],
+                        https_port: [0],
                         // https端口	array < number > [443]
-                        https: [0]
+                        http_port: [0]
                     },
                     // remark	备注	string	
                     remark: "",
@@ -65,7 +65,7 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // 接入时间	string	@mock=17-12-19 15:48:51
                     ctime: "",
                     // 防御状态	
-                    defense_state: "",
+                    open_waf: "",
                     // 域名	string	@mock=test.test.com	
                     domain: "",
                     // industry
@@ -76,9 +76,9 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // https_port	https端口	array<string>	
                     port: {
                         // http端口	array < number > [80, 8081]
-                        http: [0],
+                        http_port: [0],
                         // https端口	array < number > [443]
-                        https: [0]
+                        https_port: [0]
                     },
                     // remark	备注	string	
                     remark: "",
@@ -113,7 +113,7 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     // 可编辑		0-关闭;1-开启
                     is_update: "",
                     // 网站名称	string	@mock=test_name
-                    label: "",
+                    name: "",
                     // 防御状态		直接显示
                     open_waf: "",
                     // 	所属组织	string	@mock=org
@@ -135,6 +135,36 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                         waf_enable: ""
                     }
                 }]
+            },
+            websiteConfig: {
+                "init": {
+                    // CC开关	string	0-关闭;1-开启;不是该操作则不传
+                    ads_enable: "",
+                    // 缓存黑名单	string	@mock=cache_url_black
+                    cache_url_black: "",
+                    // 缓存url列表	array<string>	
+                    cache_urls: [""],
+                    // cdn开关	string	0-关闭;1-开启;不是该操作则不传
+                    cdn_enable: "",
+                    // 镜像开关	string	0-关闭;1-开启;不是该操作则不传	
+                    mirror_enable: "",
+                    // 	镜像周期		没有设置为-1
+                    mirror_interval: -1,
+                    // 镜像URL列表	array<string>	
+                    mirror_urls: [""],
+                    // waf开关	string	0-关闭;1-开启;不是该操作则不传
+                    waf_enable: "",
+                    // 防盗链白名单	array<string>	@mock=waf_hotlink_white
+                    waf_hotlink_white: [""],
+                    // 防火墙ip黑名单	array<string>	@mock=waf_ip_black
+                    waf_ip_black: [""],
+                    // 防火墙ip白名单	array<string>	@mock=waf_ip_white
+                    waf_ip_white: [""],
+                    // 防火墙url白名单	array<string>	@mock=waf_url_black
+                    waf_url_black: [""],
+                    // 防火墙url黑名单	array<string>	@mock=waf_url_white
+                    waf_url_white: [""],
+                }
             }
         };
     },
@@ -149,6 +179,12 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
         [MYWEBSITEEVENT.GETWEBMESSAGE]: (state, payload) => {
             state.websiteMessage[payload.website_id] = payload.message;
         },
+        [MYWEBSITEEVENT.GETWEBEDIT]: (state, payload) => {
+            state.websiteEdit[payload.website_id] = payload.message;
+        },
+        [MYWEBSITEEVENT.GETWEBSITECONFIG]: (state, payload) => {
+            state.websiteConfig[payload.website_id] = payload.message;
+        }
     },
     actions: {
         [MYWEBSITEEVENT.GETLISTMESSAGE]: ({ state, commit, rootState }, payload) => {
@@ -199,7 +235,23 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                         break;
                 }
             });
-        }
+        },
+        [MYWEBSITEEVENT.GETWEBSITECONFIG]: ({ state, commit, rootState }, payload) => {
+            if (payload.website_id in state.websiteConfig) {
+                EventBus.doNotify(CONSTANT.GETWEBSITECONFIG, { website_id: payload.website_id });
+            }
+            MywebsiteServer.getWebsiteFnDate(payload.website_id).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        commit(MYWEBSITEEVENT.GETWEBSITECONFIG, { website_id: payload.website_id, message: res.data });
+                        EventBus.doNotify(CONSTANT.GETWEBSITECONFIG, { website_id: payload.website_id });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        },
     },
     getters: {
         "websiteMessage": function (state) {
@@ -210,6 +262,9 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
         },
         "websiteEdit": function (state) {
             return state.websiteEdit;
+        },
+        "websiteConfig": function (state) {
+            return state.websiteConfig;
         }
     }
 };

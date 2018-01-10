@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 
@@ -95,12 +94,12 @@ export class OrganizationComponent extends Vue {
     }
 
     delNode(opt: any) {
-        ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
+        this.$msgbox.confirm("确定要删除嘛？", "提示").then(() => {
             OrganizationServer.delOrganization(opt.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        ElementUI.Message({
+                        this.$message({
                             message: "删除成功",
                             type: "success"
                         });
@@ -134,7 +133,7 @@ export class OrganizationComponent extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            ElementUI.Message({
+                            this.$message({
                                 message: res.message || "修改成功",
                                 type: "success"
                             });

@@ -19,21 +19,31 @@
                 <template slot-scope="scope">
                     <span v-if="column.type==='date'" class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | date | none}}</span>     
                     <span v-else-if="column.type==='website_server'">
-                        <pre>
+                        <p class="ellipsis turn_left margin5-0" :title="scope.row[column.prop].waf_enable==='1'?'开启':'关闭'">
                             Web应用防火墙:{{scope.row[column.prop].waf_enable==="1"?"开启":"关闭" }}
+                        </p>
+                        <p class="ellipsis turn_left margin5-0">
                             CC防御:{{scope.row[column.prop].ads_enable==="1"?"开启":"关闭"}}
+                        </p>
+                        <p class="ellipsis turn_left margin5-0">
                             网站替身:{{scope.row[column.prop].mirror_enable==="1"?"开启":"关闭"}}
+                        </p>
+                        <p class="ellipsis turn_left margin5-0">
                             网站加速:{{scope.row[column.prop].cdn_enable==="1"?"开启":"关闭"}}
-                        </pre>
+                        </p>
                     </span>
                     <span v-else-if="column.type==='website_port'">
-                        <span>
+                        <p class="ellipsis turn_left margin5-0">
                             http:
-                            <i v-for="port in scope.row[column.prop].http_port">{{port}}</i>
-                        </span>
+                            <span v-for="port in scope.row[column.prop].http_port">{{port}}</span>
+                        </p>
+                        <p class="ellipsis turn_left margin5-0">
                             https:
-                            <i v-for="port in scope.row[column.prop].https_port">{{port}}</i>
-                        </pre>
+                            <span v-for="port in scope.row[column.prop].https_port">{{port}}</span>
+                        </p>
+                    </span>
+                    <span v-else-if="column.type==='source_info'" class="ellipsis" :title="scope.row[column.prop]">
+                        <span v-for="item in scope.row[column.prop]">{{item}}</span>
                     </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>

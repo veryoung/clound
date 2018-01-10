@@ -1,5 +1,5 @@
 import { TableConfigType } from "@store/table.type";
-import { MYWEBSITEEVENT, MyWebsiteType, } from "@store/mywebsite.type";
+import { MYWEBSITEEVENT, MyWebsiteType, WebsiteTableType } from "@store/mywebsite.type";
 import { CloudTable } from "@components/cloudtable/table";
 import Component from "vue-class-component";
 import Vue from "vue";

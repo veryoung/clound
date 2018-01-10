@@ -1,9 +1,9 @@
+import { WebsiteOperation } from "@views/websitemanage/website.operation/website.operation";
 import { WebsiteSettings } from "@views/websitemanage/website.settings/website.settings";
 import { WebsiteManagement } from "@views/websitemanage/website.manage";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 import { WebsiteMessage } from "@views/websitemanage/website.message/webstie.message";
-import { WebsiteOperation } from "@views/websitemanage/website.operation/website.operation";
 
 
 
@@ -25,6 +25,18 @@ export const WebsiteManageRouter: RouteConfig[] = [
         },
         props: {
             operation: "add"
+        },
+        component: WebsiteOperation,
+    },
+    {
+        path: "myWebsite/editor/:id",
+        name: "编辑网站",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        props: {
+            operation: "editor"
         },
         component: WebsiteOperation,
     },

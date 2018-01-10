@@ -17,7 +17,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "uid",
                         label: "用户id",
                         show: false,
-                        disable: true
+                        disable: true,
+                        nonexit: true
                     },
                     {
                         prop: "user_name",
@@ -83,21 +84,28 @@ export const TableConfigStore: Module<TableConfigType, any> = {
             "mywebsitetable": {
                 columns: [
                     {
-                        prop: "label",
+                        prop: "name",
                         label: "网站名称",
+                        show: true
+
                     },
                     {
                         prop: "domain",
                         label: "网站域名",
+                        show: true
+
                     },
                     {
                         prop: "organization",
                         label: "所属组织",
+                        show: true
+
                     },
                     {
                         prop: "port",
                         label: "协议类型",
-                        type: "protocoltype"
+                        type: "website_port",
+                        show: true
                     },
                     {
                         prop: "source_type",
@@ -107,7 +115,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                     {
                         prop: "source_info",
                         label: "回源地址",
-                        show: true
+                        show: true,
+                        type: "source_info"
                     },
                     {
                         prop: "cname",
@@ -118,6 +127,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "ctime",
                         label: "创建时间",
                         show: true,
+                        type: "date",
                     },
                     {
                         prop: "state",
@@ -133,7 +143,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "service",
                         label: "服务项",
                         show: true,
-                        type: "websiteService"
+                        type: "website_server"
                     },
                 ],
                 pageSizes: [10, 20, 30, 40, 50],
