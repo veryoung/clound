@@ -5,14 +5,33 @@
 // source_info	源ip或源域名	array<string>	IP或域名数组 eg: ["a.baidu.com", "b.baidu.com"]
 // source_type	回源类型	string	A/CNAME
 
-export default interface FormType {
+export interface FormType {
     cid: string;
     domain: string;
-    http_port: Array < number >;
-    https_port: Array < number >;
+    http_port: any ;
+    https_port: any;
     industry: string;
     name: string;
     open_waf: number;
     source_info: Array < string >;
     source_type: string;
+    remark: string;
+    id: string;
+}
+
+
+interface PortArray {
+    http: Array<number>;
+    https: Array<number>;
+}
+export interface WebSiteEditType {
+    defense_state:  string;
+    domain: string;	
+    id: string;			
+    industry: string;		
+    label: string;	
+    port: Array<PortArray>;
+    remark:	string;		
+    source_info: Array<string>;		
+    source_type: string;		
 }

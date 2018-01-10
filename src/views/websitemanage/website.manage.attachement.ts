@@ -1,3 +1,6 @@
+import { ResType } from "server";
+import { AxiosResponse } from "axios";
+import { MywebsiteServer } from "@server/mywebsite";
 import ElementUI from "element-ui";
 // 变量名	含义	类型	备注
 // cperson	创建人	string	
@@ -21,6 +24,7 @@ export default interface SearchType {
     source_info?: string;
     source_type?: string;
     state?: string;
+    ctime?: string;
 }
 
 export const filterData: SearchType = {
@@ -34,6 +38,7 @@ export const filterData: SearchType = {
     source_info: "",
     source_type: "",
     state: "",
+    ctime: ""
 };
 
 
@@ -60,6 +65,7 @@ export interface WebsiteListColumnType {
     id: string;
     is_delete: string;
     is_update: string;
+    name: string;
     open_waf: string;
     organization: string;
     port: Array<PortArray>;
@@ -81,40 +87,82 @@ export interface ServiceArray {
     waf_enable: number;	
 }
 
-
-export interface WebListColumnType {
-    company: string;
-    cperson: string;
-    ctime: string;
-    email: string;
-    expiry_date: string;
-    is_active: string;
-    is_delete: string;
-    is_edite: string;
-    phone: string;
-    role: string;
-    user_name: string;
-    uid: string;
+export interface WebSiteCompanyListType {
+    [extra: string]: WebSiteListType;
+}
+export interface WebSiteListType {
+    data: WebSiteStructure;
+    total: number;
 }
 
+export interface WebSiteStructure {
+    [extra: number]: Array<WebsiteListColumnType>;
+}
+interface ServerType {
+    // cc / ddos 防御		0 - 关闭; 1 - 开启
+    cdn_enable: string;
+    ads_enable: string;
+    mirror_enable: string;
+    waf_enable: string;
+}
+
+interface PortType {
+    // cc / ddos 防御		0 - 关闭; 1 - 开启
+    http_port: Array<number>;
+    https_port: Array<number>;
+}
+export interface WebMessageType {
+    // 别名	string	@mock=bcf30118.waf
+    cname: string;
+    // 创建人	string	
+    cperson: string;
+    // 接入时间	string	@mock=17-12-19 15:48:51
+    ctime: string;
+    // 防御状态	
+    open_waf: string;
+    // 域名	string	@mock=test.test.com	
+    domain: string;
+    // industry
+    industry: string;
+    // 网站名称	string	@mock=test_name		
+    port: PortType;
+    // remark	备注	string	
+    remark: string;
+    service: ServerType;
+    // 回源地址	array<string>	@mock=www.baidu.com
+    source_info: string[];
+    // 回源类型	string	@mock=CNAME
+    source_type: string;
+    // 接入状态
+    state: string;
+    id?: string;
+    name: string;
+    
+}
+
+export interface WebMessagePageType {
+    [extra: string]: WebMessageType;
+}
 export class WebsiteManager {
-    handleDel(row: WebListColumnType) {
+    handleDel(row: WebsiteListColumnType) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
-            // UserServer.delUser(row.uid).then((response: AxiosResponse<ResType>) => {
-            //     let res: ResType = response.data;
-            //     switch (res.status) {
-            //         case "suc":
-            //             ElementUI.Message({
-            //                 message: "删除成功",
-            //                 type: "success"
-            //             });
-            //             break;
-            //         default:
-            //             break;
-            //     }
-            // });
+            MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        ElementUI.Message({
+                            message: "删除成功",
+                            type: "success"
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            });
         }).catch(() => {
 
         });
     }
 }
+
+export const WebsiteManagerController = new WebsiteManager();

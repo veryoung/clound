@@ -2,7 +2,6 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
-import ElementUI from "element-ui";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 

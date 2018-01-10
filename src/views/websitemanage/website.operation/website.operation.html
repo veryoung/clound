@@ -1,12 +1,12 @@
 <div class="website-operation">
-    <UpdateDiploma :dialogVisible="dialogVisibleDiploma"  @close="closeDiploma"/>
+    <UpdateDiploma :dialogVisible="dialogVisibleDiploma" @close="closeDiploma" />
     <div class="panel">
-        <ModuleTitle :titles="['添加网站']" />
+        <ModuleTitle :titles="titles" />
         <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="website-form">
             <el-form-item label="网站名称" prop="name">
                 <el-input v-model="form.name" placeholder="请输入网站名称"></el-input>
             </el-form-item>
-            <el-form-item label="网站域名" class="websiteName">
+            <el-form-item label="网站域名" class="websiteName" prop="domain">
                 <el-input v-model="form.domain" placeholder="请输入网站域名"></el-input>
                 <div class="websiteNameText">
                     注：如果域名相同，则会同步更新https证书、回源方式、防御状态
@@ -31,24 +31,50 @@
             <el-form-item label="协议类型" class="httpTpye">
                 <div class="websiteHttp">
                     <div class="http">
-                        <el-checkbox v-model="httpTpye">HTTP</el-checkbox>
-                        <el-input class="httptext" :disabled= !httpTpye></el-input>
+                        <div class="httpTotalBox">
+                            <el-checkbox v-model="httpTpye" @change="chooseHttpType">HTTP</el-checkbox>
+                            <div class="httpTpyeRemarkBox">
+                                <span>
+                                    注：1、一个端口只能对应一种协议，一种协议最多10个端口
+                                </span>
+                                <span class="httpTpyeRemark">
+                                    2、端口支持80、443、2000-65535，其中2812、3071、5141、5989、44366、49258端口除外
+                                </span>
+                            </div>
+                        </div>
+                        <div class="httpTag">
+                            <el-tag :key="tag" v-for="tag in form.http_port" closable :disable-transitions="false" @close="handleHttpClose(tag)">
+                                {{tag}}
+                            </el-tag>
+                            <el-input class="input-new-tag" v-if="HttpInputVisible" v-model="HttpInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleHttpInputConfirm"
+                                @blur="handleHttpInputConfirm">
+                            </el-input>
+                            <el-button v-else v-show="showHttpTag" class="button-new-tag" size="small" @click="showHttpInput">请输入Http端口</el-button>
+                        </div>
                     </div>
                     <div class="https">
-                        <el-checkbox v-model="httpsTpye">HTTPS</el-checkbox>
-                        <el-input class="httpstext" :disabled= !httpsTpye></el-input>
+                        <div class="httpsTotalBox">
+                            <el-checkbox v-model="httpsTpye" @change="chooseHttpType">HTTPS</el-checkbox>
+                            <div class="httpsTpyeRemarkBox">
+                                <el-button type="primary" :disabled="!httpsTpye" @click="handle('updateDiploma')">上传证书</el-button>
+                            </div>
+                        </div>
+                        <div class="httpsTag">
+                            <el-tag :key="tag" v-for="tag in form.https_port" closable :disable-transitions="false" @close="handleHttpsClose(tag)">
+                                {{tag}}
+                            </el-tag>
+                            <el-input class="input-new-tag" v-if="HttpsInputVisible" v-model="HttpsInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleHttpsInputConfirm"
+                                @blur="handleHttpsInputConfirm">
+                            </el-input>
+                            <el-button v-else v-show="showHttpsTag" :disabled="!httpsTpye" class="button-new-tag" size="small" @click="showHttpsInput">请输入Https端口</el-button>
+                        </div>
+
+
+
                     </div>
                 </div>
                 <div class="websiteHttpRemark">
-                    <div class="httpTpyeRemarkBox">
-                        <span>
-                            注：1、一个端口只能对应一种协议，多个请以英文“,”隔开，不能换行，一种协议最多10个端口
-                        </span>
-                        <span class="httpTpyeRemark">
-                            2、端口支持80、443、2000-65535，其中2812、3071、5141、5989、44366、49258端口除外
-                        </span>
-                    </div>
-                    <el-button type="primary" :disabled= !httpsTpye @click="handle('updateDiploma')">上传证书</el-button>
+
                 </div>
 
             </el-form-item>
@@ -64,13 +90,12 @@
                         </div> -->
                     </el-radio-group>
                     <div class="sourceTag">
-                        <el-tag :key="tag" v-for="tag in form.source_info" closable :disable-transitions="false" @close="handleClose(tag)">
+                        <el-tag :key="tag" v-for="tag in form.source_info" closable :disable-transitions="false" @close="handleSourceClose(tag)">
                             {{tag}}
                         </el-tag>
-                        <el-input class="input-new-tag" v-if="inputVisible" v-model="sourceInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm"
-                            @blur="handleInputConfirm">
+                        <el-input class="input-new-tag" v-if="sourceInputVisible" v-model="sourceInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleSourceInputConfirm">
                         </el-input>
-                        <el-button v-else v-show="showTag" class="button-new-tag" size="small" @click="showInput">请输入{{sourceIP===0?"回源IP":"回源域名"}}</el-button>
+                        <el-button v-else v-show="showTag" class="button-new-tag" size="small" @click="showSourceInput">请输入{{sourceIP===0?"回源IP":"回源域名"}}</el-button>
                     </div>
                 </div>
 
@@ -78,8 +103,8 @@
             <el-form-item label="防御状态" class="defenStatus">
                 <div class="defenContent">
                     <el-radio-group v-model="form.open_waf">
-                        <el-radio :label="1">防御</el-radio>
-                        <el-radio :label="0">回源</el-radio>
+                        <el-radio :label="0">防御</el-radio>
+                        <el-radio :label="1">回源</el-radio>
                     </el-radio-group>
                 </div>
                 <div class="defenRemark">

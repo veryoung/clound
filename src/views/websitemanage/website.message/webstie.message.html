@@ -4,51 +4,50 @@
         <ul class="basicmessage">
             <li>
                 <div class="label">网站名称:</div>
-                <div class="message">{{ userMessage.user_name }}</div>
+                <div class="message">{{ WebsiteInfo.name }}</div>
             </li>
             <li>
                 <div class="label">网站域名:</div>
-                <div class="message">{{ userMessage.role }}</div>
+                <div class="message">{{ WebsiteInfo.domain }}</div>
             </li>
             <li>
                 <div class="label">创建人:</div>
-                <div class="message">{{ userMessage.cperson }}</div>
+                <div class="message">{{ WebsiteInfo.cperson }}</div>
             </li>
             <li>
                 <div class="label">所属行业:</div>
-                <div class="message">{{ userMessage.company }}</div>
+                <div class="message">{{ WebsiteInfo.industry }}</div>
             </li>
             <li>
                 <div class="label">协议类型:</div>
-                <div class="message">{{ userMessage.phone }}</div>
+                <div class="message">http: {{ WebsiteInfo.port.http_port }}</div>
+                <div class="message">https: {{ WebsiteInfo.port.https_port }}</div>
             </li>
             <li>
                 <div class="label">回源方式:</div>
-                <div class="message">{{ userMessage.email }}</div>
+                <div class="message">{{ WebsiteInfo.source_type ==="A"?"回源IP":"回源域名" }}</div>
             </li>
             <li>
                 <div class="label">回源地址:</div>
-                <div class="message">{{ userMessage.email }}</div>
+                <div class="message">{{ WebsiteInfo.source_info }}</div>
             </li>
             <li>
                 <div class="label">CNAME别名:</div>
-                <div class="message">{{ userMessage.email }}</div>
+                <div class="message">{{ WebsiteInfo.cname }}</div>
             </li>
             <li>
                 <div class="label">接入时间:</div>
                 <div class="message">{{ 
-                    userMessage.ctime.substring(0,4)+"-"+
-                    userMessage.ctime.substring(4,6)+"-"+
-                    userMessage.ctime.substring(6,8) 
+                    WebsiteInfo.ctime
                 }}</div>
             </li>
             <li>
                 <div class="label">接入状态:</div>
-                <div class="message">{{ userMessage.is_active==1?"使用中":"已到期" }}</div>
+                <div class="message">{{ WebsiteInfo.state=="未接入"?"未接入":"使用中" }}</div>
             </li>
             <li>
                 <div class="label">防御状态:</div>
-                <div class="message">{{ userMessage.is_active==1?"使用中":"已到期" }}</div>
+                <div class="message">{{ WebsiteInfo.open_waf=="防御"?"防御":"回源" }}</div>
             </li>
         </ul>
 
@@ -58,10 +57,10 @@
             <li>
                 <div class="label">服务项:</div>
                 <div class="server" style="color:#999">
-                    <div>Web应用防火墙:{{ userMessage.waf_enable==="1"?"开启":"关闭" }}</div>
-                    <div>CC防御:{{ userMessage.ads_enable==="1"?"开启":"关闭" }}</div>
-                    <div>网站替身:{{ userMessage.mirror_enable==="1"?"开启":"关闭" }}</div>
-                    <div>网站加速:{{ userMessage.cdn_enable==="1"?"开启":"关闭" }}</div>
+                    <div>Web应用防火墙:{{ WebsiteInfo.service.waf_enable==="1"?"开启":"关闭" }}</div>
+                    <div>CC防御:{{ WebsiteInfo.service.ads_enable==="1"?"开启":"关闭" }}</div>
+                    <div>网站替身:{{ WebsiteInfo.service.mirror_enable==="1"?"开启":"关闭" }}</div>
+                    <div>网站加速:{{ WebsiteInfo.service.cdn_enable==="1"?"开启":"关闭" }}</div>
                 </div>
             </li>
         </ul>

@@ -10,7 +10,7 @@
         position absolute
         width 100%
         >.website-form
-            width 1000px
+            width 1200px
             >.el-form-item
                 >.el-form-item__content
                     display flex
@@ -32,39 +32,107 @@
                         align-self flex-start
                         .http
                             display flex
-                            flex-direction row
-                            .el-checkbox
-                                margin-top 0px
-                            label
-                                margin-top 10px
-                            .httptext 
-                                margin-left 15px 
-                                width 225px
+                            flex-direction column
+                            .httpTotalBox
+                                display flex
+                                flex-direction row
+                                .httpTpyeRemarkBox
+                                    display flex
+                                    flex-direction column
+                                    margin-left 20px
+                                    span
+                                        font-size 10px
+                                        line-height 15px
+                                        height 24px
+                                    .httpTpyeRemark
+                                        margin-left 10px
+                            .httpTag
+                                align-self flex-start
+                                display flex
+                                width 650px
+                                flex-wrap: wrap
+                                .el-textarea__inner
+                                    height 75px
+                                .el-tag
+                                    margin-left 10px
+                                    overflow hidden
+                                    width 120px 
+                                    text-overflow ellipsis 
+                                    white-space: nowrap
+                                    position relative
+                                    margin-top 10px
+
+                                    .el-tag__close
+                                        position absolute
+                                        top 8px
+                                        right  5px
+                                .button-new-tag
+                                    margin-top 10px
+                                    margin-left 10px
+                                    height 32px
+                                    line-height 30px
+                                    padding-top 0
+                                    padding-bottom 0
+                                .input-new-tag
+                                    margin-top 10px
+                                    width 90px
+                                    margin-left 10px
+                                    vertical-align bottom             
                         .https
                             display flex
-                            flex-direction row
+                            flex-direction column
                             margin-top 20px
-                            .el-checkbox
-                                margin-top 0px
-                            label
-                                margin-top 10px
-                            .httpstext 
-                                margin-left 6px
-                                width 225px
+                            .httpsTotalBox
+                                display flex
+                                flex-direction row
+                                .httpsTpyeRemarkBox
+                                    display flex
+                                    flex-direction column
+                                    margin-left 20px
+                                    span
+                                        font-size 10px
+                                        line-height 15px
+                                        height 24px
+                                    .httpsTpyeRemark
+                                        margin-left 10px
+                            .httpsTag
+                                align-self flex-start
+                                display flex
+                                width 650px
+                                flex-wrap: wrap
+                                .el-textarea__inner
+                                    height 75px
+                                .el-tag
+                                    margin-top 10px
+                                    margin-left 10px
+                                    overflow hidden
+                                    width 120px 
+                                    text-overflow ellipsis 
+                                    white-space: nowrap
+                                    position relative
+                                    .el-tag__close
+                                        position absolute
+                                        top 8px
+                                        right  5px
+                                .button-new-tag 
+                                    margin-left 10px
+                                    height 32px
+                                    line-height 30px
+                                    padding-top 0
+                                    padding-bottom 0
+                                    margin-top 10px
+                                .input-new-tag
+                                    margin-top 10px
+                                    width 90px
+                                    margin-left 10px
+                                    vertical-align bottom                                        
+
                     .websiteHttpRemark
                         display flex
                         flex-direction column
                         height 85px
                         margin-left 20px
-                        .httpTpyeRemarkBox
-                            display flex
-                            flex-direction column
-                            span
-                                font-size 10px
-                                line-height 15px
-                                height 24px
-                            .httpTpyeRemark
-                                margin-left 10px 
+
                         button
                             width 88px
                             margin-top 5px
@@ -95,7 +163,6 @@
                                     position absolute
                                     top 8px
                                     right  5px
-
                             .button-new-tag 
                                 margin-left 10px
                                 height 32px
@@ -143,9 +210,22 @@
             .webstieIndustry
                 .el-form-item__content
                     .el-radio-group
+                        display flex
                         -moz-user-select none/*火狐*/
                         -webkit-user-select none/*webkit浏览器*/
                         -ms-user-select none/*IE10*/
                         -khtml-user-select none/*早期浏览器*/
-                        user-select none                    
+                        user-select none
+                        .el-radio-button
+                            border 1px solid #d5d5d5
+                            margin 0 10px
+                            border-radius 4px
+                            .el-radio-button__inner
+                                background #f4f4f4
+                                border-radius 4px
+                        .is-active
+                            .el-radio-button__inner
+                                color black        
+ 
+
                                                     

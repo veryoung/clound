@@ -7,7 +7,8 @@
                 v-loading="loading" 
                 element-loading-text="拼命加载中" 
                 element-loading-spinner="el-icon-loading" 
-                element-loading-background="rgba(255, 255, 255, 0.8)">
+                element-loading-background="rgba(255, 255, 255, 0.8)"
+                >
                 <div class="attetion">
                     <div>
                         注意:
@@ -23,13 +24,15 @@
                     <span>
                         选择证书
                     </span>
-                    <el-upload ref="upload" 
+                    <el-upload ref="Crtupload" 
                         drag 
-                        action="/portal/api/v20/account/user/excel/" 
+                        action="/portal/api/v20/websites/cert/" 
                         :limit="1" 
                         :auto-upload="false"
-                        :on-success="success"
-                        :before-upload="uploader">
+                        :data="upLoadData"
+                        name="private_key"
+                        :on-success="uploaderDone"
+                        :before-upload="Crtuploader">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或
                             <em>点击上传</em>
@@ -40,13 +43,15 @@
                         <span>
                            选择私钥
                         </span>
-                        <el-upload ref="upload" 
+                        <el-upload ref="Keyupload" 
                             drag 
-                            action="/portal/api/v20/account/user/excel/" 
+                            action="/portal/api/v20/websites/cert/" 
                             :limit="1" 
+                            :data="upLoadData"
+                            name="certificate"
                             :auto-upload="false"
-                            :on-success="success"
-                            :before-upload="uploader">
+                            :on-success="uploaderDone"
+                            :before-upload="Keyuploader">
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">将文件拖到此处，或
                                 <em>点击上传</em>

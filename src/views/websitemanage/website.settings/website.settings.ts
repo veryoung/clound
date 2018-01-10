@@ -1,3 +1,6 @@
+import { WebSiteConfig } from "@store/mywebsite.type";
+import { CONSTANT } from "@utils/event";
+import { EventBus } from "@utils/event";
 import { SpeedUpdateFrame } from "./dialogbox/speedUpdate";
 import { SpeedListFrame } from "./dialogbox/speedlist.frame";
 import { MirrorFrame } from "./dialogbox/mirror.frame";
@@ -8,6 +11,8 @@ import Vue from "vue";
 import {mapGetters} from "vuex";
 
 import {ModuleTitle} from "@components/title/module.title";
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
+import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 
 require("./website.settings.styl");
 @Component({
@@ -20,9 +25,16 @@ require("./website.settings.styl");
             MirrorFrame,
             SpeedListFrame,
             SpeedUpdateFrame
-        }
+        },
+        computed: {
+            ...mapGetters([
+                "websiteConfig"
+            ])
+        },
     })
 export class WebsiteSettings extends Vue {
+    // init computed
+    public websiteConfig: WebSiteConfig;
     // init computed init data
     public value: boolean = false;
     public listType: string = "";
@@ -38,6 +50,24 @@ export class WebsiteSettings extends Vue {
     public dialogVisibleSpeedList: boolean = false;
     // 指定URL刷新
     public dialogVisibleSpeedUpdate: boolean = false;
+    // 表单内容
+    public form: FormType = {
+        ads_enable:	"",
+        cache_url_black: "",	
+        cache_urls:	[],
+        cdn_enable:	"",
+        mirror_enable:	"",
+        mirror_interval: -1,	
+        mirror_urls: [],	
+        waf_enable:	"",
+        waf_hotlink_white: [],		
+        waf_ip_black: [],		
+        waf_ip_white: [],		
+        waf_url_black: [],	
+        waf_url_white: [],	
+    };
+    // 获取的表单
+    
 
 
     public options: any = [{
@@ -53,8 +83,13 @@ export class WebsiteSettings extends Vue {
       public value4: string =  "";
 
     // public tableDefault: = lifecircle hook
-    created() {
-        console.log("i am website ");
+    created() { 
+        let id = this.$route.params.id;
+        let that = this;
+        this.$store.dispatch(MYWEBSITEEVENT.GETWEBSITECONFIG, { website_id: id, });
+        let eventId = EventBus.register(CONSTANT.GETWEBSITECONFIG, function (event: string, info: any) {
+            that.form = that.websiteConfig[id];
+        });
     }
 
     destroyed() {}
