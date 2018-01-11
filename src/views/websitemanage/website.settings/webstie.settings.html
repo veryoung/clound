@@ -1,9 +1,9 @@
 <div class="website-settings">
     <ListFrame :dialogVisible="dialogVisibleList" :data="form" :types = "listType" @close="closeList"/>
-    <DenfenFrame :dialogVisible="dialogVisibleDefenWhite" @close="closeDefense"/>
-    <MirrorFrame :dialogVisible="dialogVisibleMirrorSet" @close="closeMirror"/>
-    <SpeedListFrame :dialogVisible="dialogVisibleSpeedList" @close="closeSpeedList"/>
-    <SpeedUpdateFrame :dialogVisible="dialogVisibleSpeedUpdate" @close="closeSpeedUpdate"/>
+    <DenfenFrame :dialogVisible="dialogVisibleDefenWhite" :data="form"  @close="closeDefense"/>
+    <MirrorFrame :dialogVisible="dialogVisibleMirrorSet" :data="form"  @close="closeMirror"/>
+    <SpeedListFrame :dialogVisible="dialogVisibleSpeedList"  :data="form" @close="closeSpeedList"/>
+    <SpeedUpdateFrame :dialogVisible="dialogVisibleSpeedUpdate"  :data="form" @close="closeSpeedUpdate"/>
     <el-row :gutter="60" class="setting-row">
         <el-col class="setting-col" :span="12">
             <ModuleTitle :titles="['Web应用防火墙']" />
