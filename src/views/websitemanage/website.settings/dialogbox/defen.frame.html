@@ -4,11 +4,10 @@
         防盗链白名单设置
     </span>
     <div class="content-box">
-        <span class="defen-frame">注：多个请以英文“,”隔开，不能换行，最多10个</span>
+        <span class="defen-frame">注：最多10个</span>
         <el-form :model="form"  ref="form" label-width="100px">
             <span>防盗链URL白名单11（仅白名单指定域名可访问站点内容，同时您可以使用*.a.com来代表a.com下所有站点)</span>
-            <el-form-item  prop="pwd" label-width="0px" >
-            </el-form-item>
+            <CustomTags @getTags="getTags" :total="10"/>
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">

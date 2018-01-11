@@ -46,7 +46,7 @@ export class MirrorFrame extends Vue {
 
     submit(formName: string) {
         let id = this.$route.params.id;
-        let params = {
+        let params = { 
             sid: id,
             urls: this.form.mirror_urls,
             interval: this.mirrcyc
@@ -55,6 +55,8 @@ export class MirrorFrame extends Vue {
         this.$emit("MirrorData", this.form.mirror_urls);
         MywebsiteServer.mirror(params).then( (response: AxiosResponse<ResType>) => {
             console.log(response);
+            this.cancel();
+
         });
     }
 
