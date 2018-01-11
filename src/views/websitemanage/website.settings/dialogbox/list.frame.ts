@@ -13,16 +13,34 @@ require("./list.frame.styl");
     props: {
         dialogVisible: Boolean,
         types: String,
-    }
+        data: Object,
+    },
 })
 export class ListFrame extends Vue {
     // init props
     public types: string;
+    public data: any;
     // init data
     public form: ResetType = {
-        pwd1: "",
-        pwd: ""
+        ip: "",
+        url: ""
     };
+
+    
+
+    created() { 
+        console.log(111);
+
+        console.log(this.types);
+        if ( this.types === "white") {
+            this.form.ip = "11";
+            this.form.url = this.data.waf_url_white[0];
+        } else {
+            this.form.ip = "22";
+            this.form.url = this.data.waf_url_black[0];
+        }
+        console.log(this.form);
+    }
     /**
      *     required?: boolean;
     message?: string;
@@ -44,6 +62,6 @@ export class ListFrame extends Vue {
 }
 
 export interface ResetType {
-    pwd: string;
-    pwd1: string;
+    ip: string;
+    url: string;
 }
