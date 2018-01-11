@@ -9,7 +9,7 @@ class Mywebsite extends Restful {
     
     batchWebsite(opt: ObjType) {
         return this.put({
-            url: "/portal/api/v20/websites/open_waf/",
+            url: "/api/v20/websites/open_waf/",
             params: opt
         });
     }
