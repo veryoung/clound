@@ -36,6 +36,10 @@ module.exports = function (env) {
             entry: './src/main.ts',
             vendor: ['vue', 'element-ui', 'vue-router']
         },
+        output: {
+            path: process.env.PLATFORM === "operation" ? path.resolve(__dirname, '../operation') : path.resolve(__dirname, '../portal'),
+            filename: 'build.[hash].js',
+        },
         module: {
             rules: [{
                     test: /\.styl$/,
@@ -106,12 +110,13 @@ module.exports = function (env) {
             extractStylus,
             extractCss,
             moduleCss,
-            new CopyWebpackPlugin([
-                {
-                    from: path.resolve(__dirname, '../users_template_opc.xlsx'),
-                    to: './download/users_template_opc.xlsx'
-                },
-            ]),
+            new CopyWebpackPlugin([{
+                from: path.resolve(__dirname, '../users_template_opc.xlsx'),
+                to: './download/users_template_opc.xlsx'
+            }, {
+                from: path.resolve(__dirname, '../users_template_portal.xls'),
+                to: './download/users_template_portal.xls'
+            }]),
             new webpack.optimize.UglifyJsPlugin({
                 sourceMap: false,
                 compress: {

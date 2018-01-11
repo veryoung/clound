@@ -4,7 +4,8 @@ export const MYWEBSITEEVENT: EventType = {
     GETLISTMESSAGE: "获取我的网站列表数据",
     GETWEBMESSAGE: "获取网站详情",
     GETWEBEDIT: "获取网站编辑信息",
-    GETWEBSITECONFIG: "获取网站配置信息"
+    GETWEBSITECONFIG: "获取网站配置信息",
+    MIRRORSETUPATE: "网站配置信息镜像配置更新"
 };
 
 export interface MyWebsiteType {

@@ -20,6 +20,17 @@ export class ImportUserFrame extends Vue {
     }
 
     // init method
+    exportTemplate() {
+        let a = document.createElement("a");
+        a.target = "_black";
+        if (process.env.PLATFORM === "operation") {
+            a.href = "/download/users_template_opc.xlsx";
+        } else {
+            a.href = "/download/users_template_portal.xls";
+        }
+        a.click();
+    }
+
 
     importUser() {
         let temp: any = this.$refs.upload;
