@@ -1,10 +1,10 @@
 <div class="website-settings">
-    <ListFrame :dialogVisible="dialogVisibleList" :data="form" :types="listType" @close="closeList" />
-    <DenfenFrame :dialogVisible="dialogVisibleDefenWhite" :data="form" @close="closeDefense" />
-    <MirrorFrame :dialogVisible="dialogVisibleMirrorSet" :data="form.mirror_urls" :mirrcyc="MirrorValue" @MirrorData="getMirror" @close="closeMirror"
+    <ListFrame v-if="dialogVisibleList" :dialogVisible="dialogVisibleList" :data="form" :types="listType" @close="closeList" />
+    <DenfenFrame v-if="dialogVisibleDefenWhite" :dialogVisible="dialogVisibleDefenWhite" :data="form" @close="closeDefense" />
+    <MirrorFrame  v-if="dialogVisibleMirrorSet" :dialogVisible="dialogVisibleMirrorSet" :data="form.mirror_urls" :mirrcyc="MirrorValue" @MirrorData="getMirror" @close="closeMirror"
     />
-    <SpeedListFrame :dialogVisible="dialogVisibleSpeedList" :data="form" @close="closeSpeedList" />
-    <SpeedUpdateFrame :dialogVisible="dialogVisibleSpeedUpdate" :data="form" @close="closeSpeedUpdate" />
+    <SpeedListFrame  v-if="dialogVisibleSpeedList" :dialogVisible="dialogVisibleSpeedList" :data="form" @close="closeSpeedList" />
+    <SpeedUpdateFrame  v-if="dialogVisibleSpeedUpdate" :dialogVisible="dialogVisibleSpeedUpdate" :data="form" @close="closeSpeedUpdate" />
     <el-row :gutter="60" class="setting-row">
         <el-col class="setting-col" :span="12">
             <ModuleTitle :titles="['Web应用防火墙']" />

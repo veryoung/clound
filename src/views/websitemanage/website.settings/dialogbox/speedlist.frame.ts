@@ -15,6 +15,7 @@ require("./speedlist.frame.styl");
     props: {
         dialogVisible: Boolean,
         types: String,
+        data: Object,
     },
     components: {
         CustomTags
@@ -23,11 +24,18 @@ require("./speedlist.frame.styl");
 export class SpeedListFrame extends Vue {
     // init props
     public types: string;
+    public data: any;
+
     // init data
     public form: SpeedListType = {
         cache_url_black: [""],
     };
+    public defalutUrl: Array<string>;
 
+    created() {
+        this.defalutUrl = this.data.cache_url_black;
+        console.log(this.defalutUrl);
+    }
     getTags(tags: string[]) {
         this.form.cache_url_black = tags;
     }

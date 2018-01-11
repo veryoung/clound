@@ -6,14 +6,11 @@
          <span class="list-frame">注：多个请以英文“,”隔开，不能换行，最多10个</span>
         <el-form :model="form" ref="form" label-width="100px">
             <span class="list-title">指定URI刷新</span>
-            <el-form-item prop="pwd" label-width="0px">
-                <el-input type="textarea" :rows="2" clearable: true :minlength="200" height="200px" placeholder="请输入内容" 
-                />
-            </el-form-item>
+            <CustomTags @getTags="getTags" :tags="defalutUrl" :total="10"/>
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submit()">确定</el-button>
         <el-button @click="cancel">取消</el-button>
     </span>
-</el-dialog>
+</el-dialog> 

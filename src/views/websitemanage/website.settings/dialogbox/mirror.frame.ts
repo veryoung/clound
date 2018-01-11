@@ -20,6 +20,7 @@ require("./mirror.frame.styl");
         },
         data: Array,
         mirrcyc: Number,
+        
     },
     components: {
         CustomTags
@@ -36,8 +37,11 @@ export class MirrorFrame extends Vue {
     public form: MirrorType = {
         mirror_urls: [""],
     };
+    public defalutUrl: Array<string>;
+
 
     created() {
+        this.defalutUrl = this.data;
     }
 
     getTags(tags: string[]) {

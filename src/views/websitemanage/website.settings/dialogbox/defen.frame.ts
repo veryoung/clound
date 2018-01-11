@@ -17,6 +17,7 @@ require("./defen.frame.styl");
         uid: {
             type: String
         },
+        data: Object,
     },
     components: {
         CustomTags
@@ -25,11 +26,18 @@ require("./defen.frame.styl");
 export class DenfenFrame extends Vue {
     // init props
     public uid: string;
+    public data: any;
+
     // init data
     public form: DenfenType = {
         waf_hotlink_white: [""],
     };
-
+    public defalutUrl: Array<string>;
+    
+    created() {
+        this.defalutUrl = this.data.waf_hotlink_white;
+        console.log(this.defalutUrl);
+    }
     getTags(tags: string[]) {
         this.form.waf_hotlink_white = tags;
     }

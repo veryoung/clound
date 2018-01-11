@@ -1,7 +1,9 @@
+import { ResType } from "@server/index";
+import { MywebsiteServer } from "@server/mywebsite";
+import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
-import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 
@@ -13,16 +15,23 @@ require("./speedUpdate.styl");
     props: {
         dialogVisible: Boolean,
         types: String,
-    }
+        data: Object,
+    },
+    components: {
+        CustomTags
+    } 
 })
 export class SpeedUpdateFrame extends Vue {
     // init props
     public types: string;
+    public data: any;
+
     // init data
-    public form: ResetType = {
-        pwd1: "",
-        pwd: ""
+    public form: SpeedUpdateType = {
+        url: [""],
     };
+    public defalutUrl: Array<string>;
+
     /**
      *     required?: boolean;
     message?: string;
@@ -34,16 +43,59 @@ export class SpeedUpdateFrame extends Vue {
 
     // init methods
 
-    submit(formName: string) {
- 
+    created() {
+        this.defalutUrl = this.data.cache_urls;
+        console.log(this.defalutUrl);
+
     }
+
+    submit(formName: string) {
+        let params = {
+            sid: this.$route.params.id,
+            url: this.form.url,
+        };
+        this.$confirm("是否对指定URL进行刷新？", "指定URL刷新", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+        }).then(() => {
+            MywebsiteServer.cache(params).then( (response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                console.log(res);
+                switch (res.status) {
+                    // "suc" | "error" | "red"
+                    case "suc":
+                        this.$message({
+                            type: "success",
+                            message: "刷新成功!"
+                        });
+                        break;
+                    case "error":
+                        this.$message({
+                            type: "error",
+                            message: res.message
+                        });
+                        break;
+                }
+            });
+        }).catch(() => {
+            this.$message({
+                type: "info",
+                message: "已取消刷新"
+            });
+        });
+    }
+
+    getTags(tags: string[]) {
+        this.form.url = tags;
+    }
+
 
     cancel() {
         this.$emit("close", false);
     }
 }
 
-export interface ResetType {
-    pwd: string;
-    pwd1: string;
+export interface SpeedUpdateType {
+    url: Array<string>;
 }

@@ -173,7 +173,6 @@ export class WebsiteSettings extends Vue {
     // 选择更新周期时候刷新
     updateMirrorCycle(val: number) {
         this.MirrorValue = this.form.mirror_interval;
-   
         this.$confirm("是否刷新周期？", "更新周期", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
@@ -223,14 +222,33 @@ export class WebsiteSettings extends Vue {
     }
     // 网站加速全站刷新
     updateSpeed() {
+        let params = {
+            sid: this.$route.params.id,
+            url: "",
+        };
         this.$confirm("是否对网站进行全站刷新？", "全站刷新", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning"
         }).then(() => {
-            this.$message({
-                type: "success",
-                message: "刷新成功!"
+            MywebsiteServer.cache(params).then( (response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                console.log(res);
+                switch (res.status) {
+                    // "suc" | "error" | "red"
+                    case "suc":
+                        this.$message({
+                            type: "success",
+                            message: "刷新成功!"
+                        });
+                        break;
+                    case "error":
+                        this.$message({
+                            type: "error",
+                            message: res.message
+                        });
+                        break;
+                }
             });
         }).catch(() => {
             this.$message({

@@ -7,7 +7,7 @@
         <span class="defen-frame">注：最多10个</span>
         <el-form :model="form"  ref="form" label-width="100px">
             <span>防盗链URL白名单11（仅白名单指定域名可访问站点内容，同时您可以使用*.a.com来代表a.com下所有站点)</span>
-            <CustomTags @getTags="getTags" :total="10"/>
+            <CustomTags @getTags="getTags" :tags="defalutUrl" :total="10"/>
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
