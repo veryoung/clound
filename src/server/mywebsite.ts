@@ -111,7 +111,7 @@ class Mywebsite extends Restful {
     // 网站开关接口
     switch(opt: ObjType) {
         return this.put({
-            url: "/api/v20/websites/swith/",
+            url: "/api/v20/websites/switch/",
             params: opt
         });
     }

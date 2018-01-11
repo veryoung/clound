@@ -1,3 +1,6 @@
+import { ResType } from "@server/index";
+import { AxiosResponse } from "axios";
+import { MywebsiteServer } from "@server/mywebsite";
 import { WebSiteConfig } from "@store/mywebsite.type";
 import { CONSTANT } from "@utils/event";
 import { EventBus } from "@utils/event";
@@ -67,28 +70,36 @@ export class WebsiteSettings extends Vue {
         waf_url_white: [],	
     };
     // 获取的表单
-    
 
-
-    public options: any = [{
-        value: "选项1",
+    public options: any = [
+        {
+            value: "-1",
+            label: " "
+          },
+        {
+        value: "86400",
         label: "一天"
       }, {
-        value: "选项2",
-        label: "一小时"
-      }, {
-        value: "选项3",
+        value: "604800",
         label: "一周"
+      }, {
+        value: "3600",
+        label: "一小时"
       }];
       public value4: string =  "";
 
     // public tableDefault: = lifecircle hook
     created() { 
-        let id = this.$route.params.id;
         let that = this;
+        let id = this.$route.params.id;
         this.$store.dispatch(MYWEBSITEEVENT.GETWEBSITECONFIG, { website_id: id, });
         let eventId = EventBus.register(CONSTANT.GETWEBSITECONFIG, function (event: string, info: any) {
             that.form = that.websiteConfig[id];
+            // 处理选择框为负一 选择框内容为空
+            if (that.form.mirror_interval === -1) {
+            }
+            console.log(that.form.mirror_interval);
+
         });
     }
 
@@ -133,6 +144,25 @@ export class WebsiteSettings extends Vue {
             });          
           });
     }
+    // 选择更新周期时候刷新
+    updateMirrorCycle() {
+        console.log(this.form.mirror_interval);
+        this.$confirm("是否刷新周期？", "更新周期", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(() => {
+            this.$message({
+              type: "success",
+              message: "刷新成功!"
+            });
+          }).catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消刷新"
+            });          
+          });
+    }
 
     // 网站加速全站刷新
     updateSpeed() {
@@ -174,5 +204,206 @@ export class WebsiteSettings extends Vue {
     closeSpeedUpdate() {
         this.dialogVisibleSpeedUpdate = false;
     }
+
+    // switch 方法
+    // 网站加速
+    cdnSwitchChange(val: string) {
+        if ( val === "1") {
+            this.form.cdn_enable = "0";
+        } else {
+            this.form.cdn_enable = "1";
+        }
+        let text = "";
+        if (val === "1") {
+            text = "开启";
+        } else { 
+            text = "关闭";
+        }
+        this.$confirm("确认开启吗？", "开启开关", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(() => {
+            let id = this.$route.params.id;
+            let Params = {
+                sid: id,
+                cdn_enable: val,
+            };
+            MywebsiteServer.switch( Params ).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        // "suc" | "error" | "red"
+                        case "suc":
+                            this.form.cdn_enable = val;
+                            this.$message({
+                            type: "success",
+                            message: "刷新成功!"
+                            });
+                            break;
+                        case "error":
+                            this.$message({
+                                type: "error",
+                                message: res.message
+                            });
+                            break;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                type: "info",
+                message: "已取消" + text
+                });          
+          });
+    }
+    // 网络替身
+    mirrorSwitchChange(val: string) {
+        if ( val === "1") {
+            this.form.mirror_enable = "0";
+        } else {
+            this.form.mirror_enable = "1";
+        }
+        let text = "";
+        if (val === "1") {
+            text = "开启";
+        } else { 
+            text = "关闭";
+        }
+        this.$confirm("确认开启吗？", "开启开关", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(() => {
+            let id = this.$route.params.id;
+            let Params = {
+                sid: id,
+                mirror_enable: val,
+            };
+            MywebsiteServer.switch( Params ).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        // "suc" | "error" | "red"
+                        case "suc":
+                            this.form.cdn_enable = val;
+                            this.$message({
+                            type: "success",
+                            message: "刷新成功!"
+                            });
+                            break;
+                        case "error":
+                            this.$message({
+                                type: "error",
+                                message: res.message
+                            });
+                            break;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                type: "info",
+                message: "已取消" + text
+            });          
+        });
+    }
+    // 防火墙
+    wafSwitchChange(val: string) {
+        if ( val === "1") {
+            this.form.waf_enable = "0";
+        } else {
+            this.form.waf_enable = "1";
+        }
+        let text = "";
+        if (val === "1") {
+            text = "开启";
+        } else { 
+            text = "关闭";
+        }
+        this.$confirm("确认开启吗？", "开启开关", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(() => {
+            let id = this.$route.params.id;
+            let Params = {
+                sid: id,
+                waf_enable: val,
+            };
+        MywebsiteServer.switch( Params ).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        // "suc" | "error" | "red"
+                        case "suc":
+                            this.form.waf_enable = val;
+                            this.$message({
+                            type: "success",
+                            message: "刷新成功!"
+                            });
+                            break;
+                        case "error":
+                            this.$message({
+                                type: "error",
+                                message: res.message
+                            });
+                            break;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                type: "info",
+                message: "已取消" + text
+            });          
+        });
+    
+    }
+    // cc防御
+    adsSwitchChange(val: string) {
+        if ( val === "1") {
+            this.form.ads_enable = "0";
+        } else {
+            this.form.ads_enable = "1";
+        }
+        let text = "";
+        if (val === "1") {
+            text = "开启";
+        } else { 
+            text = "关闭";
+        }
+        this.$confirm("确认开启吗？", "开启开关", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(() => {
+            let id = this.$route.params.id;
+            let Params = {
+                sid: id,
+                ads_enable: val,
+            };
+        MywebsiteServer.switch( Params ).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        // "suc" | "error" | "red"
+                        case "suc":
+                            this.form.ads_enable = val;
+                            this.$message({
+                            type: "success",
+                            message: "刷新成功!"
+                            });
+                            break;
+                        case "error":
+                            this.$message({
+                                type: "error",
+                                message: res.message
+                            });
+                            break;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                type: "info",
+                message: "已取消" + text
+            });          
+        });
+    }
+
+    
 
 }

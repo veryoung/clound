@@ -1,5 +1,5 @@
 <div class="website-settings">
-    <ListFrame :dialogVisible="dialogVisibleList" :types = "listType" @close="closeList"/>
+    <ListFrame :dialogVisible="dialogVisibleList" :data="form" :types = "listType" @close="closeList"/>
     <DenfenFrame :dialogVisible="dialogVisibleDefenWhite" @close="closeDefense"/>
     <MirrorFrame :dialogVisible="dialogVisibleMirrorSet" @close="closeMirror"/>
     <SpeedListFrame :dialogVisible="dialogVisibleSpeedList" @close="closeSpeedList"/>
@@ -19,9 +19,14 @@
                 </el-col>
                 <el-col :span="7" class="childcol-right">
                     <div class="childcol-child">
-                        <el-switch v-model="value">
-                        </el-switch>
-                        <span>{{value?"开启":"关闭"}}</span>
+                        <el-switch 
+                        v-model="form.waf_enable"
+                        active-value = "1"
+                        inactive-value = "0"
+                        @change	= "wafSwitchChange"
+                        >
+                    </el-switch>
+                    <span>{{form.waf_enable === "1"?"开启":"关闭"}}</span>
                     </div>
                     <div class="childcol-child" @click="handle('setWhiteList')">白名单设置</div>
                     <div class="childcol-child" @click="handle('setBlackList')">黑名单设置</div>
@@ -43,9 +48,14 @@
                 </el-col>
                 <el-col :span="7" class="childcol-right">
                     <div class="childcol-child">
-                        <el-switch v-model="value">
+                        <el-switch 
+                            v-model="form.ads_enable"
+                            active-value = "1"
+                            inactive-value = "0"
+                            @change	= "adsSwitchChange"                  
+                            >
                         </el-switch>
-                        <span>{{value?"开启":"关闭"}}</span>
+                        <span>{{form.ads_enable === "1"?"开启":"关闭"}}</span>
                     </div>
                 </el-col>
             </el-row>
@@ -65,13 +75,20 @@
                 <el-col :span="7" class="childcol-right">
                     <div class="childcol-child">
                         定期更新:
-                        <el-switch v-model="value" >
+                        <el-switch 
+                            v-model="form.mirror_enable"
+                            active-value = "1"
+                            inactive-value = "0"
+                            @change	= "mirrorSwitchChange"
+                            >
                         </el-switch>
-                        <span>{{value?"开启":"关闭"}}</span>
+                        <span>{{form.mirror_enable === "1"?"开启":"关闭"}}</span>
                     </div>
                     <div class="childcol-child">
                             更新周期:
-                            <el-select v-model="value4" clearable placeholder="请选择" size = "small">
+                            <el-select ref = "mirrorselect" v-model="form.mirror_interval" value-key="form.mirror_interval" clearable placeholder="请选择" size = "small" 
+                            @change = "updateMirrorCycle()"
+                            >
                                     <el-option
                                       v-for="item in options"
                                       :key="item.value"
@@ -99,9 +116,14 @@
                 </el-col>
                 <el-col :span="7" class="childcol-right">
                     <div class="childcol-child">
-                        <el-switch v-model="value">
+                        <el-switch 
+                        v-model="form.cdn_enable"
+                        active-value = "1"
+                        inactive-value = "0"
+                        @change	= "cdnSwitchChange"
+                        >
                         </el-switch>
-                        <span>{{value?"开启":"关闭"}}</span>
+                        <span>{{form.cdn_enable === "1"?"开启":"关闭"}}</span>
                     </div>
                     <div class="childcol-child" @click="handle('setSpeedList')">黑名单设置</div>
                     <div class="childcol-child" @click="updateSpeed">全站刷新</div>

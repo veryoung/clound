@@ -1,3 +1,6 @@
+import { ResType } from "server";
+import { AxiosResponse } from "axios";
+import { MywebsiteServer } from "@server/mywebsite";
 import { TableConfigType } from "@store/table.type";
 import { MYWEBSITEEVENT, MyWebsiteType, WebsiteTableType } from "@store/mywebsite.type";
 import { CloudTable } from "@components/cloudtable/table";
@@ -45,8 +48,6 @@ export class WebsiteManagement extends Vue {
     // 导出
     public ids: string[] = [];
     public serialize: string = "&";
-    public exportLink: string = `/portal/api/v20/websites/export_all/?ids=[${this.ids}]${this.serialize}`;
-
 
     // public tableDefault: = 
     // lifecircle hook 
@@ -112,7 +113,10 @@ export class WebsiteManagement extends Vue {
     }
 
     handleSelectionChange(options: any[]) {
-
+        this.ids = [];
+        options.map((item: WebsiteListColumnType, $index: number) => {
+            this.ids.push(item.id);
+        });
     }
 
     sortChange(opt: any) {
@@ -123,29 +127,62 @@ export class WebsiteManagement extends Vue {
     // 导出
     exportChoose(type: string) {
         let dom = document.createElement("a");
-        dom.href = `${this.exportLink}`;
-        console.log(this.filter);
-        console.log(dom.href);
+        const { domain, name, open_waf, organization, port, protocol, source_info, state } = this.filter;
+        let exportLink: string = `/api/v20/websites/export/?ids=[${this.ids}]${this.serialize}domain=${domain}${this.serialize}name=${name}${this.serialize}open_waf=${open_waf}${this.serialize}organization=${organization}${this.serialize}port=${port}${this.serialize}protocol=${protocol}${this.serialize}source_info=${source_info}${this.serialize}state=${state}${this.serialize}`;
+        console.log(exportLink);
+        dom.href = `${exportLink}`;
         dom.target = "_blank";
-        if (type === "all") {
-            dom.click();
+        if (this.ids.length === 0) {
+            this.$message({
+            message: "请选择导出项",
+            type: "warning"
+            });
         } else {
-            if (this.ids.length === 0) {
-                this.$message({
-                    message: "请选择导出项",
-                    type: "warning"
-                });
-            } else {
-                dom.click();
-            }
+            dom.click();
         }
     }
     exportAll() {
         let dom = document.createElement("a");
         const { domain, name, open_waf, organization, port, protocol, source_info, state } = this.filter;
-        let exportLink: string = `/portal/api/v20/websites/export_all/?domain=${domain}${this.serialize}name=${name}${this.serialize}open_waf=${open_waf}${this.serialize}organization=${organization}${this.serialize}port=${port}${this.serialize}protocol=${protocol}${this.serialize}source_info=${source_info}${this.serialize}state=${state}${this.serialize}`;
+        let exportLink: string = `/api/v20/websites/export/?domain=${domain}${this.serialize}name=${name}${this.serialize}open_waf=${open_waf}${this.serialize}organization=${organization}${this.serialize}port=${port}${this.serialize}protocol=${protocol}${this.serialize}source_info=${source_info}${this.serialize}state=${state}${this.serialize}`;
         dom.href = `${exportLink}`;
         dom.target = "_blank";
         dom.click();
     }
+
+    // 开启防御/批量回源
+    openwaf(type: string) {
+        let open_waf: number;
+        let open_text: string;
+        if (type === "openWaf") {
+            open_waf = 1;
+            open_text = "防御";
+        } else {
+            open_waf = 0;
+            open_text = "回源";
+        }
+        if (this.ids.length === 0) {
+            this.$message({
+                message: "请选择" + open_text + "项",
+                type: "warning"
+            });
+        } else {
+            console.log(this.ids);
+            let params = {
+                open_waf: open_waf,
+                website_ids: this.ids,
+            };
+            MywebsiteServer.batchWebsite(params).then( (response: AxiosResponse<ResType>) => {
+                let data = response.data;
+                if ( data.status === "suc" ) {
+                    this.$message({
+                        message: "开启" + open_text + "成功",
+                        type: "success"
+                    });
+                }
+            });
+        }
+
+    }
+
 }
