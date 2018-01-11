@@ -195,7 +195,7 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(MYWEBSITEEVENT.GETLISTMESSAGE, { page: payload.page, message: res.data });
+                        commit(MYWEBSITEEVENT.GETLISTMESSAGE, { page: payload.page, message: res.data.data });
                         Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "mywebsitetable", total: res.data.total });
                         EventBus.doNotify(CONSTANT.GETLISTMESSAGE);
                         break;

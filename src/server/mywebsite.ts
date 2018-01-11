@@ -6,6 +6,14 @@ class Mywebsite extends Restful {
         super();
     }
 
+    
+    batchWebsite(opt: ObjType) {
+        return this.put({
+            url: "/portal/api/v20/websites/open_waf/",
+            params: opt
+        });
+    }
+
     getWebsiteEditDetail(website_id: string) {
         return this.get({
             url: "/api/v20/websites/detail",
