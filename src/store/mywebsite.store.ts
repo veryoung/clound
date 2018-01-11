@@ -184,6 +184,9 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
         },
         [MYWEBSITEEVENT.GETWEBSITECONFIG]: (state, payload) => {
             state.websiteConfig[payload.website_id] = payload.message;
+        },
+        [MYWEBSITEEVENT.MIRRORSETUPATE]: (state, payload) => {
+            state.websiteConfig[payload.id].mirror_urls = payload.message;
         }
     },
     actions: {
@@ -252,6 +255,9 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                 }
             });
         },
+        [MYWEBSITEEVENT.MIRRORSETUPATE]: ({ state, commit, rootState }, payload) => {
+            commit(MYWEBSITEEVENT.MIRRORSETUPATE, payload);
+        }
     },
     getters: {
         "websiteMessage": function (state) {
