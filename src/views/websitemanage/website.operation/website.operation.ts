@@ -13,7 +13,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { MywebsiteServer } from "@server/mywebsite";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { Auxiliary } from "@utils/auxiliary";
-import FormType from "@views/websitemanage/website.operation/website.operation.attachement";
+import { FormType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
 
 
@@ -284,9 +284,9 @@ export class WebsiteOperation extends Vue {
                 });
                 break;
             case "editor":
-            let id = this.$route.params.id;
-            this.form.id = id;    
-            MywebsiteServer.updateWebsite(this.form).then((response: AxiosResponse<ResType>) => {
+                let id = this.$route.params.id;
+                this.form.id = id;
+                MywebsiteServer.updateWebsite(this.form).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":

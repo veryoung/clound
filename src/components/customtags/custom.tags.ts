@@ -46,7 +46,8 @@ export class CustomTags extends Vue {
 
     handleInputConfirm() {
         let inputValue = this.tag;
-        if (inputValue === "" || inputValue in this.tags) {
+        if (inputValue === "" || this.tags.indexOf(inputValue) !== -1) {
+            this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
             return;
         }
         this.tags.push(this.tag);
