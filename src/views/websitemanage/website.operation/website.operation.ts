@@ -1,5 +1,4 @@
 import { WebEditType } from "@store/mywebsite.type";
-import { FormType, WebSiteEditType } from "./website.operation.attachement";
 import { EventBus, CONSTANT } from "@utils/event";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
@@ -14,6 +13,9 @@ import { ModuleTitle } from "@components/title/module.title";
 import { MywebsiteServer } from "@server/mywebsite";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { Auxiliary } from "@utils/auxiliary";
+import FormType from "@views/websitemanage/website.operation/website.operation.attachement";
+import { CustomTags } from "@components/customtags/custom.tags";
+
 
 const Aux = new Auxiliary<string>();
 require("./website.operation.styl");
@@ -33,7 +35,8 @@ require("./website.operation.styl");
     },
     components: {
         ModuleTitle,
-        UpdateDiploma
+        UpdateDiploma,
+        CustomTags
     }
 })
 
@@ -82,9 +85,7 @@ export class WebsiteOperation extends Vue {
 
     // 回源方式单选框
     public sourceIP: number = 0; // 0 表示 IP 1 表示域名
-    public sourceInfo: string = "";
-    public showTag: boolean = true;
-    public sourceInputVisible: any = false;
+    public sourceInputVisible: boolean = false;
 
     // 上传证书
     public dialogVisibleDiploma: boolean = false;
@@ -133,6 +134,7 @@ export class WebsiteOperation extends Vue {
             }
         });
         Aux.insertId(eventId);
+        console.log(this.form);
 
     }
 
@@ -141,6 +143,7 @@ export class WebsiteOperation extends Vue {
             EventBus.unRegister(id);
         });
         this.unwatch();
+
     }
 
     // init methods
@@ -163,59 +166,30 @@ export class WebsiteOperation extends Vue {
             this.httpTpye = true;
         }
     }
-    // 控制tag标签的功能
-    handleSourceClose(tag: any) {
-        this.form.source_info.splice(this.form.source_info.indexOf(tag), 1);
-        if (this.form.source_info.length > 3) {
-            this.showTag = false;
-        } else {
-            this.showTag = true;
-        }
-    }
 
-    showSourceInput() {
-        this.sourceInputVisible = true;
-        // this.$nextTick( _  => {
-        //   this.$refs.saveTagInput.$refs.input.focus();
-        // });
-    }
 
     handleSourceInputConfirm() {
-        let inputValue = this.sourceInfo;
-        console.log(this.form.source_type);
-        if (this.form.source_type === "A") {
-            // ip
-            let ipReg = new RegExp("^(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2})$");
-            if (!ipReg.test(inputValue)) {
-                this.$message({
-                    message: "回源IP格式不正确",
-                    type: "warning"
-                });
-                return;
-            }
-        } else {
-            let sourceReg = new RegExp("^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$");
-            if (!sourceReg.test(inputValue)) {
-                console.log(sourceReg.test(inputValue));
-                this.$message({
-                    message: "回源域名格式不正确",
-                    type: "warning"
-                });
-                return;
-            }
-        }
-
-
-        if (inputValue) {
-            this.form.source_info.push(inputValue);
-        }
-        if (this.form.source_info.length > 3) {
-            this.showTag = false;
-        } else {
-            this.showTag = true;
-        }
-        this.sourceInputVisible = false;
-        this.sourceInfo = "";
+        // if (this.form.source_type === "A") {
+        //     // ip
+        //     let ipReg = new RegExp("^(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2})$");
+        //     if (!ipReg.test(inputValue)) {
+        //         this.$message({
+        //             message: "回源IP格式不正确",
+        //             type: "warning"
+        //         });
+        //         return;
+        //     }
+        // } else {
+        //     let sourceReg = new RegExp("^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$");
+        //     if (!sourceReg.test(inputValue)) {
+        //         console.log(sourceReg.test(inputValue));
+        //         this.$message({
+        //             message: "回源域名格式不正确",
+        //             type: "warning"
+        //         });
+        //         return;
+        //     }
+        // }
     }
 
 
@@ -286,6 +260,13 @@ export class WebsiteOperation extends Vue {
         this.HttpsInputVisible = false;
         this.HttpsInfo = "";
     }
+
+
+
+    getTags(tags: string[]) {
+        this.form.source_info = tags;
+    }
+
 
     // "formbasic","formserver"
     submitForm(formBasic: string, formServer: string) {
