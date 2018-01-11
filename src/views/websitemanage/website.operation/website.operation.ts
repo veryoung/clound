@@ -7,6 +7,7 @@ import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
 import FormType from "@views/websitemanage/website.operation/website.operation.attachement";
+import { CustomTags } from "@components/customtags/custom.tags";
 
 
 require("./website.operation.styl");
@@ -21,12 +22,13 @@ require("./website.operation.styl");
     },
     computed: {
         ...mapGetters([
-  
+
         ])
     },
     components: {
         ModuleTitle,
-        UpdateDiploma 
+        UpdateDiploma,
+        CustomTags
     }
 })
 export class WebsiteOperation extends Vue {
@@ -49,14 +51,11 @@ export class WebsiteOperation extends Vue {
         source_type: "A",
     };
 
-    public inputVisible: any = false;
     // 协议类型复选框
     public httpTpye: boolean = false;
     public httpsTpye: boolean = false;
     // 回源方式单选框
     public sourceIP: number = 0; // 0 表示 IP 1 表示域名
-    public sourceInfo: string = "";
-    public showTag: boolean = true;
     // 上传证书
     public dialogVisibleDiploma: boolean = false;
     // 表单验证
@@ -69,18 +68,18 @@ export class WebsiteOperation extends Vue {
             { required: true, message: "请添加用户角色", trigger: "blur" },
         ],
 
-    }; 
+    };
 
 
-    
+
     // init lifecircle hook
     created() {
         console.log(this.form);
-     
+
     }
 
     destroyed() {
-    
+
     }
 
 
@@ -93,36 +92,12 @@ export class WebsiteOperation extends Vue {
         }
     }
 
-    handleClose(tag: any) {
-        this.form.source_info.splice(this.form.source_info.indexOf(tag), 1);
-        if (this.form.source_info.length > 3) {
-            this.showTag = false;
-        } else {
-            this.showTag = true;
-        }
+
+
+    getTags(tags: string[]) {
+        this.form.source_info = tags;
     }
 
-    showInput() {
-        this.inputVisible = true;
-        // this.$nextTick( _  => {
-        //   this.$refs.saveTagInput.$refs.input.focus();
-        // });
-    }
-
-    handleInputConfirm() {
-        let inputValue = this.sourceInfo;
-        if (inputValue) {
-          this.form.source_info.push(inputValue);
-        }
-        console.log(this.form.source_info.length);
-        if (this.form.source_info.length > 3) {
-            this.showTag = false;
-        } else {
-            this.showTag = true;
-        }
-        this.inputVisible = false;
-        this.sourceInfo = "";
-    }
 
     // "formbasic","formserver"
     submitForm(formBasic: string, formServer: string) {
@@ -135,7 +110,7 @@ export class WebsiteOperation extends Vue {
 
     // 协议类型复选框
     changeSoure(val: any) {
-        if ( val === 0) {
+        if (val === 0) {
             this.form.source_type = "A";
         } else {
             this.form.source_type = "CNAME";

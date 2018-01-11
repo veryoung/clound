@@ -63,15 +63,7 @@
                                 </span>
                         </div> -->
                     </el-radio-group>
-                    <div class="sourceTag">
-                        <el-tag :key="tag" v-for="tag in form.source_info" closable :disable-transitions="false" @close="handleClose(tag)">
-                            {{tag}}
-                        </el-tag>
-                        <el-input class="input-new-tag" v-if="inputVisible" v-model="sourceInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm"
-                            @blur="handleInputConfirm">
-                        </el-input>
-                        <el-button v-else v-show="showTag" class="button-new-tag" size="small" @click="showInput">请输入{{sourceIP===0?"回源IP":"回源域名"}}</el-button>
-                    </div>
+                    <CustomTags @getTags="getTags"/>
                 </div>
 
             </el-form-item>

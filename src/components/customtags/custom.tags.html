@@ -1,0 +1,9 @@
+<div class="sourceTag">
+    <el-tag :key="tag" v-for="(tag,$index) in tags" closable :disable-transitions="false" @close="closeTag($index)">
+        {{tag}}
+    </el-tag>
+    <el-input class="input-new-tag" v-if="inputVisible" v-model="tag" size="small" @keyup.enter.native="handleInputConfirm"
+        @blur="handleInputConfirm">
+    </el-input>
+    <el-button v-else v-show="addFlag" class="button-new-tag" size="small" @click="inputVisible = true">{{addTagText}}</el-button>
+</div>
