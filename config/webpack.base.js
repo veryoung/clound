@@ -4,15 +4,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
-console.log("process.env.NODE_ENV", process.env.NODE_ENV, "base");
 
 module.exports = function (env) {
     return {
         entry: './src/main.ts',
-        output: {
-            path: path.resolve(__dirname, '../dist'),
-            filename: 'build.[hash].js',
-        },
         resolve: {
             extensions: ['.ts', '.js', '.vue', '.scss', '.json'],
             alias: {
@@ -20,12 +15,12 @@ module.exports = function (env) {
                 'vue$': 'vue/dist/vue.esm.js',
                 '@views': 'src/views/',
                 '@components': 'src/components/',
-                '@router':'src/router/',
-                '@store':'src/store/',
-                '@directives':'src/directives',
-                '@utils':'src/utils',
-                '@server':'src/server',
-                '@filters':'src/filters',
+                '@router': 'src/router/',
+                '@store': 'src/store/',
+                '@directives': 'src/directives',
+                '@utils': 'src/utils',
+                '@server': 'src/server',
+                '@filters': 'src/filters',
             }
         },
         module: {
@@ -77,6 +72,7 @@ module.exports = function (env) {
             }),
             new webpack.DefinePlugin({
                 'process.env': {
+                    PLATFORM: JSON.stringify(process.env.PLATFORM),
                     NODE_ENV: JSON.stringify(env)
                 }
             })
