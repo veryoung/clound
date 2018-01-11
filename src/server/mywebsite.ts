@@ -6,7 +6,7 @@ class Mywebsite extends Restful {
         super();
     }
 
-    
+
     batchWebsite(opt: ObjType) {
         return this.put({
             url: "/api/v20/websites/open_waf/",

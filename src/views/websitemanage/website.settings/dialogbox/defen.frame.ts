@@ -1,3 +1,4 @@
+import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
@@ -14,7 +15,10 @@ require("./defen.frame.styl");
         dialogVisible: Boolean,
         uid: {
             type: String
-        }
+        },
+    },
+    components: {
+        CustomTags
     }
 })
 export class DenfenFrame extends Vue {
@@ -51,6 +55,8 @@ export class DenfenFrame extends Vue {
             callback();
         }
     }
+
+
     submit(formName: string) {
         let temp: any = this.$refs[formName];
         temp.validate((valid: any) => {

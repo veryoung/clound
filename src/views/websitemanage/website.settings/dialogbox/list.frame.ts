@@ -29,9 +29,6 @@ export class ListFrame extends Vue {
     
 
     created() { 
-        console.log(111);
-
-        console.log(this.types);
         if ( this.types === "white") {
             this.form.ip = "11";
             this.form.url = this.data.waf_url_white[0];
@@ -39,7 +36,6 @@ export class ListFrame extends Vue {
             this.form.ip = "22";
             this.form.url = this.data.waf_url_black[0];
         }
-        console.log(this.form);
     }
     /**
      *     required?: boolean;

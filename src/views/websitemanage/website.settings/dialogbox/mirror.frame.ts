@@ -1,9 +1,12 @@
+import { MywebsiteServer } from "@server/mywebsite";
+import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+
 
 
 require("./mirror.frame.styl");
@@ -14,64 +17,44 @@ require("./mirror.frame.styl");
         dialogVisible: Boolean,
         uid: {
             type: String
-        }
+        },
+        data: Array,
+        mirrcyc: Number,
+    },
+    components: {
+        CustomTags
+    },
+    computed: {
     }
 })
 export class MirrorFrame extends Vue {
     // init props
     public uid: string;
+    public data: any;
+    public mirrcyc: Number;
     // init data
-    public form: ResetType = {
-        pwd1: "",
-        pwd: ""
+    public form: MirrorType = {
+        mirror_urls: [""],
     };
-    /**
-     *     required?: boolean;
-    message?: string;
-    trigger?: string;
-    validator?: Function;
-    min?: number;
-    max?: number;
-     */
-    public rules: FormRuleType = {
-        pwd: [
-            { required: true, message: "密码不能为空", trigger: "blur" },
-            { validator: FromValidator.pwd, message: "密码不符合规则", trigger: "blur" }
-        ],
-        pwd1: [
-            { required: true, message: "密码不能为空", trigger: "blur" },
-            { validator: this.npwdAgain, message: "两次密码不一致", trigger: "blur" }
-        ]
-    };
-    // init methods
-    npwdAgain(rule: FormRuleType, value: string, callback: Function) {
-        if (value !== this.form.pwd) {
-            callback(new Error("两次输入密码不一致"));
-        } else {
-            callback();
-        }
+
+    created() {
     }
+
+    getTags(tags: string[]) {
+        this.form.mirror_urls = tags;
+    }
+
     submit(formName: string) {
-        let temp: any = this.$refs[formName];
-        temp.validate((valid: any) => {
-            if (valid) {
-                UserServer.resetPwd({ uid: this.uid + "", pwd: this.form.pwd }).then((response: AxiosResponse<ResType>) => {
-                    let res: ResType = response.data;
-                    switch (res.status) {
-                        case "suc":
-                            this.$message({
-                                message: "修改成功",
-                                type: "success"
-                            });
-                            this.cancel();
-                            break;
-                        default:
-                            break;
-                    }
-                });
-            } else {
-                return false;
-            }
+        let id = this.$route.params.id;
+        let params = {
+            sid: id,
+            urls: this.form.mirror_urls,
+            interval: this.mirrcyc
+        };
+        // 提交成功后将数据传给父组件
+        this.$emit("MirrorData", this.form.mirror_urls);
+        MywebsiteServer.mirror(params).then( (response: AxiosResponse<ResType>) => {
+            console.log(response);
         });
     }
 
@@ -80,7 +63,6 @@ export class MirrorFrame extends Vue {
     }
 }
 
-export interface ResetType {
-    pwd: string;
-    pwd1: string;
+export interface MirrorType {
+    mirror_urls: Array<string>;
 }

@@ -266,6 +266,12 @@ export class WebsiteOperation extends Vue {
     getTags(tags: string[]) {
         this.form.source_info = tags;
     }
+    gethttpTags(tags: string[]) {
+        this.form.http_port = tags;
+    }
+    gethttpsTags(tags: string[]) {
+        this.form.https_port = tags;
+    }
 
 
     // "formbasic","formserver"

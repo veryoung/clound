@@ -43,13 +43,7 @@
                             </div>
                         </div>
                         <div class="httpTag">
-                            <el-tag :key="tag" v-for="tag in form.http_port" closable :disable-transitions="false" @close="handleHttpClose(tag)">
-                                {{tag}}
-                            </el-tag>
-                            <el-input class="input-new-tag" v-if="HttpInputVisible" v-model="HttpInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleHttpInputConfirm"
-                                @blur="handleHttpInputConfirm">
-                            </el-input>
-                            <el-button v-else v-show="showHttpTag" class="button-new-tag" size="small" @click="showHttpInput">请输入Http端口</el-button>
+                            <CustomTags @getTags="gethttpTags" :total="10" addTagText="请输入Http端口"/>
                         </div>
                     </div>
                     <div class="https">
@@ -60,17 +54,8 @@
                             </div>
                         </div>
                         <div class="httpsTag">
-                            <el-tag :key="tag" v-for="tag in form.https_port" closable :disable-transitions="false" @close="handleHttpsClose(tag)">
-                                {{tag}}
-                            </el-tag>
-                            <el-input class="input-new-tag" v-if="HttpsInputVisible" v-model="HttpsInfo" ref="saveTagInput" size="small" @keyup.enter.native="handleHttpsInputConfirm"
-                                @blur="handleHttpsInputConfirm">
-                            </el-input>
-                            <el-button v-else v-show="showHttpsTag" :disabled="!httpsTpye" class="button-new-tag" size="small" @click="showHttpsInput">请输入Https端口</el-button>
+                            <CustomTags @getTags="gethttpsTags" :total="10" addTagText="请输入Https端口"/>
                         </div>
-
-
-
                     </div>
                 </div>
                 <div class="websiteHttpRemark">
@@ -89,7 +74,7 @@
                                 </span>
                         </div> -->
                     </el-radio-group>
-                    <CustomTags @getTags="getTags"/>
+                    <CustomTags @getTags="getTags" :total="4"/>
                 </div>
 
             </el-form-item>
