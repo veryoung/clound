@@ -19,27 +19,20 @@ import { USER } from "@store/user.center.type";
 import { Store } from "@store/store";
 import { UserStatus } from "@utils/monitor";
 import { WebsiteManageRouter } from "@router/website.manage";
+import { LoginPortal } from "@views/loginportal/login.portal";
 
 
 Vue.use(Router);
 
-export const entry: RouteConfig[] = [
+let tempRouter: RouteConfig[] = [
     {
         path: "/",
-        // redirect: "/login",
         meta: {
             hidden: true
         },
         beforeEnter(to: Route, from: Route, next: Function) {
             new UserStatus(next);
         }
-    },
-    {
-        path: "/login",
-        meta: {
-            hidden: true
-        },
-        component: Login
     },
     {
         path: "/home",
@@ -84,7 +77,7 @@ export const entry: RouteConfig[] = [
         },
         props: {
             sider: {
-                menus: WebsiteManageRouter 
+                menus: WebsiteManageRouter
             }
         },
         meta: {
@@ -155,6 +148,23 @@ export const entry: RouteConfig[] = [
         children: userCenterRouter,
     }
 ];
+
+tempRouter.push(
+    process.env.PLATFORM === "portal" ? {
+        path: "/portal",
+        meta: {
+            hidden: true
+        },
+        component: LoginPortal
+    } : {
+        path: "/login",
+        meta: {
+            hidden: true
+        },
+        component: Login
+    }
+);
+export const entry: RouteConfig[] = tempRouter;
 
 export const entryRouter = new Router({
     routes: entry

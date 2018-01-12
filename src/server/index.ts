@@ -69,7 +69,11 @@ axios.interceptors.response.use((response): AxiosResponse<ResType> => {
             ElementUI.Message.error(res.message);
             break;
         case "red":
-            entryRouter.replace("/login");
+            if (process.env.PLATFORM === "portal") {
+                entryRouter.replace("/portal");
+            } else {
+                entryRouter.replace("/login");
+            }
             break;
     }
     return response;

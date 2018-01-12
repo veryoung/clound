@@ -48,7 +48,11 @@ export class UserMenu extends Vue {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
-                    this.$router.push("/login");
+                    if (process.env.PLATFORM === "portal") {
+                        this.$router.replace("/portal");
+                    } else {
+                        this.$router.replace("/login");
+                    }
                     break;
                 default:
                     break;

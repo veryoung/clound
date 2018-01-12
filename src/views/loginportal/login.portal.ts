@@ -11,12 +11,12 @@ import { session } from "@utils/sessionstorage";
 import { Permissions } from "@directives/permissions";
 
 
-const style = require("./login.m.css");
+const style = require("../login/login.m.css");
 @Component({
-    name: "login",
-    template: require("./login.html")
+    name: "loginportal",
+    template: require("./login.portal.html")
 })
-export class Login extends Vue {
+export class LoginPortal extends Vue {
     public form: any = {
         username: "",
         pwd: ""

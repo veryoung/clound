@@ -14,8 +14,8 @@ module.exports = function (env) {
                 target: "http://10.10.200.232:8080",
                 changeOrigin: true,
                 secure: false,
-                host: "0.0.0.0"
             }],
+            port: process.env.PLATFORM === 'portal' ? 7000 : 8000
             // hot: true
         },
         module: {
