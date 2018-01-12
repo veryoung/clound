@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 import { ModuleTitle } from "@components/title/module.title";
@@ -15,6 +14,9 @@ import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { roleDict } from "@utils/role.fn";
+import { SubmitBtn } from "@components/submit/submit";
+
 
 const Aux = new Auxiliary<string>();
 
@@ -35,7 +37,7 @@ require("./operation.styl");
         ])
     },
     components: {
-        ModuleTitle, AddOrganizationFrame, TissueTree
+        ModuleTitle, AddOrganizationFrame, TissueTree, SubmitBtn
     }
 })
 export class UserOperation extends Vue {
@@ -47,6 +49,8 @@ export class UserOperation extends Vue {
     public roleList: RoleType[];
 
     // init data
+    public roleType: string = "";
+    public titles: string[] = [];
     public defaultTime: Date = new Date();
     public unwatch: Function = () => { };
     public roles: RoleType[] = new Array<RoleType>();
@@ -76,7 +80,7 @@ export class UserOperation extends Vue {
     public rules: FormRuleType = {
         user_name: [
             { required: true, message: "真实姓名不能为空", trigger: "blur" },
-            { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
+            { min: 2, max: 15, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
         ],
         role: [
             { required: true, message: "请添加用户角色", trigger: "blur" },
@@ -92,18 +96,18 @@ export class UserOperation extends Vue {
         pwd: [
             { required: true, message: "密码不能为空", trigger: "blur" },
         ],
-        max_domain_num: [
-            { required: true, message: "网站总数不能为空", trigger: "blur" },
-            { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
-            { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
-        ],
         expiry_date: [
             { required: true, message: "请填写到期日期", trigger: "blur" },
         ],
     };
-
+    public expiryOption: any = {
+        disabledDate(time: any) {
+            return time.getTime() <= new Date(new Date().getTime() - 86400000);
+        },
+    };
     // init lifecircle hook
     created() {
+        this.titles = this.operation === "add" ? ["添加用户"] : ["编辑用户"];
         let that = this;
         let id = this.$route.params.id;
         this.$store.dispatch(USER.GETUSERROLES);
@@ -126,13 +130,14 @@ export class UserOperation extends Vue {
         Aux.insertId(eventId1);
 
         this.unwatch = vm.$watch(() => {
-            return this.form.role;
-        }, (val, oldVal) => {
-            if (val !== "sm" && val !== "om") {
-                this.rules.company = [];
-                this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
+            if (that.form.role) {
+                return roleDict.ufcode(that.form.role);
             } else {
-                delete this.rules.company;
+                return that.form.role;
+            }
+        }, (val, oldVal) => {
+            if (val) {
+                this.changeRules(val);
             }
         });
     }
@@ -147,6 +152,27 @@ export class UserOperation extends Vue {
 
 
     // init methods
+    changeRules(val: string) {
+        if (val !== "sm" && val !== "om" && val !== "am") {
+            this.rules.company = [];
+            this.rules.company.push({ required: true, message: "企业名称不能为空", trigger: "blur" });
+        } else {
+            delete this.rules.company;
+        }
+
+        if (val !== "am") {
+            this.rules.max_domain_num = [];
+            this.rules.max_domain_num = [
+                { required: true, message: "网站总数不能为空", trigger: "blur" },
+                { type: "number", message: "网站总数必须为数字值", trigger: "blur" },
+                { validator: this.GE, message: "网站总数必须大于等于0", trigger: "blur" },
+            ];
+        } else {
+            delete this.rules.max_domain_num;
+        }
+        this.roleType = val;
+    }
+
     stringToBoolean() {
         this.form.ads_enable = this.form.ads_enable === "1" ? true : false;
         this.form.cdn_enable = this.form.cdn_enable === "1" ? true : false;
@@ -182,57 +208,59 @@ export class UserOperation extends Vue {
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
         let temp1: any = this.$refs[formServer];
+        let flag: boolean = false;
+        let flag1: boolean = false;
         for (let item of this.roleList) {
             if (item.ufcode === this.form.role) {
                 this.form.role_id = item.role_id;
             }
         }
         temp.validate((valid: any) => {
-            if (valid) {
-                this.booleanToString();
-                switch (this.operation) {
-                    case "add":
-                        UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
-                            let res: ResType = response.data;
-                            switch (res.status) {
-                                case "suc":
-                                    ElementUI.Message({
-                                        message: "添加用户成功",
-                                        type: "success"
-                                    });
-                                    this.$router.push("/SystemManagement/UserManagement");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                        break;
-                    case "editor":
-                        UserServer.editUser(this.form).then((response: AxiosResponse<ResType>) => {
-                            let res: ResType = response.data;
-                            switch (res.status) {
-                                case "suc":
-                                    ElementUI.Message({
-                                        message: "编辑用户成功",
-                                        type: "success"
-                                    });
-                                    this.$router.push("/SystemManagement/UserManagement");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                    default:
-                        break;
-                }
-
-            } else {
-                return false;
-            }
+            flag = valid;
         });
         temp1.validate((valid: boolean) => {
-            console.log(valid);
+            flag1 = valid;
         });
+        if (flag && flag1) {
+            this.booleanToString();
+            switch (this.operation) {
+                case "add":
+                    UserServer.addUser(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$message({
+                                    message: "添加用户成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/SystemManagement/UserManagement");
+                                break;
+                            default:
+                                this.stringToBoolean();
+                                break;
+                        }
+                    });
+                    break;
+                case "editor":
+                    UserServer.editUser(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$message({
+                                    message: "编辑用户成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/SystemManagement/UserManagement");
+                                break;
+                            default:
+                                this.stringToBoolean();
+                                break;
+                        }
+                    });
+                default:
+                    break;
+            }
+        }
     }
 
     back() {

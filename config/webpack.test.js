@@ -30,6 +30,10 @@ module.exports = function (env) {
         plugins: 'prepend',
     })(base(env), {
         devtool: '#source-map',
+        output: {
+            path: process.env.PLATFORM === "operation" ? path.resolve(__dirname, '../operation') : path.resolve(__dirname, '../portal'),
+            filename: 'build.[hash].js',
+        },
         module: {
             rules: [{
                     test: /\.styl$/,
@@ -70,7 +74,7 @@ module.exports = function (env) {
                             }
                         }],
                     }),
-                    exclude:/\.m\.css$/
+                    exclude: /\.m\.css$/
                 },
                 {
                     test: /\.m\.css$/,
@@ -91,7 +95,7 @@ module.exports = function (env) {
         },
         plugins: [
             new CleanWebpackPlugin([
-                'dist',
+                process.env.PLATFORM,
             ], {
                 root: path.resolve(__dirname, '../'),
                 verbose: false,
@@ -100,12 +104,13 @@ module.exports = function (env) {
             extractStylus,
             extractCss,
             moduleCss,
-            new CopyWebpackPlugin([
-                {
-                    from: path.resolve(__dirname, '../users_template_opc.xls'),
-                    to: './download/users_template_opc.xls'
-                },
-            ]),
+            new CopyWebpackPlugin([{
+                from: path.resolve(__dirname, '../users_template_opc.xlsx'),
+                to: './download/users_template_opc.xlsx'
+            }, {
+                from: path.resolve(__dirname, '../users_template_portal.xls'),
+                to: './download/users_template_portal.xls'
+            }]),
             new webpack.optimize.UglifyJsPlugin({
                 sourceMap: true,
                 compress: {

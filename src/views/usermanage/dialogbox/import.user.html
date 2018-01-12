@@ -3,7 +3,7 @@
         <span class="iconfont ">&#xe63b;</span>
         批量导入用户
     </span>
-    <div class="content-box" 
+    <div class="import-user" 
         v-loading="loading" 
         element-loading-text="拼命加载中" 
         element-loading-spinner="el-icon-loading" 
@@ -35,8 +35,8 @@
                     <em>点击上传</em>
                 </div>
             </el-upload>
-            <el-button type="primary" size="small">
-                <a href="/download/users_template_opc.xls" target="_blank">下载导入模板</a>
+            <el-button type="primary" size="small" @click="exportTemplate">
+                下载导入模板
             </el-button>
         </div>
     </div>

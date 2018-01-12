@@ -2,7 +2,6 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
-import ElementUI from "element-ui";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 
@@ -60,10 +59,11 @@ export class ResetPwd extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            ElementUI.Message({
+                            this.$message({
                                 message: "修改成功",
                                 type: "success"
                             });
+                            this.cancel();
                             break;
                         default:
                             break;

@@ -1,6 +1,5 @@
 const env = process.env.NODE_ENV;
 
-
 module.exports = function(){
     switch(env){
         case 'development':

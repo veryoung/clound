@@ -7,6 +7,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER } from "@store/user.center.type";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { UserStatus } from "@utils/monitor";
 
 const Aux = new Auxiliary<string>();
 require("./user.message.styl");
@@ -24,6 +25,7 @@ require("./user.message.styl");
 })
 export class UserMessage extends Vue {
     // init data
+    public unwatch: any = "";
     public userMessage: UserMessageType = {
         uid: "0",
         user_name: "",
@@ -53,20 +55,31 @@ export class UserMessage extends Vue {
     created() {
         let that = this;
         let id = this.$route.params.id;
-        if (id) {
-            this.$store.dispatch(USER.GETOTHERUSER, { uid: id });
-        } else {
-            this.userMessage = this.personInfo.default;
-        }
+        this.unwatch = vm.$watch(function () {
+            let id = that.$route.params.id;
+            if (id) {
+                that.$store.dispatch(USER.GETOTHERUSER, { uid: id });
+            } else {
+                new UserStatus();
+            }
+            return id;
+        }, (id, oldid) => {
+        });
+
         let eventId = EventBus.register(CONSTANT.GETOTHERUSER, function (event: string, info: any) {
             that.userMessage = that.personInfo[id];
         });
+        let eventId1 = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+            that.userMessage = that.personInfo.default;
+        });
         Aux.insertId(eventId);
+        Aux.insertId(eventId1);
     }
 
     beforeDestroy() {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
         });
+        this.unwatch();
     }
 }

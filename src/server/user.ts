@@ -1,6 +1,5 @@
 import { axios, Restful } from "@server/index";
 import { UserMessageType } from "@store/user.center.type";
-import SearchType from "@views/usermanage/user.manage.attachement";
 
 
 export class User extends Restful {
@@ -72,6 +71,15 @@ export class User extends Restful {
         });
     }
 
+    
+    public getDefaultUser(uid: string) {
+        return this.get({
+            url: "/api/v20/account/user/personal/",
+            params: {
+                uid: uid
+            }
+        });
+    }
 
     public getPersonInfo(uid: string) {
         return this.get({

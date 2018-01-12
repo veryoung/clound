@@ -37,7 +37,11 @@ export const OrganizationStore: Module<OrganizationType, any> = {
 
     mutations: {
         [ORGANIZATION.INITORGANIZATIONTREE]: (state: OrganizationType, payload) => {
-            state.tree[0].nodes = payload.data;
+            if (process.env.PLATFORM === "portal") {
+                state.tree = payload.data;
+            } else {
+                state.tree[0].nodes = payload.data;
+            }
         },
         [ORGANIZATION.ADDORGANIZATIONMESSAGE]: (state: OrganizationType, payload) => {
             state.message[payload.id] = payload.data;

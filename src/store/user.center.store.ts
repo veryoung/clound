@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { UserCenterType, UserStoreType, UserMessageType, USER, UserListType, UserCompanyListType, RoleType } from "./user.center.type";
+import { UserCenterType, UserStoreType, UserMessageType, USER, RoleType, UserListType } from "./user.center.type";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
 import { session, vm } from "@utils/index";
@@ -8,6 +8,7 @@ import { TABLECONFIG } from "@store/table.type";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 import * as moment from "moment";
+import { GeneralServer } from "@server/general";
 
 
 export const UserCenterStore: Module<UserStoreType, any> = {
@@ -43,30 +44,26 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         let personInfo: UserCenterType = {
             "init": message
         };
-        let personCache = session.getItem("personInfo");
-        let userlist: UserCompanyListType = {
+        let userlist: UserListType = {
             "init": {
-                data: {
-                    "0": [{
-                        company: "",
-                        cperson: "",
-                        ctime: "",
-                        email: "",
-                        expiry_date: "",
-                        is_active: "",
-                        is_delete: "",
-                        is_edite: "",
-                        phone: "",
-                        role: "",
-                        user_name: "",
-                        uid: "",
-                    }]
-                },
-                total: 1
+                "0": [{
+                    company: "",
+                    cperson: "",
+                    ctime: "",
+                    email: "",
+                    expiry_date: "",
+                    is_active: "",
+                    is_delete: "",
+                    is_edite: "",
+                    phone: "",
+                    role: "",
+                    user_name: "",
+                    uid: "",
+                }]
             }
         };
         return {
-            personInfo: personCache !== null ? personCache : personInfo,
+            personInfo: personInfo,
             userlist: userlist,
             roleList: roleList,
         };
@@ -78,7 +75,6 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         },
         [USER.DEFAULTUSER]: (state: UserStoreType, payload) => {
             state.personInfo["default"] = payload.message;
-            session.setItem("personInfo", state.personInfo);
         },
         [USER.GETOTHERUSER]: (state: UserStoreType, payload) => {
             if (state.personInfo[payload.uid]) {
@@ -86,17 +82,15 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             } else {
                 state.personInfo[payload.uid] = (<any>Object).assign({}, payload.message);
             }
-            session.setItem("personInfo", state.personInfo);
         },
         [USER.GETUSERLIST]: (state: UserStoreType, payload) => {
             if (!state.userlist[payload.ori_id]) {
-                state.userlist[payload.ori_id] = { data: {}, total: 0 };
+                state.userlist[payload.ori_id] = {};
             }
-            if (!state.userlist[payload.ori_id].data[Math.floor(payload.page) - 1]) {
-                state.userlist[payload.ori_id].data[Math.floor(payload.page) - 1] = [];
+            if (!state.userlist[payload.ori_id][Math.floor(payload.page) - 1]) {
+                state.userlist[payload.ori_id][Math.floor(payload.page) - 1] = [];
             }
-            state.userlist[payload.ori_id].data[Math.floor(payload.page) - 1] = payload.message.data;
-            state.userlist[payload.ori_id].total = payload.message.total;
+            state.userlist[payload.ori_id][Math.floor(payload.page) - 1] = [].concat(payload.message.data);
         },
         [USER.GETUSERROLES]: (state: UserStoreType, payload) => {
             state.roleList = payload;
@@ -110,9 +104,12 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             });
         },
         [USER.DEFAULTUSER]: ({ state, commit, rootState }, payload) => {
-            UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
+            if ("default" in state.personInfo) {
+                EventBus.doNotify(CONSTANT.DEFAULTUSER);
+            }
+            UserServer.getDefaultUser(payload.uid).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
-                commit(USER.DEFAULTUSER, { uid: payload.uid, message: res.data });
+                commit(USER.DEFAULTUSER, { uid: res.data.uid, message: res.data });
                 EventBus.doNotify(CONSTANT.DEFAULTUSER);
             });
         },
@@ -135,6 +132,11 @@ export const UserCenterStore: Module<UserStoreType, any> = {
             }
         },
         [USER.GETUSERLIST]: ({ state, commit, rootState }, payload) => {
+            if (payload.ori_id in state.userlist) {
+                if ((Math.floor(payload.page) - 1) in state.userlist[payload.ori_id]) {
+                    EventBus.doNotify(CONSTANT.GETUSERLIST, { id: payload.ori_id });
+                }
+            }
             UserServer.getUserList(payload).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {

@@ -17,7 +17,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "uid",
                         label: "用户id",
                         show: false,
-                        disable: true
+                        disable: true,
+                        nonexit: true
                     },
                     {
                         prop: "user_name",
@@ -71,7 +72,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "is_active",
                         label: "状态",
                         show: true,
-                        disable: true
+                        disable: true,
+                        width: "130px"
                     },
                 ],
                 pageSizes: [10, 20, 30, 40, 50],
@@ -79,6 +81,76 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                 page: 1,
                 total: 1
             },
+            "mywebsitetable": {
+                columns: [
+                    {
+                        prop: "name",
+                        label: "网站名称",
+                        show: true
+
+                    },
+                    {
+                        prop: "domain",
+                        label: "网站域名",
+                        show: true
+
+                    },
+                    {
+                        prop: "organization",
+                        label: "所属组织",
+                        show: true
+
+                    },
+                    {
+                        prop: "port",
+                        label: "协议类型",
+                        type: "website_port",
+                        show: true
+                    },
+                    {
+                        prop: "source_type",
+                        label: "回源方式",
+                        show: true
+                    },
+                    {
+                        prop: "source_info",
+                        label: "回源地址",
+                        show: true,
+                        type: "source_info"
+                    },
+                    {
+                        prop: "cname",
+                        label: "CNAME别名",
+                        show: true
+                    },
+                    {
+                        prop: "ctime",
+                        label: "创建时间",
+                        show: true,
+                        type: "date",
+                    },
+                    {
+                        prop: "state",
+                        label: "接入状态",
+                        show: true,
+                    },
+                    {
+                        prop: "open_waf",
+                        label: "防御状态",
+                        show: true,
+                    },
+                    {
+                        prop: "service",
+                        label: "服务项",
+                        show: true,
+                        type: "website_server"
+                    },
+                ],
+                pageSizes: [10, 20, 30, 40, 50],
+                page_size: 10,
+                page: 1,
+                total: 1
+            }
         };
         return systemTable;
     },
@@ -119,7 +191,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
             commit(TABLECONFIG.TOTAL, { moduleName: payload.moduleName, total: payload.total });
         },
         [TABLECONFIG.TABLEALL]: ({ state, commit, rootState }, payload) => {
-            TableServer.getConfig().then((response: AxiosResponse<ResType>) => {
+            TableServer.getConfig(payload.moduleName).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":

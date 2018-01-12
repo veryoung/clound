@@ -29,31 +29,18 @@ export class LeftMenu extends Vue {
     public defaultIndex: string | undefined = this.menus[0].name;
     public unwatch: any = "";
 
-    created() {
-        // this.defaultIndex = this.menus[0].name;
+    mounted() {
         let that = this;
-        this.unwatch = vm.$watch(() => {
-            return this.defaultIndex;
-        }, (to, from) => {          
-        }, {
-                deep: true
-            });
         this.unwatch = vm.$watch(() => {
             return this.$route;
         }, (to, from) => {
             that.defaultIndex = to.name;
         }, {
-                deep: true
-            });
-    }
-
-    updated() {
-        // this.defaultIndex = this.$route.name;
-        // console.log(this.$route.name);
+            deep: true
+        });
     }
 
     destroyed() {
-        console.log("destroyed");
         this.unwatch();
     }
 

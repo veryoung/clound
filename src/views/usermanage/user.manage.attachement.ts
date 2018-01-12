@@ -1,8 +1,9 @@
 import { UserListType, UserServer } from "@server/user";
 import { ResType } from "server";
 import ElementUI from "element-ui";
-import { UserListColumnType } from "@store/user.center.type";
+import { UserListColumnType, USER } from "@store/user.center.type";
 import { AxiosResponse } from "axios";
+import { Store } from "@store/store";
 
 
 
@@ -19,7 +20,7 @@ import { AxiosResponse } from "axios";
 // sort_ctime	创建时间排序	boolean	
 // sort_expiry_date	过期日期排序	boolean	
 export default interface SearchType {
-    name: string;
+    user_name: string;
     role_id?: string;
     phone: string;
     email: string;
@@ -32,7 +33,7 @@ export default interface SearchType {
 }
 
 export const filterData: SearchType = {
-    name: "",
+    user_name: "",
     role_id: "",
     phone: "",
     email: "",
@@ -45,7 +46,7 @@ export const filterData: SearchType = {
 };
 
 export class UserManager {
-    handleDel(row: UserListColumnType) {
+    handleDel(row: UserListColumnType, opt: any) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
             UserServer.delUser(row.uid).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
@@ -55,6 +56,7 @@ export class UserManager {
                             message: "删除成功",
                             type: "success"
                         });
+                        Store.dispatch(USER.GETUSERLIST, opt);
                         break;
                     default:
                         break;

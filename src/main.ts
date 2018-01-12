@@ -14,6 +14,7 @@ import { InitFilters } from "@filters/index";
 require("element-ui/lib/theme-chalk/index.css");
 require("./resource/iconfont/iconfont.css");
 require("./resource/css/global.css");
+require("./resource/global.styl");
 
 if (process.env.NODE_ENV === "test") {
     console.info("测试环境,测试版本号", require("../package.json").version, "更新日期", new Date());

@@ -42,6 +42,8 @@ export interface ColumnType {
     // 类型，代表使用何种的类型
     type?: string;
     width?: string;
+    // 是否存在于setcol组件
+    nonexit?: boolean;
 }
 
 export interface PageConfig {

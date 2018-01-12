@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 
@@ -16,6 +15,8 @@ import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { create } from "domain";
+import { Permissions } from "@directives/permissions";
+import { SubmitBtn } from "@components/submit/submit";
 
 
 const Aux = new Auxiliary<string>();
@@ -30,7 +31,7 @@ require("./organization.styl");
         }
     },
     components: {
-        ModuleTitle, TissueTree, TipBox
+        ModuleTitle, TissueTree, TipBox, SubmitBtn
     },
     computed: {
         ...mapGetters([
@@ -40,6 +41,8 @@ require("./organization.styl");
 })
 export class OrganizationComponent extends Vue {
     // init data
+    public add: boolean = Permissions.judge("SystemManagement.Organization.Add");
+    public del: boolean = Permissions.judge("SystemManagement.Organization.Delete");
     public pid: string = "";
     public dialogVisible: boolean = false;
     public create: boolean = false;
@@ -91,12 +94,12 @@ export class OrganizationComponent extends Vue {
     }
 
     delNode(opt: any) {
-        ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
+        this.$msgbox.confirm("确定要删除嘛？", "提示").then(() => {
             OrganizationServer.delOrganization(opt.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        ElementUI.Message({
+                        this.$message({
                             message: "删除成功",
                             type: "success"
                         });
@@ -113,7 +116,9 @@ export class OrganizationComponent extends Vue {
     }
 
     clickNode(data: OrganizationTreeType) {
-        this.$store.dispatch(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: data.id });
+        if (Permissions.judge("SystemManagement.Organization.Check")) {
+            this.$store.dispatch(ORGANIZATION.ADDORGANIZATIONMESSAGE, { id: data.id });
+        }
     }
 
     close() {
@@ -128,7 +133,7 @@ export class OrganizationComponent extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            ElementUI.Message({
+                            this.$message({
                                 message: res.message || "修改成功",
                                 type: "success"
                             });
@@ -143,10 +148,5 @@ export class OrganizationComponent extends Vue {
                 return false;
             }
         });
-    }
-
-    resetForm(form: string) {
-        let temp: any = this.$refs[form];
-        temp.resetFields();
     }
 }

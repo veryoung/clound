@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import ElementUI from "element-ui";
 
 
 import { MessageType, Organization, ORGANIZATION } from "@store/organization.type";
@@ -9,6 +8,7 @@ import { FormRuleType } from "@utils/form.validator";
 import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
+import { SubmitBtn } from "@components/submit/submit";
 
 
 
@@ -16,6 +16,9 @@ require("./tip.box.styl");
 @Component({
     name: "tipbox",
     template: require("./tip.box.html"),
+    components: {
+        SubmitBtn
+    },
     props: {
         dialogVisible: {
             type: Boolean,
@@ -38,7 +41,7 @@ export class TipBox extends Vue {
     public pid: string;
     // init computed
     public OrganizationMessage: Organization;
-
+    // init datas
     public form: MessageType = {
         name: "",
         sname: "",
@@ -72,7 +75,7 @@ export class TipBox extends Vue {
                     switch (res.status) {
                         case "suc":
                             // 'success' | 'warning' | 'info' | 'error'
-                            ElementUI.Message({
+                            this.$message({
                                 message: res.message || "组织机构添加成功",
                                 type: "success"
                             });

@@ -34,12 +34,15 @@ export class Restful {
 
     protected del(opt: GetType) {
         const { url, params } = opt;
-        let temps = "?";
-        for (let key in params) {
-            temps += key + "=" + params[key] + "&";
-        }
-        temps = temps.substring(0, temps.length - 1);
-        return axios.delete(`${url}${temps}`);
+        // let temps = "?";
+        // for (let key in params) {
+        //     temps += key + "=" + params[key] + "&";
+        // }
+        // temps = temps.substring(0, temps.length - 1);
+        // return axios.delete(`${url}${temps}`);
+        return axios.delete(url, {
+            data: params
+        });
     }
 
 }
@@ -66,7 +69,11 @@ axios.interceptors.response.use((response): AxiosResponse<ResType> => {
             ElementUI.Message.error(res.message);
             break;
         case "red":
-            entryRouter.replace("/login");
+            if (process.env.PLATFORM === "portal") {
+                entryRouter.replace("/portal");
+            } else {
+                entryRouter.replace("/login");
+            }
             break;
     }
     return response;

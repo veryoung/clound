@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { ResType } from "server";
-import ElementUI from "element-ui";
 
 require("./import.user.styl");
 @Component({
@@ -21,6 +20,17 @@ export class ImportUserFrame extends Vue {
     }
 
     // init method
+    exportTemplate() {
+        let a = document.createElement("a");
+        a.target = "_black";
+        if (process.env.PLATFORM === "operation") {
+            a.href = "/download/users_template_opc.xlsx";
+        } else {
+            a.href = "/download/users_template_portal.xls";
+        }
+        a.click();
+    }
+
 
     importUser() {
         let temp: any = this.$refs.upload;
@@ -44,9 +54,9 @@ export class ImportUserFrame extends Vue {
         switch (response.status) {
             case "suc":
                 message = `
-                    <p>导入成功${response.data.success}条</p>
-                    <p>导入失败${response.data.error}条</p>
-                    <p>${response.data.error_info}</p>
+                    <p style="max-height:100px;overflow:auto;">导入成功${response.data.success}条</p>
+                    <p style="max-height:100px;overflow:auto;">导入失败${response.data.error}条</p>
+                    <p style="max-height:100px;overflow:auto;">${response.data.error_info}</p>
                 `;
                 this.loading = false;
                 break;
@@ -56,20 +66,20 @@ export class ImportUserFrame extends Vue {
             default:
                 break;
         }
-        ElementUI.MessageBox.alert(`<div>${message}</div>`, "提示", {
-            dangerouslyUseHTMLString: true
-        }).then(() => {
-            if (response.status === "suc") {
-
-            } else if (response.status === "error") {
-
+        let temp: any = this.$refs.upload;
+        this.$msgbox.alert(`<div>${message}</div>`, "提示", {
+            dangerouslyUseHTMLString: true,
+            beforeClose: (action, instance, done) => {
+                done();
             }
+        }).then(() => {
+            temp.clearFiles();
+            if (response.status === "suc") {
+            } else if (response.status === "error") {
+            }
+        }).catch(() => {
+            temp.clearFiles();
         });
-        /**
-         *         this.$alert("<strong>这是 <i>HTML</i> 片段</strong>", "HTML 片段", {
-          dangerouslyUseHTMLString: true
-        });
-         */
 
     }
     handleClose(done: Function) {

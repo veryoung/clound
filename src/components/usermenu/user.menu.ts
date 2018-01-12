@@ -10,8 +10,12 @@ import { ResType } from "@server/index";
 import { UserCenterType, USER } from "@store/user.center.type";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
+import { UserStatus } from "@utils/monitor";
+import { Auxiliary } from "@utils/auxiliary";
 
 
+
+const Aux = new Auxiliary<string>();
 require("./user.menu.styl");
 @Component({
     name: "usermenu",
@@ -31,6 +35,7 @@ export class UserMenu extends Vue {
     // lifecircle hook
     created() {
         let that = this;
+        new UserStatus();
         if (this.personInfo.default) {
             this.user_name = this.personInfo.default.user_name;
         }
@@ -43,7 +48,11 @@ export class UserMenu extends Vue {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
-                    this.$router.push("/login");
+                    if (process.env.PLATFORM === "portal") {
+                        this.$router.replace("/portal");
+                    } else {
+                        this.$router.replace("/login");
+                    }
                     break;
                 default:
                     break;
