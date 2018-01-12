@@ -15,7 +15,7 @@ export class General extends Restful {
         if (process.env.PLATFORM === "operation") {
             url = "/api/v20/account/auth";
         } else {
-            url = "portal/api/v20/account/auth";
+            url = "/portal/api/v20/account/auth";
         }
         return this.post({
             url: url, params: {
