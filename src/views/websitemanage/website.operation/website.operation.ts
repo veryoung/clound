@@ -148,6 +148,11 @@ export class WebsiteOperation extends Vue {
 
     // init methods
 
+    // 获取证书CID
+    diplomaCid(id: string) {
+        this.form.cid = id;
+    }
+
     handle(type: "updateDiploma") {
         if (type === "updateDiploma") {
             this.dialogVisibleDiploma = true;
@@ -156,8 +161,6 @@ export class WebsiteOperation extends Vue {
 
     // 控制多选框不能少选
     chooseHttpType() {
-        console.log(this.httpsTpye);
-        console.log(this.httpTpye);
         if (!this.httpsTpye && !this.httpTpye) {
             this.$message({
                 message: "协议类型必须选择一个",
@@ -277,6 +280,19 @@ export class WebsiteOperation extends Vue {
     // "formbasic","formserver"
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
+        console.log(this.form.cid);
+        if (!this.httpsTpye) {
+            this.form.cid = "";
+        } else {
+            if (this.form.cid === "") {
+                this.$message({
+                    message: "请上传证书",
+                    type: "warning"
+                });
+                return;
+            }
+        } 
+
         switch (this.operation) {
             case "add":
                 let httpsTemp: any = "";
@@ -285,8 +301,25 @@ export class WebsiteOperation extends Vue {
                     this.form.https_port = [];
                 }
                 MywebsiteServer.addWebsite(this.form).then((response: AxiosResponse<ResType>) => {
-                    console.log(response);
-                    this.form.https_port = httpsTemp;
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            this.$message({
+                                message: "创建用户成功",
+                                type: "success"
+                            });
+                            this.form.https_port = httpsTemp;
+                            this.$router.push("/WebsiteManagement/myWebsite");
+                            break;
+                        case "error":
+                            this.$message({
+                                message: res.message,
+                                type: "error"
+                            });
+                            break;    
+                        default:
+                            break;
+                    }
                 });
                 break;
             case "editor":

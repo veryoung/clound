@@ -69,12 +69,24 @@ export class WebsiteManagement extends Vue {
 
     // init method
     search() {
-        console.log("----搜索--------");
+        if (this.filter.ctime === null ) {
+            this.filter.ctime = "";
+        }
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
     }
 
     reset() {
+        this.filter = (<any>Object).assign({}, filterData);
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+    }
 
+    handleSizeChange(val: number) {
+        this.tableConfig.mywebsitetable.page_size = val;
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+    }
+    handleCurrentChange(val: number) {
+        this.tableConfig.mywebsitetable.page = val;
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
     }
 
     mergeData(opt: any) {
@@ -105,12 +117,7 @@ export class WebsiteManagement extends Vue {
         }
     }
 
-    handleSizeChange(val: number) {
 
-    }
-    handleCurrentChange(val: number) {
-
-    }
 
     handleSelectionChange(options: any[]) {
         this.ids = [];

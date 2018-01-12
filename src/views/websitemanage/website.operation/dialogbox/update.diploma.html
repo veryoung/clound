@@ -30,8 +30,8 @@
                         :limit="1" 
                         :auto-upload="false"
                         :data="upLoadData"
-                        name="private_key"
-                        :on-success="uploaderDone"
+                        name="file"
+                        :on-success="uploaderCertDone"
                         :before-upload="Crtuploader">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或
@@ -45,12 +45,12 @@
                         </span>
                         <el-upload ref="Keyupload" 
                             drag 
-                            action="/portal/api/v20/websites/cert/" 
+                            action="/api/v20/websites/pri_key/" 
                             :limit="1" 
                             :data="upLoadData"
-                            name="certificate"
+                            name="file"
                             :auto-upload="false"
-                            :on-success="uploaderDone"
+                            :on-success="uploaderKeyDone"
                             :before-upload="Keyuploader">
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">将文件拖到此处，或
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="importUser" :disabled="loading">导入</el-button>
+                <el-button type="primary" @click="importDiploma" :disabled="loading">导入</el-button>
                 <el-button @click="cancel" :disabled="loading">取消</el-button>
             </span>
     </el-dialog>

@@ -61,19 +61,20 @@ export class SpeedUpdateFrame extends Vue {
         }).then(() => {
             MywebsiteServer.cache(params).then( (response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
-                // Do something with response data
+                console.log(res);
                 switch (res.status) {
                     // "suc" | "error" | "red"
                     case "suc":
                         this.$message({
                             type: "success",
-                            message: "设置成功!"
+                            message: "刷新成功!"
                         });
-                        this.cancel();
                         break;
                     case "error":
-                        break;
-                    case "red":
+                        this.$message({
+                            type: "error",
+                            message: res.message
+                        });
                         break;
                 }
             });

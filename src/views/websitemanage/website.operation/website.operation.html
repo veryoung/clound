@@ -1,5 +1,5 @@
 <div class="website-operation">
-    <UpdateDiploma :dialogVisible="dialogVisibleDiploma" @close="closeDiploma" />
+    <UpdateDiploma v-if="dialogVisibleDiploma" :dialogVisible="dialogVisibleDiploma" @close="closeDiploma"  @diplomaCid="diplomaCid"/>
     <div class="panel">
         <ModuleTitle :titles="titles" />
         <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="website-form">

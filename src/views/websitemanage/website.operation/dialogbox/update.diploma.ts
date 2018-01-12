@@ -15,7 +15,7 @@ const style = require("./update.m.css");
         uid: {
             type: String
         }
-    }
+    },
 })
 export class UpdateDiploma extends Vue {
     // init data
@@ -24,15 +24,16 @@ export class UpdateDiploma extends Vue {
     public upLoadData: any = {
         cid: ""
     };
+    public Keytemp: any = "";
+    public Crttemp: any = "";
+
     // lifecycle hook
-    created() { }
 
     // init method
-
-    importUser() {
-        let temp: any = this.$refs.Crtupload;
-        console.log(temp);
-        temp.submit();
+    importDiploma() {
+        this.Keytemp = this.$refs.Keyupload;
+        this.Crttemp = this.$refs.Crtupload;
+        this.Crttemp.submit();
     }
     // 证书验证
     Crtuploader(file: any) {
@@ -44,6 +45,7 @@ export class UpdateDiploma extends Vue {
         if (!isLt1M) {
             this.$message({ message: "请导入指定的模板文件", type: "info" });
         }
+
         return extension && isLt1M;
     }
     // 密匙验证
@@ -59,32 +61,57 @@ export class UpdateDiploma extends Vue {
         return extension && isLt1M;
     }
 
-    uploaderDone(response: ResType, file: any, fileList: any) {
-        this.upLoadData.cid === response.data.cid;
-    }
+    uploaderCertDone(response: ResType, file: any, fileList: any) {
+        let res: ResType = response;
 
-    success(response: ResType) {
-        let message: string = "";
-        switch (response.status) {
+        switch (res.status) {
             case "suc":
-                message = `
-                  <p>导入成功${response.data.success}条</p>
-                  <p>导入失败${response.data.error}条</p>
-                  <p>${response.data.error_info}</p>
-              `;
-                this.loading = false;
+                this.$message({
+                    message: "导入证书成功",
+                    type: "success"
+                });
+                this.upLoadData.cid = response.data.cid;
+                this.$emit("diplomaCid", this.upLoadData.cid);
+                this.Keytemp.submit();
                 break;
             case "error":
-                message = "失败";
-                this.loading = false;
+                this.$message({
+                    message: "导入证书失败",
+                    type: "error"
+                });
+                this.Crttemp.clearFiles();
+                break;
             default:
                 break;
         }
-        this.$msgbox.alert(`<div>${message}</div>`, "提示", { dangerouslyUseHTMLString: true }).then(() => {
-            if (response.status === "suc") { } else if (response.status === "error") { }
-        });
+    }
+
+    uploaderKeyDone(response: ResType, file: any, fileList: any) {
+        let res: ResType = response;
+        switch (res.status) {
+            case "suc":
+                this.$message({
+                    message: "导入密匙成功",
+                    type: "success"
+                });
+                this.upLoadData.cid = response.data.cid;
+                this.$emit("diplomaCid", this.upLoadData.cid);
+                this.$emit("close", false);
+                break;
+            case "error":
+                this.$message({
+                    message: "导入证书失败",
+                    type: "error"
+                });
+                let temp: any = this.$refs.Crtupload;
+                temp.clearFiles();
+                break;
+            default:
+                break;
+        }
 
     }
+
     cancel(done: Function) {
         this.$emit("close", false);
     }
