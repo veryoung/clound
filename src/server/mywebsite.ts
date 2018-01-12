@@ -34,21 +34,21 @@ class Mywebsite extends Restful {
 
     addWebsite(opt: ObjType) {
         return this.post({
-            url: "/api/v20/websites",
+            url: "/api/v20/websites/",
             params: opt
         });
     }
 
     updateWebsite(opt: ObjType) {
         return this.put({
-            url: "/api/v20/websites",
+            url: "/api/v20/websites/",
             params: opt
         });
     }
 
     delWebsite(website_id: string) {
         return this.del({
-            url: "/api/v20/websites",
+            url: "/api/v20/websites/",
             params: {
                 website_id: website_id
             }
@@ -58,7 +58,7 @@ class Mywebsite extends Restful {
 
     addWebsiteIpBlacklist() {
         return this.post({
-            url: "/api/v20/websites/globalip/blacklist",
+            url: "/api/v20/websites/globalip/blacklist/",
             params: {}
         });
     }
@@ -66,7 +66,7 @@ class Mywebsite extends Restful {
 
     addWebsiteIpWhitelist() {
         return this.post({
-            url: "/api/v20/websites/globalip/whitelist",
+            url: "/api/v20/websites/globalip/whitelist/",
             params: {}
         });
     }
@@ -74,7 +74,7 @@ class Mywebsite extends Restful {
 
     updateWebsiteConfig() {
         return this.put({
-            url: "/api/v20/websites/notifylist",
+            url: "/api/v20/websites/notifylist/",
             params: {}
         });
     }
@@ -82,7 +82,7 @@ class Mywebsite extends Restful {
 
     delWebsiteConfig() {
         return this.del({
-            url: "/api/v20/websites/notifylist",
+            url: "/api/v20/websites/notifylist/",
             params: {}
         });
     }
@@ -118,14 +118,14 @@ class Mywebsite extends Restful {
 
     getList(opt: ObjType) {
         return this.get({
-            url: "/api/v20/websites/list",
+            url: "/api/v20/websites/list/",
             params: opt
         });
     }
 
     getWebsiteDetail(website_id: string) {
         return this.get({
-            url: "/api/v20/websites/detail",
+            url: "/api/v20/websites/detail/",
             params: {
                 website_id: website_id
             }

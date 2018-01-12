@@ -32,7 +32,7 @@ export class MirrorFrame extends Vue {
     // init props
     public uid: string;
     public data: any;
-    public mirrcyc: Number;
+    public mirrcyc: Number | "";
     // init data
     public form: MirrorType = {
         mirror_urls: [""],
@@ -50,6 +50,9 @@ export class MirrorFrame extends Vue {
 
     submit(formName: string) {
         let id = this.$route.params.id;
+        // if (this.mirrcyc === -1) {
+        //     this.mirrcyc = "";
+        // }
         let params = { 
             sid: id,
             urls: this.form.mirror_urls,
@@ -58,9 +61,22 @@ export class MirrorFrame extends Vue {
         // 提交成功后将数据传给父组件
         this.$emit("MirrorData", this.form.mirror_urls);
         MywebsiteServer.mirror(params).then( (response: AxiosResponse<ResType>) => {
-            console.log(response);
-            this.cancel();
-
+            let res: ResType = response.data;
+            // Do something with response data
+            switch (res.status) {
+                // "suc" | "error" | "red"
+                case "suc":
+                    this.$message({
+                        type: "success",
+                        message: "设置成功!"
+                    });
+                    this.cancel();
+                    break;
+                case "error":
+                    break;
+                case "red":
+                    break;
+            }
         });
     }
 

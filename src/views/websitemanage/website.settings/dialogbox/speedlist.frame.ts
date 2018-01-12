@@ -47,8 +47,22 @@ export class SpeedListFrame extends Vue {
             cache_url_black: this.form.cache_url_black,
         };
         MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
-            console.log(response);
-            this.cancel();
+            let res: ResType = response.data;
+            // Do something with response data
+            switch (res.status) {
+                // "suc" | "error" | "red"
+                case "suc":
+                    this.$message({
+                        type: "success",
+                        message: "设置成功!"
+                    });
+                    this.cancel();
+                    break;
+                case "error":
+                    break;
+                case "red":
+                    break;
+            }
         });
     }
 

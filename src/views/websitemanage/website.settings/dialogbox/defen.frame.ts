@@ -49,8 +49,26 @@ export class DenfenFrame extends Vue {
             waf_hotlink_white: this.form.waf_hotlink_white,
         };
         MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
-            console.log(response);
-            this.cancel();
+            let res: ResType = response.data;
+            // Do something with response data
+            switch (res.status) {
+                // "suc" | "error" | "red"
+                case "suc":
+                    this.$message({
+                        type: "success",
+                        message: "设置成功!"
+                    });
+                    this.cancel();
+                    break;
+                case "error":
+                    this.$message({
+                        type: "error",
+                        message: res.message
+                    });
+                    break;
+                case "red":
+                    break;
+            }
         });
     }
 

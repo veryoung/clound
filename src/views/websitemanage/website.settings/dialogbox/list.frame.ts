@@ -36,11 +36,11 @@ export class ListFrame extends Vue {
 
     created() {
         if (this.types === "white") {
-            this.defalutIP = this.data.waf_ip_white;
-            this.defalutUrl = this.data.waf_url_white;
+            this.form.ip = this.data.waf_ip_white;
+            this.form.url = this.data.waf_url_white;
         } else {
-            this.defalutIP = this.data.waf_ip_black;
-            this.defalutUrl = this.data.waf_url_black;
+            this.form.ip = this.data.waf_ip_black;
+            this.form.url = this.data.waf_url_black;
         }
     }
     // init methods
@@ -72,12 +72,33 @@ export class ListFrame extends Vue {
             };
         }
         MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
-            console.log(response);
-            this.cancel();
+            let res: ResType = response.data;
+            // Do something with response data
+            switch (res.status) {
+                // "suc" | "error" | "red"
+                case "suc":
+                    this.$message({
+                        type: "success",
+                        message: "设置成功!"
+                    });
+                    this.cancel();
+                    break;
+                case "error":
+                    break;
+                case "red":
+                    break;
+            }
         });
     }
 
     cancel() {
+        if (this.types === "white") {
+            this.form.ip = this.data.waf_ip_white;
+            this.form.url = this.data.waf_url_white;
+        } else {
+            this.form.ip = this.data.waf_ip_black;
+            this.form.url = this.data.waf_url_black;
+        }
         this.$emit("close", false);
     }
 }
