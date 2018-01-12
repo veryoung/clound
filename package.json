@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev webpack-dev-server --open --hot --watch",
+    "dev:operation": "cross-env NODE_ENV=dev PLATFORM=operation webpack-dev-server --open --hot --watch",
+    "dev:portal": "cross-env NODE_ENV=dev PLATFORM=portal webpack-dev-server --open --hot --watch",
     "prod:operation": "cross-env NODE_ENV=production PLATFORM=operation webpack --progress --hide-modules",
     "test:operation": "cross-env NODE_ENV=test PLATFORM=operation webpack --progress --hide-modules",
     "prod:portal": "cross-env NODE_ENV=production PLATFORM=portal webpack --progress --hide-modules",
