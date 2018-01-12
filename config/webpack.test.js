@@ -95,7 +95,7 @@ module.exports = function (env) {
         },
         plugins: [
             new CleanWebpackPlugin([
-                'dist',
+                process.env.PLATFORM,
             ], {
                 root: path.resolve(__dirname, '../'),
                 verbose: false,
