@@ -8,17 +8,14 @@ const base = require('./webpack.base');
 module.exports = function (env) {
     return merge.smart(base(env), {
         devServer: {
-            historyApiFallback: true,
             noInfo: true,
-            proxy: {
-                "/api/v20/": {
-                    target: "http://10.10.200.232:8080",                    
-                    // target: "http://10.4.5.221:8080",
-                    changeOrigin: true,
-                    secure: false,
-                    // port: 8080
-                }
-            },
+            proxy: [{
+                context: ["/portal/api/v20/", "/api/v20/"],
+                target: "http://10.10.200.232:8080",
+                changeOrigin: true,
+                secure: false,
+                host: "0.0.0.0"
+            }],
             // hot: true
         },
         module: {
@@ -55,7 +52,7 @@ module.exports = function (env) {
                             }
                         }
                     ],
-                    exclude:/\.m\.css$/
+                    exclude: /\.m\.css$/
                 },
                 {
                     test: /\.m\.css$/,
@@ -65,9 +62,9 @@ module.exports = function (env) {
                         {
                             loader: 'css-loader',
                             options: {
-                                modules:true,
-                                importLoaders:1,
-                                localIdentName:'[path]___[name]__[local]___[hash:base64:5]'
+                                modules: true,
+                                importLoaders: 1,
+                                localIdentName: '[path]___[name]__[local]___[hash:base64:5]'
                             }
                         },
                         {
