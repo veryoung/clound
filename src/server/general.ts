@@ -11,8 +11,14 @@ export class General extends Restful {
      */
     public login(opt: LoginType) {
         const { username, pwd } = opt;
+        let url: string = "";
+        if (process.env.PLATFORM === "operation") {
+            url = "/api/v20/account/auth";
+        } else {
+            url = "portal/api/v20/account/auth";
+        }
         return this.post({
-            url: "/api/v20/account/auth", params: {
+            url: url, params: {
                 username: username,
                 pwd: pwd
             }
