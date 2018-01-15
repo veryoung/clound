@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
@@ -39,8 +40,18 @@ export class DenfenFrame extends Vue {
         this.defalutUrl = this.data.waf_hotlink_white;
         console.log(this.defalutUrl);
     }
-    getTags(tags: string[]) {
-        this.form.waf_hotlink_white = tags;
+
+    getTags(tagVal: string, done: Function) {
+        if (RegValidate.uri(tagVal)) {
+            done(true);
+            if (this.form.waf_hotlink_white) this.form.waf_hotlink_white.push(tagVal);
+            return;
+        }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
 
     submit(formName: string) {

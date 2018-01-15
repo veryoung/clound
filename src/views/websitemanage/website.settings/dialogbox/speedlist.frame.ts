@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
@@ -36,8 +37,18 @@ export class SpeedListFrame extends Vue {
     created() {
         this.defalutUrl = this.data.cache_url_black;
     }
-    getTags(tags: string[]) {
-        this.form.cache_url_black = tags;
+
+    getTags(tagVal: string, done: Function) {
+        if (RegValidate.uri(tagVal)) {
+            done(true);
+            if (this.form.cache_url_black) this.form.cache_url_black.push(tagVal);
+            return;
+        }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
 
     submit(formName: string) {

@@ -57,7 +57,24 @@ class Reg {
     public domain(value: string) {
         return /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$/.test(value);
     }
-} 
+    // 端口支持80、443、2000-65535，其中2812、3071、5141、5989、44366、49258端口除外
+    public port(value: string) {
+        if (value === "80" || value === "443" || (value > "1999" && value < "65536" && value !== "2812" && value !== "3017" && value !== "5141" && value !== "5989" && value !== "44366" && value !== "49258")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public uri(value: string) {
+        if (value.indexOf("www.") !== -1 && value.indexOf(".com") !== -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
 
 
 export const RegValidate = new Reg();

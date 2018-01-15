@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
@@ -44,11 +45,18 @@ export class MirrorFrame extends Vue {
     created() {
         this.defalutUrl = this.data.mirror_urls;
     }
-
-    getTags(tags: string[]) {
-        this.form.mirror_urls = tags;
+    getTags(tagVal: string, done: Function) {
+        if (RegValidate.uri(tagVal)) {
+            done(true);
+            if (this.form.mirror_urls) this.form.mirror_urls.push(tagVal);
+            return;
+        }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
-
     submit(formName: string) {
         let id = this.$route.params.id;
         // if (this.mirrcyc === -1) {

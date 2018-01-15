@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="httpTag">
-                            <CustomTags @getTags="gethttpTags" :total="10" addTagText="请输入Http端口"/>
+                            <CustomTags @getTags="gethttpTags" @error="httpError" :tags="httpTags" :total="10" addTagText="请输入Http端口"/>
                         </div>
                     </div>
                     <div class="https">
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="httpsTag">
-                            <CustomTags @getTags="gethttpsTags" :total="10" addTagText="请输入Https端口"/>
+                            <CustomTags @getTags="gethttpsTags"  :tags="httpsTags" :total="10" addTagText="请输入Https端口"/>
                         </div>
                     </div>
                 </div>

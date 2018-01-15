@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { ResType } from "@server/index";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
@@ -73,11 +74,18 @@ export class SpeedUpdateFrame extends Vue {
             });
         });
     }
-
-    getTags(tags: string[]) {
-        this.form.url = tags;
+     getTags(tagVal: string, done: Function) {
+        if (RegValidate.uri(tagVal)) {
+            done(true);
+            if (this.form.url) this.form.url.push(tagVal);
+            return;
+        }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
-
 
     cancel() {
         this.$emit("close", false);

@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { ResType } from "@server/index";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
@@ -45,15 +46,32 @@ export class ListFrame extends Vue {
         }
     }
     // init methods
-    getURLTags(tags: string[]) {
-        this.form.url = tags;
+
+    getURLTags(tagVal: string, done: Function) {
+        if (RegValidate.uri(tagVal)) {
+            done(true);
+            if (this.form.url) this.form.url.push(tagVal);
+            return;
+        }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
 
-    getIpTags(tags: string[]) {
-        this.form.ip = tags;
+    getIpTags(tagVal: string, done: Function) {
+        if (RegValidate.ip(tagVal)) {
+            done(true);
+            if (this.form.ip) this.form.ip.push(tagVal);
+            return;
+        }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
-
-
     submit(formName: string) {
         let id = this.$route.params.id;
         let params: ListParamsType = {

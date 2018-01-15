@@ -336,7 +336,6 @@ export class WebsiteSettings extends Vue {
     }
     // 网络替身
     mirrorSwitchChange(val: string) {
-        console.log(val);
         if (val === "1") {
             this.form.mirror_enable = "0";
         } else {
@@ -363,7 +362,7 @@ export class WebsiteSettings extends Vue {
                 switch (res.status) {
                     // "suc" | "error" | "red"
                     case "suc":
-                        this.form.cdn_enable = val;
+                        this.form.mirror_enable = val;
                         this.$message({
                             type: "success",
                             message: "刷新成功!"

@@ -8,8 +8,8 @@
 export interface FormType {
     cid: string;
     domain: string;
-    http_port: any ;
-    https_port: any;
+    http_port: Array < number > | undefined ;
+    https_port: Array < number > | undefined ;
     industry: string;
     name: string;
     open_waf: number;
@@ -39,4 +39,9 @@ export interface WebSiteEditType {
 export interface MirrorOptionsType {
     value: number;
     label: string;
+}
+
+export interface TagType {
+    title: string;
+    type: "" | "danger";
 }

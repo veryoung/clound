@@ -3,7 +3,7 @@ import { EventBus, CONSTANT } from "@utils/event";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import { UpdateDiploma } from "./dialogbox/update.diploma";
-import { FormRuleType } from "@utils/form.validator";
+import { FormRuleType, RegValidate } from "@utils/form.validator";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { mapGetters } from "vuex";
@@ -13,7 +13,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { MywebsiteServer } from "@server/mywebsite";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { Auxiliary } from "@utils/auxiliary";
-import { FormType } from "@views/websitemanage/website.operation/website.operation.attachement";
+import { FormType , TagType} from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
 
 
@@ -71,17 +71,8 @@ export class WebsiteOperation extends Vue {
     public httpTpye: boolean = true;
     public httpsTpye: boolean = false;
     // 协议类型 输入框控制
-    public showHttpTag: boolean = true;
-    public HttpInfo: string = "";
-    public HttpInputVisible: any = false;
-
-
-    public showHttpsTag: boolean = true;
-    public HttpsInfo: string = "";
-    public HttpsInputVisible: any = false;
-
-
-
+    public httpTags:  TagType[] = [];
+    public httpsTags:  TagType[] = [];
     // 回源方式单选框
     public sourceIP: number = 0; // 0 表示 IP 1 表示域名
     public sourceInputVisible: boolean = false;
@@ -131,6 +122,8 @@ export class WebsiteOperation extends Vue {
             } else {
                 that.sourceIP = 1;
             }
+
+            console.log(that.form);
         });
         Aux.insertId(eventId);
     }
@@ -166,84 +159,56 @@ export class WebsiteOperation extends Vue {
     }
 
 
-    handleHttpClose(tag: any) {
-        this.form.http_port.splice(this.form.http_port.indexOf(tag), 1);
-        if (this.form.http_port.length > 9) {
-            this.showHttpTag = false;
+    getTags(tagVal: string, done: Function) {
+        if (this.sourceIP) {
+            if (RegValidate.ip(tagVal)) {
+                done(true);
+                if (this.form.source_info) this.form.source_info.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         } else {
-            this.showHttpTag = true;
+            if (RegValidate.domain(tagVal)) {
+                done(true);
+                if (this.form.source_info) this.form.source_info.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
     }
 
-    showHttpInput() {
-        this.HttpInputVisible = true;
-        // this.$nextTick( _  => {
-        //   this.$refs.saveTagInput.$refs.input.focus();
-        // });
-    }
-
-    handleHttpInputConfirm() {
-        let inputValue = this.HttpInfo;
-        console.log(this.HttpInfo);
-        console.log(typeof this.form.http_port);
-
-        let inputValueNum = parseInt(inputValue);
-        if (inputValueNum) {
-            this.form.http_port.push(inputValueNum);
+    gethttpTags(tagVal: string, done: Function) {
+        if (RegValidate.port(tagVal)) {
+            done(true);
+            if (this.form.http_port) this.form.http_port.push(parseInt(tagVal));
+            return;
         }
-        if (this.form.http_port.length > 9) {
-            this.showHttpTag = false;
-        } else {
-            this.showHttpTag = true;
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
+    }
+
+    gethttpsTags(tagVal: string, done: Function) {
+        if (RegValidate.port(tagVal)) {
+            done(true);
+            if (this.form.https_port) this.form.https_port.push(parseInt(tagVal));
+            return;
         }
-        this.HttpInputVisible = false;
-        this.HttpInfo = "";
-    }
-
-
-    handleHttpsClose(tag: any) {
-        this.form.https_port.splice(this.form.https_port.indexOf(tag), 1);
-        if (this.form.https_port.length > 9) {
-            this.showHttpsTag = false;
-        } else {
-            this.showHttpsTag = true;
-        }
-    }
-
-    showHttpsInput() {
-        this.HttpsInputVisible = true;
-        // this.$nextTick( _  => {
-        //   this.$refs.saveTagInput.$refs.input.focus();
-        // });
-    }
-
-    handleHttpsInputConfirm() {
-        let inputValue = this.HttpsInfo;
-        console.log(typeof inputValue);
-        let inputValueNum = parseInt(inputValue);
-        if (inputValue) {
-            this.form.https_port.push(inputValueNum);
-        }
-        console.log(this.form.https_port.length);
-        if (this.form.https_port.length > 9) {
-            this.showHttpsTag = false;
-        } else {
-            this.showHttpsTag = true;
-        }
-        this.HttpsInputVisible = false;
-        this.HttpsInfo = "";
-    }
-
-
-
-    getTags(tags: string[]) {
-        this.form.source_info = tags;
-    }
-    gethttpTags(tags: string[]) {
-        this.form.http_port = tags;
-    }
-    gethttpsTags(tags: string[]) {
-        this.form.https_port = tags;
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
 
 
@@ -336,5 +301,13 @@ export class WebsiteOperation extends Vue {
     // 关闭窗口
     closeDiploma() {
         this.dialogVisibleDiploma = false;
+    }
+
+    // 错误提示
+    httpError(res: any) {
+        this.$message({
+            message: res.message,
+            type: "warning"
+        });
     }
 }
