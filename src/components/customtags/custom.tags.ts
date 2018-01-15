@@ -26,13 +26,13 @@ require("./custom.tags.styl");
 export class CustomTags extends Vue {
     // init props
     public total: number;
-    public tags: string[];
+    public tags: TagType[];
     public addTagText: string;
 
     // init data
     public addFlag: boolean = true;
     public inputVisible: boolean = false;
-    public tag: string = "";
+    public title: string = "";
 
     // init methods
     closeTag($index: number) {
@@ -45,19 +45,33 @@ export class CustomTags extends Vue {
     }
 
     handleInputConfirm() {
-        let inputValue = this.tag;
-        if (inputValue === "" || this.tags.indexOf(inputValue) !== -1) {
-            this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
+        let inputValue = this.title;
+        if (inputValue === "") {
+            this.$emit("error", { message: "数据是空,不能添加", code: 1 });
             return;
         }
-        this.tags.push(this.tag);
+        for (let tag of this.tags) {
+            if (inputValue in tag) {
+                this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
+                return;
+            }
+        }
+        this.tags.push({
+            title: this.title,
+            type: ""
+        });
         if (this.tags.length >= this.total) {
             this.addFlag = false;
         } else {
             this.addFlag = true;
         }
         this.inputVisible = false;
-        this.tag = "";
+        this.title = "";
         this.$emit("getTags", this.tags);
     }
+}
+
+export interface TagType {
+    title: string;
+    type: "" | "danger";
 }

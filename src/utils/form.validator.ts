@@ -43,3 +43,21 @@ export interface SingleRule {
 export interface FormRuleType {
     [extra: string]: SingleRule[];
 }
+
+
+
+class Reg {
+    constructor() { }
+
+    public ip(value: string) {
+        return /^(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2})$/.test(value);
+    }
+
+
+    public domain(value: string) {
+        return /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$/.test(value);
+    }
+} 
+
+
+export const RegValidate = new Reg();
