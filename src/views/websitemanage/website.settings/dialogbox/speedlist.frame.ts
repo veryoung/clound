@@ -30,7 +30,7 @@ export class SpeedListFrame extends Vue {
     public form: SpeedListType = {
         cache_url_black: [""],
     };
-    public defalutUrl: Array<string>;
+    public defalutUrl: Array<string> = new Array<string>();
 
     created() {
         this.defalutUrl = this.data.cache_url_black;
@@ -46,7 +46,7 @@ export class SpeedListFrame extends Vue {
             sid: id,
             cache_url_black: this.form.cache_url_black,
         };
-        MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
+        MywebsiteServer.BWlist(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             // Do something with response data
             switch (res.status) {

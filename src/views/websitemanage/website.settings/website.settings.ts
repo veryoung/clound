@@ -2,8 +2,7 @@ import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import { MywebsiteServer } from "@server/mywebsite";
 import { WebSiteConfig } from "@store/mywebsite.type";
-import { CONSTANT } from "@utils/event";
-import { EventBus } from "@utils/event";
+import { CONSTANT, EventBus } from "@utils/event";
 import { SpeedUpdateFrame } from "./dialogbox/speedUpdate";
 import { SpeedListFrame } from "./dialogbox/speedlist.frame";
 import { MirrorFrame } from "./dialogbox/mirror.frame";
@@ -16,7 +15,10 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
+import { Auxiliary } from "@utils/auxiliary";
 
+
+const Aux = new Auxiliary<string>();
 require("./website.settings.styl");
 @Component({
     name: "websitesettings",
@@ -100,9 +102,14 @@ export class WebsiteSettings extends Vue {
             if (that.form.mirror_interval === -1) {
             }
         });
+        Aux.insertId(eventId);
     }
 
-    destroyed() { }
+    destroyed() {
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
+    }
 
     // init method
 
@@ -231,7 +238,7 @@ export class WebsiteSettings extends Vue {
             cancelButtonText: "取消",
             type: "warning"
         }).then(() => {
-            MywebsiteServer.cache(params).then( (response: AxiosResponse<ResType>) => {
+            MywebsiteServer.cache(params).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 console.log(res);
                 switch (res.status) {

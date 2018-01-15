@@ -61,7 +61,6 @@ export class WebsiteOperation extends Vue {
         remark: "",
         id: "",
     };
-    public unwatch: Function = () => { };
 
     // 标题
     public titles: string[] = [];
@@ -134,16 +133,12 @@ export class WebsiteOperation extends Vue {
             }
         });
         Aux.insertId(eventId);
-        console.log(this.form);
-
     }
 
     destroyed() {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
         });
-        this.unwatch();
-
     }
 
     // init methods
