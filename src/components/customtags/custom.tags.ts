@@ -47,7 +47,6 @@ export class CustomTags extends Vue {
     handleInputConfirm() {
         let inputValue = this.title;
         if (inputValue === "") {
-            this.$emit("error", { message: "数据是空,不能添加", code: 1 });
             return;
         }
         for (let tag of this.tags) {
