@@ -166,31 +166,6 @@ export class WebsiteOperation extends Vue {
     }
 
 
-    handleSourceInputConfirm() {
-        // if (this.form.source_type === "A") {
-        //     // ip
-        //     let ipReg = new RegExp("^(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2})$");
-        //     if (!ipReg.test(inputValue)) {
-        //         this.$message({
-        //             message: "回源IP格式不正确",
-        //             type: "warning"
-        //         });
-        //         return;
-        //     }
-        // } else {
-        //     let sourceReg = new RegExp("^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$");
-        //     if (!sourceReg.test(inputValue)) {
-        //         console.log(sourceReg.test(inputValue));
-        //         this.$message({
-        //             message: "回源域名格式不正确",
-        //             type: "warning"
-        //         });
-        //         return;
-        //     }
-        // }
-    }
-
-
     handleHttpClose(tag: any) {
         this.form.http_port.splice(this.form.http_port.indexOf(tag), 1);
         if (this.form.http_port.length > 9) {

@@ -1,3 +1,4 @@
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
@@ -26,7 +27,7 @@ require("./defen.frame.styl");
 export class DenfenFrame extends Vue {
     // init props
     public uid: string;
-    public data: any;
+    public data: FormType;
 
     // init data
     public form: DenfenType = {

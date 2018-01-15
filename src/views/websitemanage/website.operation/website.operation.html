@@ -68,11 +68,6 @@
                     <el-radio-group v-model="sourceIP" @change="changeSoure">
                         <el-radio :label="0">回源IP</el-radio>
                         <el-radio :label="1">回源域名</el-radio>
-                        <!-- <div class="sourceRemark">
-                                <span>
-                                    注：回源IP最多4个
-                                </span>
-                        </div> -->
                     </el-radio-group>
                     <CustomTags @getTags="getTags" :total="4"/>
                 </div>

@@ -1,7 +1,10 @@
+import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { MywebsiteServer } from "@server/mywebsite";
 import ElementUI from "element-ui";
+import { Store } from "@store/store";
+
 // 变量名	含义	类型	备注
 // cperson	创建人	string	
 // domain	域名	string	
@@ -144,7 +147,7 @@ export interface WebMessagePageType {
     [extra: string]: WebMessageType;
 }
 export class WebsiteManager {
-    handleDel(row: WebsiteListColumnType) {
+    handleDel(row: WebsiteListColumnType , opt: any) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
             MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
@@ -154,6 +157,7 @@ export class WebsiteManager {
                             message: "删除成功",
                             type: "success"
                         });
+                        Store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, opt);
                         break;
                     default:
                         break;

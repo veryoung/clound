@@ -35,3 +35,8 @@ export interface WebSiteEditType {
     source_info: Array<string>;		
     source_type: string;		
 }
+
+export interface MirrorOptionsType {
+    value: number;
+    label: string;
+}
