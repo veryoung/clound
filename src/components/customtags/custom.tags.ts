@@ -62,16 +62,14 @@ export class CustomTags extends Vue {
                     title: that.title,
                     type: ""
                 });
-                if (that.tags.length >= that.total) {
-                    that.addFlag = false;
-                } else {
-                    that.addFlag = true;
-                }
-                that.inputVisible = false;
-                that.title = "";
-            } else {
-
             }
+            if (that.tags.length >= that.total) {
+                that.addFlag = false;
+            } else {
+                that.addFlag = true;
+            }
+            that.inputVisible = false;
+            that.title = "";
         });
     }
 }
