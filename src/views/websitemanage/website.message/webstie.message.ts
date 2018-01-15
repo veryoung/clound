@@ -56,9 +56,7 @@ export class WebsiteMessage extends Vue {
         let that = this;
         let id = this.$route.params.id;
         if (id) {
-            this
-                .$store
-                .dispatch(MYWEBSITEEVENT.GETWEBMESSAGE, { website_id: id });
+            this.$store.dispatch(MYWEBSITEEVENT.GETWEBMESSAGE, { website_id: id });
         } else {
             this.WebsiteInfo = this.websiteMessage.default;
         }
