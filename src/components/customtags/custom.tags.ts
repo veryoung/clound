@@ -55,18 +55,24 @@ export class CustomTags extends Vue {
                 return;
             }
         }
-        this.tags.push({
-            title: this.title,
-            type: ""
+        let that = this;
+        this.$emit("getTags", inputValue, function (flag: boolean) {
+            if (flag) {
+                that.tags.push({
+                    title: that.title,
+                    type: ""
+                });
+                if (that.tags.length >= that.total) {
+                    that.addFlag = false;
+                } else {
+                    that.addFlag = true;
+                }
+                that.inputVisible = false;
+                that.title = "";
+            } else {
+
+            }
         });
-        if (this.tags.length >= this.total) {
-            this.addFlag = false;
-        } else {
-            this.addFlag = true;
-        }
-        this.inputVisible = false;
-        this.title = "";
-        this.$emit("getTags", this.tags);
     }
 }
 
