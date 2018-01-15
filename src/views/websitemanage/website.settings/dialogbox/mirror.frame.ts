@@ -6,6 +6,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 
 
 
@@ -31,7 +32,7 @@ require("./mirror.frame.styl");
 export class MirrorFrame extends Vue {
     // init props
     public uid: string;
-    public data: any;
+    public data: FormType;
     public mirrcyc: Number | "";
     // init data
     public form: MirrorType = {
@@ -41,7 +42,7 @@ export class MirrorFrame extends Vue {
 
 
     created() {
-        this.defalutUrl = this.data;
+        this.defalutUrl = this.data.mirror_urls;
     }
 
     getTags(tags: string[]) {

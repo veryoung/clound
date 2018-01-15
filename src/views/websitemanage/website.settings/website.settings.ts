@@ -16,6 +16,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { Auxiliary } from "@utils/auxiliary";
+import { MirrorOptionsType } from "@views/websitemanage/website.operation/website.operation.attachement";
 
 
 const Aux = new Auxiliary<string>();
@@ -58,7 +59,7 @@ export class WebsiteSettings extends Vue {
     // 表单内容
     public form: FormType = {
         ads_enable: "",
-        cache_url_black: "",
+        cache_url_black: [],
         cache_urls: [],
         cdn_enable: "",
         mirror_enable: "",
@@ -72,9 +73,9 @@ export class WebsiteSettings extends Vue {
         waf_url_white: [],
     };
     // 获取的镜像
-    public options: any = [
+    public options: Array<MirrorOptionsType> = [
         {
-            value: -1,
+            value: 0,
             label: " "
         },
         {
@@ -98,9 +99,6 @@ export class WebsiteSettings extends Vue {
         let eventId = EventBus.register(CONSTANT.GETWEBSITECONFIG, function (event: string, info: any) {
             that.form = that.websiteConfig[id];
             that.MirrorValue = that.form.mirror_interval;
-            // 处理选择框为负一 选择框内容为空
-            if (that.form.mirror_interval === -1) {
-            }
         });
         Aux.insertId(eventId);
     }

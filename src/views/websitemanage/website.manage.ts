@@ -130,7 +130,7 @@ export class WebsiteManagement extends Vue {
             } else if (type === "look") {
                 this.$router.push(`/WebsiteManagement/myWebsite/look/${row.id}`);
             } else if (type === "del") {
-                WebsiteManagerController.handleDel(row);
+                WebsiteManagerController.handleDel(row , this.mergeData(this.tableConfig["mywebsitetable"]) );
             }
             return;
         }

@@ -1,6 +1,6 @@
 export interface FormType {
     ads_enable: string;
-    cache_url_black: string;
+    cache_url_black: Array < string >;
     cache_urls: Array < string >;
     cdn_enable: string;
     mirror_enable: string;

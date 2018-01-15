@@ -6,6 +6,7 @@ import Component from "vue-class-component";
 import { UserServer } from "@server/user";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 
 
 require("./list.frame.styl");
@@ -24,7 +25,7 @@ require("./list.frame.styl");
 export class ListFrame extends Vue {
     // init props
     public types: string;
-    public data: any;
+    public data: FormType;
     // init data
     public form: ListFrameType = {
         ip: [""],
@@ -55,8 +56,12 @@ export class ListFrame extends Vue {
 
     submit(formName: string) {
         let id = this.$route.params.id;
-        let params = {
-
+        let params: ListParamsType = {
+            sid: "",
+            waf_ip_white: [""],
+            waf_url_white: [""],
+            waf_ip_black: [""],
+            waf_url_black: [""] 
         };
         if (this.types === "white") {
             params = {
@@ -106,4 +111,12 @@ export class ListFrame extends Vue {
 export interface ListFrameType {
     ip: Array<string>;
     url: Array<string>;
+}
+
+export interface ListParamsType {
+    sid: string;
+    waf_ip_white?: Array<string>;
+    waf_url_white?: Array<string>; 
+    waf_ip_black?: Array<string>; 
+    waf_url_black?: Array<string>; 
 }
