@@ -69,8 +69,8 @@
                         <el-radio :label="0">回源IP</el-radio>
                         <el-radio :label="1">回源域名</el-radio>
                     </el-radio-group>
-                    <CustomTags v-show="!sourceIP" @getTags="getsourceIPTags" :tags="ipTags" :total="4"/>
-                    <CustomTags v-show="sourceIP" @getTags="getsourceDomainTags"  :tags="domainTags":total="4"/>
+                    <CustomTags v-show="!sourceIP" @getTags="getsourceIPTags" :tags="sourceIPData" :total="4"/>
+                    <CustomTags v-show="sourceIP" @getTags="getsourceDomainTags"  :tags="sourceDomainData":total="4"/>
                 </div>
 
             </el-form-item>

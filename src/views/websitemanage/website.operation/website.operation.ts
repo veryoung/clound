@@ -71,15 +71,13 @@ export class WebsiteOperation extends Vue {
     public httpTpye: boolean = true;
     public httpsTpye: boolean = false;
     // 协议类型 输入框控制
-    public httpTags: TagType[] = [];
-    public httpsTags: TagType[] = [];
+    public httpTags: any = [];
+    public httpsTags: any = [];
     // 回源方式单选框
     public sourceIP: number = 0; // 0 表示 IP 1 表示域名
     public sourceInputVisible: boolean = false;
     public sourceIPData: Array<string> = [];
     public sourceDomainData: Array<string> = [];
-    public ipTags: Array<TagType> = [];
-    public domainTags: Array<TagType> = [];
 
 
     // 上传证书
@@ -115,21 +113,17 @@ export class WebsiteOperation extends Vue {
             that.form.source_info = that.websiteEdit[id].source_info;
             that.form.remark = that.websiteEdit[id].remark;
             // 判断回源类型所属框
-            let sourceArray: Array<TagType> = [];
-            for ( let key in that.form.source_info) {
-                sourceArray.push({
-                    title: that.form.source_info[key],
-                    type: "" 
-                });
-            }
             if (that.form.source_type === "A") {
                 that.sourceIP = 0;
                 that.sourceIPData = that.form.source_info;
-                that.ipTags = sourceArray;
             } else {
                 that.sourceIP = 1;
-                that.domainTags = sourceArray;
+                that.sourceDomainData = that.form.source_info;
             }
+            console.log(that.form.http_port);
+            // 判断端口值
+            that.httpTags = that.form.http_port;
+            that.httpsTags = that.form.https_port;
 
             console.log(that.form);
         });
@@ -167,56 +161,80 @@ export class WebsiteOperation extends Vue {
     }
 
 
-    getsourceIPTags(tagVal: string, done: Function) {
-        if (RegValidate.ip(tagVal)) {
+    getsourceIPTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.sourceIPData.indexOf(tagVal);
+            this.sourceIPData.splice(index, 1);
             done(true);
-            this.sourceIPData.push(tagVal);
-            return;
+        } else {
+            if (RegValidate.ip(tagVal)) {
+                done(true);
+                this.sourceIPData.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
 
-    getsourceDomainTags(tagVal: string, done: Function) {
-        if (RegValidate.domain(tagVal)) {
+    getsourceDomainTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.sourceDomainData.indexOf(tagVal);
+            this.sourceDomainData.splice(index, 1);
             done(true);
-            this.sourceDomainData.push(tagVal);
-            return;
+        } else {
+            if (RegValidate.domain(tagVal)) {
+                done(true);
+                this.sourceDomainData.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
 
-    gethttpTags(tagVal: string, done: Function) {
-        if (RegValidate.port(tagVal)) {
+    gethttpTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.httpTags.indexOf(tagVal);
+            this.httpTags.splice(index, 1);
             done(true);
-            if (this.form.http_port) this.form.http_port.push(parseInt(tagVal));
-            return;
+        } else {
+            if (RegValidate.port(tagVal)) {
+                done(true);
+                this.httpTags.push(parseInt(tagVal));
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
 
-    gethttpsTags(tagVal: string, done: Function) {
-        if (RegValidate.port(tagVal)) {
+    gethttpsTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.httpsTags.indexOf(tagVal);
+            this.httpsTags.splice(index, 1);
             done(true);
-            if (this.form.https_port) this.form.https_port.push(parseInt(tagVal));
-            return;
+        } else {
+            if (RegValidate.port(tagVal)) {
+                done(true);
+                this.httpsTags.push(parseInt(tagVal));
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
 
 
