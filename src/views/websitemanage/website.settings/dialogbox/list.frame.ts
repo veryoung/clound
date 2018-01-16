@@ -48,27 +48,20 @@ export class ListFrame extends Vue {
     }
     // init methods
     getURLTags(tagVal: string, type: string, done: Function) {
-        if ( type === "del") {
+        if (type === "del") {
             let index = this.defalutUrl.indexOf(tagVal);
             this.defalutUrl.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.uri(tagVal)) {
-                done(true);
-                this.defalutUrl.push(tagVal);
-                return;
-            }
-            this.$message({
-                message: "输入格式不正确",
-                type: "warning"
-            });
-            done();
+            done(true);
+            this.defalutUrl.push(tagVal);
+            return;
         }
     }
 
     getIpTags(tagVal: string, type: string, done: Function) {
         console.log(tagVal);
-        if ( type === "del") {
+        if (type === "del") {
             let index = this.defalutIP.indexOf(tagVal);
             this.defalutIP.splice(index, 1);
             done(true);
@@ -85,7 +78,7 @@ export class ListFrame extends Vue {
             done();
         }
     }
- 
+
     submit(formName: string) {
         let id = this.$route.params.id;
         let params: ListParamsType = {
@@ -93,22 +86,22 @@ export class ListFrame extends Vue {
             waf_ip_white: [""],
             waf_url_white: [""],
             waf_ip_black: [""],
-            waf_url_black: [""] 
+            waf_url_black: [""]
         };
         if (this.types === "white") {
             params = {
                 sid: id,
-                waf_ip_white: this.defalutIP, 
-                waf_url_white: this.defalutUrl 
+                waf_ip_white: this.defalutIP,
+                waf_url_white: this.defalutUrl
             };
         } else {
             params = {
                 sid: id,
-                waf_ip_black: this.defalutIP, 
-                waf_url_black: this.defalutUrl 
+                waf_ip_black: this.defalutIP,
+                waf_url_black: this.defalutUrl
             };
         }
-        MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
+        MywebsiteServer.BWlist(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             // Do something with response data
             switch (res.status) {
@@ -148,7 +141,7 @@ export interface ListFrameType {
 export interface ListParamsType {
     sid: string;
     waf_ip_white?: Array<string>;
-    waf_url_white?: Array<string>; 
-    waf_ip_black?: Array<string>; 
-    waf_url_black?: Array<string>; 
+    waf_url_white?: Array<string>;
+    waf_ip_black?: Array<string>;
+    waf_url_black?: Array<string>;
 }
