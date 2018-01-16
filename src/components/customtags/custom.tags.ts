@@ -26,7 +26,7 @@ require("./custom.tags.styl");
 export class CustomTags extends Vue {
     // init props
     public total: number;
-    public tags: TagType[];
+    public tags: string[];
     public addTagText: string;
 
     // init data
@@ -53,19 +53,14 @@ export class CustomTags extends Vue {
         if (inputValue === "") {
             return;
         }
-        for (let tag of this.tags) {
-            if (inputValue in tag) {
-                this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
-                return;
-            }
+        if (this.tags.indexOf(inputValue) !== -1) {
+            this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
+            return;
         }
         let that = this;
         this.$emit("getTags", inputValue, function (flag: boolean) {
             if (flag) {
-                that.tags.push({
-                    title: that.title,
-                    type: ""
-                });
+                that.tags.push(that.title);
             }
             if (that.tags.length >= that.total) {
                 that.addFlag = false;
@@ -76,9 +71,4 @@ export class CustomTags extends Vue {
             that.title = "";
         });
     }
-}
-
-export interface TagType {
-    title: string;
-    type: "" | "danger";
 }
