@@ -172,13 +172,13 @@ export class WebsiteManagement extends Vue {
 
     // 开启防御/批量回源
     openwaf(type: string) {
-        let open_waf: number = 0;
+        let open_waf: string = "0";
         let open_text: string = "";
         if (type === "openWaf") {
-            open_waf = 1;
+            open_waf = "1";
             open_text = "防御";
         } else {
-            open_waf = 0;
+            open_waf = "0";
             open_text = "回源";
         }
         if (this.ids.length === 0) {
@@ -187,7 +187,6 @@ export class WebsiteManagement extends Vue {
                 type: "warning"
             });
         } else {
-            console.log(this.ids);
             let params = {
                 open_waf: open_waf,
                 website_ids: this.ids,
