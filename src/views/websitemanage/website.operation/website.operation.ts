@@ -78,6 +78,8 @@ export class WebsiteOperation extends Vue {
     public sourceInputVisible: boolean = false;
     public sourceIPData: Array<string> = [];
     public sourceDomainData: Array<string> = [];
+    public ipTags: Array<TagType> = [];
+    public domainTags: Array<TagType> = [];
 
 
     // 上传证书
@@ -105,7 +107,6 @@ export class WebsiteOperation extends Vue {
             this.$store.dispatch(MYWEBSITEEVENT.GETWEBEDIT, { website_id: id, operation: this.operation });
         }
         let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
-            console.log(that.websiteEdit[id].port.http_port);
             that.form.name = that.websiteEdit[id].name;
             that.form.domain = that.websiteEdit[id].domain;
             that.form.http_port = that.websiteEdit[id].port.http_port;
@@ -113,22 +114,24 @@ export class WebsiteOperation extends Vue {
             that.form.industry = that.websiteEdit[id].industry;
             that.form.source_info = that.websiteEdit[id].source_info;
             that.form.remark = that.websiteEdit[id].remark;
-
-            console.log(that.form.http_port);
-
-            // 判断返回状态
-            if (that.websiteEdit[id].open_waf === "防御") {
-                that.form.open_waf = 0;
-            } else {
-                that.form.open_waf = 1;
-            }
-
             // 判断回源类型所属框
-            if (that.websiteEdit[id].source_type === "回源IP") {
+            let sourceArray: Array<TagType> = [];
+            for ( let key in that.form.source_info) {
+                sourceArray.push({
+                    title: that.form.source_info[key],
+                    type: "" 
+                });
+            }
+            if (that.form.source_type === "A") {
                 that.sourceIP = 0;
+                that.sourceIPData = that.form.source_info;
+                that.ipTags = sourceArray;
             } else {
                 that.sourceIP = 1;
+                that.domainTags = sourceArray;
             }
+
+            console.log(that.form);
         });
         Aux.insertId(eventId);
     }
@@ -231,7 +234,7 @@ export class WebsiteOperation extends Vue {
                 return;
             }
         }
-
+        console.log(this.form.source_info);
         // 验证回源域名问题
         if (this.sourceIP === 0) {
             this.form.source_info = this.sourceIPData;
