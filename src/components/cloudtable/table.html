@@ -33,11 +33,11 @@
                         </p>
                     </span>
                     <span v-else-if="column.type==='website_port'">
-                        <p class="ellipsis turn_left margin5-0">
+                        <p class="ellipsis turn_left margin5-0" v-if="scope.row[column.prop].http_port.length>0">
                             http:
                             <span v-for="port in scope.row[column.prop].http_port">{{port}}</span>
                         </p>
-                        <p class="ellipsis turn_left margin5-0">
+                        <p class="ellipsis turn_left margin5-0" v-if="scope.row[column.prop].https_port.length>0">
                             https:
                             <span v-for="port in scope.row[column.prop].https_port">{{port}}</span>
                         </p>
