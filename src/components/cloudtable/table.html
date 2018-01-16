@@ -39,11 +39,19 @@
                         </p>
                         <p class="ellipsis turn_left margin5-0" v-if="scope.row[column.prop].https_port.length>0">
                             https:
-                            <span v-for="port in scope.row[column.prop].https_port">{{port}}</span>
+                            <span v-for="port in scope.row[column.prop].https_port">{{port}}</span> 
                         </p>
                     </span>
                     <span v-else-if="column.type==='source_info'" class="ellipsis" :title="scope.row[column.prop]">
                         <span v-for="item in scope.row[column.prop]">{{item}}</span>
+                    </span>
+                    <span v-else-if="column.type==='state'&&scope.row[column.prop]==='未接入'">
+                        <span >
+                            {{scope.row[column.prop]}}
+                            <el-button size="small" type="primary" @click="stateCheck(scope.row)" >
+                                    验证
+                            </el-button>
+                        </span>
                     </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>

@@ -89,7 +89,7 @@
             </div>
         </div>
         <CloudTable moduleName="mywebsitetable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
-            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
+            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange" @stateCheck="stateCheck">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
             </el-table-column>
             <el-table-column label="操作" align="center">
@@ -110,13 +110,6 @@
                             </p>
                         </span>
                     </span>
-
-                    <!-- <div class="websiteOperate">
-                            <i title="设置网站" style="cursor:pointer" class="iconfont" @click="handle('settings',{$index:scope.$index, row:scope.row})">设置</i>
-                            <i title="查看网站" style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">详情</i>
-                            <i title="编辑网站" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">编辑</i>
-                            <i title="删除网站" style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">删除</i>    
-                    </div> -->
                 </template>
             </el-table-column>
         </CloudTable>

@@ -204,4 +204,24 @@ export class WebsiteManagement extends Vue {
 
     }
 
+    // 当状态为未接入时的验证
+    stateCheck(opt: any) {
+        let params: StateCheckType = {
+            sid: opt.id
+        };
+        MywebsiteServer.refreshState(params).then((response: AxiosResponse<ResType>) => {
+            let data = response.data;
+            if (data.status === "suc") {
+                this.$message({
+                    message: "验证成功",
+                    type: "success"
+                });
+            }
+        });
+    }
+
+}
+
+export interface StateCheckType {
+    sid: number;
 }

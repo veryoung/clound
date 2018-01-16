@@ -55,7 +55,7 @@ class Reg {
 
 
     public domain(value: string) {
-        return /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$/.test(value);
+        return /r'^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|'r'([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|'r'([a-zA-Z0-9][-_.a-zA-Z0-9]{1,61}[a-zA-Z0-9]))\.'r'([a-zA-Z]{2,13}|[a-zA-Z0-9-]{2,30}.[a-zA-Z]{2,3})$'/.test(value);
     }
     // 端口支持80、443、2000-65535，其中2812、3071、5141、5989、44366、49258端口除外
     public port(val: string) {

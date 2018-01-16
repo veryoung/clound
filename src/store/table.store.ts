@@ -133,6 +133,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "state",
                         label: "接入状态",
                         show: true,
+                        type: "state",
                     },
                     {
                         prop: "open_waf",
