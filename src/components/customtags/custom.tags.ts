@@ -37,7 +37,7 @@ export class CustomTags extends Vue {
     // init methods
     closeTag(value: string, $index: number) {
         let that = this;
-        this.$emit("getTags", value, function (flag: boolean) {
+        this.$emit("getTags", value, "del", function (flag: boolean) {
             that.tags.splice($index, 1);
             if (that.tags.length < that.total) {
                 that.addFlag = true;
@@ -58,7 +58,7 @@ export class CustomTags extends Vue {
             return;
         }
         let that = this;
-        this.$emit("getTags", inputValue, function (flag: boolean) {
+        this.$emit("getTags", inputValue, "add", function (flag: boolean) {
             if (flag) {
                 that.tags.push(that.title);
             }
