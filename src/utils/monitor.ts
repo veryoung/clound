@@ -13,6 +13,9 @@ export class UserStatus {
             if (res.data && res.data.pcode) {
                 session.setItem("pcode", Permissions.trans(res.data.pcode));
             }
+            if (res.data && res.data.uid) {
+                session.setItem("age", res.data.uid);
+            }
             switch (res.status) {
                 case "suc":
                     Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
