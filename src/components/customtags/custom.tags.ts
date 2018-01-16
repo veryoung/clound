@@ -35,13 +35,17 @@ export class CustomTags extends Vue {
     public title: string = "";
 
     // init methods
-    closeTag($index: number) {
-        this.tags.splice($index, 1);
-        if (this.tags.length < this.total) {
-            this.addFlag = true;
-        } else {
-            this.addFlag = false;
-        }
+    closeTag(value: string, $index: number) {
+        let that = this;
+        this.$emit("getTags", value, function (flag: boolean) {
+            that.tags.splice($index, 1);
+            if (that.tags.length < that.total) {
+                that.addFlag = true;
+            } else {
+                that.addFlag = false;
+            }
+        });
+
     }
 
     handleInputConfirm() {
