@@ -55,7 +55,7 @@ export class WebsiteOperation extends Vue {
         https_port: [443],
         industry: "金融",
         name: "",
-        open_waf: 0,
+        open_waf: "1",
         source_info: [],
         source_type: "A",
         remark: "",
@@ -71,8 +71,8 @@ export class WebsiteOperation extends Vue {
     public httpTpye: boolean = true;
     public httpsTpye: boolean = false;
     // 协议类型 输入框控制
-    public httpTags: any = [];
-    public httpsTags: any = [];
+    public httpTags: any = [80];
+    public httpsTags: any = [443];
     // 回源方式单选框
     public sourceIP: number = 0; // 0 表示 IP 1 表示域名
     public sourceInputVisible: boolean = false;
@@ -112,20 +112,21 @@ export class WebsiteOperation extends Vue {
             that.form.industry = that.websiteEdit[id].industry;
             that.form.source_info = that.websiteEdit[id].source_info;
             that.form.remark = that.websiteEdit[id].remark;
+            that.form.source_type = that.websiteEdit[id].source_type;
             // 判断回源类型所属框
-            if (that.form.source_type === "A") {
+            console.log(that.form.source_type);
+
+            if (that.form.source_type === "回源IP") {
                 that.sourceIP = 0;
                 that.sourceIPData = that.form.source_info;
             } else {
                 that.sourceIP = 1;
                 that.sourceDomainData = that.form.source_info;
             }
-            console.log(that.form.http_port);
             // 判断端口值
             that.httpTags = that.form.http_port;
             that.httpsTags = that.form.https_port;
 
-            console.log(that.form);
         });
         Aux.insertId(eventId);
     }
@@ -200,6 +201,7 @@ export class WebsiteOperation extends Vue {
     }
 
     gethttpTags(tagVal: string, type: string, done: Function) {
+        console.log(tagVal);
         if ( type === "del") {
             let index = this.httpTags.indexOf(tagVal);
             this.httpTags.splice(index, 1);
@@ -259,10 +261,18 @@ export class WebsiteOperation extends Vue {
         } else {
             this.form.source_info = this.sourceDomainData;
         }
+        // 验证回源方式的问题
+        if ( this.form.source_type === "回源IP") {
+            this.form.source_type = "A";
+        } else if (this.form.source_type === "回源域名") {
+            this.form.source_type = "CNAME";
+        }
         switch (this.operation) {
             case "add":
                 let httpsTemp: any = "";
                 httpsTemp = this.form.https_port;
+                this.form.http_port = this.httpTags;
+                this.form.https_port = this.httpsTags;
                 if (this.httpsTpye === false) {
                     this.form.https_port = [];
                 }
@@ -322,6 +332,7 @@ export class WebsiteOperation extends Vue {
 
     // 协议类型复选框
     changeSoure(val: any) {
+        console.log(val);
         if (val === 0) {
             this.form.source_type = "A";
         } else {

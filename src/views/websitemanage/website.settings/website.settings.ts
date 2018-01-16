@@ -150,13 +150,13 @@ export class WebsiteSettings extends Vue {
                     case "suc":
                         this.$message({
                             type: "success",
-                            message: res.message
+                            message: res.message || "更新成功"
                         });
                         break;
                     case "error":
                         this.$message({
                             type: "error",
-                            message: res.message
+                            message: res.message || "更新失败"
                         });
                         break;
                     case "red":

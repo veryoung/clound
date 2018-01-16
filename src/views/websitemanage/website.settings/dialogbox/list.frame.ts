@@ -37,41 +37,55 @@ export class ListFrame extends Vue {
 
 
     created() {
+        console.log(this.data);
         if (this.types === "white") {
-            this.form.ip = this.data.waf_ip_white;
-            this.form.url = this.data.waf_url_white;
+            this.defalutIP = this.data.waf_ip_white;
+            this.defalutUrl = this.data.waf_url_white;
         } else {
-            this.form.ip = this.data.waf_ip_black;
-            this.form.url = this.data.waf_url_black;
+            this.defalutIP = this.data.waf_ip_black;
+            this.defalutUrl = this.data.waf_url_black;
         }
     }
     // init methods
-
-    getURLTags(tagVal: string, done: Function) {
-        if (RegValidate.uri(tagVal)) {
+    getURLTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
             done(true);
-            if (this.form.url) this.form.url.push(tagVal);
-            return;
+        } else {
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
 
-    getIpTags(tagVal: string, done: Function) {
-        if (RegValidate.ip(tagVal)) {
+    getIpTags(tagVal: string, type: string, done: Function) {
+        console.log(tagVal);
+        if ( type === "del") {
+            let index = this.defalutIP.indexOf(tagVal);
+            this.defalutIP.splice(index, 1);
             done(true);
-            if (this.form.ip) this.form.ip.push(tagVal);
-            return;
+        } else {
+            if (RegValidate.ip(tagVal)) {
+                done(true);
+                this.defalutIP.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
+ 
     submit(formName: string) {
         let id = this.$route.params.id;
         let params: ListParamsType = {
@@ -84,14 +98,14 @@ export class ListFrame extends Vue {
         if (this.types === "white") {
             params = {
                 sid: id,
-                waf_ip_white: this.form.ip, 
-                waf_url_white: this.form.url 
+                waf_ip_white: this.defalutIP, 
+                waf_url_white: this.defalutUrl 
             };
         } else {
             params = {
                 sid: id,
-                waf_ip_black: this.form.ip, 
-                waf_url_black: this.form.url 
+                waf_ip_black: this.defalutIP, 
+                waf_url_black: this.defalutUrl 
             };
         }
         MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {

@@ -12,7 +12,7 @@ export interface FormType {
     https_port: Array < number > | undefined ;
     industry: string;
     name: string;
-    open_waf: number;
+    open_waf: string;
     source_info: Array < string >;
     source_type: string;
     remark: string;

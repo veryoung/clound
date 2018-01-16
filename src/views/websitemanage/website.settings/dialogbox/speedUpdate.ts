@@ -41,7 +41,7 @@ export class SpeedUpdateFrame extends Vue {
     submit(formName: string) {
         let params = {
             sid: this.$route.params.id,
-            url: this.form.url,
+            url: this.defalutUrl,
         };
         this.$confirm("是否对指定URL进行刷新？", "指定URL刷新", {
             confirmButtonText: "确定",
@@ -74,17 +74,24 @@ export class SpeedUpdateFrame extends Vue {
             });
         });
     }
-     getTags(tagVal: string, done: Function) {
-        if (RegValidate.uri(tagVal)) {
+
+    getTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
             done(true);
-            if (this.form.url) this.form.url.push(tagVal);
-            return;
+        } else {
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
 
     cancel() {
