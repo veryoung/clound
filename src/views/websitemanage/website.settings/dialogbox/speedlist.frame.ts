@@ -38,24 +38,31 @@ export class SpeedListFrame extends Vue {
         this.defalutUrl = this.data.cache_url_black;
     }
 
-    getTags(tagVal: string, done: Function) {
-        if (RegValidate.uri(tagVal)) {
+    getTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
             done(true);
-            if (this.form.cache_url_black) this.form.cache_url_black.push(tagVal);
-            return;
+        } else {
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
+
 
     submit(formName: string) {
         let id = this.$route.params.id;
         let params = {
             sid: id,
-            cache_url_black: this.form.cache_url_black,
+            cache_url_black: this.defalutUrl,
         };
         MywebsiteServer.BWlist(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;

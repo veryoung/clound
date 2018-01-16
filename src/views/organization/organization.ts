@@ -57,9 +57,10 @@ export class OrganizationComponent extends Vue {
     public rules: FormRuleType = {
         name: [
             { required: true, message: "请输入组织名称", trigger: "blur" },
+            { min: 2, max: 15, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
         ],
         sname: [
-            { required: true, message: "请输入组织简称", trigger: "change" }
+            { required: true, message: "请输入组织简称", trigger: "change" },
         ]
     };
     // init computed

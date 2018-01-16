@@ -41,24 +41,30 @@ export class DenfenFrame extends Vue {
         console.log(this.defalutUrl);
     }
 
-    getTags(tagVal: string, done: Function) {
-        if (RegValidate.uri(tagVal)) {
+    getTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
             done(true);
-            if (this.form.waf_hotlink_white) this.form.waf_hotlink_white.push(tagVal);
-            return;
+        } else {
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
 
     submit(formName: string) {
         let id = this.$route.params.id;
         let params = {
             sid: id,
-            waf_hotlink_white: this.form.waf_hotlink_white,
+            waf_hotlink_white: this.defalutUrl,
         };
         MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;

@@ -20,9 +20,9 @@ require("./mirror.frame.styl");
         uid: {
             type: String
         },
-        data: Array,
+        data: Object,
         mirrcyc: Number,
-        
+
     },
     components: {
         CustomTags
@@ -45,31 +45,32 @@ export class MirrorFrame extends Vue {
     created() {
         this.defalutUrl = this.data.mirror_urls;
     }
-    getTags(tagVal: string, done: Function) {
-        if (RegValidate.uri(tagVal)) {
+    getTags(tagVal: string, type: string, done: Function) {
+        if (type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
             done(true);
-            if (this.form.mirror_urls) this.form.mirror_urls.push(tagVal);
+        } else {
+            done(true);
+            this.defalutUrl.push(tagVal);
             return;
         }
-        this.$message({
-            message: "输入格式不正确",
-            type: "warning"
-        });
-        done();
     }
+
+
     submit(formName: string) {
         let id = this.$route.params.id;
         // if (this.mirrcyc === -1) {
         //     this.mirrcyc = "";
         // }
-        let params = { 
+        let params = {
             sid: id,
-            urls: this.form.mirror_urls,
+            urls: this.defalutUrl,
             interval: this.mirrcyc
         };
         // 提交成功后将数据传给父组件
-        this.$emit("MirrorData", this.form.mirror_urls);
-        MywebsiteServer.mirror(params).then( (response: AxiosResponse<ResType>) => {
+        this.$emit("MirrorData", this.defalutUrl);
+        MywebsiteServer.mirror(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             // Do something with response data
             switch (res.status) {
