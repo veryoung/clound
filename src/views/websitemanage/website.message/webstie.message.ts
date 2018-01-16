@@ -48,6 +48,9 @@ export class WebsiteMessage extends Vue {
         },
 
     };
+    public httpString: string = "";
+    public httpsString: string = "";
+    public sourcenfoString: string = "";
     // init computed
     public websiteMessage: WebMessagePageType;
 
@@ -62,6 +65,10 @@ export class WebsiteMessage extends Vue {
         }
         let eventId = EventBus.register(CONSTANT.GETWEBMESSAGE, function (event: string, info: any) {
             that.WebsiteInfo = that.websiteMessage[id];
+            console.log(that.WebsiteInfo);
+            that.httpString = that.WebsiteInfo.port.http_port.join(",");
+            that.httpsString = that.WebsiteInfo.port.https_port.join(",");
+            that.sourcenfoString = that.WebsiteInfo.source_info.join(",");
         });
         Aux.insertId(eventId);
     }
