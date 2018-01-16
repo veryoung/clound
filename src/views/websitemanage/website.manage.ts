@@ -1,5 +1,4 @@
-import { UserStatus } from "@utils/monitor";
-import { USER, UserMessageType } from "@store/user.center.type";
+import { USER } from "@store/user.center.type";
 import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
@@ -16,9 +15,10 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { SetCol } from "@components/setcol/setcol";
-import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController } from "./website.manage.attachement";
+import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController, DomainType } from "./website.manage.attachement";
 import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { session } from "@utils/sessionstorage";
 
 
 
@@ -50,55 +50,29 @@ export class WebsiteManagement extends Vue {
     public titles: string[] = ["我的网站"];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
+    public userMessage: DomainType = {
+        used_domain_num: "",
+        max_domain_num: "",
+    };
 
     // 导出
     public ids: string[] = [];
     public serialize: string = "&";
     public exportLink: string = `/api/v20/websites/export/?ids=[${this.ids}]${this.serialize}`;
 
-    // watch
-    public unwatch: Function = () => { };
-    public userMessage: UserMessageType = {
-        uid: "0",
-        user_name: "",
-        pwd: "",
-        role: "",
-        role_id: "",
-        cperson: "",
-        ctime: "",
-        is_active: "",
-        company: "",
-        company_id: "",
-        phone: "",
-        email: "",
-        remark: "",
-        used_domain_num: "",
-        max_domain_num: "",
-        waf_enable: "1",
-        ads_enable: "1",
-        mirror_enable: "1",
-        cdn_enable: "1",
-        expiry_date: "",
-    };
 
-    // public tableDefault: = 
     // lifecircle hook 
     created() {
-        // console.log(this.tableConfig.mywebsitetable);
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
         let that = this;
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
         });
-        this.unwatch = vm.$watch(function () {
-            let id = that.$route.params.id;
-            new UserStatus();
-            return id;
-        }, (id, oldid) => {
-        });
 
+        this.$store.dispatch(USER.DEFAULTUSER, { uid: session.getItem("age") });
         let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
-            that.userMessage = that.personInfo.default;
+            that.userMessage.used_domain_num = that.personInfo.default.used_domain_num;
+            that.userMessage.max_domain_num = that.personInfo.default.max_domain_num;
         });
         Aux.insertId(ListId);
         Aux.insertId(PersonInfoId);
@@ -108,7 +82,6 @@ export class WebsiteManagement extends Vue {
         Aux.getIds().map((id, $idnex) => {
             EventBus.unRegister(id);
         });
-        this.unwatch();
     }
 
     // init method
@@ -152,7 +125,7 @@ export class WebsiteManagement extends Vue {
             } else if (type === "look") {
                 this.$router.push(`/WebsiteManagement/myWebsite/look/${row.id}`);
             } else if (type === "del") {
-                WebsiteManagerController.handleDel(row , this.mergeData(this.tableConfig["mywebsitetable"]) );
+                WebsiteManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"]));
             }
             return;
         }

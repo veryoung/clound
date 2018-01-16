@@ -48,6 +48,29 @@ export const PermissionsSet: any = {
             // 公告通知
             Check: "Personal.Announcement.Check",
             Modify: "Personal.Announcement.Modify"
+        },
+    },
+    WebsiteManagement: {
+        // 我的网站
+        MyWebsite: {
+            // 查看
+            Check: "WebsiteManagement.MyWebsite.Check",
+            // 添加
+            Add: "WebsiteManagement.MyWebsite.Add",
+            // 开启防御
+            OpenDefense: "WebsiteManagement.MyWebsite.OpenDefense",
+            // 批量回源
+            BatchReturn: "WebsiteManagement.MyWebsite.BatchReturn",
+            // 导出选中
+            ExportSelection: "WebsiteManagement.MyWebsite.ExportSelection",
+            // 设置
+            Set: "WebsiteManagement.MyWebsite.Set",
+            // 详情
+            Details: "WebsiteManagement.MyWebsite.Details",
+            // 编辑
+            Edit: "WebsiteManagement.MyWebsite.Edit",
+            // 删除
+            Delete: "WebsiteManagement.MyWebsite.Delete"
         }
     }
 };

@@ -85,9 +85,9 @@ export interface PortArray {
 
 export interface ServiceArray {
     ads_enable: number;
-    cdn_enable: number;			
-    mirror_enable: number;				
-    waf_enable: number;	
+    cdn_enable: number;
+    mirror_enable: number;
+    waf_enable: number;
 }
 
 export interface WebSiteCompanyListType {
@@ -140,14 +140,18 @@ export interface WebMessageType {
     state: string;
     id?: string;
     name: string;
-    
+
 }
 
+export interface DomainType {
+    used_domain_num: string;
+    max_domain_num: string;
+}
 export interface WebMessagePageType {
     [extra: string]: WebMessageType;
 }
 export class WebsiteManager {
-    handleDel(row: WebsiteListColumnType , opt: any) {
+    handleDel(row: WebsiteListColumnType, opt: any) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
             MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
