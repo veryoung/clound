@@ -241,83 +241,90 @@ export class WebsiteOperation extends Vue {
 
 
     // "formbasic","formserver"
-    submitForm(formBasic: string, formServer: string) {
+    submitForm(formBasic: string) {
         let temp: any = this.$refs[formBasic];
-        if (!this.httpsTpye) {
-            this.form.cid = "";
-        } else {
-            if (this.form.cid === "") {
-                this.$message({
-                    message: "请上传证书",
-                    type: "warning"
-                });
-                return;
+        let flag: boolean = false;
+        temp.validate((valid: any) => {
+            flag = valid;
+        });
+        if (flag) {
+            if (!this.httpsTpye) {
+                this.form.cid = "";
+            } else {
+                if (this.form.cid === "") {
+                    this.$message({
+                        message: "请上传证书",
+                        type: "warning"
+                    });
+                    return;
+                }
+            } 
+            console.log(this.form.source_info);
+            // 验证回源域名问题
+            if (this.sourceIP === 0) {
+                this.form.source_info = this.sourceIPData;
+            } else {
+                this.form.source_info = this.sourceDomainData;
+            }
+            // 验证回源方式的问题
+            if ( this.form.source_type === "回源IP") {
+                this.form.source_type = "A";
+            } else if (this.form.source_type === "回源域名") {
+                this.form.source_type = "CNAME";
+            }
+            switch (this.operation) {
+                case "add":
+                    let httpsTemp: any = "";
+                    httpsTemp = this.form.https_port;
+                    this.form.http_port = this.httpTags;
+                    this.form.https_port = this.httpsTags;
+                    if (this.httpsTpye === false) {
+                        this.form.https_port = [];
+                    }
+                    MywebsiteServer.addWebsite(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$message({
+                                    message: "创建用户成功",
+                                    type: "success"
+                                });
+                                this.form.https_port = httpsTemp;
+                                this.$router.push("/WebsiteManagement/myWebsite");
+                                break;
+                            case "error":
+                                this.$message({
+                                    message: res.message,
+                                    type: "error"
+                                });
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                    break;
+                case "editor":
+                    let id = this.$route.params.id;
+                    this.form.id = id;
+                    MywebsiteServer.updateWebsite(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$message({
+                                    message: "编辑用户成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/WebsiteManagement/myWebsite");
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                default:
+                    break;
             }
         }
-        console.log(this.form.source_info);
-        // 验证回源域名问题
-        if (this.sourceIP === 0) {
-            this.form.source_info = this.sourceIPData;
-        } else {
-            this.form.source_info = this.sourceDomainData;
-        }
-        // 验证回源方式的问题
-        if ( this.form.source_type === "回源IP") {
-            this.form.source_type = "A";
-        } else if (this.form.source_type === "回源域名") {
-            this.form.source_type = "CNAME";
-        }
-        switch (this.operation) {
-            case "add":
-                let httpsTemp: any = "";
-                httpsTemp = this.form.https_port;
-                this.form.http_port = this.httpTags;
-                this.form.https_port = this.httpsTags;
-                if (this.httpsTpye === false) {
-                    this.form.https_port = [];
-                }
-                MywebsiteServer.addWebsite(this.form).then((response: AxiosResponse<ResType>) => {
-                    let res: ResType = response.data;
-                    switch (res.status) {
-                        case "suc":
-                            this.$message({
-                                message: "创建用户成功",
-                                type: "success"
-                            });
-                            this.form.https_port = httpsTemp;
-                            this.$router.push("/WebsiteManagement/myWebsite");
-                            break;
-                        case "error":
-                            this.$message({
-                                message: res.message,
-                                type: "error"
-                            });
-                            break;
-                        default:
-                            break;
-                    }
-                });
-                break;
-            case "editor":
-                let id = this.$route.params.id;
-                this.form.id = id;
-                MywebsiteServer.updateWebsite(this.form).then((response: AxiosResponse<ResType>) => {
-                    let res: ResType = response.data;
-                    switch (res.status) {
-                        case "suc":
-                            this.$message({
-                                message: "编辑用户成功",
-                                type: "success"
-                            });
-                            this.$router.push("/WebsiteManagement/myWebsite");
-                            break;
-                        default:
-                            break;
-                    }
-                });
-            default:
-                break;
-        }
+        
 
 
 
