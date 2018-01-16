@@ -13,7 +13,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { MywebsiteServer } from "@server/mywebsite";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { Auxiliary } from "@utils/auxiliary";
-import { FormType , TagType} from "@views/websitemanage/website.operation/website.operation.attachement";
+import { FormType, TagType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
 
 
@@ -71,11 +71,14 @@ export class WebsiteOperation extends Vue {
     public httpTpye: boolean = true;
     public httpsTpye: boolean = false;
     // 协议类型 输入框控制
-    public httpTags:  TagType[] = [];
-    public httpsTags:  TagType[] = [];
+    public httpTags: TagType[] = [];
+    public httpsTags: TagType[] = [];
     // 回源方式单选框
     public sourceIP: number = 0; // 0 表示 IP 1 表示域名
     public sourceInputVisible: boolean = false;
+    public sourceIPData: Array<string> = [];
+    public sourceDomainData: Array<string> = [];
+
 
     // 上传证书
     public dialogVisibleDiploma: boolean = false;
@@ -102,6 +105,7 @@ export class WebsiteOperation extends Vue {
             this.$store.dispatch(MYWEBSITEEVENT.GETWEBEDIT, { website_id: id, operation: this.operation });
         }
         let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
+            console.log(that.websiteEdit[id].port.http_port);
             that.form.name = that.websiteEdit[id].name;
             that.form.domain = that.websiteEdit[id].domain;
             that.form.http_port = that.websiteEdit[id].port.http_port;
@@ -109,6 +113,9 @@ export class WebsiteOperation extends Vue {
             that.form.industry = that.websiteEdit[id].industry;
             that.form.source_info = that.websiteEdit[id].source_info;
             that.form.remark = that.websiteEdit[id].remark;
+
+            console.log(that.form.http_port);
+
             // 判断返回状态
             if (that.websiteEdit[id].open_waf === "防御") {
                 that.form.open_waf = 0;
@@ -122,8 +129,6 @@ export class WebsiteOperation extends Vue {
             } else {
                 that.sourceIP = 1;
             }
-
-            console.log(that.form);
         });
         Aux.insertId(eventId);
     }
@@ -159,30 +164,30 @@ export class WebsiteOperation extends Vue {
     }
 
 
-    getTags(tagVal: string, done: Function) {
-        if (this.sourceIP) {
-            if (RegValidate.ip(tagVal)) {
-                done(true);
-                if (this.form.source_info) this.form.source_info.push(tagVal);
-                return;
-            }
-            this.$message({
-                message: "输入格式不正确",
-                type: "warning"
-            });
-            done();
-        } else {
-            if (RegValidate.domain(tagVal)) {
-                done(true);
-                if (this.form.source_info) this.form.source_info.push(tagVal);
-                return;
-            }
-            this.$message({
-                message: "输入格式不正确",
-                type: "warning"
-            });
-            done();
+    getsourceIPTags(tagVal: string, done: Function) {
+        if (RegValidate.ip(tagVal)) {
+            done(true);
+            this.sourceIPData.push(tagVal);
+            return;
         }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
+    }
+
+    getsourceDomainTags(tagVal: string, done: Function) {
+        if (RegValidate.domain(tagVal)) {
+            done(true);
+            this.sourceDomainData.push(tagVal);
+            return;
+        }
+        this.$message({
+            message: "输入格式不正确",
+            type: "warning"
+        });
+        done();
     }
 
     gethttpTags(tagVal: string, done: Function) {
@@ -215,7 +220,6 @@ export class WebsiteOperation extends Vue {
     // "formbasic","formserver"
     submitForm(formBasic: string, formServer: string) {
         let temp: any = this.$refs[formBasic];
-        console.log(this.form.cid);
         if (!this.httpsTpye) {
             this.form.cid = "";
         } else {
@@ -226,8 +230,14 @@ export class WebsiteOperation extends Vue {
                 });
                 return;
             }
-        } 
+        }
 
+        // 验证回源域名问题
+        if (this.sourceIP === 0) {
+            this.form.source_info = this.sourceIPData;
+        } else {
+            this.form.source_info = this.sourceDomainData;
+        }
         switch (this.operation) {
             case "add":
                 let httpsTemp: any = "";
@@ -251,7 +261,7 @@ export class WebsiteOperation extends Vue {
                                 message: res.message,
                                 type: "error"
                             });
-                            break;    
+                            break;
                         default:
                             break;
                     }

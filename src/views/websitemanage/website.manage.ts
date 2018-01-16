@@ -1,3 +1,6 @@
+import { UserStatus } from "@utils/monitor";
+import { USER, UserMessageType } from "@store/user.center.type";
+import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { MywebsiteServer } from "@server/mywebsite";
@@ -31,6 +34,7 @@ require("./website.manage.styl");
         ...mapGetters([
             "tableData",
             "tableConfig",
+            "personInfo"
         ])
     }
 })
@@ -38,6 +42,8 @@ export class WebsiteManagement extends Vue {
     // init computed
     public tableData: WebsiteTableType;
     public tableConfig: TableConfigType;
+    public personInfo: UserCenterType;
+
 
 
     // init data
@@ -52,6 +58,28 @@ export class WebsiteManagement extends Vue {
 
     // watch
     public unwatch: Function = () => { };
+    public userMessage: UserMessageType = {
+        uid: "0",
+        user_name: "",
+        pwd: "",
+        role: "",
+        role_id: "",
+        cperson: "",
+        ctime: "",
+        is_active: "",
+        company: "",
+        company_id: "",
+        phone: "",
+        email: "",
+        remark: "",
+        used_domain_num: "",
+        max_domain_num: "",
+        waf_enable: "1",
+        ads_enable: "1",
+        mirror_enable: "1",
+        cdn_enable: "1",
+        expiry_date: "",
+    };
 
     // public tableDefault: = 
     // lifecircle hook 
@@ -62,24 +90,18 @@ export class WebsiteManagement extends Vue {
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
         });
-        this.unwatch = vm.$watch(
-            () => {
-                return this.filter;
-            }, (val, oldval) => {
-                if (JSON.stringify(val) === JSON.stringify(oldval)) {
-                    return false;
-                }
-                let temp: any = val;
-                this.serialize = "&";
-                for (let $index in temp) {
-                    this.serialize += $index + "=" + temp[$index] + "&";
-                }
-                this.serialize = this.serialize.substring(0, this.serialize.length - 1);
-                this.exportLink = `/api/v20/account/user/excel/?ids=${this.ids}${this.serialize}`;
-            }, {
-                deep: true
-            });
+        this.unwatch = vm.$watch(function () {
+            let id = that.$route.params.id;
+            new UserStatus();
+            return id;
+        }, (id, oldid) => {
+        });
+
+        let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+            that.userMessage = that.personInfo.default;
+        });
         Aux.insertId(ListId);
+        Aux.insertId(PersonInfoId);
     }
 
     destroyed() {

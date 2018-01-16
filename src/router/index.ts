@@ -20,6 +20,7 @@ import { Store } from "@store/store";
 import { UserStatus } from "@utils/monitor";
 import { WebsiteManageRouter } from "@router/website.manage";
 import { LoginPortal } from "@views/loginportal/login.portal";
+import { WebsiteAnalysisRouter } from "@router/website.analysis";
 
 
 Vue.use(Router);
@@ -59,12 +60,22 @@ let tempRouter: RouteConfig[] = [
     },
     {
         path: "/WebsiteAnalysis",
+        redirect: "/WebsiteAnalysis/WebsitePandect",
         name: "网站分析",
         components: {
             header: HeaderComponent,
             sider: SiderComponent,
             main: ViewContainer
         },
+        props: {
+            sider: {
+                menus: WebsiteAnalysisRouter
+            }
+        },
+        meta: {
+            hidden: false,
+        },
+        children: WebsiteAnalysisRouter
     },
     {
         path: "/WebsiteManagement",
