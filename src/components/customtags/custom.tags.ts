@@ -54,7 +54,7 @@ export class CustomTags extends Vue {
             return;
         }
         if (this.tags.indexOf(inputValue) !== -1) {
-            this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
+            this.$emit("error", { message: "请不要添加重复数据", code: 0 });
             return;
         }
         let that = this;

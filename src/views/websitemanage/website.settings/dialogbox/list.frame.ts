@@ -131,6 +131,13 @@ export class ListFrame extends Vue {
         }
         this.$emit("close", false);
     }
+
+    error(res: any) {
+        this.$message({
+            message: res.message,
+            type: "warning"
+        });
+    }
 }
 
 export interface ListFrameType {

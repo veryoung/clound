@@ -7,7 +7,7 @@
          <span class="list-frame">注：最多10个</span>
         <el-form :model="form" ref="form" label-width="100px">
             <span class="list-title">URI黑名单（URI将不做web攻击检测）</span>
-            <CustomTags @getTags="getTags" :tags="defalutUrl" :total="10"/>
+            <CustomTags @getTags="getTags" @error="error"  :tags="defalutUrl" :total="10"/>
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
