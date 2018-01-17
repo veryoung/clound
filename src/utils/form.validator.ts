@@ -69,11 +69,7 @@ class Reg {
     }
 
     public uri(value: string) {
-        if (value.indexOf("www.") !== -1 && value.indexOf(".com") !== -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return /^\//.test(value);
     }
 
 }
