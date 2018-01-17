@@ -13,6 +13,9 @@ require("./website.detail.styl");
 export class WebsiteDetail extends Vue {
     // init computed
     // init data
+    public form: any = {
+        datePicker: "今天",
+    };
     // lifecircle hook 
     created() {
 

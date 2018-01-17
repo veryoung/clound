@@ -109,11 +109,12 @@ export class WebsiteManagement extends Vue {
     sortChange(opt: any) {
         if (opt.prop === "ctime") {
             if (opt.order === "descending") {
-                this.filter.sort_ctime = "0";
-            } else {
                 this.filter.sort_ctime = "1";
+            } else {
+                this.filter.sort_ctime = "-1";
             }
         }
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
     }
 
 

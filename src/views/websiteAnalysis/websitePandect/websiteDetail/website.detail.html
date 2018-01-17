@@ -1,13 +1,9 @@
 <div class="website-detail">
     <div class="choose-box">
-        <el-button type="primary" size="small" @click="exportChoose('selected')">
-            <span>今天</span>
-        </el-button>
-        <el-button type="primary" size="small" @click="exportChoose('selected')">
-            <span>最近七天</span>
-        </el-button>
-        <el-button type="primary" size="small" @click="exportChoose('selected')">
-            <span>最近三十天</span>
-        </el-button>
+        <el-radio-group v-model="form.datePicker">
+            <el-radio-button label="今天"></el-radio-button>
+            <el-radio-button label="最近7天"></el-radio-button>
+            <el-radio-button label="最近30天"></el-radio-button>
+          </el-radio-group>
     </div>
 </div>
