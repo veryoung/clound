@@ -65,6 +65,9 @@ export class WebsiteOperation extends Vue {
     // 标题
     public titles: string[] = [];
 
+    // 上传证书的文字提示
+    public diplomaText: string = "上传证书";
+
 
 
     // 协议类型复选框
@@ -128,6 +131,7 @@ export class WebsiteOperation extends Vue {
             that.httpsTags = that.form.https_port;
             if (that.httpsTags.length !== 0) {
                 that.httpsTpye = true;
+                that.diplomaText = "更新证书";
             }
 
         });
