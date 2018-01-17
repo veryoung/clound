@@ -1,9 +1,62 @@
 <div class="website-detail">
-    <div class="choose-box">
-        <el-radio-group v-model="form.datePicker">
-            <el-radio-button label="今天"></el-radio-button>
-            <el-radio-button label="最近7天"></el-radio-button>
-            <el-radio-button label="最近30天"></el-radio-button>
-          </el-radio-group>
+    <div class="detail-content">
+        <div class="choose-box">
+            <el-radio-group v-model="form.datePicker">
+                <el-radio-button label="今天"></el-radio-button>
+                <el-radio-button label="最近7天"></el-radio-button>
+                <el-radio-button label="最近30天"></el-radio-button>
+            </el-radio-group>
+
+        </div>
+        <div class="list-box">
+            <el-row class="list-top">
+                <el-col class="top-left" :span="7">
+                    <div class="top-left-box">
+                        <ModuleTitle :titles="['安全评级']" />
+
+                    </div>
+                </el-col>
+                <el-col class="top-right" :span="17">
+                    <div class="top-right-box">
+                        <div>
+                            web攻击
+                        </div>
+                        <div>
+                            CC攻击
+                        </div>
+                        <div>
+                            加速请求
+                        </div>
+                        <div>
+                            加速流量
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
+            <div class="safe-list">
+                <ModuleTitle :titles="['安全防护']" />
+                <el-col :span="7">
+                    <ModuleTitle :titles="['安全评级']" />
+
+                </el-col>
+                <el-col :span="7">
+                    <ModuleTitle :titles="['安全评级']" />
+
+                </el-col>
+                <el-col :span="7">
+                    <ModuleTitle :titles="['安全评级']" />
+
+                </el-col>
+                <el-col :span="7">
+                    <ModuleTitle :titles="['安全评级']" />
+
+                </el-col>
+            </div>
+            <div class="speed-list">
+                <ModuleTitle :titles="['加速优化']" />
+
+            </div>
+        </div>
     </div>
+
 </div>

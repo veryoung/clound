@@ -2,8 +2,46 @@
 
 .website-detail
     common-panel(0,20px)
-    display flex
-    flex-direction column
-        .choose-box
-            align-self flex-start
+    >.detail-content
+        display flex
+        flex-direction column
+        width 100%
+        >.choose-box
+            height 70px
+            width 100%
+            border-bottom 1px solid #cccccc
+            position relative
+            >.el-radio-group
+                position absolute
+                top 50%
+                left 0
+                transform translate(0,-50%)
+                >.el-radio-button
+                    margin-right 20px
+                    width 92px
+                    border 1px solid #dcdfe6
+                    border-radius 5px
+                    >.el-radio-button__inner
+                        width 92px
+                        border none !important
+                        border-radius 5px
+        >.list-box
+            >.list-top
+                margin 20px 0
+                height 250px
+                >.top-left
+                    height 100%
+                    >.top-left-box
+                        height 100%
+                        background #cccccc
+                        margin-right 15px
+                >.top-right
+                    height 100%
+                    >.top-right-box
+                        height 100%
+                        margin-left 15px
+                        background #cccccc        
+
+
+
     
