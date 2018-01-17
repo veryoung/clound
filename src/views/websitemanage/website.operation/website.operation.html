@@ -38,12 +38,12 @@
                                     注：1、一个端口只能对应一种协议，一种协议最多10个端口
                                 </span>
                                 <span class="httpTpyeRemark">
-                                    2、端口支持80、443、2000-65535，其中2812、3071、5141、5989、44366、49258端口除外
+                                    2、支持80、443、[3000-35000]，但3071、5989、10050端口除外
                                 </span>
                             </div>
                         </div>
                         <div class="httpTag">
-                            <CustomTags @getTags="gethttpTags" @error="httpError" :tags="httpTags" :total="10" addTagText="请输入Http端口"/>
+                            <CustomTags v-if="httpTpye" @getTags="gethttpTags" @error="httpError" :tags="httpTags" :total="10" addTagText="请输入Http端口"/>
                         </div>
                     </div>
                     <div class="https">
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="httpsTag">
-                            <CustomTags @getTags="gethttpsTags"  :tags="httpsTags" :total="10" addTagText="请输入Https端口"/>
+                            <CustomTags  v-if="httpsTpye" @getTags="gethttpsTags"  :tags="httpsTags" :total="10" addTagText="请输入Https端口"/>
                         </div>
                     </div>
                 </div>
