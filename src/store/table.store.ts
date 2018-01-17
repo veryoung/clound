@@ -97,7 +97,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                     },
                     {
                         prop: "organization",
-                        label: "所属组织",
+                        label: "所属企业",
                         show: true
 
                     },
