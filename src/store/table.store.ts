@@ -96,6 +96,11 @@ export const TableConfigStore: Module<TableConfigType, any> = {
 
                     },
                     {
+                        prop: "cperson",
+                        label: "创建人",
+                        show: true,
+                    },
+                    {
                         prop: "organization",
                         label: "所属组织",
                         show: true
