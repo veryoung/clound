@@ -28,6 +28,7 @@ export default interface SearchType {
     source_type?: string;
     state?: string;
     ctime?: string;
+    sort_ctime?: string;
 }
 
 export const filterData: SearchType = {
@@ -41,7 +42,8 @@ export const filterData: SearchType = {
     source_info: "",
     source_type: "",
     state: "",
-    ctime: ""
+    ctime: "",
+    sort_ctime: "",
 };
 
 

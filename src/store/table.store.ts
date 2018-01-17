@@ -128,6 +128,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         label: "创建时间",
                         show: true,
                         type: "date",
+                        sortable: "custom",
                     },
                     {
                         prop: "open_waf",

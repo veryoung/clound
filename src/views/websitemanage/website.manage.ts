@@ -106,6 +106,17 @@ export class WebsiteManagement extends Vue {
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
     }
 
+    sortChange(opt: any) {
+        if (opt.prop === "ctime") {
+            if (opt.order === "descending") {
+                this.filter.sort_ctime = "0";
+            } else {
+                this.filter.sort_ctime = "1";
+            }
+        }
+    }
+
+
     mergeData(opt: any) {
         const { page_size, page } = opt;
         return (<any>Object).assign({}, this.filter, {
@@ -143,10 +154,7 @@ export class WebsiteManagement extends Vue {
         });
     }
 
-    sortChange(opt: any) {
-
-    }
-
+   
 
     // 导出
     exportChoose(type: string) {
