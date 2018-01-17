@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
@@ -6,6 +7,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 
 
 require("./speedlist.frame.styl");
@@ -24,7 +26,7 @@ require("./speedlist.frame.styl");
 export class SpeedListFrame extends Vue {
     // init props
     public types: string;
-    public data: any;
+    public data: FormType;
 
     // init data
     public form: SpeedListType = {
@@ -34,19 +36,35 @@ export class SpeedListFrame extends Vue {
 
     created() {
         this.defalutUrl = this.data.cache_url_black;
-        console.log(this.defalutUrl);
     }
-    getTags(tags: string[]) {
-        this.form.cache_url_black = tags;
+
+    getTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
+            done(true);
+        } else {
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
+        }
     }
+
 
     submit(formName: string) {
         let id = this.$route.params.id;
         let params = {
             sid: id,
-            cache_url_black: this.form.cache_url_black,
+            cache_url_black: this.defalutUrl,
         };
-        MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
+        MywebsiteServer.BWlist(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             // Do something with response data
             switch (res.status) {

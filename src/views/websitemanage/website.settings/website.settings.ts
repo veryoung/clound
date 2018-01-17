@@ -2,8 +2,7 @@ import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import { MywebsiteServer } from "@server/mywebsite";
 import { WebSiteConfig } from "@store/mywebsite.type";
-import { CONSTANT } from "@utils/event";
-import { EventBus } from "@utils/event";
+import { CONSTANT, EventBus } from "@utils/event";
 import { SpeedUpdateFrame } from "./dialogbox/speedUpdate";
 import { SpeedListFrame } from "./dialogbox/speedlist.frame";
 import { MirrorFrame } from "./dialogbox/mirror.frame";
@@ -16,7 +15,11 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
+import { Auxiliary } from "@utils/auxiliary";
+import { MirrorOptionsType } from "@views/websitemanage/website.operation/website.operation.attachement";
 
+
+const Aux = new Auxiliary<string>();
 require("./website.settings.styl");
 @Component({
     name: "websitesettings",
@@ -56,7 +59,7 @@ export class WebsiteSettings extends Vue {
     // 表单内容
     public form: FormType = {
         ads_enable: "",
-        cache_url_black: "",
+        cache_url_black: [],
         cache_urls: [],
         cdn_enable: "",
         mirror_enable: "",
@@ -70,9 +73,9 @@ export class WebsiteSettings extends Vue {
         waf_url_white: [],
     };
     // 获取的镜像
-    public options: any = [
+    public options: Array<MirrorOptionsType> = [
         {
-            value: -1,
+            value: 0,
             label: " "
         },
         {
@@ -96,13 +99,15 @@ export class WebsiteSettings extends Vue {
         let eventId = EventBus.register(CONSTANT.GETWEBSITECONFIG, function (event: string, info: any) {
             that.form = that.websiteConfig[id];
             that.MirrorValue = that.form.mirror_interval;
-            // 处理选择框为负一 选择框内容为空
-            if (that.form.mirror_interval === -1) {
-            }
         });
+        Aux.insertId(eventId);
     }
 
-    destroyed() { }
+    destroyed() {
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
+    }
 
     // init method
 
@@ -145,13 +150,13 @@ export class WebsiteSettings extends Vue {
                     case "suc":
                         this.$message({
                             type: "success",
-                            message: res.message
+                            message: res.message || "更新成功"
                         });
                         break;
                     case "error":
                         this.$message({
                             type: "error",
-                            message: res.message
+                            message: res.message || "更新失败"
                         });
                         break;
                     case "red":
@@ -231,7 +236,7 @@ export class WebsiteSettings extends Vue {
             cancelButtonText: "取消",
             type: "warning"
         }).then(() => {
-            MywebsiteServer.cache(params).then( (response: AxiosResponse<ResType>) => {
+            MywebsiteServer.cache(params).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 console.log(res);
                 switch (res.status) {
@@ -331,7 +336,6 @@ export class WebsiteSettings extends Vue {
     }
     // 网络替身
     mirrorSwitchChange(val: string) {
-        console.log(val);
         if (val === "1") {
             this.form.mirror_enable = "0";
         } else {
@@ -358,7 +362,7 @@ export class WebsiteSettings extends Vue {
                 switch (res.status) {
                     // "suc" | "error" | "red"
                     case "suc":
-                        this.form.cdn_enable = val;
+                        this.form.mirror_enable = val;
                         this.$message({
                             type: "success",
                             message: "刷新成功!"

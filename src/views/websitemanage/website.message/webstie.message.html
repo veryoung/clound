@@ -20,8 +20,10 @@
             </li>
             <li>
                 <div class="label">协议类型:</div>
-                <div class="message">http: {{ WebsiteInfo.port.http_port }}</div>
-                <div class="message">https: {{ WebsiteInfo.port.https_port }}</div>
+                <div class="httpType">
+                        <div class="message">http: {{ httpString }}</div>
+                        <div class="message">https: {{ httpsString }}</div>
+                </div>
             </li>
             <li>
                 <div class="label">回源方式:</div>
@@ -29,7 +31,7 @@
             </li>
             <li>
                 <div class="label">回源地址:</div>
-                <div class="message">{{ WebsiteInfo.source_info }}</div>
+                <div class="message">{{ sourcenfoString }}</div>
             </li>
             <li>
                 <div class="label">CNAME别名:</div>

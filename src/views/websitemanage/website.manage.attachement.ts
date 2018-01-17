@@ -1,7 +1,10 @@
+import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { MywebsiteServer } from "@server/mywebsite";
 import ElementUI from "element-ui";
+import { Store } from "@store/store";
+
 // 变量名	含义	类型	备注
 // cperson	创建人	string	
 // domain	域名	string	
@@ -82,9 +85,9 @@ export interface PortArray {
 
 export interface ServiceArray {
     ads_enable: number;
-    cdn_enable: number;			
-    mirror_enable: number;				
-    waf_enable: number;	
+    cdn_enable: number;
+    mirror_enable: number;
+    waf_enable: number;
 }
 
 export interface WebSiteCompanyListType {
@@ -137,14 +140,18 @@ export interface WebMessageType {
     state: string;
     id?: string;
     name: string;
-    
+
 }
 
+export interface DomainType {
+    used_domain_num: string;
+    max_domain_num: string;
+}
 export interface WebMessagePageType {
     [extra: string]: WebMessageType;
 }
 export class WebsiteManager {
-    handleDel(row: WebsiteListColumnType) {
+    handleDel(row: WebsiteListColumnType, opt: any) {
         ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
             MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
@@ -154,6 +161,7 @@ export class WebsiteManager {
                             message: "删除成功",
                             type: "success"
                         });
+                        Store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, opt);
                         break;
                     default:
                         break;

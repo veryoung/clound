@@ -58,19 +58,19 @@
         <div class="btn-group">
             <div>
                 <div class="btn-first">
-                    <el-button type="primary" @click="handle('add')" size="small">
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.Add'" type="primary" @click="handle('add')" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         添加
                     </el-button>
-                    <el-button type="primary" @click="openwaf('openWaf')" size="small">
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.OpenDefense'" type="primary" @click="openwaf('openWaf')" size="small">
                         <span class="iconfont">&#xe61b;</span>
                         开启防御
                     </el-button>
-                    <el-button type="primary" @click="openwaf('openSource')" size="small">
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.BatchReturn'" type="primary" @click="openwaf('openSource')" size="small">
                         <span class="iconfont">&#xe61b;</span>
                         批量回源
                     </el-button>
-                    <el-button type="primary" size="small" @click="exportChoose('selected')">
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.ExportSelection'" type="primary" size="small" @click="exportChoose('selected')">
                         <span class="iconfont">&#xe61e;</span>
                         <span>导出</span>
                     </el-button>
@@ -80,7 +80,8 @@
                     </el-button>
                 </div>
                 <div class="btn-test">
-                    已使用 0 个,剩余 989575 个可用,总共 1000000 个
+                        已使用{{ userMessage.used_domain_num|none }}个，剩余{{ userMessage.max_domain_num-userMessage.used_domain_num |none}}个可用，总共{{
+                            userMessage.max_domain_num |none}}个
                 </div>
             </div>
             <div class="btn-last">
@@ -88,23 +89,27 @@
             </div>
         </div>
         <CloudTable moduleName="mywebsitetable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
-            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
+            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange" @stateCheck="stateCheck">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
             </el-table-column>
-            <!-- <el-table-column label="服务项" align="center">
-                <template slot-scope="scope">
-                    <i title="查看用户详情" style="cursor:pointer" class="iconfont">&#xe602;</i>
-                    <i title="编辑用户详情" style="cursor:pointer" class="iconfont">&#xe604;</i>
-                    <i title="重置密码" style="cursor:pointer" class="iconfont">&#xe603;</i>
-                    <i title="删除用户" style="cursor:pointer" class="iconfont">&#xe601;</i>
-                </template>
-            </el-table-column> -->
             <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
-                    <i title="设置网站" style="cursor:pointer" class="iconfont" @click="handle('settings',{$index:scope.$index, row:scope.row})">&#xe603;</i>
-                    <i title="查看网站" style="cursor:pointer" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;</i>
-                    <i title="编辑网站" style="cursor:pointer" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;</i>
-                    <i title="删除网站" style="cursor:pointer" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">&#xe601;</i>
+                    <span>
+                        <span>
+                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Set'" @click="handle('settings',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0" >
+                                设置
+                            </p>
+                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Details'" @click="handle('look',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                               详情
+                            </p>
+                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Edit'" @click="handle('editor',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                                编辑
+                            </p>
+                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Delete'" @click="handle('del',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                                删除
+                            </p>
+                        </span>
+                    </span>
                 </template>
             </el-table-column>
         </CloudTable>

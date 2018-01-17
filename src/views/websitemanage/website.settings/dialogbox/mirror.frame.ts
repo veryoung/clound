@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
@@ -6,6 +7,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 
 
 
@@ -18,9 +20,9 @@ require("./mirror.frame.styl");
         uid: {
             type: String
         },
-        data: Array,
+        data: Object,
         mirrcyc: Number,
-        
+
     },
     components: {
         CustomTags
@@ -31,7 +33,7 @@ require("./mirror.frame.styl");
 export class MirrorFrame extends Vue {
     // init props
     public uid: string;
-    public data: any;
+    public data: FormType;
     public mirrcyc: Number | "";
     // init data
     public form: MirrorType = {
@@ -41,26 +43,34 @@ export class MirrorFrame extends Vue {
 
 
     created() {
-        this.defalutUrl = this.data;
+        this.defalutUrl = this.data.mirror_urls;
+    }
+    getTags(tagVal: string, type: string, done: Function) {
+        if (type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
+            done(true);
+        } else {
+            done(true);
+            this.defalutUrl.push(tagVal);
+            return;
+        }
     }
 
-    getTags(tags: string[]) {
-        this.form.mirror_urls = tags;
-    }
 
     submit(formName: string) {
         let id = this.$route.params.id;
         // if (this.mirrcyc === -1) {
         //     this.mirrcyc = "";
         // }
-        let params = { 
+        let params = {
             sid: id,
-            urls: this.form.mirror_urls,
+            urls: this.defalutUrl,
             interval: this.mirrcyc
         };
         // 提交成功后将数据传给父组件
-        this.$emit("MirrorData", this.form.mirror_urls);
-        MywebsiteServer.mirror(params).then( (response: AxiosResponse<ResType>) => {
+        this.$emit("MirrorData", this.defalutUrl);
+        MywebsiteServer.mirror(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             // Do something with response data
             switch (res.status) {

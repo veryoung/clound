@@ -1,7 +1,7 @@
 <div class="website-settings">
     <ListFrame v-if="dialogVisibleList" :dialogVisible="dialogVisibleList" :data="form" :types="listType" @close="closeList" />
     <DenfenFrame v-if="dialogVisibleDefenWhite" :dialogVisible="dialogVisibleDefenWhite" :data="form" @close="closeDefense" />
-    <MirrorFrame  v-if="dialogVisibleMirrorSet" :dialogVisible="dialogVisibleMirrorSet" :data="form.mirror_urls" :mirrcyc="MirrorValue" @MirrorData="getMirror" @close="closeMirror"
+    <MirrorFrame  v-if="dialogVisibleMirrorSet" :dialogVisible="dialogVisibleMirrorSet" :data="form" :mirrcyc="MirrorValue" @MirrorData="getMirror" @close="closeMirror"
     />
     <SpeedListFrame  v-if="dialogVisibleSpeedList" :dialogVisible="dialogVisibleSpeedList" :data="form" @close="closeSpeedList" />
     <SpeedUpdateFrame  v-if="dialogVisibleSpeedUpdate" :dialogVisible="dialogVisibleSpeedUpdate" :data="form" @close="closeSpeedUpdate" />

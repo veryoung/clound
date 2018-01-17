@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="httpTag">
-                            <CustomTags @getTags="gethttpTags" :total="10" addTagText="请输入Http端口"/>
+                            <CustomTags @getTags="gethttpTags" @error="httpError" :tags="httpTags" :total="10" addTagText="请输入Http端口"/>
                         </div>
                     </div>
                     <div class="https">
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="httpsTag">
-                            <CustomTags @getTags="gethttpsTags" :total="10" addTagText="请输入Https端口"/>
+                            <CustomTags @getTags="gethttpsTags"  :tags="httpsTags" :total="10" addTagText="请输入Https端口"/>
                         </div>
                     </div>
                 </div>
@@ -68,21 +68,17 @@
                     <el-radio-group v-model="sourceIP" @change="changeSoure">
                         <el-radio :label="0">回源IP</el-radio>
                         <el-radio :label="1">回源域名</el-radio>
-                        <!-- <div class="sourceRemark">
-                                <span>
-                                    注：回源IP最多4个
-                                </span>
-                        </div> -->
                     </el-radio-group>
-                    <CustomTags @getTags="getTags" :total="4"/>
+                    <CustomTags v-show="!sourceIP" @getTags="getsourceIPTags" :tags="sourceIPData" :total="4"/>
+                    <CustomTags v-show="sourceIP" @getTags="getsourceDomainTags"  :tags="sourceDomainData":total="4"/>
                 </div>
 
             </el-form-item>
             <el-form-item label="防御状态" class="defenStatus">
                 <div class="defenContent">
                     <el-radio-group v-model="form.open_waf">
-                        <el-radio :label="0">防御</el-radio>
-                        <el-radio :label="1">回源</el-radio>
+                        <el-radio :label="'1'">防御</el-radio>
+                        <el-radio :label="'0'">回源</el-radio>
                     </el-radio-group>
                 </div>
                 <div class="defenRemark">

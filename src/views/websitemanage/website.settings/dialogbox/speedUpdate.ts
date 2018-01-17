@@ -1,3 +1,4 @@
+import { RegValidate } from "./../../../../utils/form.validator";
 import { ResType } from "@server/index";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
@@ -6,6 +7,7 @@ import Component from "vue-class-component";
 import { UserServer } from "@server/user";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 
 
 require("./speedUpdate.styl");
@@ -24,7 +26,7 @@ require("./speedUpdate.styl");
 export class SpeedUpdateFrame extends Vue {
     // init props
     public types: string;
-    public data: any;
+    public data: FormType;
 
     // init data
     public form: SpeedUpdateType = {
@@ -32,27 +34,14 @@ export class SpeedUpdateFrame extends Vue {
     };
     public defalutUrl: Array<string>;
 
-    /**
-     *     required?: boolean;
-    message?: string;
-    trigger?: string;
-    validator?: Function;
-    min?: number;
-    max?: number;
-     */
-
-    // init methods
-
     created() {
         this.defalutUrl = this.data.cache_urls;
-        console.log(this.defalutUrl);
-
     }
 
     submit(formName: string) {
         let params = {
             sid: this.$route.params.id,
-            url: this.form.url,
+            url: this.defalutUrl,
         };
         this.$confirm("是否对指定URL进行刷新？", "指定URL刷新", {
             confirmButtonText: "确定",
@@ -86,10 +75,24 @@ export class SpeedUpdateFrame extends Vue {
         });
     }
 
-    getTags(tags: string[]) {
-        this.form.url = tags;
+    getTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
+            done(true);
+        } else {
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
+        }
     }
-
 
     cancel() {
         this.$emit("close", false);

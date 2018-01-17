@@ -81,7 +81,6 @@ export class UserManagement extends Vue {
                 if (JSON.stringify(val) === JSON.stringify(oldval)) {
                     return false;
                 }
-                console.log(val);
                 let temp: any = val;
                 this.serialize = "&";
                 for (let $index in temp) {

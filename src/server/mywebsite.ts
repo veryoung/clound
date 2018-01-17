@@ -131,6 +131,14 @@ class Mywebsite extends Restful {
             }
         });
     }
+
+    // 刷新网站接入状态
+    refreshState(opt: ObjType) {
+        return this.put({
+            url: "/api/v20/websites/state/",
+            params: opt
+        });
+    }
 }
 
 interface ObjType {

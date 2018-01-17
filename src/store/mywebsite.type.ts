@@ -31,7 +31,7 @@ interface WebSiteConfigType {
     // CC开关	string	0-关闭;1-开启;不是该操作则不传
     ads_enable: string;
     // 缓存黑名单	string	@mock=cache_url_black
-    cache_url_black: string;
+    cache_url_black: string[];
     // 缓存url列表	array<string>	
     cache_urls: string[];
     // cdn开关	string	0-关闭;1-开启;不是该操作则不传

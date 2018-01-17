@@ -32,32 +32,43 @@ export class CustomTags extends Vue {
     // init data
     public addFlag: boolean = true;
     public inputVisible: boolean = false;
-    public tag: string = "";
+    public title: string = "";
 
     // init methods
-    closeTag($index: number) {
-        this.tags.splice($index, 1);
-        if (this.tags.length < this.total) {
-            this.addFlag = true;
-        } else {
-            this.addFlag = false;
-        }
+    closeTag(value: string, $index: number) {
+        let that = this;
+        this.$emit("getTags", value, "del", function (flag: boolean) {
+            // that.tags.splice($index, 1);
+            if (that.tags.length < that.total) {
+                that.addFlag = true;
+            } else {
+                that.addFlag = false;
+            }
+        });
+
     }
 
     handleInputConfirm() {
-        let inputValue = this.tag;
-        if (inputValue === "" || this.tags.indexOf(inputValue) !== -1) {
+        let inputValue = this.title;
+        if (inputValue === "") {
+            return;
+        }
+        if (this.tags.indexOf(inputValue) !== -1) {
             this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
             return;
         }
-        this.tags.push(this.tag);
-        if (this.tags.length >= this.total) {
-            this.addFlag = false;
-        } else {
-            this.addFlag = true;
-        }
-        this.inputVisible = false;
-        this.tag = "";
-        this.$emit("getTags", this.tags);
+        let that = this;
+        this.$emit("getTags", inputValue, "add", function (flag: boolean) {
+            // if (flag) {
+            //     that.tags.push(that.title);
+            // }
+            if (that.tags.length >= that.total) {
+                that.addFlag = false;
+            } else {
+                that.addFlag = true;
+            }
+            that.inputVisible = false;
+            that.title = "";
+        });
     }
 }

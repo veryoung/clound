@@ -1,3 +1,5 @@
+import { RegValidate } from "./../../../../utils/form.validator";
+import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
@@ -26,7 +28,7 @@ require("./defen.frame.styl");
 export class DenfenFrame extends Vue {
     // init props
     public uid: string;
-    public data: any;
+    public data: FormType;
 
     // init data
     public form: DenfenType = {
@@ -38,15 +40,31 @@ export class DenfenFrame extends Vue {
         this.defalutUrl = this.data.waf_hotlink_white;
         console.log(this.defalutUrl);
     }
-    getTags(tags: string[]) {
-        this.form.waf_hotlink_white = tags;
+
+    getTags(tagVal: string, type: string, done: Function) {
+        if ( type === "del") {
+            let index = this.defalutUrl.indexOf(tagVal);
+            this.defalutUrl.splice(index, 1);
+            done(true);
+        } else {
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
+        }
     }
 
     submit(formName: string) {
         let id = this.$route.params.id;
         let params = {
             sid: id,
-            waf_hotlink_white: this.form.waf_hotlink_white,
+            waf_hotlink_white: this.defalutUrl,
         };
         MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;

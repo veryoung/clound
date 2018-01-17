@@ -43,3 +43,40 @@ export interface SingleRule {
 export interface FormRuleType {
     [extra: string]: SingleRule[];
 }
+
+
+
+class Reg {
+    constructor() { }
+
+    public ip(value: string) {
+        return /^(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2}).(2[0-5]{2}|2[0-4][0-9]|1?[0-9]{1,2})$/.test(value);
+    }
+
+
+    public domain(value: string) {
+        return /r'^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|'r'([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|'r'([a-zA-Z0-9][-_.a-zA-Z0-9]{1,61}[a-zA-Z0-9]))\.'r'([a-zA-Z]{2,13}|[a-zA-Z0-9-]{2,30}.[a-zA-Z]{2,3})$'/.test(value);
+    }
+    // 端口支持80、443、2000-65535，其中2812、3071、5141、5989、44366、49258端口除外
+    public port(val: string) {
+        let value: number;
+        value = parseInt(val);
+        if (value === 80 || value === 443 || ((value > 1999 && value < 65536) && value !== 2812 && value !== 3017 && value !== 5141 && value !== 5989 && value !== 44366 && value !== 49258)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public uri(value: string) {
+        if (value.indexOf("www.") !== -1 && value.indexOf(".com") !== -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
+
+
+export const RegValidate = new Reg();

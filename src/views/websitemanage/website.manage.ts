@@ -1,3 +1,5 @@
+import { USER } from "@store/user.center.type";
+import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { MywebsiteServer } from "@server/mywebsite";
@@ -13,9 +15,10 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { SetCol } from "@components/setcol/setcol";
-import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController } from "./website.manage.attachement";
-import { EventBus, CONSTANT } from "@utils/event";
+import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController, DomainType } from "./website.manage.attachement";
+import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { session } from "@utils/sessionstorage";
 
 
 
@@ -31,6 +34,7 @@ require("./website.manage.styl");
         ...mapGetters([
             "tableData",
             "tableConfig",
+            "personInfo"
         ])
     }
 })
@@ -38,27 +42,40 @@ export class WebsiteManagement extends Vue {
     // init computed
     public tableData: WebsiteTableType;
     public tableConfig: TableConfigType;
+    public personInfo: UserCenterType;
+
 
 
     // init data
     public titles: string[] = ["我的网站"];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
+    public userMessage: DomainType = {
+        used_domain_num: "",
+        max_domain_num: "",
+    };
 
     // 导出
     public ids: string[] = [];
     public serialize: string = "&";
+    public exportLink: string = `/api/v20/websites/export/?ids=[${this.ids}]${this.serialize}`;
 
-    // public tableDefault: = 
+
     // lifecircle hook 
     created() {
-        // console.log(this.tableConfig.mywebsitetable);
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
         let that = this;
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
         });
+
+        this.$store.dispatch(USER.DEFAULTUSER, { uid: session.getItem("age") });
+        let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+            that.userMessage.used_domain_num = that.personInfo.default.used_domain_num;
+            that.userMessage.max_domain_num = that.personInfo.default.max_domain_num;
+        });
         Aux.insertId(ListId);
+        Aux.insertId(PersonInfoId);
     }
 
     destroyed() {
@@ -69,7 +86,7 @@ export class WebsiteManagement extends Vue {
 
     // init method
     search() {
-        if (this.filter.ctime === null ) {
+        if (this.filter.ctime === null) {
             this.filter.ctime = "";
         }
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
@@ -108,7 +125,7 @@ export class WebsiteManagement extends Vue {
             } else if (type === "look") {
                 this.$router.push(`/WebsiteManagement/myWebsite/look/${row.id}`);
             } else if (type === "del") {
-                WebsiteManagerController.handleDel(row);
+                WebsiteManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"]));
             }
             return;
         }
@@ -124,6 +141,7 @@ export class WebsiteManagement extends Vue {
         options.map((item: WebsiteListColumnType, $index: number) => {
             this.ids.push(item.id);
         });
+        this.exportLink = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
     }
 
     sortChange(opt: any) {
@@ -134,15 +152,12 @@ export class WebsiteManagement extends Vue {
     // 导出
     exportChoose(type: string) {
         let dom = document.createElement("a");
-        const { domain, name, open_waf, organization, port, protocol, source_info, state } = this.filter;
-        let exportLink: string = `/api/v20/websites/export/?ids=[${this.ids}]${this.serialize}domain=${domain}${this.serialize}name=${name}${this.serialize}open_waf=${open_waf}${this.serialize}organization=${organization}${this.serialize}port=${port}${this.serialize}protocol=${protocol}${this.serialize}source_info=${source_info}${this.serialize}state=${state}${this.serialize}`;
-        console.log(exportLink);
-        dom.href = `${exportLink}`;
+        dom.href = `${this.exportLink}`;
         dom.target = "_blank";
         if (this.ids.length === 0) {
             this.$message({
-            message: "请选择导出项",
-            type: "warning"
+                message: "请选择导出项",
+                type: "warning"
             });
         } else {
             dom.click();
@@ -150,22 +165,20 @@ export class WebsiteManagement extends Vue {
     }
     exportAll() {
         let dom = document.createElement("a");
-        const { domain, name, open_waf, organization, port, protocol, source_info, state } = this.filter;
-        let exportLink: string = `/api/v20/websites/export/?domain=${domain}${this.serialize}name=${name}${this.serialize}open_waf=${open_waf}${this.serialize}organization=${organization}${this.serialize}port=${port}${this.serialize}protocol=${protocol}${this.serialize}source_info=${source_info}${this.serialize}state=${state}${this.serialize}`;
-        dom.href = `${exportLink}`;
+        dom.href = `${this.exportLink}`;
         dom.target = "_blank";
         dom.click();
     }
 
     // 开启防御/批量回源
     openwaf(type: string) {
-        let open_waf: number;
-        let open_text: string;
+        let open_waf: string = "0";
+        let open_text: string = "";
         if (type === "openWaf") {
-            open_waf = 1;
+            open_waf = "1";
             open_text = "防御";
         } else {
-            open_waf = 0;
+            open_waf = "0";
             open_text = "回源";
         }
         if (this.ids.length === 0) {
@@ -174,14 +187,13 @@ export class WebsiteManagement extends Vue {
                 type: "warning"
             });
         } else {
-            console.log(this.ids);
             let params = {
                 open_waf: open_waf,
                 website_ids: this.ids,
             };
-            MywebsiteServer.batchWebsite(params).then( (response: AxiosResponse<ResType>) => {
+            MywebsiteServer.batchWebsite(params).then((response: AxiosResponse<ResType>) => {
                 let data = response.data;
-                if ( data.status === "suc" ) {
+                if (data.status === "suc") {
                     this.$message({
                         message: "开启" + open_text + "成功",
                         type: "success"
@@ -192,4 +204,24 @@ export class WebsiteManagement extends Vue {
 
     }
 
+    // 当状态为未接入时的验证
+    stateCheck(opt: any) {
+        let params: StateCheckType = {
+            sid: opt.id
+        };
+        MywebsiteServer.refreshState(params).then((response: AxiosResponse<ResType>) => {
+            let data = response.data;
+            if (data.status === "suc") {
+                this.$message({
+                    message: "验证成功",
+                    type: "success"
+                });
+            }
+        });
+    }
+
+}
+
+export interface StateCheckType {
+    sid: number;
 }
