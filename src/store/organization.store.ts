@@ -13,7 +13,7 @@ import { EventBus, CONSTANT } from "@utils/event";
 
 export const OrganizationStore: Module<OrganizationType, any> = {
     state: (): OrganizationType => {
-        let organization: Array<OrganizationTreeType> = [
+        let organization: OrganizationTreeType[] = [
             {
                 id: "",
                 tree_label: "全部组织机构",
@@ -54,6 +54,7 @@ export const OrganizationStore: Module<OrganizationType, any> = {
                 switch (res.status) {
                     case "suc":
                         commit(ORGANIZATION.INITORGANIZATIONTREE, { data: res.data });
+                        EventBus.doNotify(CONSTANT.INITORGANIZATIONTREE);
                         break;
                     default:
                         break;

@@ -85,7 +85,6 @@ export class OrganizationComponent extends Vue {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
         });
-
     }
 
     // init methods

@@ -6,9 +6,11 @@ import { mapGetters } from "vuex";
 
 import { treeAttchment } from "@components/tissuetree/tree.attachment";
 import { OrganizationTreeType, ORGANIZATION } from "@store/organization.type";
+import { EventBus, CONSTANT } from "@utils/event";
+import { Auxiliary } from "@utils/auxiliary";
 
 
-
+const Aux = new Auxiliary<string>();
 require("./tree.styl");
 @Component({
     name: "TissueTree",
@@ -41,14 +43,23 @@ export class TissueTree extends Vue {
     public del: boolean;
     // init data
     public defaultProps: any = treeAttchment.defaultProps;
-    public data: Array<OrganizationTreeType>;
+    public data: Array<OrganizationTreeType> = [];
     public filterText: string = treeAttchment.filterText;
     // init computed
     public OrganizationTree: Array<OrganizationTreeType>;
     // lifecircle hook
     created() {
         this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
-        this.data = this.OrganizationTree;
+        let that = this;
+        let id = EventBus.register(CONSTANT.INITORGANIZATIONTREE, function () {
+            that.data = that.OrganizationTree;
+        });
+        Aux.insertId(id);
+    }
+    destroyed() {
+        Aux.getIds().map((id, $index) => {
+            EventBus.unRegister(id);
+        });
     }
     // init methods
     addNode(data: OrganizationTreeType & "") {
@@ -74,7 +85,7 @@ export class TissueTree extends Vue {
     }
 
     renderContent(h: Function, options: any) {
-        const { node, data, store } = options;  
+        const { node, data, store } = options;
         return (
             h("li", {
                 "class": {
