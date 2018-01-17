@@ -1,0 +1,17 @@
+<el-dialog :visible="dialogVisible" width="800px" top="10%" :before-close="cancel" class="dialog-plane">
+    <span slot="title" class="dialog-title">
+        <span class="iconfont ">&#xe63b;</span>
+        防盗链白名单设置
+    </span>
+    <div class="content-box">
+        <span class="defen-frame">注：最多10个</span>
+        <el-form :model="form"  ref="form" label-width="100px">
+            <div style="text-align:left">防盗链URI白名单（仅白名单指定域名可访问站点内容，同时您可以使用*.a.com来代表a.com下所有站点)</div>
+            <CustomTags @getTags="getTags" :tags="defalutUrl" :total="10"/>
+        </el-form>
+    </div>
+    <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submit('form')">确定</el-button>
+        <el-button @click="cancel">取消</el-button>
+    </span>
+</el-dialog>
