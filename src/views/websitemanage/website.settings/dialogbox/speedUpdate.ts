@@ -58,6 +58,7 @@ export class SpeedUpdateFrame extends Vue {
                             type: "success",
                             message: "刷新成功!"
                         });
+                        this.cancel();
                         break;
                     case "error":
                         this.$message({
