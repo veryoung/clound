@@ -55,7 +55,7 @@ class Reg {
 
 
     public domain(value: string) {
-        return /r'^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|'r'([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|'r'([a-zA-Z0-9][-_.a-zA-Z0-9]{1,61}[a-zA-Z0-9]))\.'r'([a-zA-Z]{2,13}|[a-zA-Z0-9-]{2,30}.[a-zA-Z]{2,3})$'/.test(value);
+        return /^(?:\w[-_\w]{0,61}\.){1,}(?:com\.cn|net\.cn|org\.cn|gov\.cn|net|org|com|cn|cc|me|tel|mobi|asia|biz|info|name|tv|hk|公司|中国|网络)$/.test(value);
     }
     // 支持80、443、[3000-35000]，但3071、5989、10050端口除外
     public port(val: string) {
