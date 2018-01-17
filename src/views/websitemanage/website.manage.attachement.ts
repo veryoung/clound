@@ -22,7 +22,7 @@ export default interface SearchType {
     name: string;
     open_waf: string;
     organization: string;
-    port: number;
+    port: number | string;
     protocol: string;
     source_info?: string;
     source_type?: string;
@@ -36,7 +36,7 @@ export const filterData: SearchType = {
     name: "",
     open_waf: "",
     organization: "",
-    port: 80,
+    port: "",
     protocol: "",
     source_info: "",
     source_type: "",

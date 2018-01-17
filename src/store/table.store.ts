@@ -130,12 +130,6 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         type: "date",
                     },
                     {
-                        prop: "state",
-                        label: "接入状态",
-                        show: true,
-                        type: "state",
-                    },
-                    {
                         prop: "open_waf",
                         label: "防御状态",
                         show: true,

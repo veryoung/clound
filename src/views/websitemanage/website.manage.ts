@@ -141,7 +141,6 @@ export class WebsiteManagement extends Vue {
         options.map((item: WebsiteListColumnType, $index: number) => {
             this.ids.push(item.id);
         });
-        this.exportLink = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
     }
 
     sortChange(opt: any) {
@@ -151,8 +150,8 @@ export class WebsiteManagement extends Vue {
 
     // 导出
     exportChoose(type: string) {
+        let data = this.filter;
         let dom = document.createElement("a");
-        dom.href = `${this.exportLink}`;
         dom.target = "_blank";
         if (this.ids.length === 0) {
             this.$message({
@@ -160,12 +159,14 @@ export class WebsiteManagement extends Vue {
                 type: "warning"
             });
         } else {
+            dom.href = `/api/v20/websites/export/?ids=[${this.ids}]&domain=${data.domain}&name=${data.name}&open_waf=${data.open_waf}&organization=${data.organization}&port=${data.port}&protocol=${data.protocol}&source_info=${data.source_info}&state=${data.state}`;
             dom.click();
         }
     }
     exportAll() {
+        let data = this.filter;
         let dom = document.createElement("a");
-        dom.href = `${this.exportLink}`;
+        dom.href = `/api/v20/websites/export/?ids=[]&domain=${data.domain}&name=${data.name}&open_waf=${data.open_waf}&organization=${data.organization}&port=${data.port}&protocol=${data.protocol}&source_info=${data.source_info}&state=${data.state}`;
         dom.target = "_blank";
         dom.click();
     }

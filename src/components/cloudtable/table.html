@@ -45,14 +45,7 @@
                     <span v-else-if="column.type==='source_info'" class="ellipsis" :title="scope.row[column.prop]">
                         <span v-for="item in scope.row[column.prop]">{{item}}</span>
                     </span>
-                    <span v-else-if="column.type==='state'&&scope.row[column.prop]==='未接入'">
-                        <span >
-                            {{scope.row[column.prop]}}
-                            <el-button size="small" type="primary" @click="stateCheck(scope.row)" >
-                                    验证
-                            </el-button>
-                        </span>
-                    </span>
+
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>
             </el-table-column>
