@@ -126,6 +126,9 @@ export class WebsiteOperation extends Vue {
             // 判断端口值
             that.httpTags = that.form.http_port;
             that.httpsTags = that.form.https_port;
+            if (that.httpsTags.length !== 0) {
+                that.httpsTpye = true;
+            }
 
         });
         Aux.insertId(eventId);

@@ -50,7 +50,7 @@
                         <div class="httpsTotalBox">
                             <el-checkbox v-model="httpsTpye" @change="chooseHttpType">HTTPS</el-checkbox>
                             <div class="httpsTpyeRemarkBox">
-                                <el-button type="primary" :disabled="!httpsTpye" @click="handle('updateDiploma')">上传证书</el-button>
+                                <el-button type="primary" :disabled="!httpsTpye" @click="handle('updateDiploma')">{{httpsTags.length ===0?"上传":"更新"}}证书</el-button>
                             </div>
                         </div>
                         <div class="httpsTag">
