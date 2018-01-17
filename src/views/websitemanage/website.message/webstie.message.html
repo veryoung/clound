@@ -21,8 +21,8 @@
             <li>
                 <div class="label">协议类型:</div>
                 <div class="httpType">
-                        <div class="message">http: {{ httpString }}</div>
-                        <div class="message">https: {{ httpsString }}</div>
+                        <div class="message" v-if="WebsiteInfo.port.http_port.length !== 0">http: {{ httpString }}</div>
+                        <div class="message" v-if="WebsiteInfo.port.https_port.length !== 0">https: {{ httpsString }}</div>
                 </div>
             </li>
             <li>
@@ -40,7 +40,7 @@
             <li>
                 <div class="label">接入时间:</div>
                 <div class="message">{{ 
-                    WebsiteInfo.ctime
+                    WebsiteInfo.ctime|date
                 }}</div>
             </li>
             <li>
