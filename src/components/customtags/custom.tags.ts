@@ -33,7 +33,14 @@ export class CustomTags extends Vue {
     public addFlag: boolean = true;
     public inputVisible: boolean = false;
     public title: string = "";
-
+    // init lifecircle
+    updated() {
+        if (this.tags.length < this.total) {
+            this.addFlag = true;
+        } else {
+            this.addFlag = false;
+        }        
+    }
     // init methods
     closeTag(value: string, $index: number) {
         let that = this;
