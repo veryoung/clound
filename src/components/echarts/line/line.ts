@@ -1,9 +1,34 @@
-import Vue from "vue";
 import Component from "vue-class-component";
-const echarts = require("echarts");
+import { chartConfig, ChartComponent } from "@components/echarts/default.chart";
 
 
 require("./line.styl");
+
+@chartConfig({
+    tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        type: "plain",
+        data: ["初始化"]
+    },
+    xAxis: {
+        data: ["初始化数据1", "初始化数据2", "初始化数据3", "初始化数据4", "初始化数据5", "初始化数据6"]
+    },
+    yAxis: {
+        show: true,
+        type: "category"
+    },
+    series: [{
+        name: "初始化",
+        type: "line",
+        data: [5, 20, 36, 10, 10, 20],
+        tooltip: {
+            formatter: "{a}<br />{b}<br />{c}"
+        }
+    }]
+})
 @Component({
     name: "lineComponent",
     template: require("./line.html"),
@@ -11,41 +36,6 @@ require("./line.styl");
         option: {
             type: Object
         }
-    },
-    
-})
-export class LineComponent extends Vue {
-    // init props
-    public option: any;
-    // init data
-    public chart: any = "";
-    // init lifecircle hook
-    public defaultOption: any = {
-        tooltip: {},
-        legend: {
-            type: "plain",
-            data: ["初始化"]
-        },
-        xAxis: {
-            data: ["初始化数据1", "初始化数据2", "初始化数据3", "初始化数据4", "初始化数据5", "初始化数据6"]
-        },
-        yAxis: {
-            show: true,
-            type: "category"
-        },
-        series: [{
-            name: "初始化",
-            type: "line",
-            data: [5, 20, 36, 10, 10, 20],
-            tooltip: {
-                formatter: "{a}<br />{b}<br />{c}"
-            }
-        }]
-    };
-    mounted() {
-        this.chart = echarts.init(document.getElementById("line-cloud"));
-        let result: any = (<any>Object).assign({}, this.defaultOption, this.option);
-        // 使用刚指定的配置项和数据显示图表。
-        this.chart.setOption(result);
     }
-}
+})
+export class LineComponent extends ChartComponent { }
