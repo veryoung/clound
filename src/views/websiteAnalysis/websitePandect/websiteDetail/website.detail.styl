@@ -3,6 +3,11 @@
 .website-detail
     common-panel(0,20px)
     height 700px
+    .flex50-box
+        width 50%
+        flex-shrink 0
+    .mariginright30
+        margin-right 30px    
     >.detail-content
         display flex
         flex-direction column
@@ -46,8 +51,16 @@
                         background #cccccc
             >.safe-list
                 >.safe-box
-                    // display flex
-                    // flex-direction row                    
+                    width 100%
+                    display flex
+                    flex-direction row
+                    flex-wrap wrap
+            >.speed-list
+                >.speed-box
+                    width 100%
+                    display flex
+                    flex-direction row
+                    flex-wrap wrap                               
 
 
 

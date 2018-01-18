@@ -1,3 +1,4 @@
+import { BarComponent } from "@components/echarts/bar/bar";
 import { PieComponent } from "@components/echarts/pie/pie";
 import { LineComponent } from "@components/echarts/line/line";
 import { ModuleTitle } from "@components/title/module.title";
@@ -10,7 +11,8 @@ require("./website.detail.styl");
     components: {
         ModuleTitle,
         LineComponent,
-        PieComponent
+        PieComponent,
+        BarComponent,
     },
     template: require("./website.detail.html"),
 })
