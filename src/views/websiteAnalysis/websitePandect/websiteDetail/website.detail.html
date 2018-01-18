@@ -38,7 +38,9 @@
                 <ModuleTitle :titles="['安全防护']" />
                 <el-col style="padding-right: 30px;" :span="12">
                     <ModuleTitle :titles="['攻击次数趋势']" />
-
+                    <div style="height:300px;width:600px;">
+                        <LineComponent />
+                    </div>
                 </el-col>
                 <el-col :span="12">
                     <ModuleTitle :titles="['攻击类型分布']" />

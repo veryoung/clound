@@ -1,3 +1,4 @@
+import { LineComponent } from "@components/echarts/line/line";
 import { ModuleTitle } from "@components/title/module.title";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -6,7 +7,8 @@ require("./website.detail.styl");
 @Component({
     name: "websitedetail",
     components: {
-        ModuleTitle
+        ModuleTitle,
+        LineComponent,
     },
     template: require("./website.detail.html"),
 })

@@ -3,7 +3,7 @@ import Component from "vue-class-component";
 const echarts = require("echarts");
 
 
-
+require("./line.styl");
 @Component({
     name: "lineComponent",
     template: require("./line.html"),
@@ -11,7 +11,8 @@ const echarts = require("echarts");
         option: {
             type: Object
         }
-    }
+    },
+    
 })
 export class LineComponent extends Vue {
     // init props
@@ -41,7 +42,7 @@ export class LineComponent extends Vue {
             }
         }]
     };
-    created() {
+    mounted() {
         this.chart = echarts.init(document.getElementById("line-cloud"));
         let result: any = (<any>Object).assign({}, this.defaultOption, this.option);
         // 使用刚指定的配置项和数据显示图表。

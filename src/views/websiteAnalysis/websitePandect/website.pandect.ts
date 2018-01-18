@@ -27,7 +27,6 @@ require("./website.pandect.styl");
     },
     computed: {
         ...mapGetters([
-            "tableData",
             "tableConfig",
         ])
     }
