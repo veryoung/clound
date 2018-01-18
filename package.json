@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/node": "^8.0.34",
     "axios": "^0.17.1",
+    "echarts": "^4.0.1",
     "element-ui": "^2.0.1",
     "moment": "^2.20.1",
     "vue": "^2.5.0",
