@@ -337,7 +337,7 @@ export class WebsiteOperation extends Vue {
                         switch (res.status) {
                             case "suc":
                                 this.$message({
-                                    message: "创建用户成功",
+                                    message: "创建网站成功",
                                     type: "success"
                                 });
                                 this.form.https_port = httpsTemp;
@@ -362,7 +362,7 @@ export class WebsiteOperation extends Vue {
                         switch (res.status) {
                             case "suc":
                                 this.$message({
-                                    message: "编辑用户成功",
+                                    message: "编辑网站成功",
                                     type: "success"
                                 });
                                 this.$router.push("/WebsiteManagement/myWebsite");

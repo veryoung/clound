@@ -19,41 +19,43 @@
                 <el-col class="top-right" :span="17">
                     <div class="top-right-box">
                         <el-col :span="6">
-                                web攻击
+                            web攻击
                         </el-col>
                         <el-col :span="6">
-                                CC攻击
+                            CC攻击
                         </el-col>
                         <el-col :span="6">
-                                加速请求
+                            加速请求
 
                         </el-col>
                         <el-col :span="6">
-                                加速流量
+                            加速流量
                         </el-col>
                     </div>
                 </el-col>
             </el-row>
             <div class="safe-list">
                 <ModuleTitle :titles="['安全防护']" />
-                <el-col style="padding-right: 30px;" :span="12">
-                    <ModuleTitle :titles="['攻击次数趋势']" />
-                    <div style="height:300px;width:100%;">
-                        <LineComponent :option="attackTimeOpt" />
+                <div class="safe-box">
+                    <div style="width:50%">
+                        <ModuleTitle :titles="['攻击次数趋势']" />
+                        <div style="height:400px;width:100%;">
+                            <LineComponent :option="attackTimeOpt" />
+                        </div>
                     </div>
-                </el-col>
-                <el-col :span="12">
-                    <ModuleTitle :titles="['攻击类型分布']" />
-
-                </el-col>
-                <el-col style="padding-right: 30px;" :span="12">
-                    <ModuleTitle :titles="['攻击源地域分布TOP10']" />
-
-                </el-col>
-                <el-col :span="12">
-                    <ModuleTitle :titles="['攻击IPTOP10']" />
-
-                </el-col>
+                    <div style="width:50%">
+                        <ModuleTitle :titles="['攻击类型分布']" />
+                        <div style="height:400px;width:100%;">
+                            <PieComponent :option="attackTypeOpt" />
+                        </div>
+                    </div>
+                    <div style="width:50%">
+                        <ModuleTitle :titles="['攻击源地域分布TOP10']" />
+                    </div>
+                    <div style="width:50%">
+                        <ModuleTitle :titles="['攻击IPTOP10']" />
+                    </div>
+                </div>
             </div>
             <div class="speed-list">
                 <ModuleTitle :titles="['加速优化']" />
