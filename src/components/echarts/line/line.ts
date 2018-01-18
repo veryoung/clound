@@ -28,7 +28,7 @@ require("./line.styl");
             formatter: "{a}<br />{b}<br />{c}"
         }
     }]
-})
+}, "line-cloud")
 @Component({
     name: "lineComponent",
     template: require("./line.html"),

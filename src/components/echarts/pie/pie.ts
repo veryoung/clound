@@ -51,9 +51,14 @@ require("./pie.styl");
             ]
         }
     ]
-})
+}, "pie-cloud")
 @Component({
     name: "pieComponent",
-    template: require("./pie.html")
+    template: require("./pie.html"),
+    props: {
+        option: {
+            type: Object
+        }
+    }
 })
 export class PieComponent extends ChartComponent { }
