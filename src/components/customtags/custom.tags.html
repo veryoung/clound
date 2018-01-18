@@ -1,4 +1,4 @@
-<div class="sourceTag">
+<div class="Tag">
     <!-- :class="'error':tag.level === 'error'"  -->
     <el-tag :key="$index" v-for="(tag,$index) in tags" closable :disable-transitions="false" @close="closeTag(tag,$index)">
         {{tag}}

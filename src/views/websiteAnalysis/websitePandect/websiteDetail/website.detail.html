@@ -18,18 +18,19 @@
                 </el-col>
                 <el-col class="top-right" :span="17">
                     <div class="top-right-box">
-                        <div>
-                            web攻击
-                        </div>
-                        <div>
-                            CC攻击
-                        </div>
-                        <div>
-                            加速请求
-                        </div>
-                        <div>
-                            加速流量
-                        </div>
+                        <el-col :span="6">
+                                web攻击
+                        </el-col>
+                        <el-col :span="6">
+                                CC攻击
+                        </el-col>
+                        <el-col :span="6">
+                                加速请求
+
+                        </el-col>
+                        <el-col :span="6">
+                                加速流量
+                        </el-col>
                     </div>
                 </el-col>
             </el-row>
@@ -43,7 +44,7 @@
                     <ModuleTitle :titles="['攻击类型分布']" />
 
                 </el-col>
-                <el-col  style="padding-right: 30px;" :span="12">
+                <el-col style="padding-right: 30px;" :span="12">
                     <ModuleTitle :titles="['攻击源地域分布TOP10']" />
 
                 </el-col>
@@ -54,7 +55,7 @@
             </div>
             <div class="speed-list">
                 <ModuleTitle :titles="['加速优化']" />
-                <el-col style="padding-right: 30px;"  :span="12">
+                <el-col style="padding-right: 30px;" :span="12">
                     <ModuleTitle :titles="['访问流量趋势']" />
 
                 </el-col>
@@ -62,7 +63,7 @@
                     <ModuleTitle :titles="['访问次数趋势']" />
 
                 </el-col>
-                <el-col style="padding-right: 30px;"  :span="12">
+                <el-col style="padding-right: 30px;" :span="12">
                     <ModuleTitle :titles="['IP访问次数']" />
 
                 </el-col>
@@ -70,7 +71,7 @@
                     <ModuleTitle :titles="['IP访问次数TOP10']" />
 
                 </el-col>
-                <el-col style="padding-right: 30px;"  :span="12">
+                <el-col style="padding-right: 30px;" :span="12">
                     <ModuleTitle :titles="['地域访问流量TOP10']" />
 
                 </el-col>
