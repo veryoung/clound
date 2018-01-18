@@ -87,6 +87,13 @@ export class SpeedListFrame extends Vue {
     cancel() {
         this.$emit("close", false);
     }
+
+    error(res: any) {
+        this.$message({
+            message: res.message,
+            type: "warning"
+        });
+    }
 }
 
 export interface SpeedListType {

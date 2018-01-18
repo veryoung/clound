@@ -50,7 +50,7 @@
                         <div class="httpsTotalBox">
                             <el-checkbox v-model="httpsTpye" @change="chooseHttpType">HTTPS</el-checkbox>
                             <div class="httpsTpyeRemarkBox">
-                                <el-button type="primary" :disabled="!httpsTpye" @click="handle('updateDiploma')">{{httpsTags.length ===0?"上传":"更新"}}证书</el-button>
+                                <el-button type="primary" :disabled="!httpsTpye" @click="handle('updateDiploma')">{{diplomaText}}</el-button>
                             </div>
                         </div>
                         <div class="httpsTag">
@@ -69,8 +69,8 @@
                         <el-radio :label="0">回源IP</el-radio>
                         <el-radio :label="1">回源域名</el-radio>
                     </el-radio-group>
-                    <CustomTags v-show="!sourceIP" @getTags="getsourceIPTags" :tags="sourceIPData" :total="4"/>
-                    <CustomTags v-show="sourceIP" @getTags="getsourceDomainTags"  :tags="sourceDomainData":total="4"/>
+                    <CustomTags v-show="!sourceIP" @error="sourceIPError" @getTags="getsourceIPTags" :tags="sourceIPData" :total="4"/>
+                    <CustomTags v-show="sourceIP" @error="sourceDomainError" @getTags="getsourceDomainTags"  :tags="sourceDomainData":total="4"/>
                 </div>
 
             </el-form-item>

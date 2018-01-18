@@ -6,7 +6,7 @@
          <span class="list-frame">注：多个请以英文“,”隔开，不能换行，最多10个</span>
         <el-form :model="form" ref="form" label-width="100px">
             <span class="list-title">指定URI刷新</span>
-            <CustomTags @getTags="getTags" :tags="defalutUrl" :total="10"/>
+            <CustomTags @getTags="getTags"  @error="error" :tags="defalutUrl" :total="10"/>
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">

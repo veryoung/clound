@@ -65,6 +65,9 @@ export class WebsiteOperation extends Vue {
     // 标题
     public titles: string[] = [];
 
+    // 上传证书的文字提示
+    public diplomaText: string = "上传证书";
+
 
 
     // 协议类型复选框
@@ -128,6 +131,7 @@ export class WebsiteOperation extends Vue {
             that.httpsTags = that.form.https_port;
             if (that.httpsTags.length !== 0) {
                 that.httpsTpye = true;
+                that.diplomaText = "更新证书";
             }
 
         });
@@ -166,7 +170,10 @@ export class WebsiteOperation extends Vue {
 
 
     getsourceIPTags(tagVal: string, type: string, done: Function) {
-        if ( type === "del") {
+        console.log(tagVal);
+
+
+        if (type === "del") {
             let index = this.sourceIPData.indexOf(tagVal);
             this.sourceIPData.splice(index, 1);
             done(true);
@@ -185,7 +192,7 @@ export class WebsiteOperation extends Vue {
     }
 
     getsourceDomainTags(tagVal: string, type: string, done: Function) {
-        if ( type === "del") {
+        if (type === "del") {
             let index = this.sourceDomainData.indexOf(tagVal);
             this.sourceDomainData.splice(index, 1);
             done(true);
@@ -202,14 +209,37 @@ export class WebsiteOperation extends Vue {
             done();
         }
     }
+    containsPort(arr: Array<number>, obj: number) {
+        let i = arr.length;
+        while (i--) {
+            if (arr[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     gethttpTags(tagVal: string, type: string, done: Function) {
-        console.log(tagVal);
-        if ( type === "del") {
+        if (type === "del") {
             let index = this.httpTags.indexOf(tagVal);
             this.httpTags.splice(index, 1);
             done(true);
         } else {
+            if (!/^[0-9]+$/.test(tagVal)) {
+                this.$message({
+                    message: "输入格式不正确",
+                    type: "warning"
+                });
+                return;
+            }
+            let tagValNum: number = parseInt(tagVal);
+            if (this.containsPort(this.httpTags, tagValNum)) {
+                this.$message({
+                    message: "请不要添加重复数据",
+                    type: "warning"
+                });
+                return;
+            }
             if (RegValidate.port(tagVal)) {
                 done(true);
                 this.httpTags.push(parseInt(tagVal));
@@ -224,11 +254,26 @@ export class WebsiteOperation extends Vue {
     }
 
     gethttpsTags(tagVal: string, type: string, done: Function) {
-        if ( type === "del") {
+        if (type === "del") {
             let index = this.httpsTags.indexOf(tagVal);
             this.httpsTags.splice(index, 1);
             done(true);
         } else {
+            if (!/^[0-9]+$/.test(tagVal)) {
+                this.$message({
+                    message: "输入格式不正确",
+                    type: "warning"
+                });
+                return;
+            }
+            let tagValNum: number = parseInt(tagVal);
+            if (this.containsPort(this.httpsTags, tagValNum)) {
+                this.$message({
+                    message: "请不要添加重复数据",
+                    type: "warning"
+                });
+                return;
+            }
             if (RegValidate.port(tagVal)) {
                 done(true);
                 this.httpsTags.push(parseInt(tagVal));
@@ -261,7 +306,7 @@ export class WebsiteOperation extends Vue {
                     });
                     return;
                 }
-            } 
+            }
             console.log(this.form.source_info);
             // 验证回源域名问题
             if (this.sourceIP === 0) {
@@ -270,7 +315,7 @@ export class WebsiteOperation extends Vue {
                 this.form.source_info = this.sourceDomainData;
             }
             // 验证回源方式的问题
-            if ( this.form.source_type === "回源IP") {
+            if (this.form.source_type === "回源IP") {
                 this.form.source_type = "A";
             } else if (this.form.source_type === "回源域名") {
                 this.form.source_type = "CNAME";
@@ -327,7 +372,7 @@ export class WebsiteOperation extends Vue {
                     break;
             }
         }
-        
+
 
 
 
@@ -356,7 +401,13 @@ export class WebsiteOperation extends Vue {
     }
 
     // 错误提示
-    httpError(res: any) {
+    sourceIPError(res: any) {
+        this.$message({
+            message: res.message,
+            type: "warning"
+        });
+    }
+    sourceDomainError(res: any) {
         this.$message({
             message: res.message,
             type: "warning"
