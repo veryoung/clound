@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="httpTag">
-                            <CustomTags v-if="httpTpye" @getTags="gethttpTags" @error="httpError" :tags="httpTags" :total="10" addTagText="请输入Http端口"/>
+                            <CustomTags v-if="httpTpye" @getTags="gethttpTags" @error="error" :tags="httpTags" :total="10" addTagText="请输入Http端口"/>
                         </div>
                     </div>
                     <div class="https">
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="httpsTag">
-                            <CustomTags  v-if="httpsTpye" @getTags="gethttpsTags"  :tags="httpsTags" :total="10" addTagText="请输入Https端口"/>
+                            <CustomTags  v-if="httpsTpye" @getTags="gethttpsTags"  @error="error"  :tags="httpsTags" :total="10" addTagText="请输入Https端口"/>
                         </div>
                     </div>
                 </div>
@@ -69,8 +69,8 @@
                         <el-radio :label="0">回源IP</el-radio>
                         <el-radio :label="1">回源域名</el-radio>
                     </el-radio-group>
-                    <CustomTags v-show="!sourceIP" @error="sourceIPError" @getTags="getsourceIPTags" :tags="sourceIPData" :total="4"/>
-                    <CustomTags v-show="sourceIP" @error="sourceDomainError" @getTags="getsourceDomainTags"  :tags="sourceDomainData":total="4"/>
+                    <CustomTags v-show="!sourceIP" @error="error" @getTags="getsourceIPTags" :tags="sourceIPData" :total="4"/>
+                    <CustomTags v-show="sourceIP" @error="error" @getTags="getsourceDomainTags"  :tags="sourceDomainData":total="4"/>
                 </div>
 
             </el-form-item>

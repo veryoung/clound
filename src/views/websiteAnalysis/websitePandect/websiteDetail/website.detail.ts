@@ -21,9 +21,20 @@ export class WebsiteDetail extends Vue {
     public form: any = {
         datePicker: "今天",
     };
+
+    public attackTimeOpt: any = {
+
+    };
     // lifecircle hook 
     created() {
-
+        this.attackTimeOpt = {
+            legend: {
+                data: ["2015 降水量", "2016 降水量"]
+            },
+            xAxis: [{
+                data: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"]
+            }],
+        };
     }
     // 选择方法
     exportChoose() {

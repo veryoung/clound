@@ -307,7 +307,6 @@ export class WebsiteOperation extends Vue {
                     return;
                 }
             }
-            console.log(this.form.source_info);
             // 验证回源域名问题
             if (this.sourceIP === 0) {
                 this.form.source_info = this.sourceIPData;
@@ -328,6 +327,9 @@ export class WebsiteOperation extends Vue {
                     this.form.https_port = this.httpsTags;
                     if (this.httpsTpye === false) {
                         this.form.https_port = [];
+                    }
+                    if (this.httpTpye === false) {
+                        this.form.http_port = [];
                     }
                     MywebsiteServer.addWebsite(this.form).then((response: AxiosResponse<ResType>) => {
                         let res: ResType = response.data;
@@ -401,13 +403,7 @@ export class WebsiteOperation extends Vue {
     }
 
     // 错误提示
-    sourceIPError(res: any) {
-        this.$message({
-            message: res.message,
-            type: "warning"
-        });
-    }
-    sourceDomainError(res: any) {
+    error(res: any) {
         this.$message({
             message: res.message,
             type: "warning"
