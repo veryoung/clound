@@ -2,8 +2,8 @@ import Component from "vue-class-component";
 import { chartConfig, ChartComponent } from "@components/echarts/default.chart";
 
 
-require("./line.styl");
 
+const timestamp: string = new Date().getTime() + "";
 @chartConfig({
     tooltip: {
         trigger: "item",
@@ -28,13 +28,17 @@ require("./line.styl");
             formatter: "{a}<br />{b}<br />{c}"
         }
     }]
-}, "line-cloud")
+})
 @Component({
     name: "lineComponent",
     template: require("./line.html"),
     props: {
         option: {
             type: Object
+        },
+        id: {
+            type: String,
+            default: `line-cloud${timestamp}`
         }
     }
 })

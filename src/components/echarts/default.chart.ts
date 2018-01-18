@@ -4,17 +4,17 @@ import Vue from "vue";
 
 export class ChartComponent extends Vue {
     // init props
-    public option: any;
+    protected option: any;
     // Decorator
     // echarts 对象
-    public echarts: any;
+    protected echarts: any;
     // 默认的配置
-    public defaultOption: any;
+    protected defaultOption: any;
     // 默认的渲染id
-    public id: string;
+    protected id: string;
     // init data
     // echarts 实例
-    public chart: any = "";
+    protected chart: any = "";
     protected init() {
         this.chart = this.echarts.init(document.getElementById(this.id));
         let result: any = (<any>Object).assign({}, this.defaultOption, this.option);
@@ -24,13 +24,12 @@ export class ChartComponent extends Vue {
 }
 
 // echarts装饰器，功能类似mixins
-export function chartConfig(obj: any, id: string) {
+export function chartConfig(obj: any) {
     return function <T extends { new(...args: any[]): {} }>(constructor: T) {
         return class extends constructor {
             // init data
             echarts = echarts;
             defaultOption = obj;
-            id = id;
         };
     };
 }

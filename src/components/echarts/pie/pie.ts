@@ -2,8 +2,8 @@ import Component from "vue-class-component";
 import { chartConfig, ChartComponent } from "@components/echarts/default.chart";
 
 
-require("./pie.styl");
 
+const timestamp: string = new Date().getTime() + "";
 @chartConfig({
     tooltip: {
         trigger: "item",
@@ -33,13 +33,17 @@ require("./pie.styl");
             ]
         }
     ]
-}, "pie-cloud")
+})
 @Component({
     name: "pieComponent",
     template: require("./pie.html"),
     props: {
         option: {
             type: Object
+        },
+        id: {
+            type: String,
+            default: `pie-cloud${timestamp}`
         }
     }
 })
