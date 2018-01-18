@@ -295,11 +295,12 @@ export class WebsiteOperation extends Vue {
         temp.validate((valid: any) => {
             flag = valid;
         });
+
         if (flag) {
             if (!this.httpsTpye) {
                 this.form.cid = "";
             } else {
-                if (this.form.cid === "") {
+                if (this.form.cid === "" && this.form.https_port === []) {
                     this.$message({
                         message: "请上传证书",
                         type: "warning"
