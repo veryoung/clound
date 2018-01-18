@@ -209,6 +209,7 @@ export class WebsiteManagement extends Vue {
                         type: "success"
                     });
                 }
+                this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
             });
         }
 
