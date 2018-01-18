@@ -38,4 +38,8 @@ require("./line.styl");
         }
     }
 })
-export class LineComponent extends ChartComponent { }
+export class LineComponent extends ChartComponent {
+    mounted() {
+        this.init();
+    }
+}

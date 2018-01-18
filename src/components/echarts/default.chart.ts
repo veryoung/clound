@@ -15,8 +15,7 @@ export class ChartComponent extends Vue {
     // init data
     // echarts 实例
     public chart: any = "";
-    // init lifecircle hook
-    mounted() {
+    protected init() {
         this.chart = this.echarts.init(document.getElementById(this.id));
         let result: any = (<any>Object).assign({}, this.defaultOption, this.option);
         // 使用刚指定的配置项和数据显示图表。

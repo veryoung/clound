@@ -61,4 +61,8 @@ require("./pie.styl");
         }
     }
 })
-export class PieComponent extends ChartComponent { }
+export class PieComponent extends ChartComponent {
+    mounted() {
+        this.init();
+    }
+}
