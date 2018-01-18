@@ -7,7 +7,7 @@ const timestamp: string = new Date().getTime() + "";
 @chartConfig({
     tooltip: {
         trigger: "item",
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        formatter: "{a} <br/>{b} : {c}"
     },
     legend: {
         type: "plain",
