@@ -5,7 +5,7 @@ const echarts = require("echarts");
 
 
 @Component({
-    name: "line",
+    name: "lineComponent",
     template: require("./line.html"),
     props: {
         option: {
@@ -13,7 +13,7 @@ const echarts = require("echarts");
         }
     }
 })
-export class Line extends Vue {
+export class LineComponent extends Vue {
     // init props
     public option: any;
     // init data
