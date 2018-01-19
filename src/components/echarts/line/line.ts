@@ -2,8 +2,6 @@ import Component from "vue-class-component";
 import { chartConfig, ChartComponent } from "@components/echarts/default.chart";
 
 
-
-const timestamp: string = new Date().getTime() + "";
 @chartConfig({
     tooltip: {
         trigger: "item",
@@ -38,7 +36,10 @@ const timestamp: string = new Date().getTime() + "";
         },
         id: {
             type: String,
-            default: `line-cloud${timestamp}`
+            default: function () {
+                const timestamp: string = new Date().getTime() + "";
+                return `line-cloud${timestamp}`;
+            }
         }
     }
 })

@@ -2,12 +2,10 @@ import Component from "vue-class-component";
 import { chartConfig, ChartComponent } from "@components/echarts/default.chart";
 
 
-
-const timestamp: string = new Date().getTime() + "";
 @chartConfig({
     tooltip: {
         trigger: "item",
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        formatter: "{a} <br/>{b} : {c}"
     },
     legend: {
         x: "center",
@@ -43,7 +41,10 @@ const timestamp: string = new Date().getTime() + "";
         },
         id: {
             type: String,
-            default: `pie-cloud${timestamp}`
+            default: function () {
+                const timestamp: string = new Date().getTime() + "";
+                return `pie-cloud${timestamp}`;
+            }
         }
     }
 })
