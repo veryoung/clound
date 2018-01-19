@@ -1,5 +1,5 @@
 import Component from "vue-class-component";
-import { chartConfig, ChartComponent } from "@components/echarts/default.chart";
+import { chartConfig, ChartComponent, buildId } from "@components/echarts/default.chart";
 
 
 @chartConfig({
@@ -37,8 +37,7 @@ import { chartConfig, ChartComponent } from "@components/echarts/default.chart";
         id: {
             type: String,
             default: function () {
-                const timestamp: string = new Date().getTime() + "";
-                return `bar-cloud${timestamp}`;
+                return buildId("bar-cloud");
             }
         }
     }

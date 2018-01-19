@@ -33,3 +33,9 @@ export function chartConfig(obj: any) {
         };
     };
 }
+
+
+export function buildId(name: string) {
+    const timestamp: string = new Date().getTime() + Math.floor(Math.random() * 1000) + "";
+    return name + timestamp;
+}
