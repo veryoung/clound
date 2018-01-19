@@ -52,13 +52,13 @@
                     <div class="flex50-box ">
                         <ModuleTitle class="mariginright30" :titles="['攻击源地域分布TOP10']" />
                         <div style="height:400px;width:100%;">
-                            <BarComponent  />
+                            <BarComponent  :option = "attackResource10Opt"/>
                         </div>
                     </div>
                     <div class="flex50-box">
                         <ModuleTitle :titles="['攻击IPTOP10']" />
                         <div style="height:400px;width:100%;">
-                            <BarComponent />
+                            <BarComponent  :option = "attackResource10Opt"/>
                         </div>
                     </div>
                 </div>
@@ -68,24 +68,35 @@
                 <div class="speed-box">
                     <div class="flex50-box ">
                         <ModuleTitle class="mariginright30" :titles="['访问流量趋势']" />
-                        <PieComponent :option="attackTypeOpt" />
+                        <div style="height:400px;width:100%;">
+                            <LineComponent :option="attackTimeOpt" />
+                        </div>
                     </div>
                     <div class="flex50-box">
                         <ModuleTitle :titles="['访问次数趋势']" />
+                        <div style="height:400px;width:100%;">
+                            <LineComponent :option="attackTimeOpt" />
+                        </div>
                         <PieComponent :option="attackTypeOpt" />
                     </div>
                     <div class="flex50-box ">
                         <ModuleTitle class="mariginright30" :titles="['IP访问次数']" />
+                        <div style="height:400px;width:100%;">
+                            <LineComponent :option="attackTimeOpt" />
+                        </div>
                         <PieComponent :option="attackTypeOpt" />
                     </div>
-                    <div class="flex50-box">
-                        <ModuleTitle :titles="['IP访问次数TOP10']" />
-                    </div>
                     <div class="flex50-box ">
-                        <ModuleTitle class="mariginright30" :titles="['地域访问流量TOP10']" />
+                        <ModuleTitle class="mariginright30" :titles="['地域访问次数TOP10']" />
+                        <div style="height:400px;width:100%;">
+                            <BarComponent  :option = "attackResource10Opt"/>
+                        </div>
                     </div>
                     <div class="flex50-box">
-                        <ModuleTitle :titles="['攻击IPTOP10']" />
+                        <ModuleTitle :titles="['地域访问流量TOP10']" />
+                        <div style="height:400px;width:100%;">
+                            <BarComponent  :option = "attackResource10Opt"/>
+                        </div>
                     </div>
                 </div>
             </div>

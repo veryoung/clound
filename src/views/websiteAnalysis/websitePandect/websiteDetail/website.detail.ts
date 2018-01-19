@@ -29,6 +29,7 @@ export class WebsiteDetail extends Vue {
     public attackTimeOpt: any = {};
     public attackTypeOpt: any = {};
     public safeLevelOpt: any = {};
+    public attackResource10Opt: any = {};
     // lifecircle hook 
     created() {
         this.attackTimeOpt = {
@@ -44,8 +45,27 @@ export class WebsiteDetail extends Vue {
                         }
                     }
                 },
+                boundaryGap: false,
+                axisLine: {
+                    onZero: false
+                },
+                axisTick: {
+                    show: false  
+                },
                 data: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"]
             }],
+            yAxis: {
+                splitNumber: 6,
+                axisLabel: {
+                    formatter: "{value} %"  
+                },
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                }
+            },
             series: [
                 {
                     name: "Web攻击",
@@ -121,6 +141,44 @@ export class WebsiteDetail extends Vue {
         };
         this.safeLevelOpt = {
 
+        };
+        this.attackResource10Opt = {
+            // title: {
+            //     text: "世界人口总量",
+            //     subtext: "数据来自网络"
+            // },
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    type: "shadow"
+                }
+            },
+            legend: {
+                show: false,
+                height: 0,
+                data: ["2011年", "2012年"]
+            },
+            grid: {
+                left: "3%",
+                right: "4%",
+                bottom: "3%",
+                containLabel: true
+            },
+            xAxis: {
+                type: "value",
+                boundaryGap: [0, 0.01]
+            },
+            yAxis: {
+                type: "category",
+                data: ["TOP 1", "TOP 2", "TOP 3", "TOP 4", "TOP 5", "TOP 6", "TOP 7", "TOP 8", "TOP 9", "TOP 10"]
+            },
+            series: [
+                {
+                    name: "2011年",
+                    type: "bar",
+                    data: [18203, 23489, 29034, 104970, 131744, 630230, 630230, 630230, 630230, 630230]
+                },
+            ]
         };
     }
     // 选择方法
