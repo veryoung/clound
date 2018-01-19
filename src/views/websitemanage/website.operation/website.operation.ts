@@ -148,6 +148,7 @@ export class WebsiteOperation extends Vue {
 
     // 获取证书CID
     diplomaCid(id: string) {
+        this.diplomaText = "更新证书";
         this.form.cid = id;
     }
 
