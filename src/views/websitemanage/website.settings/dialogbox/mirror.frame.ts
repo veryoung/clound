@@ -51,9 +51,16 @@ export class MirrorFrame extends Vue {
             this.defalutUrl.splice(index, 1);
             done(true);
         } else {
-            done(true);
-            this.defalutUrl.push(tagVal);
-            return;
+            if (RegValidate.uri(tagVal)) {
+                done(true);
+                this.defalutUrl.push(tagVal);
+                return;
+            }
+            this.$message({
+                message: "输入格式不正确",
+                type: "warning"
+            });
+            done();
         }
     }
 
@@ -92,6 +99,13 @@ export class MirrorFrame extends Vue {
 
     cancel() {
         this.$emit("close", false);
+    }
+
+    error(res: any) {
+        this.$message({
+            message: res.message,
+            type: "warning"
+        });
     }
 }
 

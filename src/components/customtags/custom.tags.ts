@@ -33,7 +33,14 @@ export class CustomTags extends Vue {
     public addFlag: boolean = true;
     public inputVisible: boolean = false;
     public title: string = "";
-
+    // init lifecircle
+    updated() {
+        if (this.tags.length < this.total) {
+            this.addFlag = true;
+        } else {
+            this.addFlag = false;
+        }        
+    }
     // init methods
     closeTag(value: string, $index: number) {
         let that = this;
@@ -54,7 +61,7 @@ export class CustomTags extends Vue {
             return;
         }
         if (this.tags.indexOf(inputValue) !== -1) {
-            this.$emit("error", { message: "数据源中已经存在该数据", code: 0 });
+            this.$emit("error", { message: "请不要添加重复数据", code: 0 });
             return;
         }
         let that = this;

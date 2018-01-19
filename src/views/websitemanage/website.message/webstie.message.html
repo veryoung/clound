@@ -20,16 +20,18 @@
             </li>
             <li>
                 <div class="label">协议类型:</div>
-                <div class="message">http: {{ WebsiteInfo.port.http_port }}</div>
-                <div class="message">https: {{ WebsiteInfo.port.https_port }}</div>
+                <div class="httpType">
+                        <div class="message" v-if="WebsiteInfo.port.http_port.length !== 0">http: {{ httpString }}</div>
+                        <div class="message" v-if="WebsiteInfo.port.https_port.length !== 0">https: {{ httpsString }}</div>
+                </div>
             </li>
             <li>
                 <div class="label">回源方式:</div>
-                <div class="message">{{ WebsiteInfo.source_type ==="A"?"回源IP":"回源域名" }}</div>
+                <div class="message">{{ WebsiteInfo.source_type ==="回源IP"?"回源IP":"回源域名" }}</div>
             </li>
             <li>
                 <div class="label">回源地址:</div>
-                <div class="message">{{ WebsiteInfo.source_info }}</div>
+                <div class="message">{{ sourcenfoString }}</div>
             </li>
             <li>
                 <div class="label">CNAME别名:</div>
@@ -38,16 +40,16 @@
             <li>
                 <div class="label">接入时间:</div>
                 <div class="message">{{ 
-                    WebsiteInfo.ctime
+                    WebsiteInfo.ctime|date
                 }}</div>
             </li>
             <li>
                 <div class="label">接入状态:</div>
-                <div class="message">{{ WebsiteInfo.state=="未接入"?"未接入":"使用中" }}</div>
+                <div class="message">{{ WebsiteInfo.state}}</div>
             </li>
             <li>
                 <div class="label">防御状态:</div>
-                <div class="message">{{ WebsiteInfo.open_waf=="防御"?"防御":"回源" }}</div>
+                <div class="message">{{ WebsiteInfo.open_waf}}</div>
             </li>
         </ul>
 

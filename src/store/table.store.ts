@@ -96,8 +96,13 @@ export const TableConfigStore: Module<TableConfigType, any> = {
 
                     },
                     {
+                        prop: "cperson",
+                        label: "创建人",
+                        show: true,
+                    },
+                    {
                         prop: "organization",
-                        label: "所属组织",
+                        label: "所属企业",
                         show: true
 
                     },
@@ -128,12 +133,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         label: "创建时间",
                         show: true,
                         type: "date",
-                    },
-                    {
-                        prop: "state",
-                        label: "接入状态",
-                        show: true,
-                        type: "state",
+                        sortable: "custom",
                     },
                     {
                         prop: "open_waf",
@@ -145,6 +145,65 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         label: "服务项",
                         show: true,
                         type: "website_server"
+                    },
+                ],
+                pageSizes: [10, 20, 30, 40, 50],
+                page_size: 10,
+                page: 1,
+                total: 1
+            },
+            "websitepandecttable": {
+                columns: [
+                    {
+                        prop: "name",
+                        label: "网站名称",
+                        show: true
+
+                    },
+                    {
+                        prop: "domain",
+                        label: "网站域名",
+                        show: true
+
+                    },
+                    {
+                        prop: "organization",
+                        label: "所属企业",
+                        show: true
+
+                    },
+                    {
+                        prop: "organization",
+                        label: "安全评级",
+                        show: true
+
+                    },
+                    {
+                        prop: "organization",
+                        label: "今日Web攻击",
+                        show: true,
+                        sortable: "custom",
+                    },
+                    {
+                        prop: "organization",
+                        label: "今日CC攻击",
+                        show: true,
+                        sortable: "custom",
+
+                    },
+                    {
+                        prop: "organization",
+                        label: "今日加速请求",
+                        show: true,
+                        sortable: "custom",
+
+                    },
+                    {
+                        prop: "organization",
+                        label: "今日加速请求",
+                        show: true,
+                        sortable: "custom",
+
                     },
                 ],
                 pageSizes: [10, 20, 30, 40, 50],

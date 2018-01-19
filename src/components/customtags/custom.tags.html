@@ -1,6 +1,6 @@
-<div class="sourceTag">
+<div class="Tag">
     <!-- :class="'error':tag.level === 'error'"  -->
-    <el-tag :key="tag" v-for="(tag,$index) in tags" closable :disable-transitions="false" @close="closeTag(tag,$index)">
+    <el-tag :key="$index" v-for="(tag,$index) in tags" closable :disable-transitions="false" @close="closeTag(tag,$index)">
         {{tag}}
     </el-tag>
     <el-input class="input-new-tag" v-if="inputVisible" v-model="title" size="small" @keyup.enter.native="handleInputConfirm"

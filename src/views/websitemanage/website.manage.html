@@ -72,16 +72,16 @@
                     </el-button>
                     <el-button v-permissions="'WebsiteManagement.MyWebsite.ExportSelection'" type="primary" size="small" @click="exportChoose('selected')">
                         <span class="iconfont">&#xe61e;</span>
-                        <span>导出</span>
+                        <span>导出选中</span>
                     </el-button>
-                    <el-button type="primary" size="small" @click="exportAll()">
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.ExportSelection'" type="primary" size="small" @click="exportAll()">
                         <span class="iconfont">&#xe61e;</span>
                         <span>导出所有</span>
                     </el-button>
                 </div>
                 <div class="btn-test">
-                        已使用{{ userMessage.used_domain_num|none }}个，剩余{{ userMessage.max_domain_num-userMessage.used_domain_num |none}}个可用，总共{{
-                            userMessage.max_domain_num |none}}个
+                    已使用{{ userMessage.used_domain_num|none }}个，剩余{{ userMessage.max_domain_num-userMessage.used_domain_num |none}}个可用，总共{{ userMessage.max_domain_num
+                    |none}}个
                 </div>
             </div>
             <div class="btn-last">
@@ -89,23 +89,36 @@
             </div>
         </div>
         <CloudTable moduleName="mywebsitetable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
-            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange" @stateCheck="stateCheck">
+            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
             </el-table-column>
+            <el-table-column label="接入状态" align="center">
+                <template slot-scope="scope">
+                    <span>
+                        <span>
+                            {{scope.row.state}}
+                            <el-button size="small" v-if="scope.row.state==='未接入'" type="primary" @click="stateCheck(scope.row)">
+                                验证
+                            </el-button>
+                        </span>
+                    </span>
+                </template>
+            </el-table-column>
+
             <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
                     <span>
                         <span>
-                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Set'" @click="handle('settings',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0" >
+                            <p style="cursor:pointer" v-if="scope.row.is_edite" @click="handle('settings',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 设置
                             </p>
-                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Details'" @click="handle('look',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
-                               详情
+                            <p style="cursor:pointer" @click="handle('look',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                                详情
                             </p>
-                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Edit'" @click="handle('editor',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                            <p style="cursor:pointer" v-if="scope.row.is_edite" @click="handle('editor',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 编辑
                             </p>
-                            <p style="cursor:pointer" v-permissions="'WebsiteManagement.MyWebsite.Delete'" @click="handle('del',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                            <p style="cursor:pointer" v-if="scope.row.is_delete" @click="handle('del',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 删除
                             </p>
                         </span>

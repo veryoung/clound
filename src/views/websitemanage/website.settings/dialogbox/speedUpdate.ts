@@ -58,6 +58,7 @@ export class SpeedUpdateFrame extends Vue {
                             type: "success",
                             message: "刷新成功!"
                         });
+                        this.cancel();
                         break;
                     case "error":
                         this.$message({
@@ -96,6 +97,13 @@ export class SpeedUpdateFrame extends Vue {
 
     cancel() {
         this.$emit("close", false);
+    }
+
+    error(res: any) {
+        this.$message({
+            message: res.message,
+            type: "warning"
+        });
     }
 }
 

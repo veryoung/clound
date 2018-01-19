@@ -35,7 +35,8 @@ require("./user.manage.styl");
         ...mapGetters([
             "userlist",
             "tableConfig",
-            "roleList"
+            "roleList",
+            "OrganizationTree"
         ])
     }
 })
@@ -44,6 +45,7 @@ export class UserManagement extends Vue {
     public userlist: UserListType;
     public tableConfig: TableConfigType;
     public roleList: RoleType[];
+    public OrganizationTree: OrganizationTreeType[];
     // init data
     public titles: string[] = ["用户列表"];
     public dialogVisible: boolean = false;
@@ -61,12 +63,8 @@ export class UserManagement extends Vue {
     // lifecircle hook 
     created() {
         let that = this;
-        let id1 = EventBus.register(CONSTANT.TABLEALL, (event: string, info: any) => {
-            that.clickNode({
-                id: "",
-                tree_label: "全部组织机构",
-                nodes: []
-            });
+        let id1 = EventBus.register(CONSTANT.INITORGANIZATIONTREE, (event: string, info: any) => {
+            that.clickNode(that.OrganizationTree[0]);
         });
         let id2 = EventBus.register(CONSTANT.GETUSERLIST, function (event: string, info: any) {
             that.tableData = that.userlist[info.id][that.tableConfig.usertable.page - 1];
@@ -121,9 +119,9 @@ export class UserManagement extends Vue {
 
     exportUser(type: string) {
         let dom = document.createElement("a");
-        dom.href = `${this.exportLink}`;
         dom.target = "_blank";
         if (type === "all") {
+            dom.href = `/api/v20/account/user/excel/?ids=[]${this.serialize}`;
             dom.click();
         } else {
             if (this.ids.length === 0) {
@@ -132,6 +130,7 @@ export class UserManagement extends Vue {
                     type: "info"
                 });
             } else {
+                dom.href = `${this.exportLink}`;
                 dom.click();
             }
         }

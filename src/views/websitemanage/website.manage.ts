@@ -106,6 +106,18 @@ export class WebsiteManagement extends Vue {
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
     }
 
+    sortChange(opt: any) {
+        if (opt.prop === "ctime") {
+            if (opt.order === "descending") {
+                this.filter.sort_ctime = "1";
+            } else {
+                this.filter.sort_ctime = "-1";
+            }
+        }
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+    }
+
+
     mergeData(opt: any) {
         const { page_size, page } = opt;
         return (<any>Object).assign({}, this.filter, {
@@ -141,18 +153,14 @@ export class WebsiteManagement extends Vue {
         options.map((item: WebsiteListColumnType, $index: number) => {
             this.ids.push(item.id);
         });
-        this.exportLink = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
     }
 
-    sortChange(opt: any) {
-
-    }
-
+   
 
     // 导出
     exportChoose(type: string) {
+        let data = this.filter;
         let dom = document.createElement("a");
-        dom.href = `${this.exportLink}`;
         dom.target = "_blank";
         if (this.ids.length === 0) {
             this.$message({
@@ -160,12 +168,14 @@ export class WebsiteManagement extends Vue {
                 type: "warning"
             });
         } else {
+            dom.href = `/api/v20/websites/export/?ids=[${this.ids}]&domain=${data.domain}&name=${data.name}&open_waf=${data.open_waf}&organization=${data.organization}&port=${data.port}&protocol=${data.protocol}&source_info=${data.source_info}&state=${data.state}`;
             dom.click();
         }
     }
     exportAll() {
+        let data = this.filter;
         let dom = document.createElement("a");
-        dom.href = `${this.exportLink}`;
+        dom.href = `/api/v20/websites/export/?ids=[]&domain=${data.domain}&name=${data.name}&open_waf=${data.open_waf}&organization=${data.organization}&port=${data.port}&protocol=${data.protocol}&source_info=${data.source_info}&state=${data.state}`;
         dom.target = "_blank";
         dom.click();
     }
@@ -199,6 +209,7 @@ export class WebsiteManagement extends Vue {
                         type: "success"
                     });
                 }
+                this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
             });
         }
 

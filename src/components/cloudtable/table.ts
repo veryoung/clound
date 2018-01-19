@@ -69,10 +69,5 @@ export class CloudTable extends Vue {
     sortChange(opt: any) {
         this.$emit("sortChange", opt);
     }
-
-    stateCheck(opt: any) {
-        this.$emit("stateCheck", opt);
-    }
-
 }
 
