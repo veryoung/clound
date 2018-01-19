@@ -13,7 +13,6 @@
                 <el-col class="top-left" :span="7">
                     <div class="top-left-box">
                         <ModuleTitle :titles="['安全评级']" />
-
                     </div>
                 </el-col>
                 <el-col class="top-right" :span="17">
@@ -34,59 +33,65 @@
                     </div>
                 </el-col>
             </el-row>
-            <div class="safe-list">
-                <ModuleTitle :titles="['安全防护']" />
-                <div class="safe-box">
-                    <div class="flex50-box">
-                        <ModuleTitle class="mariginright30" :titles="['攻击次数趋势']" />
-                        <div style="height:400px;width:100%;" class="mariginright10">
-                            <LineComponent :option="attackTimeOpt" />
-                        </div>
+        </div>
+        <div class="safe-list">
+            <ModuleTitle :titles="['安全防护']" />
+            <div class="safe-box">
+                <div class="flex50-box mariginright30">
+                    <ModuleTitle :titles="['攻击次数趋势']" />
+                    <div style="height:400px;" class="mariginright10">
+                        <LineComponent :option="attackTimeOpt" />
                     </div>
-                    <div class="flex50-box">
-                        <ModuleTitle :titles="['攻击类型分布']" />
-                        <div style="height:400px;width:100%;">
-                            <PieComponent :option="attackTypeOpt" />
-                        </div>
-                    </div>
-                    <div class="flex50-box ">
-                        <ModuleTitle class="mariginright30" :titles="['攻击源地域分布TOP10']" />
-                        <div style="height:400px;width:100%;">
-                            <BarComponent  />
-                        </div>
-                    </div>
-                    <div class="flex50-box">
-                        <ModuleTitle :titles="['攻击IPTOP10']" />
-                        <div style="height:400px;width:100%;">
-                            <BarComponent />
-                        </div>
+                </div>
+                <div class="flex50-box">
+                    <ModuleTitle :titles="['攻击类型分布']" />
+                    <div style="height:400px;">
+                        <PieComponent :option="attackTypeOpt" />
                     </div>
                 </div>
             </div>
-            <div class="speed-list">
-                <ModuleTitle :titles="['加速优化']" />
-                <div class="speed-box">
-                    <div class="flex50-box ">
-                        <ModuleTitle class="mariginright30" :titles="['访问流量趋势']" />
-                        <PieComponent :option="attackTypeOpt" />
+            <div class="safe-box">
+                <div class="flex50-box mariginright30">
+                    <ModuleTitle :titles="['攻击源地域分布TOP10']" />
+                    <div style="height:400px;">
+                        <BarComponent  />
                     </div>
-                    <div class="flex50-box">
-                        <ModuleTitle :titles="['访问次数趋势']" />
-                        <PieComponent :option="attackTypeOpt" />
+                </div>
+                <div class="flex50-box">
+                    <ModuleTitle :titles="['攻击IPTOP10']" />
+                    <div style="height:400px;">
+                        <BarComponent />
                     </div>
-                    <div class="flex50-box ">
-                        <ModuleTitle class="mariginright30" :titles="['IP访问次数']" />
-                        <PieComponent :option="attackTypeOpt" />
-                    </div>
-                    <div class="flex50-box">
-                        <ModuleTitle :titles="['IP访问次数TOP10']" />
-                    </div>
-                    <div class="flex50-box ">
-                        <ModuleTitle class="mariginright30" :titles="['地域访问流量TOP10']" />
-                    </div>
-                    <div class="flex50-box">
-                        <ModuleTitle :titles="['攻击IPTOP10']" />
-                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="speed-list">
+            <ModuleTitle :titles="['加速优化']" />
+            <div class="speed-box">
+                <div class="flex50-box mariginright30">
+                    <ModuleTitle :titles="['访问流量趋势']" />
+                    <PieComponent :option="attackTypeOpt" />
+                </div>
+                <div class="flex50-box">
+                    <ModuleTitle :titles="['访问次数趋势']" />
+                    <PieComponent :option="attackTypeOpt" />
+                </div>
+            </div>
+            <div class="speed-box">
+                <div class="flex50-box mariginright30">
+                    <ModuleTitle :titles="['IP访问次数']" />
+                    <PieComponent :option="attackTypeOpt" />
+                </div>
+                <div class="flex50-box">
+                    <ModuleTitle :titles="['IP访问次数TOP10']" />
+                </div>
+            </div>
+            <div class="speed-box">
+                <div class="flex50-box mariginright30">
+                    <ModuleTitle :titles="['地域访问流量TOP10']" />
+                </div>
+                <div class="flex50-box">
+                    <ModuleTitle :titles="['攻击IPTOP10']" />
                 </div>
             </div>
         </div>
