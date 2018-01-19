@@ -9,7 +9,7 @@ import { chartConfig, ChartComponent, buildId } from "@components/echarts/defaul
     },
     legend: {
         type: "plain",
-        data: ["初始化"]
+        data: ["初始化"],
     },
     xAxis: {
         data: ["初始化数据1", "初始化数据2", "初始化数据3", "初始化数据4", "初始化数据5", "初始化数据6"]

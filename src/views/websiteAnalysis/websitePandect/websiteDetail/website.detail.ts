@@ -34,7 +34,8 @@ export class WebsiteDetail extends Vue {
     created() {
         this.attackTimeOpt = {
             legend: {
-                data: ["Web攻击", "CC攻击"]
+                data: ["Web攻击", "CC攻击"],
+                right: "10%" ,
             },
             xAxis: [{
                 axisPointer: {
@@ -140,8 +141,117 @@ export class WebsiteDetail extends Vue {
             ]
         };
         this.safeLevelOpt = {
-
-        };
+            title: {
+              show: false
+            },
+            tooltip: {
+              show: true,
+              formatter: function(param: any) {
+                return "<em >" + param.value + "</em>";
+              }
+            },
+            series: [
+              {
+                name: "dashpie",
+                type: "gauge",
+                center: ["50%", "53%"],
+                startAngle: 180,
+                endAngle: 0,
+                min: 0,
+                max: 100,
+                axisLine: {
+                  show: true,
+                  lineStyle: {
+                    shadowBlur: 0,
+                    color: [
+                      [0.1, "#58c9f3"],
+                      [0.3, "#78cd51"],
+                      [0.6, "#f1c500"],
+                      [0.8, "#f0ad4e"],
+                      [1, "#ff6c60"]
+                    ]
+                  }
+                },
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  show: false,
+                  length: 40,
+                  lineStyle: {
+                  }
+                },
+                axisLabel: {
+                  distance: -65,
+                  textStyle: {
+                    color: "#6eba44",
+                    fontSize: "16"
+                  },
+                  inside: true,
+                  formatter: function(e: any) {
+                    switch (e + "") {
+                      case "0":
+                        return "很低";
+                      case "20":
+                        return "低";
+                      case "50":
+                        return "中";
+                      case "70":
+                        return "高";
+                      case "100":
+                        return "很高";
+                      default:
+                        return "";
+                    }
+                  },
+                  textStyle: {
+                    fontSize: 12,
+                    fontWeight: ""
+                  }
+                },
+                // pointer: {
+                //   show: true
+                // },
+                itemStyle: {
+                  normal: {
+                    color: "#033858",
+                    shadowBlur: 20
+                  }
+                },
+                detail: {
+                  show: true,
+                  backgroundColor: "rgba(0,0,0,0)",
+                  borderWidth: 0,
+                  borderColor: "#ccc",
+                  formatter: function(param: any) {
+                    let level = "";
+                    if (param > 0 && param < 10) {
+                      level = "很低";
+                    } else if (param >= 10 && param <= 30) {
+                      level = "低";
+                    } else if (param >= 30 && param <= 60) {
+                      level = "中";
+                    } else if (param >= 60 && param <= 80) {
+                      level = "高11";
+                    } else if (param >= 80 && param <= 100) {
+                      level = "很高";
+                    } else {
+                      param = "暂无";
+                      level = "暂无";
+                    }
+                    return (
+                      "安全评级" + "" + level
+                    );
+                  },
+                  offsetCenter: [0, "70%"],
+                  textStyle: {
+                    fontSize: 12
+                  }
+                },
+                data: ["10"]
+              }
+            ]
+          };
         this.attackResource10Opt = {
             // title: {
             //     text: "世界人口总量",
