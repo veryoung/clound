@@ -72,9 +72,9 @@
                     </el-button>
                     <el-button v-permissions="'WebsiteManagement.MyWebsite.ExportSelection'" type="primary" size="small" @click="exportChoose('selected')">
                         <span class="iconfont">&#xe61e;</span>
-                        <span>导出</span>
+                        <span>导出选中</span>
                     </el-button>
-                    <el-button type="primary" size="small" @click="exportAll()">
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.ExportSelection'" type="primary" size="small" @click="exportAll()">
                         <span class="iconfont">&#xe61e;</span>
                         <span>导出所有</span>
                     </el-button>

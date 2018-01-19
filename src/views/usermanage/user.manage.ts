@@ -119,9 +119,9 @@ export class UserManagement extends Vue {
 
     exportUser(type: string) {
         let dom = document.createElement("a");
-        dom.href = `${this.exportLink}`;
         dom.target = "_blank";
         if (type === "all") {
+            dom.href = `/api/v20/account/user/excel/?ids=[]${this.serialize}`;
             dom.click();
         } else {
             if (this.ids.length === 0) {
@@ -130,6 +130,7 @@ export class UserManagement extends Vue {
                     type: "info"
                 });
             } else {
+                dom.href = `${this.exportLink}`;
                 dom.click();
             }
         }

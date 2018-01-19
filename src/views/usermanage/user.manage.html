@@ -44,19 +44,19 @@
         </el-form>
         <div class="btn-group">
             <div class="btn-first">
-                <el-button type="primary" @click="handle('add')" size="small">
+                <el-button v-permissions="'SystemManagement.userManagement.Add'" type="primary" @click="handle('add')" size="small">
                     <span class="iconfont">&#xe61a;</span>
                     添加
                 </el-button>
-                <el-button type="primary" @click="importUser()" size="small">
+                <el-button v-permissions="'SystemManagement.userManagement.Edit'" type="primary" @click="importUser()" size="small">
                     <span class="iconfont">&#xe61b;</span>
                     导入
                 </el-button>
-                <el-button type="primary" size="small" @click="exportUser('selected')">
+                <el-button v-permissions="'SystemManagement.userManagement.ExportSelection'" type="primary" size="small" @click="exportUser('selected')">
                     <span class="iconfont">&#xe61e;</span>
-                    <span>导出</span>
+                    <span>导出选中</span>
                 </el-button>
-                <el-button type="primary" size="small" @click="exportUser('all')">
+                <el-button v-permissions="'SystemManagement.userManagement.ExportAll'" type="primary" size="small" @click="exportUser('all')">
                     <span class="iconfont">&#xe61e;</span>
                     <span>导出所有</span>
                 </el-button>
