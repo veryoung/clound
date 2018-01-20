@@ -81,6 +81,7 @@ export class WebsiteDetail extends Vue {
             ]
         };
         this.attackTypeOpt = {
+            // color: ["#3398DB", "#cccccc", "#46dced", "#c21"],
             tooltip: {
                 trigger: "item",
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -249,10 +250,7 @@ export class WebsiteDetail extends Vue {
             ]
           };
         this.attackResource10Opt = {
-            // title: {
-            //     text: "世界人口总量",
-            //     subtext: "数据来自网络"
-            // },
+            color: ["#3398DB"],
             tooltip: {
                 trigger: "axis",
                 axisPointer: {
