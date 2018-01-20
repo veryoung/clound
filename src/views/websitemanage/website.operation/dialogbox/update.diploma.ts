@@ -37,28 +37,24 @@ export class UpdateDiploma extends Vue {
     }
     // 证书验证
     Crtuploader(file: any) {
-        const extension = file.name.split(".")[1] === "crt";
+        // const extension = file.name.split(".")[1] === "crt";
         const isLt1M = file.size / 1024 / 1024 < 1;
-        if (!extension) {
-            this.$message({ message: "上传文件格式只能支持pem格式", type: "info" });
-        }
+        // if (!extension) {
+        //     this.$message({ message: "上传文件格式只能支持pem格式", type: "info" });
+        // }
         if (!isLt1M) {
             this.$message({ message: "请导入指定的模板文件", type: "info" });
         }
 
-        return extension && isLt1M;
+        return isLt1M;
     }
     // 密匙验证
     Keyuploader(file: any) {
-        const extension = file.name.split(".")[1] === "key";
         const isLt1M = file.size / 1024 / 1024 < 1;
-        if (!extension) {
-            this.$message({ message: "上传文件格式只能支持pem格式", type: "info" });
-        }
         if (!isLt1M) {
             this.$message({ message: "请导入指定的模板文件", type: "info" });
         }
-        return extension && isLt1M;
+        return  isLt1M;
     }
 
     uploaderCertDone(response: ResType, file: any, fileList: any) {

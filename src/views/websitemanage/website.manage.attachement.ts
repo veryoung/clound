@@ -154,7 +154,7 @@ export interface WebMessagePageType {
 }
 export class WebsiteManager {
     handleDel(row: WebsiteListColumnType, opt: any) {
-        ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
+        ElementUI.MessageBox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
             MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
