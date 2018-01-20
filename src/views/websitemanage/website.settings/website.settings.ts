@@ -316,7 +316,7 @@ export class WebsiteSettings extends Vue {
                         this.form.cdn_enable = val;
                         this.$message({
                             type: "success",
-                            message: "刷新成功!"
+                            message: text + "成功!"
                         });
                         break;
                     case "error":
@@ -365,7 +365,7 @@ export class WebsiteSettings extends Vue {
                         this.form.mirror_enable = val;
                         this.$message({
                             type: "success",
-                            message: "刷新成功!"
+                            message: text + "成功!"
                         });
                         break;
                     case "error":
@@ -414,7 +414,7 @@ export class WebsiteSettings extends Vue {
                         this.form.waf_enable = val;
                         this.$message({
                             type: "success",
-                            message: "刷新成功!"
+                            message: text + "成功!"
                         });
                         break;
                     case "error":
@@ -464,7 +464,7 @@ export class WebsiteSettings extends Vue {
                         this.form.ads_enable = val;
                         this.$message({
                             type: "success",
-                            message: "刷新成功!"
+                            message: text + "成功!"
                         });
                         break;
                     case "error":
