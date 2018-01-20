@@ -204,10 +204,6 @@ export class WebsiteDetail extends Vue {
                         return "";
                     }
                   },
-                  textStyle: {
-                    fontSize: 12,
-                    fontWeight: ""
-                  }
                 },
                 // pointer: {
                 //   show: true
