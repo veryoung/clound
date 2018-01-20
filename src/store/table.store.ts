@@ -86,13 +86,15 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                     {
                         prop: "name",
                         label: "网站名称",
-                        show: true
+                        show: true,
+                        disable: true,
 
                     },
                     {
                         prop: "domain",
                         label: "网站域名",
-                        show: true
+                        show: true,
+                        disable: true,
 
                     },
                     {
@@ -139,6 +141,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "open_waf",
                         label: "防御状态",
                         show: true,
+                        disable: true,
                     },
                     {
                         prop: "service",
