@@ -325,18 +325,16 @@ export class WebsiteOperation extends Vue {
             } else if (this.form.source_type === "回源域名") {
                 this.form.source_type = "CNAME";
             }
-            // 处理数据 
-            // 当HTTPS HTTP没被选中且有值的时候 提交表单的时候应该提交空值
-            let httpsTemp: any = "";
-            httpsTemp = this.form.https_port;
-            this.form.http_port = this.httpTags;
-            this.form.https_port = this.httpsTags;
             if (this.httpsTpye === false) {
                 this.form.https_port = [];
             }
             if (this.httpTpye === false) {
                 this.form.http_port = [];
             }
+            let httpsTemp: any = "";
+            httpsTemp = this.form.https_port;
+            this.form.http_port = this.httpTags;
+            this.form.https_port = this.httpsTags;
             switch (this.operation) {
                 case "add":
                     MywebsiteServer.addWebsite(this.form).then((response: AxiosResponse<ResType>) => {
