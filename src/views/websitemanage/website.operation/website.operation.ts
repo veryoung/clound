@@ -133,6 +133,10 @@ export class WebsiteOperation extends Vue {
                 that.httpsTpye = true;
                 that.diplomaText = "更新证书";
             }
+            // 如果没有HTTP， 应该默认不选中
+            if (that.httpTags.length === 0) {
+                that.httpTpye = false;
+            }
 
         });
         Aux.insertId(eventId);
