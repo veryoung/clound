@@ -35,7 +35,8 @@ export class DenfenFrame extends Vue {
         waf_hotlink_white: [""],
     };
     public defalutUrl: Array<string>;
-    
+    public UrlState: boolean = true;
+
     created() {
         this.defalutUrl = this.data.waf_hotlink_white;
         console.log(this.defalutUrl);
@@ -57,6 +58,8 @@ export class DenfenFrame extends Vue {
                 type: "warning"
             });
             done();
+            this.UrlState = false;
+            return;
         }
     }
 
@@ -66,6 +69,10 @@ export class DenfenFrame extends Vue {
             sid: id,
             waf_hotlink_white: this.defalutUrl,
         };
+        if (!this.UrlState) {
+            this.UrlState = true;
+            return;
+        }
         MywebsiteServer.BWlist(params).then( (response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             // Do something with response data
@@ -99,6 +106,7 @@ export class DenfenFrame extends Vue {
             message: res.message,
             type: "warning"
         });
+        this.UrlState = false;
     }
 }
 

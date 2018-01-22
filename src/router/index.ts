@@ -1,3 +1,4 @@
+import { Home } from "@views/home/home";
 import Vue from "vue";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
@@ -41,7 +42,7 @@ let tempRouter: RouteConfig[] = [
         components: {
             header: HeaderComponent,
             // sider: SiderComponent,
-            main: ViewContainer
+            main: Home
         },
     },
     {

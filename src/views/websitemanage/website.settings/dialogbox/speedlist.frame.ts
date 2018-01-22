@@ -33,6 +33,7 @@ export class SpeedListFrame extends Vue {
         cache_url_black: [""],
     };
     public defalutUrl: Array<string>;
+    public UrlState: boolean = true;
 
     created() {
         this.defalutUrl = this.data.cache_url_black;
@@ -64,6 +65,10 @@ export class SpeedListFrame extends Vue {
             sid: id,
             cache_url_black: this.defalutUrl,
         };
+        if (!this.UrlState) {
+            this.UrlState = true;
+            return;
+        }
         MywebsiteServer.BWlist(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             // Do something with response data
@@ -93,6 +98,7 @@ export class SpeedListFrame extends Vue {
             message: res.message,
             type: "warning"
         });
+        this.UrlState = false;
     }
 }
 

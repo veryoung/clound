@@ -1,0 +1,32 @@
+
+<el-container class="el-container-panel">
+    <div class="home-box">
+        <div class="home-title">
+            最后更新时间 {{date}}
+            <el-button  class = "title-button"size="small" type="primary" @click="refresh()">
+                刷新
+            </el-button>
+        </div>
+        <div class="home">
+            <div class="home-list">
+                <ModuleTitle :titles = "['接入企业统计']"/>
+            </div>
+            <div class="home-list">
+                <ModuleTitle :titles = "['接入网站统计']"/>
+            </div>
+            <div class="home-list">
+                <ModuleTitle :titles = "['网站服务到期提醒']"/>
+            </div>
+            <div class="home-list">
+                <ModuleTitle :titles = "['最新添加网站']"/>
+            </div>
+            <div class="home-list">
+                <ModuleTitle :titles = "['最新推出网站']"/>
+            </div>
+            <div class="home-list">
+                <ModuleTitle :titles = "['今日高危网站']"/>
+            </div>
+        </div>
+        <FooterComponent/>
+    </div>
+</el-container>

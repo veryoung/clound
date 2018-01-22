@@ -7,9 +7,9 @@
          <span class="list-frame">注：最多10个</span>
         <el-form :model="form" ref="form" label-width="100px">
             <span class="list-title">URI{{types==="white"?"白":"黑"}}名单（URI将不做web攻击检测）</span>
-                <CustomTags @getTags="getURLTags"  @error="error"  :total="10" :tags="defalutUrl"/>
+                <CustomTags @getTags="getURLTags"  @error="Urlerror"  :total="10" :tags="defalutUrl"/>
             <span class="list-title">IP{{types==="white"?"白":"黑"}}名单（IP将不做web攻击检测）</span>
-                <CustomTags @getTags="getIpTags"  @error="error" :total="10" :tags="defalutIP"/>
+                <CustomTags @getTags="getIpTags"  @error="Iperror" :total="10" :tags="defalutIP"/>
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">

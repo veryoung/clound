@@ -33,6 +33,7 @@ export class SpeedUpdateFrame extends Vue {
         url: [""],
     };
     public defalutUrl: Array<string>;
+    public UrlState: boolean = true;
 
     created() {
         this.defalutUrl = this.data.cache_urls;
@@ -43,6 +44,10 @@ export class SpeedUpdateFrame extends Vue {
             sid: this.$route.params.id,
             url: this.defalutUrl,
         };
+        if (!this.UrlState) {
+            this.UrlState = true;
+            return;
+        }
         this.$confirm("是否对指定URL进行刷新？", "指定URL刷新", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
@@ -91,6 +96,7 @@ export class SpeedUpdateFrame extends Vue {
                 message: "输入格式不正确",
                 type: "warning"
             });
+            this.UrlState = false;
             done();
         }
     }
@@ -104,6 +110,7 @@ export class SpeedUpdateFrame extends Vue {
             message: res.message,
             type: "warning"
         });
+        this.UrlState = false;
     }
 }
 

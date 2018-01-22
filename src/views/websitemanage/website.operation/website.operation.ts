@@ -117,8 +117,6 @@ export class WebsiteOperation extends Vue {
             that.form.remark = that.websiteEdit[id].remark;
             that.form.source_type = that.websiteEdit[id].source_type;
             // 判断回源类型所属框
-            console.log(that.form.source_type);
-
             if (that.form.source_type === "回源IP") {
                 that.sourceIP = 0;
                 that.sourceIPData = that.form.source_info;
@@ -301,6 +299,9 @@ export class WebsiteOperation extends Vue {
             flag = valid;
         });
 
+
+        console.log(this.form.cid);
+        console.log(this.form.https_port);
         if (flag) {
             if (!this.httpsTpye) {
                 this.form.cid = "";

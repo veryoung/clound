@@ -40,6 +40,7 @@ export class MirrorFrame extends Vue {
         mirror_urls: [""],
     };
     public defalutUrl: Array<string>;
+    public UrlState: boolean = true;
 
 
     created() {
@@ -61,6 +62,7 @@ export class MirrorFrame extends Vue {
                 type: "warning"
             });
             done();
+            this.UrlState = false;
         }
     }
 
@@ -70,6 +72,10 @@ export class MirrorFrame extends Vue {
         // if (this.mirrcyc === -1) {
         //     this.mirrcyc = "";
         // }
+        if (!this.UrlState) {
+            this.UrlState = true;
+            return;
+        }
         let params = {
             sid: id,
             urls: this.defalutUrl,
@@ -106,6 +112,7 @@ export class MirrorFrame extends Vue {
             message: res.message,
             type: "warning"
         });
+        this.UrlState = false;
     }
 }
 

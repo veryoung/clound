@@ -34,6 +34,8 @@ export class ListFrame extends Vue {
     };
     public defalutUrl: Array<string>;
     public defalutIP: Array<string>;
+    public UrlState: boolean = true;
+    public ipState: boolean = true;
 
 
     created() {
@@ -62,12 +64,12 @@ export class ListFrame extends Vue {
                 message: "输入格式不正确",
                 type: "warning"
             });
+            this.UrlState = false;
             done();
         }
     }
 
     getIpTags(tagVal: string, type: string, done: Function) {
-        console.log(tagVal);
         if (type === "del") {
             let index = this.defalutIP.indexOf(tagVal);
             this.defalutIP.splice(index, 1);
@@ -82,6 +84,7 @@ export class ListFrame extends Vue {
                 message: "输入格式不正确",
                 type: "warning"
             });
+            this.ipState = false;
             done();
         }
     }
@@ -107,6 +110,15 @@ export class ListFrame extends Vue {
                 waf_ip_black: this.defalutIP,
                 waf_url_black: this.defalutUrl
             };
+        }
+
+        if (!this.UrlState) {
+            this.UrlState = true;
+            return;
+        }
+        if (!this.ipState) {
+            this.ipState = true;
+            return;
         }
         MywebsiteServer.BWlist(params).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
@@ -139,11 +151,19 @@ export class ListFrame extends Vue {
         this.$emit("close", false);
     }
 
-    error(res: any) {
+    Urlerror(res: any) {
         this.$message({
             message: res.message,
             type: "warning"
         });
+        this.UrlState = false;
+    }
+    Iperror(res: any) {
+        this.$message({
+            message: res.message,
+            type: "warning"
+        });
+        this.ipState = false;
     }
 }
 
