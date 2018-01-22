@@ -325,16 +325,17 @@ export class WebsiteOperation extends Vue {
             } else if (this.form.source_type === "回源域名") {
                 this.form.source_type = "CNAME";
             }
+            let httpsTemp: any = "";
+            httpsTemp = this.form.https_port;
+            this.form.http_port = this.httpTags;
+            this.form.https_port = this.httpsTags;
             if (this.httpsTpye === false) {
                 this.form.https_port = [];
             }
             if (this.httpTpye === false) {
                 this.form.http_port = [];
             }
-            let httpsTemp: any = "";
-            httpsTemp = this.form.https_port;
-            this.form.http_port = this.httpTags;
-            this.form.https_port = this.httpsTags;
+
             switch (this.operation) {
                 case "add":
                     MywebsiteServer.addWebsite(this.form).then((response: AxiosResponse<ResType>) => {
