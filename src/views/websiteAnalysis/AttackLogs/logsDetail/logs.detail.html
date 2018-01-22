@@ -1,0 +1,16 @@
+<div class="logs-detail">
+    <div class="detail-content">
+        <ModuleTitle :titles="titles"/>
+        <div class="detail-box">
+            <div class="content-box" v-for="item in ColumnArray">
+                <div class="label-box comman">
+                    {{item.label}}
+                </div>
+                <div class="data-box comman">
+                    {{filter[item.props]}}
+                </div>
+            </div>
+        </div>
+        <el-button class="logs-button" type="primary" size = "small"@click="back()">返回</el-button>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+import { LogsDetail } from "@views/websiteAnalysis/AttackLogs/logsDetail/logs.detail";
 import { AttackLogs } from "@views/websiteAnalysis/AttackLogs/attack.logs";
 import { WebsitePandect } from "@views/websiteAnalysis/websitePandect/website.pandect";
 import Router from "vue-router";
@@ -24,7 +25,7 @@ export const WebsiteAnalysisRouter: RouteConfig[] = [
     },
     {
         path: "WebsitePandect/look/:id",
-        name: "查看详情",
+        name: "网站详情",
         meta: {
             icon: "icon-quan-",
             hidden: true
@@ -33,5 +34,17 @@ export const WebsiteAnalysisRouter: RouteConfig[] = [
             operation: "look"
         },
         component: WebsiteDetail,
+    },
+    {
+        path: "AttackLog/look/:id",
+        name: "攻击详情",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        props: {
+            operation: "look"
+        },
+        component: LogsDetail,
     },
 ];
