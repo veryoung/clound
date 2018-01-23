@@ -7,7 +7,6 @@ import { TableConfigType } from "@store/table.type";
 import { MYWEBSITEEVENT, MyWebsiteType, WebsiteTableType } from "@store/mywebsite.type";
 import { CloudTable } from "@components/cloudtable/table";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 
@@ -19,6 +18,7 @@ import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, Website
 import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { session } from "@utils/sessionstorage";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 
@@ -38,7 +38,7 @@ require("./website.manage.styl");
         ])
     }
 })
-export class WebsiteManagement extends Vue {
+export class WebsiteManagement extends ListBaseClass {
     // init computed
     public tableData: WebsiteTableType;
     public tableConfig: TableConfigType;
@@ -57,13 +57,11 @@ export class WebsiteManagement extends Vue {
 
     // 导出
     public ids: string[] = [];
-    public serialize: string = "&";
-    public exportLink: string = `/api/v20/websites/export/?ids=[${this.ids}]${this.serialize}`;
 
 
     // lifecircle hook 
     created() {
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
         let that = this;
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
@@ -89,21 +87,21 @@ export class WebsiteManagement extends Vue {
         if (this.filter.ctime === null) {
             this.filter.ctime = "";
         }
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     handleSizeChange(val: number) {
         this.tableConfig.mywebsitetable.page_size = val;
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
     handleCurrentChange(val: number) {
         this.tableConfig.mywebsitetable.page = val;
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     sortChange(opt: any) {
@@ -114,16 +112,7 @@ export class WebsiteManagement extends Vue {
                 this.filter.sort_ctime = "1";
             }
         }
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
-    }
-
-
-    mergeData(opt: any) {
-        const { page_size, page } = opt;
-        return (<any>Object).assign({}, this.filter, {
-            page: page,
-            page_size: page_size,
-        });
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     // 跳转方法同统一
@@ -137,7 +126,7 @@ export class WebsiteManagement extends Vue {
             } else if (type === "look") {
                 this.$router.push(`/WebsiteManagement/myWebsite/look/${row.id}`);
             } else if (type === "del") {
-                WebsiteManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"]));
+                WebsiteManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
             }
             return;
         }
@@ -155,29 +144,23 @@ export class WebsiteManagement extends Vue {
         });
     }
 
-   
+
 
     // 导出
     exportChoose(type: string) {
-        let data = this.filter;
-        let dom = document.createElement("a");
-        dom.target = "_blank";
+        let data: SearchType = this.filter;
         if (this.ids.length === 0) {
             this.$message({
                 message: "请选择导出项",
                 type: "warning"
             });
         } else {
-            dom.href = `/api/v20/websites/export/?ids=[${this.ids}]&domain=${data.domain}&name=${data.name}&open_waf=${data.open_waf}&organization=${data.organization}&port=${data.port}&protocol=${data.protocol}&source_info=${data.source_info}&state=${data.state}`;
-            dom.click();
+            this.exportFile(`/api/v20/websites/export/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
         }
     }
     exportAll() {
         let data = this.filter;
-        let dom = document.createElement("a");
-        dom.href = `/api/v20/websites/export/?ids=[]&domain=${data.domain}&name=${data.name}&open_waf=${data.open_waf}&organization=${data.organization}&port=${data.port}&protocol=${data.protocol}&source_info=${data.source_info}&state=${data.state}`;
-        dom.target = "_blank";
-        dom.click();
+        this.exportFile(`/api/v20/websites/export/?ids=[]${this.objToUrl(this.filter)}`);
     }
 
     // 开启防御/批量回源
@@ -209,7 +192,7 @@ export class WebsiteManagement extends Vue {
                         type: "success"
                     });
                 }
-                this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+                this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
             });
         }
 
