@@ -55,6 +55,7 @@ export class SpeedListFrame extends Vue {
                 type: "warning"
             });
             done();
+            this.UrlState = false;
         }
     }
 
