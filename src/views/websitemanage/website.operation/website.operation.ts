@@ -116,6 +116,7 @@ export class WebsiteOperation extends Vue {
             that.form.source_info = that.websiteEdit[id].source_info;
             that.form.remark = that.websiteEdit[id].remark;
             that.form.source_type = that.websiteEdit[id].source_type;
+            that.form.open_waf = that.websiteEdit[id].open_waf;
             // 判断回源类型所属框
             if (that.form.source_type === "回源IP") {
                 that.sourceIP = 0;
@@ -134,6 +135,13 @@ export class WebsiteOperation extends Vue {
             // 如果没有HTTP， 应该默认不选中
             if (that.httpTags.length === 0) {
                 that.httpTpye = false;
+            }
+            // 判断回源
+            console.log(that.websiteEdit[id]);
+            if (that.form.open_waf === "回源") {
+                that.form.open_waf = "0";
+            } else {
+                that.form.open_waf = "1";
             }
 
         });
