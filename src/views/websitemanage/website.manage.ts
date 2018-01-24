@@ -19,6 +19,7 @@ import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { session } from "@utils/sessionstorage";
 import { ListBaseClass } from "@views/base/base.class";
+import { open } from "fs";
 
 
 
@@ -167,12 +168,18 @@ export class WebsiteManagement extends ListBaseClass {
     openwaf(type: string) {
         let open_waf: string = "0";
         let open_text: string = "";
+        let open_tips: string = "";
+        let open_title: string = "";
         if (type === "openWaf") {
             open_waf = "1";
             open_text = "防御";
+            open_tips = "将对网站开启防御功能，是否开启？";
+            open_title = "开启防御";
         } else {
             open_waf = "0";
             open_text = "回源";
+            open_tips = "网站将不再享受防御服务，是否回源？";
+            open_title = "批量回源";
         }
         if (this.ids.length === 0) {
             this.$message({
@@ -180,19 +187,30 @@ export class WebsiteManagement extends ListBaseClass {
                 type: "warning"
             });
         } else {
-            let params = {
-                open_waf: open_waf,
-                website_ids: this.ids,
-            };
-            MywebsiteServer.batchWebsite(params).then((response: AxiosResponse<ResType>) => {
-                let data = response.data;
-                if (data.status === "suc") {
-                    this.$message({
-                        message: "开启" + open_text + "成功",
-                        type: "success"
-                    });
-                }
-                this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+            this.$confirm(open_tips, open_title, {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(() => {
+                let params = {
+                    open_waf: open_waf,
+                    website_ids: this.ids,
+                };
+                MywebsiteServer.batchWebsite(params).then((response: AxiosResponse<ResType>) => {
+                    let data = response.data;
+                    if (data.status === "suc") {
+                        this.$message({
+                            message: "开启" + open_text + "成功",
+                            type: "success"
+                        });
+                    }
+                    this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+                });
+            }).catch(() => {
+                this.$message({
+                    type: "info",
+                    message: "已取消" + open_title
+                });
             });
         }
 

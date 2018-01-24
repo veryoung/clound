@@ -260,7 +260,7 @@ export class WebsiteDetail extends Vue {
             legend: {
                 show: false,
                 height: 0,
-                data: ["2011年", "2012年"]
+                data: ["2011年"]
             },
             grid: {
                 left: "3%",
@@ -277,6 +277,17 @@ export class WebsiteDetail extends Vue {
                 data: ["TOP 1", "TOP 2", "TOP 3", "TOP 4", "TOP 5", "TOP 6", "TOP 7", "TOP 8", "TOP 9", "TOP 10"]
             },
             series: [
+                {
+                    name: "2012年",
+                    itemStyle: {
+                        normal: {
+                            color: "#ddd"
+                        }
+                    },
+                    barGap: "-100%", // Make series be overlap
+                    type: "bar",
+                    data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
+                },
                 {
                     name: "2011年",
                     type: "bar",
