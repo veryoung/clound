@@ -61,7 +61,7 @@ class Reg {
     public port(val: string) {
         let value: number;
         value = parseInt(val);
-        if (value === 80 || value === 443 || ((value > 2999 && value < 34999) && value !== 3071 && value !== 5989 && value !== 10050)) {
+        if (value === 80 || value === 443 || ((value > 2999 && value < 35001) && value !== 3071 && value !== 5989 && value !== 10050)) {
             return true;
         } else {
             return false;
