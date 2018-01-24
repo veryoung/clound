@@ -1,5 +1,4 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 
@@ -15,12 +14,12 @@ import { vm } from "@utils/index";
 import SearchType, { filterData, UserManagerController } from "./user.manage.attachement";
 import { OrganizationTreeType } from "@store/organization.type";
 import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
-import { filterPipe } from "@utils/filters";
 import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 const Aux = new Auxiliary<string>();
@@ -40,7 +39,7 @@ require("./user.manage.styl");
         ])
     }
 })
-export class UserManagement extends Vue {
+export class UserManagement extends ListBaseClass {
     // init computed
     public userlist: UserListType;
     public tableConfig: TableConfigType;
@@ -54,9 +53,6 @@ export class UserManagement extends Vue {
     public ids: string[] = [];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public tableData: UserListColumnType[] = new Array<UserListColumnType>();
-    public unwatch: any = "";
-    public serialize: string = "&";
-    public exportLink: string = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
     public roles: Array<RoleType> = new Array<RoleType>();
     public ori_id: string = "";
     // public tableDefault: = 
@@ -72,23 +68,6 @@ export class UserManagement extends Vue {
 
         Aux.insertId(id1);
         Aux.insertId(id2);
-        this.unwatch = vm.$watch(
-            () => {
-                return this.filter;
-            }, (val, oldval) => {
-                if (JSON.stringify(val) === JSON.stringify(oldval)) {
-                    return false;
-                }
-                let temp: any = val;
-                this.serialize = "&";
-                for (let $index in temp) {
-                    this.serialize += $index + "=" + temp[$index] + "&";
-                }
-                this.serialize = this.serialize.substring(0, this.serialize.length - 1);
-                this.exportLink = `/api/v20/account/user/excel/?ids=${this.ids}${this.serialize}`;
-            }, {
-                deep: true
-            });
         this.$store.dispatch(USER.GETUSERFILTERROLES);
         let id3 = EventBus.register(CONSTANT.GETUSERFILTERROLES, function () {
             that.roles = that.roleList;
@@ -100,29 +79,14 @@ export class UserManagement extends Vue {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
         });
-        this.unwatch();
     }
 
-
-    // init method
-    mergeData(opt: Config) {
-        const { page_size, page } = opt;
-        let tempFilter = (<any>Object).assign({}, this.filter);
-        tempFilter.expiry_date = filterPipe.date(tempFilter.expiry_date);
-        tempFilter.ctime = filterPipe.date(tempFilter.ctime);
-        return (<any>Object).assign({}, tempFilter, {
-            page: page,
-            page_size: page_size,
-            ori_id: this.ori_id
-        });
-    }
+    // init methods
 
     exportUser(type: string) {
-        let dom = document.createElement("a");
-        dom.target = "_blank";
         if (type === "all") {
-            dom.href = `/api/v20/account/user/excel/?ids=[]${this.serialize}`;
-            dom.click();
+            this.exportFile(`/api/v20/account/user/excel/?ids=[]${this.objToUrl((<any>Object).assign(this.filter, { ori_id: this.ori_id }))}`);
+            console.log(`/api/v20/account/user/excel/?ids=[]${this.objToUrl((<any>Object).assign(this.filter, { ori_id: this.ori_id }))}`);
         } else {
             if (this.ids.length === 0) {
                 this.$message({
@@ -130,8 +94,7 @@ export class UserManagement extends Vue {
                     type: "info"
                 });
             } else {
-                dom.href = `${this.exportLink}`;
-                dom.click();
+                this.exportFile(`/api/v20/account/user/excel/?ids=[${this.ids}]${this.objToUrl((<any>Object).assign(this.filter, { ori_id: this.ori_id }))}`);
             }
         }
     }
@@ -147,7 +110,7 @@ export class UserManagement extends Vue {
             } else if (type === "look") {
                 this.$router.push(`/SystemManagement/UserManagement/look/${row.uid}`);
             } else if (type === "del") {
-                UserManagerController.handleDel(row, this.mergeData(this.tableConfig.usertable));
+                UserManagerController.handleDel(row, this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id }));
             }
             return;
         }
@@ -179,22 +142,22 @@ export class UserManagement extends Vue {
     }
 
     search() {
-        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
+        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id }));
         console.log(this.filter);
     }
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
-        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
+        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id }));
     }
 
     handleSizeChange(val: number) {
         this.tableConfig.usertable.page_size = val;
-        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
+        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id }));
     }
     handleCurrentChange(val: number) {
         this.tableConfig.usertable.page = val;
-        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
+        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id }));
     }
 
     sortChange(opt: any) {
@@ -213,7 +176,7 @@ export class UserManagement extends Vue {
                 this.filter.sort_expiry_date = "1";
             }
         }
-        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable));
+        this.$store.dispatch(USER.GETUSERLIST, this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id }));
     }
 
     handleSelectionChange(options: UserMessageType[]) {
@@ -221,6 +184,5 @@ export class UserManagement extends Vue {
         options.map((item: UserMessageType, $index: number) => {
             this.ids.push(item.uid);
         });
-        this.exportLink = `/api/v20/account/user/excel/?ids=[${this.ids}]${this.serialize}`;
     }
 }

@@ -306,7 +306,14 @@ export class WebsiteOperation extends Vue {
             if (!this.httpsTpye) {
                 this.form.cid = "";
             } else {
-                if (this.form.cid === "" && this.form.https_port === []) {
+                if (this.form.https_port && this.form.https_port.length === 0) {
+                    this.$message({
+                        message: "请输入https端口",
+                        type: "warning"
+                    });
+                    return;
+                }
+                if (this.form.cid === "") {
                     this.$message({
                         message: "请上传证书",
                         type: "warning"
