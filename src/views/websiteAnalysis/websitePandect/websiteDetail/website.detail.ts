@@ -307,7 +307,10 @@ export class WebsiteDetail extends Vue {
                     barGap: "-100%", // Make series be overlap
                     type: "bar",
                     legendHoverLink: false,
-                    data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
+                    data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230],
+                    label: {
+                        show: false,
+                    }
                 },
                 {
                     name: "2011年",
@@ -454,6 +457,7 @@ export class WebsiteDetail extends Vue {
                             color: "#ddd"
                         }
                     },
+                    silent: true,
                     barGap: "-100%", // Make series be overlap
                     type: "bar",
                     data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
@@ -519,90 +523,123 @@ export class WebsiteDetail extends Vue {
             ]
         };
         this.demoOpT2 =  {
-            "title": {
-                "text": "应用总数：15",
-                "textStyle": {
-                    "color": "#bcbfff",
-                    "fontWeight": "bold",
-                    "fontSize": 14
+            tooltip: {
+                show: true,
+                formatter: function(params: any) {
+                    
+                    return "<div >" + params.data.name + "</div>" + "<div >" + params.data.value + "</div>";
                 },
-                "top": "4%",
-                "left": "2.2%"
             },
-            "tooltip": {
-                "trigger": "axis",
-                "axisPointer": { // 坐标轴指示器，坐标轴触发有效
-                    "type": "shadow" // 默认为直线，可选为："line" | "shadow"
-                }
+            grid: {
+                left: "10%",
+                top: "5%",
+                bottom: "5%",
+                right: "12%"
             },
-            "grid": {
-                "left": "3%",
-                "right": "10%",
-                "bottom": "3%",
-            },
-            "yAxis": [{
-                "type": "category",
-                "data": ["TOP5", "TOP4", "TOP3", "TOP2", "TOP1"],
-                "axisLine": {
-                    "show": false
+            color: ["#3398DB"],
+            xAxis: [{
+                max: 630230,
+                type: "value",
+                axisTick: {
+                    show: false,
                 },
-                "axisTick": {
-                    "show": false,
-                    "alignWithLabel": true
+                axisLine: {
+                    show: false,
                 },
-                "axisLabel": {
-                    "textStyle": {
-                        "color": "#ffb069"
+                axisLabel: {
+                    show: false,
+                    textStyle: {
+                        color: "#00ccfe",
                     }
+                },
+                splitLine: {
+                    show: false
                 }
             }],
-            "xAxis": [{
-                "type": "value",
-                "axisLine": {
-                    "show": false
+            yAxis: [{
+                type: "category",
+                data: ["Top1", "Top2", "Top3", "Top4", "Top5", "Top6", "Top7", "Top8", "Top9", "Top10"],
+                nameTextStyle: {
+                    color: "#b7ce9e",
+                    fontSize: "18px"
                 },
-                "axisTick": {
-                    "show": true
+                axisTick: {
+                    show: false,
                 },
-                "axisLabel": {
-                    "show": true
-                },
-                "splitLine": {
-                    "show": false
+                axisLine: {
+                    show: false,
                 }
             }],
-        
-            "series": [{
-                            name: "",
-                            itemStyle: {
-                                normal: {
-                                    color: "#ddd"
-                                }
-                            },
-                            barGap: "-100%", // Make series be overlap
-                            type: "bar",
-                            data: [80, 80, 80, 80, 80]
+            series: [{
+                name: " ",
+                type: "bar",
+                barWidth: 20,
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        color: "#f2f2f2"
+                    }
+                },
+                barGap: "-100%",
+                barCategoryGap: "50%",
+                data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230],
+            }, {
+                name: " ",
+                type: "bar",
+                barWidth: 20,
+                label: {
+                    normal: {
+                        show: true,
+                        position: "right",
+                        formatter: function(params: any) {
+                            
+                            return params.data.name + ": " + params.data.value;
                         },
-                {
-                "name": "应用使用率",
-                "type": "bar",
-                data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
-                ,
-                "label": {
-                    "normal": {
-                        "show": true,
-                        "position": "center",
-                        "formatter": function(params: any) {
-                            return params.data.name;
-                        },
-                        "textStyle": {
-                            "color": "#bcbfff" //color of value
+                        textStyle: {
+                            color: "black" 
                         }
                     }
                 },
-                "itemStyle": {
-            
-                }
+                data: [{
+                    name: "北京",
+                    value: 18203
+                    }, {
+                    name: "上海",
+                    value: 23489
+                    },
+                    {
+                    name: "深圳",
+                    value: 29034
+                    },
+                    {
+                    name: "广州",
+                    value: 104970
+                    },
+                    {
+                    name: "杭州",
+                    value: 131744
+                    },
+                    {
+                    name: "成都",
+                    value: 123123
+                    },
+                    {
+                    name: "南京",
+                    value: 185432
+                    },
+                    {
+                    name: "天津",
+                    value: 177524
+                    },
+                    {
+                    name: "南昌",
+                    value: 154323
+                    },
+                    {
+                    name: "合肥",
+                    value: 630230
+                    },
+                    ],
             }]
         };
     }
