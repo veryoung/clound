@@ -37,7 +37,7 @@ export class WebsiteDetail extends Vue {
         this.attackTimeOpt = {
             legend: {
                 data: ["Web攻击", "CC攻击"],
-                right: "10%" ,
+                right: "10%",
             },
             xAxis: [{
                 axisPointer: {
@@ -53,14 +53,14 @@ export class WebsiteDetail extends Vue {
                     onZero: false
                 },
                 axisTick: {
-                    show: false  
+                    show: false
                 },
                 data: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"]
             }],
             yAxis: {
                 splitNumber: 6,
                 axisLabel: {
-                    formatter: "{value} %"  
+                    formatter: "{value} %"
                 },
                 axisLine: {
                     show: false
@@ -89,8 +89,8 @@ export class WebsiteDetail extends Vue {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             legend: {
-                x : "center",
-                y : "top",
+                x: "center",
+                y: "top",
                 data: ["rose1", "rose2", "rose3", "rose4", "rose5", "rose6", "rose7", "rose8"]
             },
             series: [
@@ -145,112 +145,112 @@ export class WebsiteDetail extends Vue {
         };
         this.safeLevelOpt = {
             title: {
-              show: false
+                show: false
             },
             tooltip: {
-              show: true,
-              formatter: function(param: any) {
-                return "<em >" + param.value + "</em>";
-              }
+                show: true,
+                formatter: function (param: any) {
+                    return "<em >" + param.value + "</em>";
+                }
             },
             series: [
-              {
-                name: "dashpie",
-                type: "gauge",
-                center: ["50%", "53%"],
-                startAngle: 180,
-                endAngle: 0,
-                min: 0,
-                max: 100,
-                axisLine: {
-                  show: true,
-                  lineStyle: {
-                    shadowBlur: 0,
-                    color: [
-                      [0.1, "#58c9f3"],
-                      [0.3, "#78cd51"],
-                      [0.6, "#f1c500"],
-                      [0.8, "#f0ad4e"],
-                      [1, "#ff6c60"]
-                    ]
-                  }
-                },
-                axisTick: {
-                  show: false
-                },
-                splitLine: {
-                  show: false,
-                  length: 40,
-                  lineStyle: {
-                  }
-                },
-                axisLabel: {
-                  distance: -65,
-                  textStyle: {
-                    color: "#6eba44",
-                    fontSize: "16"
-                  },
-                  inside: true,
-                  formatter: function(e: any) {
-                    switch (e + "") {
-                      case "0":
-                        return "很低";
-                      case "20":
-                        return "低";
-                      case "50":
-                        return "中";
-                      case "70":
-                        return "高";
-                      case "100":
-                        return "很高";
-                      default:
-                        return "";
-                    }
-                  },
-                },
-                // pointer: {
-                //   show: true
-                // },
-                itemStyle: {
-                  normal: {
-                    color: "#033858",
-                    shadowBlur: 20
-                  }
-                },
-                detail: {
-                  show: true,
-                  backgroundColor: "rgba(0,0,0,0)",
-                  borderWidth: 0,
-                  borderColor: "#ccc",
-                  formatter: function(param: any) {
-                    let level = "";
-                    if (param > 0 && param < 10) {
-                      level = "很低";
-                    } else if (param >= 10 && param <= 30) {
-                      level = "低";
-                    } else if (param >= 30 && param <= 60) {
-                      level = "中";
-                    } else if (param >= 60 && param <= 80) {
-                      level = "高11";
-                    } else if (param >= 80 && param <= 100) {
-                      level = "很高";
-                    } else {
-                      param = "暂无";
-                      level = "暂无";
-                    }
-                    return (
-                      "安全评级" + "" + level
-                    );
-                  },
-                  offsetCenter: [0, "70%"],
-                  textStyle: {
-                    fontSize: 12
-                  }
-                },
-                data: ["10"]
-              }
+                {
+                    name: "dashpie",
+                    type: "gauge",
+                    center: ["50%", "53%"],
+                    startAngle: 180,
+                    endAngle: 0,
+                    min: 0,
+                    max: 100,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            shadowBlur: 0,
+                            color: [
+                                [0.1, "#58c9f3"],
+                                [0.3, "#78cd51"],
+                                [0.6, "#f1c500"],
+                                [0.8, "#f0ad4e"],
+                                [1, "#ff6c60"]
+                            ]
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: false,
+                        length: 40,
+                        lineStyle: {
+                        }
+                    },
+                    axisLabel: {
+                        distance: -65,
+                        textStyle: {
+                            color: "#6eba44",
+                            fontSize: "16"
+                        },
+                        inside: true,
+                        formatter: function (e: any) {
+                            switch (e + "") {
+                                case "0":
+                                    return "很低";
+                                case "20":
+                                    return "低";
+                                case "50":
+                                    return "中";
+                                case "70":
+                                    return "高";
+                                case "100":
+                                    return "很高";
+                                default:
+                                    return "";
+                            }
+                        },
+                    },
+                    // pointer: {
+                    //   show: true
+                    // },
+                    itemStyle: {
+                        normal: {
+                            color: "#033858",
+                            shadowBlur: 20
+                        }
+                    },
+                    detail: {
+                        show: true,
+                        backgroundColor: "rgba(0,0,0,0)",
+                        borderWidth: 0,
+                        borderColor: "#ccc",
+                        formatter: function (param: any) {
+                            let level = "";
+                            if (param > 0 && param < 10) {
+                                level = "很低";
+                            } else if (param >= 10 && param <= 30) {
+                                level = "低";
+                            } else if (param >= 30 && param <= 60) {
+                                level = "中";
+                            } else if (param >= 60 && param <= 80) {
+                                level = "高11";
+                            } else if (param >= 80 && param <= 100) {
+                                level = "很高";
+                            } else {
+                                param = "暂无";
+                                level = "暂无";
+                            }
+                            return (
+                                "安全评级" + "" + level
+                            );
+                        },
+                        offsetCenter: [0, "70%"],
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    data: ["10"]
+                }
             ]
-          };
+        };
         this.attackResource10Opt = {
             color: ["#3398DB"],
             "tooltip": {
@@ -319,56 +319,56 @@ export class WebsiteDetail extends Vue {
                         "normal": {
                             "show": true,
                             "position": [5, 5],
-                            "formatter": function(params: any) {
-                                return params.data.name;
+                            "formatter": function (params: any) {
+                                return params.data.name + ":                        " + params.data.value;
                             },
                             "textStyle": {
-                                "color": "black" 
+                                "color": "black"
                             }
                         }
-                        
+
                     },
                     data: [{
                         name: "北京",
                         value: 18203
-                        }, {
+                    }, {
                         name: "上海",
                         value: 23489
-                        },
-                        {
+                    },
+                    {
                         name: "深圳",
                         value: 29034
-                        },
-                        {
+                    },
+                    {
                         name: "广州",
                         value: 104970
-                        },
-                        {
+                    },
+                    {
                         name: "杭州",
                         value: 131744
-                        },
-                        {
+                    },
+                    {
                         name: "成都",
                         value: 123123
-                        },
-                        {
+                    },
+                    {
                         name: "南京",
                         value: 185432
-                        },
-                        {
+                    },
+                    {
                         name: "天津",
                         value: 177524
-                        },
-                        {
+                    },
+                    {
                         name: "南昌",
                         value: 154323
-                        },
-                        {
+                    },
+                    {
                         name: "合肥",
                         value: 630230
-                        },
-                        ]
-                        
+                    },
+                    ]
+
                 },
             ]
         };
@@ -402,7 +402,7 @@ export class WebsiteDetail extends Vue {
                     "interval": 0,
                     // rotate: -15,
                     textStyle: {
-                      color: "#00ccfe",
+                        color: "#00ccfe",
                     },
                     inside: false,
                     margin: 8,
@@ -413,7 +413,7 @@ export class WebsiteDetail extends Vue {
                     show: false,
                 },
                 axisLine: {
-                    show:  false,
+                    show: false,
                     lineStyle: {
                         color: "#00ccfe",
                     }
@@ -428,7 +428,7 @@ export class WebsiteDetail extends Vue {
                 name: "",
                 // max: 53500
                 splitLine: {
-                  show: false
+                    show: false
                 },
                 axisLine: {
                     lineStyle: {
@@ -440,14 +440,14 @@ export class WebsiteDetail extends Vue {
                     show: false,
                 },
                 axisLabel: {
-                  show: false,
-                  formatter: function(param: any) {
+                    show: false,
+                    formatter: function (param: any) {
                         return param + "%";
-                      },
-                  textStyle: {
-                      color: "#00ccfe",
-                  }
-              }
+                    },
+                    textStyle: {
+                        color: "#00ccfe",
+                    }
+                }
             }],
             series: [
                 {
@@ -469,64 +469,64 @@ export class WebsiteDetail extends Vue {
                         "normal": {
                             "show": true,
                             "position": [5, 5],
-                            "formatter": function(params: any) {
+                            "formatter": function (params: any) {
                                 return params.data.name + params.data.value;
                             },
                             "textStyle": {
-                                "color": "black" 
+                                "color": "black"
                             }
                         }
-                        
+
                     },
                     data: [{
                         name: "北京",
                         value: 18203
-                        }, {
+                    }, {
                         name: "上海",
                         value: 23489
-                        },
-                        {
+                    },
+                    {
                         name: "深圳",
                         value: 29034
-                        },
-                        {
+                    },
+                    {
                         name: "广州",
                         value: 104970
-                        },
-                        {
+                    },
+                    {
                         name: "杭州",
                         value: 131744
-                        },
-                        {
+                    },
+                    {
                         name: "成都",
                         value: 123123
-                        },
-                        {
+                    },
+                    {
                         name: "南京",
                         value: 185432
-                        },
-                        {
+                    },
+                    {
                         name: "天津",
                         value: 177524
-                        },
-                        {
+                    },
+                    {
                         name: "南昌",
                         value: 154323
-                        },
-                        {
+                    },
+                    {
                         name: "合肥",
                         value: 630230
-                        },
-                        ]
-                        
+                    },
+                    ]
+
                 },
             ]
         };
-        this.demoOpT2 =  {
+        this.demoOpT2 = {
             tooltip: {
                 show: true,
-                formatter: function(params: any) {
-                    
+                formatter: function (params: any) {
+
                     return "<div >" + params.data.name + "</div>" + "<div >" + params.data.value + "</div>";
                 },
             },
@@ -591,60 +591,60 @@ export class WebsiteDetail extends Vue {
                     normal: {
                         show: true,
                         position: "right",
-                        formatter: function(params: any) {
-                            
+                        formatter: function (params: any) {
+
                             return params.data.name + ": " + params.data.value;
                         },
                         textStyle: {
-                            color: "black" 
+                            color: "black"
                         }
                     }
                 },
                 data: [{
                     name: "北京",
                     value: 18203
-                    }, {
+                }, {
                     name: "上海",
                     value: 23489
-                    },
-                    {
+                },
+                {
                     name: "深圳",
                     value: 29034
-                    },
-                    {
+                },
+                {
                     name: "广州",
                     value: 104970
-                    },
-                    {
+                },
+                {
                     name: "杭州",
                     value: 131744
-                    },
-                    {
+                },
+                {
                     name: "成都",
                     value: 123123
-                    },
-                    {
+                },
+                {
                     name: "南京",
                     value: 185432
-                    },
-                    {
+                },
+                {
                     name: "天津",
                     value: 177524
-                    },
-                    {
+                },
+                {
                     name: "南昌",
                     value: 154323
-                    },
-                    {
+                },
+                {
                     name: "合肥",
                     value: 630230
-                    },
-                    ],
+                },
+                ],
             }]
         };
     }
     // 选择方法
     exportChoose() {
-        
+
     }
 }

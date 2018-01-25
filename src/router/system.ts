@@ -1,3 +1,4 @@
+import { LogsAudit } from "@views/systemmanage/logsAudit/logs.audit";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 
@@ -37,7 +38,8 @@ export const systemRouter: RouteConfig[] = [
         name: "日志审计",
         meta: {
             icon: "icon-rizhishenji"
-        }
+        },
+        component: LogsAudit,
     },
     {
         path: "ReportManagement",
