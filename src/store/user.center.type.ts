@@ -50,6 +50,7 @@ export interface UserStoreType {
     personInfo: UserCenterType;
     userlist: UserListType;
     roleList: RoleType[];
+    defaultUser: DefaultUserType;
 }
 export interface UserListType {
     [extra: string]: UserListStructure;
@@ -77,8 +78,9 @@ export const USER: EventType = {
     // UPDATEMESSAGE: "更新用户信息",
     // CHANGEPWD: "修改用户密码",
     DEFAULTUSER: "登录系统的用户信息",
+    DEFAULTCONFIG: "登录系统用户的配置信息",
     GETUSERLIST: "获取用户列表",
-    GETOTHERUSER: "获取其他用户详细信息",
+    GETUSER: "获取用户详细信息",
     GETUSERROLES: "获取该用户能看到的角色列表",
     GETUSERFILTERROLES: "获取用户能筛选的用户角色",
 };
@@ -88,4 +90,16 @@ export interface RoleType {
     name: string;
     role_id: string;
     ufcode: "sm" | "om" | "am" | "em" | "nu" | "";
+}
+
+
+export interface DefaultUserType {
+    uid: string;
+    pcode: string[];
+    service: {
+        ads_enable: boolean;
+        cdn_enable: boolean;
+        mirror_enable: boolean;
+        waf_enable: boolean;
+    };
 }

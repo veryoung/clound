@@ -1,4 +1,4 @@
-import { USER } from "@store/user.center.type";
+import { USER, DefaultUserType } from "@store/user.center.type";
 import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
@@ -35,7 +35,8 @@ require("./website.manage.styl");
         ...mapGetters([
             "tableData",
             "tableConfig",
-            "personInfo"
+            "personInfo",
+            "defaultUser"
         ])
     }
 })
@@ -44,6 +45,7 @@ export class WebsiteManagement extends ListBaseClass {
     public tableData: WebsiteTableType;
     public tableConfig: TableConfigType;
     public personInfo: UserCenterType;
+    public defaultUser: DefaultUserType;
 
 
 
@@ -68,7 +70,7 @@ export class WebsiteManagement extends ListBaseClass {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
         });
 
-        this.$store.dispatch(USER.DEFAULTUSER, { uid: session.getItem("age") });
+        this.$store.dispatch(USER.GETUSER, { uid: this.defaultUser.uid });
         let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
             that.userMessage.used_domain_num = that.personInfo.default.used_domain_num;
             that.userMessage.max_domain_num = that.personInfo.default.max_domain_num;

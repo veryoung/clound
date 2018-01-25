@@ -10,14 +10,15 @@ export class UserStatus {
     constructor(next?: Function) {
         GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
-            if (res.data && res.data.pcode) {
-                session.setItem("pcode", Permissions.trans(res.data.pcode));
-            }
-            if (res.data && res.data.uid) {
-                session.setItem("age", res.data.uid);
-            }
+            // if (res.data && res.data.pcode) {
+            //     session.setItem("pcode", Permissions.trans(res.data.pcode));
+            // }
+            // if (res.data && res.data.uid) {
+            //     session.setItem("age", res.data.uid);
+            // }
             switch (res.status) {
                 case "suc":
+                    Store.dispatch(USER.DEFAULTCONFIG, res.data);
                     Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
                     if (next) {
                         next("/home");

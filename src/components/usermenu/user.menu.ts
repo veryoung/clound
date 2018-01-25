@@ -7,7 +7,7 @@ import { mapGetters } from "vuex";
 import { userCenterRouter } from "@router/user.center";
 import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
-import { UserCenterType, USER } from "@store/user.center.type";
+import { UserCenterType, USER, DefaultUserType } from "@store/user.center.type";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 import { UserStatus } from "@utils/monitor";
@@ -22,7 +22,8 @@ require("./user.menu.styl");
     template: require("./user.menu.html"),
     computed: {
         ...mapGetters([
-            "personInfo"
+            "personInfo",
+            "defaultUser",
         ])
     }
 })
@@ -32,15 +33,17 @@ export class UserMenu extends Vue {
     public user_name: string = "";
     // init computed
     public personInfo: UserCenterType;
+    public defaultUser: DefaultUserType;
     // lifecircle hook
     created() {
         let that = this;
         new UserStatus();
+        this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
         if (this.personInfo.default) {
             this.user_name = this.personInfo.default.user_name;
         }
         EventBus.register(CONSTANT.DEFAULTUSER, function () {
-            that.user_name = that.personInfo.default.user_name;
+            that.user_name = that.personInfo[that.defaultUser.uid].user_name;
         });
     }
     logout() {

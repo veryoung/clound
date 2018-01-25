@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { UserCenterType, UserStoreType, UserMessageType, USER, RoleType, UserListType } from "./user.center.type";
+import { UserCenterType, UserStoreType, UserMessageType, USER, RoleType, UserListType, DefaultUserType } from "./user.center.type";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
 import { session, vm } from "@utils/index";
@@ -62,10 +62,21 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                 }]
             }
         };
+        let defaultUser: DefaultUserType = {
+            uid: "init",
+            pcode: [],
+            service: {
+                ads_enable: true,
+                cdn_enable: true,
+                mirror_enable: true,
+                waf_enable: true,
+            }
+        };
         return {
             personInfo: personInfo,
             userlist: userlist,
             roleList: roleList,
+            defaultUser: defaultUser,
         };
     },
 
@@ -73,10 +84,17 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         [USER.ADDUSERMESSAGE]: (state: UserStoreType, payload) => {
             state.personInfo[payload.uid] = payload.message;
         },
-        [USER.DEFAULTUSER]: (state: UserStoreType, payload) => {
-            state.personInfo["default"] = payload.message;
+        [USER.DEFAULTCONFIG]: (state: UserStoreType, payload) => {
+            state.defaultUser = payload.message;
         },
-        [USER.GETOTHERUSER]: (state: UserStoreType, payload) => {
+        [USER.DEFAULTUSER]: (state: UserStoreType, payload) => {
+            if (state.personInfo[payload.uid]) {
+                state.personInfo[payload.uid] = (<any>Object).assign({}, state.personInfo[payload.uid], payload.message);
+            } else {
+                state.personInfo[payload.uid] = (<any>Object).assign({}, payload.message);
+            }
+        },
+        [USER.GETUSER]: (state: UserStoreType, payload) => {
             if (state.personInfo[payload.uid]) {
                 state.personInfo[payload.uid] = (<any>Object).assign({}, state.personInfo[payload.uid], payload.message);
             } else {
@@ -103,9 +121,15 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                 commit(USER.ADDUSERMESSAGE, { uid: payload.uid, message: res.data });
             });
         },
+        [USER.DEFAULTCONFIG]: ({ state, commit, rootState }, payload) => {
+            commit(USER.DEFAULTCONFIG, { message: payload });
+        },
         [USER.DEFAULTUSER]: ({ state, commit, rootState }, payload) => {
-            if ("default" in state.personInfo) {
+            if (payload.uid in state.personInfo) {
                 EventBus.doNotify(CONSTANT.DEFAULTUSER);
+            }
+            if (payload.uid === "init") {
+                return;
             }
             UserServer.getDefaultUser(payload.uid).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
@@ -113,21 +137,24 @@ export const UserCenterStore: Module<UserStoreType, any> = {
                 EventBus.doNotify(CONSTANT.DEFAULTUSER);
             });
         },
-        [USER.GETOTHERUSER]: ({ state, commit, rootState }, payload) => {
+        [USER.GETUSER]: ({ state, commit, rootState }, payload) => {
             if (payload.uid in state.personInfo) {
-                EventBus.doNotify(CONSTANT.GETOTHERUSER);
+                EventBus.doNotify(CONSTANT.GETUSER);
+            }
+            if (payload.uid === "init") {
+                return;
             }
             if (payload.operation && payload.operation === "editor") {
                 UserServer.getPersonEdit(payload.uid).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
-                    commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
-                    EventBus.doNotify(CONSTANT.GETOTHERUSER);
+                    commit(USER.GETUSER, { uid: payload.uid, message: res.data });
+                    EventBus.doNotify(CONSTANT.GETUSER);
                 });
             } else {
                 UserServer.getPersonInfo(payload.uid).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
-                    commit(USER.GETOTHERUSER, { uid: payload.uid, message: res.data });
-                    EventBus.doNotify(CONSTANT.GETOTHERUSER);
+                    commit(USER.GETUSER, { uid: payload.uid, message: res.data });
+                    EventBus.doNotify(CONSTANT.GETUSER);
                 });
             }
         },
@@ -186,6 +213,9 @@ export const UserCenterStore: Module<UserStoreType, any> = {
         },
         roleList: function (state) {
             return state.roleList;
+        },
+        defaultUser: function (state) {
+            return state.defaultUser;
         }
     }
 };
