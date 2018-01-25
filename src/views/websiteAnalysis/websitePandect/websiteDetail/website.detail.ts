@@ -30,6 +30,8 @@ export class WebsiteDetail extends Vue {
     public attackTypeOpt: any = {};
     public safeLevelOpt: any = {};
     public attackResource10Opt: any = {};
+    public demoOpT: any = {};
+    public demoOpT2: any = {};
     // lifecircle hook 
     created() {
         this.attackTimeOpt = {
@@ -251,10 +253,10 @@ export class WebsiteDetail extends Vue {
           };
         this.attackResource10Opt = {
             color: ["#3398DB"],
-            tooltip: {
-                trigger: "axis",
-                axisPointer: {
-                    type: "shadow"
+            "tooltip": {
+                "trigger": "axis",
+                "axisPointer": { // 坐标轴指示器，坐标轴触发有效
+                    "type": "shadow" // 默认为直线，可选为："line" | "shadow"
                 }
             },
             legend: {
@@ -264,18 +266,186 @@ export class WebsiteDetail extends Vue {
             },
             grid: {
                 left: "3%",
-                right: "4%",
-                bottom: "3%",
+                right: "0%",
+                bottom: "0%",
                 containLabel: true
             },
-            xAxis: {
-                type: "value",
-                boundaryGap: [0, 0.01]
-            },
+            "xAxis": [{
+                "type": "value",
+                "axisLine": {
+                    "show": false
+                },
+                "axisTick": {
+                    "show": true
+                },
+                "axisLabel": {
+                    "show": true
+                },
+                "splitLine": {
+                    "show": false
+                }
+            }],
             yAxis: {
                 type: "category",
-                data: ["TOP 1", "TOP 2", "TOP 3", "TOP 4", "TOP 5", "TOP 6", "TOP 7", "TOP 8", "TOP 9", "TOP 10"]
+                data: ["Top1", "Top2", "Top3", "Top4", "Top5", "Top6", "Top7", "Top8", "Top9", "Top10"],
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false,
+                    alignWithLabel: true
+                },
             },
+            series: [
+                {
+                    name: "2012年",
+                    itemStyle: {
+                        normal: {
+                            color: "#ddd"
+                        }
+                    },
+                    barGap: "-100%", // Make series be overlap
+                    type: "bar",
+                    legendHoverLink: false,
+                    data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
+                },
+                {
+                    name: "2011年",
+                    type: "bar",
+                    label: {
+                        "normal": {
+                            "show": true,
+                            "position": [5, 5],
+                            "formatter": function(params: any) {
+                                return params.data.name;
+                            },
+                            "textStyle": {
+                                "color": "black" 
+                            }
+                        }
+                        
+                    },
+                    data: [{
+                        name: "北京",
+                        value: 18203
+                        }, {
+                        name: "上海",
+                        value: 23489
+                        },
+                        {
+                        name: "深圳",
+                        value: 29034
+                        },
+                        {
+                        name: "广州",
+                        value: 104970
+                        },
+                        {
+                        name: "杭州",
+                        value: 131744
+                        },
+                        {
+                        name: "成都",
+                        value: 123123
+                        },
+                        {
+                        name: "南京",
+                        value: 185432
+                        },
+                        {
+                        name: "天津",
+                        value: 177524
+                        },
+                        {
+                        name: "南昌",
+                        value: 154323
+                        },
+                        {
+                        name: "合肥",
+                        value: 630230
+                        },
+                        ]
+                        
+                },
+            ]
+        };
+        this.demoOpT = {
+            title: {
+                show: false,
+            },
+            color: ["#3398DB"],
+            // "tooltip": {
+            //     "trigger": "axis",
+            //     "axisPointer": { // 坐标轴指示器，坐标轴触发有效
+            //         "type": "line" // 默认为直线，可选为："line" | "shadow"
+            //     }
+            // },
+            legend: {
+                show: false,
+            },
+            calculable: true,
+            grid: {
+                top: 20,
+                bottom: 40,
+                left: 70,
+                right: 10,
+            },
+            yAxis: [{
+                "type": "category",
+                offset: 0,
+                nameLocation: "start",
+                nameGap: 33,
+                "axisLabel": {
+                    "interval": 0,
+                    // rotate: -15,
+                    textStyle: {
+                      color: "#00ccfe",
+                    },
+                    inside: false,
+                    margin: 8,
+                },
+                axisTick: {
+                    alignWithLabel: true,
+                    interval: 0,
+                    show: false,
+                },
+                axisLine: {
+                    show:  false,
+                    lineStyle: {
+                        color: "#00ccfe",
+                    }
+                },
+                data: ["Top1", "Top2", "Top3", "Top4", "Top5", "Top6", "Top7", "Top8", "Top9", "Top10"],
+                splitLine: {
+                    show: false
+                },
+            }],
+            xAxis: [{
+                // type: "value",
+                name: "",
+                // max: 53500
+                splitLine: {
+                  show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: "#00ccfe",
+                    },
+                    show: false,
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLabel: {
+                  show: false,
+                  formatter: function(param: any) {
+                        return param + "%";
+                      },
+                  textStyle: {
+                      color: "#00ccfe",
+                  }
+              }
+            }],
             series: [
                 {
                     name: "2012年",
@@ -291,9 +461,149 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "2011年",
                     type: "bar",
-                    data: [18203, 23489, 29034, 104970, 131744, 630230, 630230, 630230, 630230, 630230]
+                    label: {
+                        "normal": {
+                            "show": true,
+                            "position": [5, 5],
+                            "formatter": function(params: any) {
+                                return params.data.name + params.data.value;
+                            },
+                            "textStyle": {
+                                "color": "black" 
+                            }
+                        }
+                        
+                    },
+                    data: [{
+                        name: "北京",
+                        value: 18203
+                        }, {
+                        name: "上海",
+                        value: 23489
+                        },
+                        {
+                        name: "深圳",
+                        value: 29034
+                        },
+                        {
+                        name: "广州",
+                        value: 104970
+                        },
+                        {
+                        name: "杭州",
+                        value: 131744
+                        },
+                        {
+                        name: "成都",
+                        value: 123123
+                        },
+                        {
+                        name: "南京",
+                        value: 185432
+                        },
+                        {
+                        name: "天津",
+                        value: 177524
+                        },
+                        {
+                        name: "南昌",
+                        value: 154323
+                        },
+                        {
+                        name: "合肥",
+                        value: 630230
+                        },
+                        ]
+                        
                 },
             ]
+        };
+        this.demoOpT2 =  {
+            "title": {
+                "text": "应用总数：15",
+                "textStyle": {
+                    "color": "#bcbfff",
+                    "fontWeight": "bold",
+                    "fontSize": 14
+                },
+                "top": "4%",
+                "left": "2.2%"
+            },
+            "tooltip": {
+                "trigger": "axis",
+                "axisPointer": { // 坐标轴指示器，坐标轴触发有效
+                    "type": "shadow" // 默认为直线，可选为："line" | "shadow"
+                }
+            },
+            "grid": {
+                "left": "3%",
+                "right": "10%",
+                "bottom": "3%",
+            },
+            "yAxis": [{
+                "type": "category",
+                "data": ["TOP5", "TOP4", "TOP3", "TOP2", "TOP1"],
+                "axisLine": {
+                    "show": false
+                },
+                "axisTick": {
+                    "show": false,
+                    "alignWithLabel": true
+                },
+                "axisLabel": {
+                    "textStyle": {
+                        "color": "#ffb069"
+                    }
+                }
+            }],
+            "xAxis": [{
+                "type": "value",
+                "axisLine": {
+                    "show": false
+                },
+                "axisTick": {
+                    "show": true
+                },
+                "axisLabel": {
+                    "show": true
+                },
+                "splitLine": {
+                    "show": false
+                }
+            }],
+        
+            "series": [{
+                            name: "",
+                            itemStyle: {
+                                normal: {
+                                    color: "#ddd"
+                                }
+                            },
+                            barGap: "-100%", // Make series be overlap
+                            type: "bar",
+                            data: [80, 80, 80, 80, 80]
+                        },
+                {
+                "name": "应用使用率",
+                "type": "bar",
+                data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
+                ,
+                "label": {
+                    "normal": {
+                        "show": true,
+                        "position": "center",
+                        "formatter": function(params: any) {
+                            return params.data.name;
+                        },
+                        "textStyle": {
+                            "color": "#bcbfff" //color of value
+                        }
+                    }
+                },
+                "itemStyle": {
+            
+                }
+            }]
         };
     }
     // 选择方法
