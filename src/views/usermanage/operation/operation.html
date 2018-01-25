@@ -36,22 +36,22 @@
                 <el-input type="age" v-model.number="form.max_domain_num" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="服务项" v-if="roleType !== 'am'">
-                <div class="switch">
+                <div class="switch" v-if="defaultUser.service.waf_enable">
                     WEB应用防火墙
                     <el-switch v-model="form.waf_enable">
                     </el-switch>
                 </div>
-                <div class="switch">
+                <div class="switch" v-if="defaultUser.service.ads_enable">
                     CC防御
                     <el-switch v-model="form.ads_enable">
                     </el-switch>
                 </div>
-                <div class="switch">
+                <div class="switch" v-if="defaultUser.service.mirror_enable">
                     网站替身
                     <el-switch v-model="form.mirror_enable">
                     </el-switch>
                 </div>
-                <div class="switch">
+                <div class="switch" v-if="defaultUser.service.cdn_enable">
                     网站加速
                     <el-switch v-model="form.cdn_enable">
                     </el-switch>

@@ -376,22 +376,22 @@ export class WebsiteDetail extends Vue {
             title: {
                 show: false,
             },
+            tooltip: {
+                show: true,
+                formatter: function (params: any) {
+                    return "<div >" + params.data.name + "</div>" + "<div >" + params.data.value + "</div>";
+                },
+            },
             color: ["#3398DB"],
-            // "tooltip": {
-            //     "trigger": "axis",
-            //     "axisPointer": { // 坐标轴指示器，坐标轴触发有效
-            //         "type": "line" // 默认为直线，可选为："line" | "shadow"
-            //     }
-            // },
             legend: {
                 show: false,
             },
             calculable: true,
             grid: {
-                top: 20,
-                bottom: 40,
-                left: 70,
-                right: 10,
+                left: "10%",
+                top: "3%",
+                bottom: "3%",
+                right: "10%"
             },
             yAxis: [{
                 "type": "category",
@@ -532,9 +532,9 @@ export class WebsiteDetail extends Vue {
             },
             grid: {
                 left: "10%",
-                top: "5%",
-                bottom: "5%",
-                right: "12%"
+                top: "3%",
+                bottom: "3%",
+                right: "10%"
             },
             color: ["#3398DB"],
             xAxis: [{

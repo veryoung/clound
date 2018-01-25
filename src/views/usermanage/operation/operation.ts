@@ -4,7 +4,7 @@ import { mapGetters } from "vuex";
 
 
 import { ModuleTitle } from "@components/title/module.title";
-import { UserMessageType, USER, UserCenterType, RoleType } from "@store/user.center.type";
+import { UserMessageType, USER, UserCenterType, RoleType, DefaultUserType } from "@store/user.center.type";
 import { OrganizationTreeType, Organization } from "@store/organization.type";
 import { FromValidator, FormRuleType } from "@utils/form.validator";
 import { AddOrganizationFrame } from "@views/usermanage/dialogbox/add.organization.frame";
@@ -33,7 +33,8 @@ require("./operation.styl");
     computed: {
         ...mapGetters([
             "personInfo",
-            "roleList"
+            "roleList",
+            "defaultUser"
         ])
     },
     components: {
@@ -47,6 +48,7 @@ export class UserOperation extends Vue {
     // init computed
     public personInfo: UserCenterType;
     public roleList: RoleType[];
+    public defaultUser: DefaultUserType;
 
     // init data
     public roleType: string = "";
@@ -71,10 +73,10 @@ export class UserOperation extends Vue {
         remark: "",
         used_domain_num: "",
         max_domain_num: "",
-        waf_enable: "1",
-        ads_enable: "1",
-        mirror_enable: "1",
-        cdn_enable: "1",
+        waf_enable: "",
+        ads_enable: "",
+        mirror_enable: "",
+        cdn_enable: "",
         expiry_date: "",
     };
     public rules: FormRuleType = {
@@ -114,7 +116,12 @@ export class UserOperation extends Vue {
         if (id) {
             this.$store.dispatch(USER.GETUSER, { uid: id, operation: this.operation });
         } else {
-            this.form = (<any>Object).assign({}, this.personInfo.init);
+            this.form = (<any>Object).assign({}, this.personInfo.init, {
+                waf_enable: this.defaultUser.service.waf_enable ? "1" : "0",
+                ads_enable: this.defaultUser.service.ads_enable ? "1" : "0",
+                mirror_enable: this.defaultUser.service.mirror_enable ? "1" : "0",
+                cdn_enable: this.defaultUser.service.cdn_enable ? "1" : "0",
+            });
             this.stringToBoolean();
         }
         let eventId = EventBus.register(CONSTANT.GETUSER, function (event: string, info: any) {
