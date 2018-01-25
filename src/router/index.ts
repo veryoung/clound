@@ -32,9 +32,7 @@ let tempRouter: RouteConfig[] = [
         meta: {
             hidden: true
         },
-        beforeEnter(to: Route, from: Route, next: Function) {
-            new UserStatus(next);
-        }
+        redirect: "/home"
     },
     {
         path: "/home",
@@ -169,12 +167,12 @@ tempRouter.push(
         },
         component: LoginPortal
     } : {
-        path: "/login",
-        meta: {
-            hidden: true
-        },
-        component: Login
-    }
+            path: "/login",
+            meta: {
+                hidden: true
+            },
+            component: Login
+        }
 );
 export const entry: RouteConfig[] = tempRouter;
 

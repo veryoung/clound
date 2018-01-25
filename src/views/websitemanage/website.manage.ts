@@ -72,8 +72,8 @@ export class WebsiteManagement extends ListBaseClass {
 
         this.$store.dispatch(USER.GETUSER, { uid: this.defaultUser.uid });
         let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
-            that.userMessage.used_domain_num = that.personInfo.default.used_domain_num;
-            that.userMessage.max_domain_num = that.personInfo.default.max_domain_num;
+            that.userMessage.used_domain_num = that.personInfo[that.defaultUser.uid].used_domain_num;
+            that.userMessage.max_domain_num = that.personInfo[that.defaultUser.uid].max_domain_num;
         });
         Aux.insertId(ListId);
         Aux.insertId(PersonInfoId);
