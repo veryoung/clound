@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { session } from "@utils/sessionstorage";
 import { PermissionConfig } from "@directives/p.config";
+import { Store } from "@store/store";
 
 /**
  * user_manage_all = "SystemManagement.userManagement.*"
@@ -119,7 +120,7 @@ export class PermissionsObj {
 
 
     public judge(value: string): boolean {
-        let permissions: string[] = session.getItem("pcode");
+        let permissions: string[] = Store.getters.defaultUser.pcode;
         if (permissions === null) {
             return false;
         }

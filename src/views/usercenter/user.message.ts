@@ -4,7 +4,7 @@ import { mapGetters } from "vuex";
 
 
 import { ModuleTitle } from "@components/title/module.title";
-import { UserMessageType, UserCenterType, USER } from "@store/user.center.type";
+import { UserMessageType, UserCenterType, USER, DefaultUserType } from "@store/user.center.type";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { UserStatus } from "@utils/monitor";
@@ -19,7 +19,8 @@ require("./user.message.styl");
     },
     computed: {
         ...mapGetters([
-            "personInfo"
+            "personInfo",
+            "defaultUser"
         ])
     }
 })
@@ -50,6 +51,7 @@ export class UserMessage extends Vue {
     };
     // init computed
     public personInfo: UserCenterType;
+    public defaultUser: DefaultUserType;
 
     // lifecircle hook
     created() {
@@ -58,19 +60,19 @@ export class UserMessage extends Vue {
         this.unwatch = vm.$watch(function () {
             let id = that.$route.params.id;
             if (id) {
-                that.$store.dispatch(USER.GETOTHERUSER, { uid: id });
+                that.$store.dispatch(USER.GETUSER, { uid: id });
             } else {
-                new UserStatus();
+                that.$store.dispatch(USER.DEFAULTUSER, { uid: that.defaultUser.uid });
             }
             return id;
         }, (id, oldid) => {
         });
 
-        let eventId = EventBus.register(CONSTANT.GETOTHERUSER, function (event: string, info: any) {
+        let eventId = EventBus.register(CONSTANT.GETUSER, function (event: string, info: any) {
             that.userMessage = that.personInfo[id];
         });
         let eventId1 = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
-            that.userMessage = that.personInfo.default;
+            that.userMessage = that.personInfo[that.defaultUser.uid];
         });
         Aux.insertId(eventId);
         Aux.insertId(eventId1);

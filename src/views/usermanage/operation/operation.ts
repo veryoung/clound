@@ -112,12 +112,12 @@ export class UserOperation extends Vue {
         let id = this.$route.params.id;
         this.$store.dispatch(USER.GETUSERROLES);
         if (id) {
-            this.$store.dispatch(USER.GETOTHERUSER, { uid: id, operation: this.operation });
+            this.$store.dispatch(USER.GETUSER, { uid: id, operation: this.operation });
         } else {
             this.form = (<any>Object).assign({}, this.personInfo.init);
             this.stringToBoolean();
         }
-        let eventId = EventBus.register(CONSTANT.GETOTHERUSER, function (event: string, info: any) {
+        let eventId = EventBus.register(CONSTANT.GETUSER, function (event: string, info: any) {
             that.form = (<any>Object).assign({}, that.personInfo[id]);
             that.stringToBoolean();
         });
