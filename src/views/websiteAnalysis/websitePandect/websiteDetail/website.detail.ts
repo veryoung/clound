@@ -382,7 +382,6 @@ export class WebsiteDetail extends Vue {
                     return "<div >" + params.data.name + "</div>" + "<div >" + params.data.value + "</div>";
                 },
             },
-            color: ["#3398DB"],
             legend: {
                 show: false,
             },
@@ -391,7 +390,7 @@ export class WebsiteDetail extends Vue {
                 left: "10%",
                 top: "3%",
                 bottom: "3%",
-                right: "10%"
+                right: "0"
             },
             yAxis: [{
                 "type": "category",
@@ -400,10 +399,6 @@ export class WebsiteDetail extends Vue {
                 nameGap: 33,
                 "axisLabel": {
                     "interval": 0,
-                    // rotate: -15,
-                    textStyle: {
-                        color: "#00ccfe",
-                    },
                     inside: false,
                     margin: 8,
                 },
@@ -414,11 +409,8 @@ export class WebsiteDetail extends Vue {
                 },
                 axisLine: {
                     show: false,
-                    lineStyle: {
-                        color: "#00ccfe",
-                    }
                 },
-                data: ["Top1", "Top2", "Top3", "Top4", "Top5", "Top6", "Top7", "Top8", "Top9", "Top10"],
+                data: ["Top10", "Top9", "Top8", "Top7", "Top6", "Top5", "Top4", "Top3", "Top2", "Top1"],
                 splitLine: {
                     show: false
                 },
@@ -451,32 +443,37 @@ export class WebsiteDetail extends Vue {
             }],
             series: [
                 {
-                    name: "2012年",
                     itemStyle: {
                         normal: {
-                            color: "#ddd"
+                            color: "#f4f5f7"
                         }
                     },
+                    barWidth: 25,
                     silent: true,
                     barGap: "-100%", // Make series be overlap
                     type: "bar",
                     data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
                 },
                 {
-                    name: "2011年",
                     type: "bar",
+                    legendHoverLink: true,                    
+                    barWidth: 25,
+                    itemStyle: {
+                        normal: {
+                            color: "#e8e8e8"
+                        }
+                    },
                     label: {
                         "normal": {
                             "show": true,
                             "position": [5, 5],
                             "formatter": function (params: any) {
-                                return params.data.name + params.data.value;
+                                return params.data.name + ":  " + params.data.value;
                             },
                             "textStyle": {
-                                "color": "black"
+                                "color": "#737373"
                             }
                         }
-
                     },
                     data: [{
                         name: "北京",
@@ -584,7 +581,6 @@ export class WebsiteDetail extends Vue {
                 barCategoryGap: "50%",
                 data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230],
             }, {
-                name: " ",
                 type: "bar",
                 barWidth: 20,
                 label: {
