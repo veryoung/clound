@@ -1,3 +1,7 @@
-<div class="router-panel">
-    <router-view />
-</div>
+<el-container class="el-container-panel">
+        <el-container>
+                <transition name="fade" mode="out-in">
+                    <router-view />
+                </transition>
+        </el-container>
+    </el-container>

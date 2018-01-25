@@ -16,7 +16,7 @@ require("./emails.notice.styl");
         SetCol,
         CloudTable
     },
-    template: require("./emails.notice.styl"),
+    template: require("./emails.notice.html"),
 })
 
 

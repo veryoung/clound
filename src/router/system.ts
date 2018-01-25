@@ -1,3 +1,4 @@
+import { RouterComponent } from "@components/router/router.component";
 import { LogsAudit } from "@views/systemmanage/logsAudit/logs.audit";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
@@ -7,6 +8,7 @@ import { OrganizationComponent } from "@views/organization/organization";
 import { UserManagement } from "@views/usermanage/user.manage";
 import { UserOperation } from "@views/usermanage/operation/operation";
 import { UserMessage } from "@views/usercenter/user.message";
+
 
 // /SystemManagement/UserManagement/
 export const systemRouter: RouteConfig[] = [
@@ -47,7 +49,8 @@ export const systemRouter: RouteConfig[] = [
         children: notifyRouter,
         meta: {
             icon: "icon-tongzhiguanli"
-        }
+        },
+        component: RouterComponent
     },
     {
         path: "UserManagement/add",

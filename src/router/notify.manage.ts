@@ -1,7 +1,7 @@
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 
-import { UserOperation } from "@views/usermanage/operation/operation";
+
 import { PublicNotice } from "@views/systemmanage/notiManage/publicNotice/pubilc.notice";
 import { EmailsNotice } from "@views/systemmanage/notiManage/emailNotice/emails.notice";
 import { MessageNotice } from "@views/systemmanage/notiManage/messageNotice/message.notice";
@@ -9,7 +9,7 @@ import { MessageNotice } from "@views/systemmanage/notiManage/messageNotice/mess
 
 export const notifyRouter: RouteConfig[] = [
     {
-        path: "/SystemManagement/ReportManagement/notice",
+        path: "notice",
         name: "站内公告",
         meta: {
             icon: "icon-quan-"
@@ -17,7 +17,7 @@ export const notifyRouter: RouteConfig[] = [
         component: PublicNotice,
     },
     {
-        path: "/SystemManagement/ReportManagement/emaillnotice",
+        path: "emaillnotice",
         name: "邮件通知",
         meta: {
             icon: "icon-quan-"
@@ -25,12 +25,11 @@ export const notifyRouter: RouteConfig[] = [
         component: EmailsNotice,
     },
     {
-        path: "/SystemManagement/ReportManagement/messagenotice",
+        path: "messagenotice",
         name: "短信通知",
         meta: {
             icon: "icon-quan-"
         },
         component: MessageNotice,
-
     },
 ];
