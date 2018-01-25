@@ -128,7 +128,8 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                     {
                         prop: "cname",
                         label: "CNAME别名",
-                        show: true
+                        show: true,
+                        width: "105px"
                     },
                     {
                         prop: "ctime",
@@ -136,6 +137,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         show: true,
                         type: "date",
                         sortable: "custom",
+                        width: "100px"
                     },
                     {
                         prop: "open_waf",
