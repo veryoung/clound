@@ -2,7 +2,8 @@ export const NOTICEEVENT = {
     GETEMAILLIST: "获取邮件列表",
     GETEMAILDETAIL: "获取邮件详情",
     GETMSGLIST: "获取短信列表",
-    GETMSGDETAIL: "获取短信详情"
+    GETMSGDETAIL: "获取短信详情",
+    GETNOTICELIST: "获取公告列表"
 };
 
 export interface NoticeType {

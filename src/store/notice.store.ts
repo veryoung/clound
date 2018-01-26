@@ -79,17 +79,23 @@ export const NoticeStore: Module<NoticeType, any> = {
             state.emailTable[Math.floor(payload.page) - 1] = [].concat(payload.message);
         },
         [NOTICEEVENT.GETMSGLIST]: (state, payload) => {
-            if (!state.emailTable[Math.floor(payload.page) - 1]) {
-                state.emailTable[Math.floor(payload.page) - 1] = [];
+            if (!state.msgTable[Math.floor(payload.page) - 1]) {
+                state.msgTable[Math.floor(payload.page) - 1] = [];
             }
-            state.emailTable[Math.floor(payload.page) - 1] = [].concat(payload.message);
+            state.msgTable[Math.floor(payload.page) - 1] = [].concat(payload.message);
         },
         [NOTICEEVENT.GETEMAILDETAIL]: (state, payload) => {
             state.emailDetail[payload.id] = payload.message;
         },
         [NOTICEEVENT.GETMSGDETAIL]: (state, payload) => {
             state.msgDetail[payload.id] = payload.message;
-        }
+        },
+        [NOTICEEVENT.GETNOTICELIST]: (state, payload) => {
+            if (!state.noticeTable[Math.floor(payload.page) - 1]) {
+                state.noticeTable[Math.floor(payload.page) - 1] = [];
+            }
+            state.noticeTable[Math.floor(payload.page) - 1] = [].concat(payload.message);
+        },
     },
     actions: {
         [NOTICEEVENT.GETEMAILLIST]: ({ state, commit, rootState }, payload) => {
@@ -157,7 +163,24 @@ export const NoticeStore: Module<NoticeType, any> = {
                         break;
                 }
             });
-        }
+        },
+        [NOTICEEVENT.GETNOTICELIST]: ({ state, commit, rootState }, payload) => {
+            if ((Math.floor(payload.page) - 1) in state.msgTable) {
+                EventBus.doNotify(CONSTANT.GETNOTICELIST);
+            }
+            NoticeServer.getNotice(payload).then().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        commit(NOTICEEVENT.GETNOTICELIST, { page: payload.page, message: res.data.data });
+                        Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "noticetable", total: res.data.total });
+                        EventBus.doNotify(CONSTANT.GETNOTICELIST);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        },
     },
     getters: {
         "emailTable": (state) => {
@@ -171,6 +194,9 @@ export const NoticeStore: Module<NoticeType, any> = {
         },
         "msgDetail": (state) => {
             return state.msgDetail;
+        },
+        "noticeTable": (state) => {
+            return state.noticeTable;
         }
     }
 };

@@ -399,5 +399,34 @@ export const systemTable: TableConfigType = {
         page_size: 10,
         page: 1,
         total: 1
+    },
+    // 最新公告通知列表
+    "noticetable": {
+        columns: [
+            {
+                prop: "id",
+                label: "id",
+                show: false
+            },
+            {
+                prop: "创建人",
+                label: "c_person",
+                show: true,
+            },
+            {
+                prop: "公告内容",
+                label: "content",
+                show: true,
+            },
+            {
+                prop: "公告标题",
+                label: "title",
+                show: true,
+            }
+        ],
+        pageSizes: [10, 20, 30, 40, 50],
+        page_size: 10,
+        page: 1,
+        total: 1
     }
 };
