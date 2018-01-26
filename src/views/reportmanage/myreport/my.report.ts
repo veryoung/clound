@@ -14,20 +14,20 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { SetCol } from "@components/setcol/setcol";
-import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController, DomainType } from "./website.manage.attachement";
+import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController, DomainType } from "./my.report.attachement";
 import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { session } from "@utils/sessionstorage";
 import { ListBaseClass } from "@views/base/base.class";
 import { open } from "fs";
-
+import * as moment from "moment";
 
 
 const Aux = new Auxiliary<string>();
-require("./website.manage.styl");
+require("./my.report.styl");
 @Component({
-    name: "websitemanagement",
-    template: require("./website.manage.html"),
+    name: "myreport",
+    template: require("./my.report.html"),
     components: {
         ModuleTitle, TissueTree, SetCol, CloudTable
     },
@@ -40,7 +40,7 @@ require("./website.manage.styl");
         ])
     }
 })
-export class WebsiteManagement extends ListBaseClass {
+export class MyReport extends ListBaseClass {
     // init computed
     public tableData: WebsiteTableType;
     public tableConfig: TableConfigType;
@@ -50,33 +50,62 @@ export class WebsiteManagement extends ListBaseClass {
 
 
     // init data
-    public titles: string[] = ["我的网站"];
+    public titles: string[] = ["我的报告"];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
-    public userMessage: DomainType = {
-        used_domain_num: "",
-        max_domain_num: "",
-    };
 
+
+    // 统计时间
+    public conuntDay: any[] = new Array<string>();
+    // 生成时间 
+    public currentDay: any[] = new Array<string>();
+    // 统计范围
+    public options4: any = [];
+    public value9: any =  [];
+    public list: any =  [];
+    public loading: boolean = false;
+    public states: any = ["Alabama", "Alaska", "Arizona",
+        "Arkansas", "California", "Colorado",
+        "Connecticut", "Delaware", "Florida",
+        "Georgia", "Hawaii", "Idaho", "Illinois",
+        "Indiana", "Iowa", "Kansas", "Kentucky",
+        "Louisiana", "Maine", "Maryland",
+        "Massachusetts", "Michigan", "Minnesota",
+        "Mississippi", "Missouri", "Montana",
+        "Nebraska", "Nevada", "New Hampshire",
+        "New Jersey", "New Mexico", "New York",
+        "North Carolina", "North Dakota", "Ohio",
+        "Oklahoma", "Oregon", "Pennsylvania",
+        "Rhode Island", "South Carolina",
+        "South Dakota", "Tennessee", "Texas",
+        "Utah", "Vermont", "Virginia",
+        "Washington", "West Virginia", "Wisconsin",
+        "Wyoming"];
     // 导出
     public ids: string[] = [];
 
 
     // lifecircle hook 
     created() {
+        let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
+        let endDay = moment(new Date()).format("YYYYMMDD");
+        this.filter.count_time = [startDay, endDay];
+        this.filter.pro_time = [startDay, endDay];
+
+
+
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
         let that = this;
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
         });
- 
-        this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
-        let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
-            that.userMessage.used_domain_num = that.personInfo[that.defaultUser.uid].used_domain_num;
-            that.userMessage.max_domain_num = that.personInfo[that.defaultUser.uid].max_domain_num;
-        });
         Aux.insertId(ListId);
-        Aux.insertId(PersonInfoId);
+    }
+
+    mounted() {
+        this.list = this.states.map( (item: any ) => {
+          return { value: item, label: item };
+        });
     }
 
     destroyed() {
@@ -86,10 +115,25 @@ export class WebsiteManagement extends ListBaseClass {
     }
 
     // init method
-    search() {
-        if (this.filter.ctime === null) {
-            this.filter.ctime = "";
+
+    // 统计范围查询请求
+    remoteMethod(query: any) {
+        if (query !== "") {
+          this.loading = true;
+          setTimeout(() => {
+            this.loading = false;
+            this.options4 = this.list.filter((item: any ) => {
+              return item.label.toLowerCase()
+                .indexOf(query.toLowerCase()) > -1;
+            });
+          }, 200);
+        } else {
+          this.options4 = [];
         }
+    }
+
+    search() {
+        console.log(this.filter);
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
@@ -108,13 +152,6 @@ export class WebsiteManagement extends ListBaseClass {
     }
 
     sortChange(opt: any) {
-        if (opt.prop === "ctime") {
-            if (opt.order === "descending") {
-                this.filter.sort_ctime = "-1";
-            } else {
-                this.filter.sort_ctime = "1";
-            }
-        }
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 

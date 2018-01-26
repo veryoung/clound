@@ -17,33 +17,22 @@ import { Store } from "@store/store";
 // source_type	回源类型	string	
 // state	状态	string	服务中/未接入/已到期
 export default interface SearchType {
-    cperson: string;
-    domain?: string;
     name: string;
-    open_waf: string;
-    organization: string;
-    port: number | string;
-    protocol: string;
-    source_info?: string;
-    source_type?: string;
-    state?: string;
-    ctime?: string;
-    sort_ctime?: string;
+    count_cycle: string;
+    count_obj: string;
+    count_time: Array<string>;
+    count_range: string;
+    pro_time: Array<string>;
 }
 
 export const filterData: SearchType = {
-    cperson: "",
-    domain: "",
     name: "",
-    open_waf: "",
-    organization: "",
-    port: "",
-    protocol: "",
-    source_info: "",
-    source_type: "",
-    state: "",
-    ctime: "",
-    sort_ctime: "",
+    count_cycle: "",
+    count_obj: "",
+    count_time: ["", ""],
+    pro_time: ["", ""],
+    count_range: "",
+
 };
 
 
