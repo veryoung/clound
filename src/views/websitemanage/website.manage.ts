@@ -69,8 +69,8 @@ export class WebsiteManagement extends ListBaseClass {
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
         });
-
-        this.$store.dispatch(USER.GETUSER, { uid: this.defaultUser.uid });
+ 
+        this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
         let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
             that.userMessage.used_domain_num = that.personInfo[that.defaultUser.uid].used_domain_num;
             that.userMessage.max_domain_num = that.personInfo[that.defaultUser.uid].max_domain_num;

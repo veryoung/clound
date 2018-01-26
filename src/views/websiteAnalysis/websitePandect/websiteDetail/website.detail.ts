@@ -276,10 +276,10 @@ export class WebsiteDetail extends Vue {
                     "show": false
                 },
                 "axisTick": {
-                    "show": true
+                    "show": false
                 },
                 "axisLabel": {
-                    "show": true
+                    "show": false
                 },
                 "splitLine": {
                     "show": false
@@ -383,7 +383,8 @@ export class WebsiteDetail extends Vue {
                 },
             },
             legend: {
-                show: false,
+                show: true,
+                borderColor: "#f33",
             },
             calculable: true,
             grid: {
@@ -461,6 +462,9 @@ export class WebsiteDetail extends Vue {
                     itemStyle: {
                         normal: {
                             color: "#e8e8e8"
+                        },
+                        shadowBlur: {
+                            shadowColor: "#e8e8e8"
                         }
                     },
                     label: {
@@ -476,7 +480,7 @@ export class WebsiteDetail extends Vue {
                         }
                     },
                     data: [{
-                        name: "北京",
+                        name: "北京000",
                         value: 18203
                     }, {
                         name: "上海",
