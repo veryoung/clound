@@ -39,9 +39,7 @@ export class UserMenu extends Vue {
         let that = this;
         new UserStatus();
         this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
-        if (this.personInfo.default) {
-            this.user_name = this.personInfo.default.user_name;
-        }
+        this.user_name = this.personInfo[this.defaultUser.uid].user_name;
         EventBus.register(CONSTANT.DEFAULTUSER, function () {
             that.user_name = that.personInfo[that.defaultUser.uid].user_name;
         });

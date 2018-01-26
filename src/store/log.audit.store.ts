@@ -24,12 +24,15 @@ export const LogsAuditStore: Module<LogAuditType, any> = {
         };
     },
     mutations: {
-        [LOGADUITEVENT.GETLIST]: (state, payload) => {
-            state.tableData[Math.floor(payload.page) - 1] = payload.message;
+        [LOGADUITEVENT.GETLOGAUDITLIST]: (state, payload) => {
+            if (!state.tableData[Math.floor(payload.page) - 1]) {
+                state.tableData[Math.floor(payload.page) - 1] = [];
+            }
+            state.tableData[Math.floor(payload.page) - 1] = [].concat(payload.message);
         }
     },
     actions: {
-        [LOGADUITEVENT.GETLIST]: ({ state, commit, rootState }, payload) => {
+        [LOGADUITEVENT.GETLOGAUDITLIST]: ({ state, commit, rootState }, payload) => {
             if ((Math.floor(payload.page) - 1) in state.tableData) {
                 EventBus.doNotify(CONSTANT.GETLOGAUDITLIST);
             }
@@ -37,9 +40,9 @@ export const LogsAuditStore: Module<LogAuditType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(LOGADUITEVENT.GETUSERLIST, { page: payload.page, message: res.data });
+                        commit(LOGADUITEVENT.GETLOGAUDITLIST, { page: payload.page, message: res.data });
                         Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "logautdittable", total: res.data.total });
-                        EventBus.doNotify(CONSTANT.GETUSERLIST);
+                        EventBus.doNotify(CONSTANT.GETLOGAUDITLIST);
                         break;
                     default:
                         break;

@@ -1,5 +1,4 @@
 import Vue from "vue";
-import { EventType } from "@store/store";
 import { USER } from "@store/user.center.type";
 import { TABLECONFIG } from "@store/table.type";
 import { ORGANIZATION } from "@store/organization.type";
@@ -16,10 +15,7 @@ interface ListenerType {
     fn: Function;
 }
 
-export const CONSTANT: EventType = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION, MYWEBSITEEVENT);
-// export const CONSTANT: EventType = {
-//     ADDORGANIZATIONMESSAGE: "增加组织信息",
-// };
+export const CONSTANT = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION, MYWEBSITEEVENT);
 /**
  *Author wjt
  *Date 2017-12-26
@@ -27,9 +23,9 @@ export const CONSTANT: EventType = (<any>Object).assign({}, USER, TABLECONFIG, O
  */
 export class Event {
     public listeners: ListenerType[] = new Array<ListenerType>();
-    public constant: EventType = { init: "init" };
+    public constant: any = {};
 
-    constructor(constant: EventType) {
+    constructor(constant: any) {
         this.constant = constant;
     }
 

@@ -1,6 +1,4 @@
-import { EventType } from "@store/store";
-
-export const ORGANIZATION: EventType = {
+export const ORGANIZATION = {
     INITORGANIZATIONTREE: "初始化组织机构树",
     ADDORGANIZATIONMESSAGE: "增加组织机构信息",
 };
