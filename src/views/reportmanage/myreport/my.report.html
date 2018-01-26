@@ -6,36 +6,21 @@
                 <el-input v-model="filter.name" placeholder="请输入报告名称"></el-input>
             </el-form-item>
             <el-form-item label="统计范围">
-                    <el-popover
-                    ref="popover1"
-                    placement="top-start"
-                    title="标题"
-                    width="200"
-                    trigger="hover"
-                    content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-                  </el-popover>
-                    <el-select
-                    v-model="filter.count_range"
-                    filterable
-                    remote
-                    clearable
-                    reserve-keyword
-                    placeholder="请输入关键词"
-                    :remote-method="remoteMethod"
+                <el-popover ref="popover1" placement="top-start" title="标题" width="200" trigger="hover" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                </el-popover>
+                <el-select v-model="filter.count_range" filterable remote clearable reserve-keyword placeholder="请输入关键词" :remote-method="remoteMethod"
                     :loading="loading">
-                    <el-option
-                      v-popover:popover1
-                      v-for="item in options4"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                    </el-option>
-                  </el-select>
+                    <el-tooltip  v-for="item in options4" :key="item.value" class="item" effect="dark"  placement="bottom-end">
+                         <p  style="height:10px;"slot="content" class="tooltip-content">{{item.value}}</p>
+                        <el-option :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-tooltip>
+                </el-select>
             </el-form-item>
             <el-form-item label="统计周期">
                 <el-select v-model="filter.count_cycle" placeholder="状态" size="small">
                     <el-option label="全部" value=""></el-option>
-                    <el-option label="日报" value="0"></el-option>
+                    <el-option label="日报" v-popover:popover1 value="0"></el-option>
                     <el-option label="周报" value="1"></el-option>
                     <el-option label="月报" value="2"></el-option>
                     <el-option label="自定义" value="3"></el-option>
