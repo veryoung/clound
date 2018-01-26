@@ -157,6 +157,7 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                 page: 1,
                 total: 1
             },
+            // 网站总览列表
             "websitepandecttable": {
                 columns: [
                     {
@@ -181,7 +182,6 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         prop: "organization",
                         label: "安全评级",
                         show: true
-
                     },
                     {
                         prop: "organization",
@@ -209,6 +209,112 @@ export const TableConfigStore: Module<TableConfigType, any> = {
                         show: true,
                         sortable: "custom",
 
+                    },
+                ],
+                pageSizes: [10, 20, 30, 40, 50],
+                page_size: 10,
+                page: 1,
+                total: 1
+            },
+            // 攻击日志列表
+            "attacklogtable": {
+                columns: [{
+                    prop: "ctime",
+                    label: "时间",
+                    show: true,
+                },
+                {
+                    prop: "name",
+                    label: "网站名称",
+                    show: true
+
+                },
+                {
+                    prop: "domain",
+                    label: "网站域名",
+                    show: true
+
+                },
+                {
+                    prop: "attackedUrl",
+                    label: "被攻击URL",
+                    show: true
+
+                },
+                {
+                    prop: "attactIP",
+                    label: "攻击IP",
+                    show: true
+                },
+                {
+                    prop: "attactIPadd",
+                    label: "攻击IP归属地",
+                    show: true,
+                    sortable: "custom",
+                },
+                {
+                    prop: "attack_type",
+                    label: "攻击类型",
+                    show: true,
+                    sortable: "custom",
+
+                },
+                {
+                    prop: "safe_level",
+                    label: "安全级别",
+                    show: true,
+                    sortable: "custom",
+
+                },
+                {
+                    prop: "results",
+                    label: "处理结果",
+                    show: true,
+                    sortable: "custom",
+                },
+                ],
+                pageSizes: [10, 20, 30, 40, 50],
+                page_size: 10,
+                page: 1,
+                total: 1
+            },
+            // 日志审计列表
+            "logsaudittable": {
+                columns: [
+                    {
+                        prop: "访问时间",
+                        label: "op_time",
+                        show: true,
+                    },
+                    {
+                        prop: "访问用户",
+                        label: "user",
+                        show: true,
+                    },
+                    {
+                        prop: "用户邮箱",
+                        label: "email",
+                        show: true,
+                    },
+                    {
+                        prop: "访问IP",
+                        label: "ip",
+                        show: true,
+                    },
+                    {
+                        prop: "操作类型",
+                        label: "op_type",
+                        show: true,
+                    },
+                    {
+                        prop: "操作详情",
+                        label: "op_detail",
+                        show: true,
+                    },
+                    {
+                        prop: "操作结果",
+                        label: "op_ret",
+                        show: true,
                     },
                 ],
                 pageSizes: [10, 20, 30, 40, 50],

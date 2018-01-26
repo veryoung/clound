@@ -13,22 +13,22 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="访问用户">
-                <el-input v-model="filter.name" placeholder="请输入访问用户"></el-input>
+                <el-input v-model="filter.user" placeholder="请输入访问用户"></el-input>
             </el-form-item>
             <el-form-item label="访问IP">
-                <el-input v-model="filter.attackedUrl" placeholder="请输入访问IP"></el-input>
+                <el-input v-model="filter.ip" placeholder="请输入访问IP"></el-input>
             </el-form-item>
             <el-form-item label="操作详情">
-                <el-input v-model="filter.attactIP" placeholder="请输入网站名称"></el-input>
+                <el-input v-model="filter.detail" placeholder="请输入网站名称"></el-input>
             </el-form-item>
             <el-form-item label="操作类型">
-                <el-select v-model="filter.domain" placeholder="请选择操作类型">
+                <el-select v-model="filter.op_type" placeholder="请选择操作类型">
                     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="操作结果">
-                <el-select v-model="filter.domain" placeholder="请选择操作结果">
+                <el-select v-model="filter.op_result" placeholder="请选择操作结果">
                     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
