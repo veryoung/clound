@@ -1,0 +1,89 @@
+<div class="my-report">
+    <div class="form-part">
+        <ModuleTitle :titles="titles" />
+        <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
+            <el-form-item label="报告名称">
+                <el-input v-model="filter.name" placeholder="请输入报告名称"></el-input>
+            </el-form-item>
+            <el-form-item label="统计范围">
+                    <el-popover
+                    ref="popover1"
+                    placement="top-start"
+                    title="标题"
+                    width="200"
+                    trigger="hover"
+                    content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                  </el-popover>
+                    <el-select
+                    v-model="filter.count_range"
+                    filterable
+                    remote
+                    clearable
+                    reserve-keyword
+                    placeholder="请输入关键词"
+                    :remote-method="remoteMethod"
+                    :loading="loading">
+                    <el-option
+                      v-popover:popover1
+                      v-for="item in options4"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+            </el-form-item>
+            <el-form-item label="统计周期">
+                <el-select v-model="filter.count_cycle" placeholder="状态" size="small">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="日报" value="0"></el-option>
+                    <el-option label="周报" value="1"></el-option>
+                    <el-option label="月报" value="2"></el-option>
+                    <el-option label="自定义" value="3"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="统计时间">
+                <el-date-picker v-model="filter.count_time" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="生成时间">
+                <el-date-picker v-model="filter.pro_time" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item>
+                <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                <el-button size="small" @click="reset">重置</el-button>
+            </el-form-item>
+        </el-form>
+        <div class="btn-group">
+            <div>
+                <div class="btn-first">
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.Add'" type="primary" @click="handle('add')" size="small">
+                        <span class="iconfont">&#xe61a;</span>
+                        批量下载
+                    </el-button>
+                    <el-button v-permissions="'WebsiteManagement.MyWebsite.OpenDefense'" type="primary" @click="openwaf('openWaf')" size="small">
+                        <span class="iconfont">&#xe61b;</span>
+                        删除报告
+                    </el-button>
+                </div>
+            </div>
+            <div class="btn-last">
+                <SetCol moduleName="mywebsitetable" />
+            </div>
+        </div>
+        <CloudTable moduleName="mywebsitetable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
+            <el-table-column fixed type="selection" width="55" slot="type" align="center">
+            </el-table-column>
+            <el-table-column label="操作" align="center" width="180px">
+                <template slot-scope="scope">
+                    <i title="查看" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;查看</i>
+                    <i title="下载" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;下载</i>
+                    <i title="删除" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;删除</i>
+                </template>
+            </el-table-column>
+        </CloudTable>
+    </div>
+</div>

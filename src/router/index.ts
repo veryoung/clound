@@ -22,6 +22,7 @@ import { UserStatus } from "@utils/monitor";
 import { WebsiteManageRouter } from "@router/website.manage";
 import { LoginPortal } from "@views/loginportal/login.portal";
 import { WebsiteAnalysisRouter } from "@router/website.analysis";
+import { CountReportRouter } from "@router/count.report";
 
 
 Vue.use(Router);
@@ -97,12 +98,19 @@ let tempRouter: RouteConfig[] = [
     },
     {
         path: "/ReportManagement",
-        name: "报告管理",
+        name: "统计报告",
+        redirect: "/ReportManagement/MyReport",
         components: {
             header: HeaderComponent,
             sider: SiderComponent,
             main: ViewContainer
         },
+        props: {
+            sider: {
+                menus: CountReportRouter
+            }
+        },
+        children: CountReportRouter
     },
     {
         path: "/MochaITOM",

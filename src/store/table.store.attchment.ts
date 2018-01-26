@@ -428,5 +428,39 @@ export const systemTable: TableConfigType = {
         page_size: 10,
         page: 1,
         total: 1
+    },
+    // 我的报告列表
+    "myreporttable": {
+        columns: [
+            {
+                prop: "报告名称",
+                label: "name",
+                show: true,
+            },
+            {
+                prop: "统计周期",
+                label: "count_cycle",
+                show: true,
+            },
+            {
+                prop: "统计对象",
+                label: "count_obj",
+                show: true,
+            },
+            {
+                prop: "统计时间",
+                label: "count_time",
+                show: true,
+            },
+            {
+                prop: "生成时间",
+                label: "pro_time",
+                show: true,
+            },
+        ],
+        pageSizes: [10, 20, 30, 40, 50],
+        page_size: 10,
+        page: 1,
+        total: 1
     }
 };
