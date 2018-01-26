@@ -25,7 +25,10 @@ export const LogsAuditStore: Module<LogAuditType, any> = {
     },
     mutations: {
         [LOGADUITEVENT.GETLIST]: (state, payload) => {
-            state.tableData[Math.floor(payload.page) - 1] = payload.message;
+            if (!state.tableData[Math.floor(payload.page) - 1]) {
+                state.tableData[Math.floor(payload.page) - 1] = [];
+            }
+            state.tableData[Math.floor(payload.page) - 1] = [].concat(payload.message);
         }
     },
     actions: {

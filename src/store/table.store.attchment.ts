@@ -311,5 +311,93 @@ export const systemTable: TableConfigType = {
         page_size: 10,
         page: 1,
         total: 1
+    },
+    // 邮件通知列表
+    "emailtable": {
+        columns: [
+            {
+                prop: "id",
+                label: "id",
+                show: false
+            },
+            {
+                prop: "邮件标题",
+                label: "object",
+                show: true,
+            },
+            {
+                prop: "接收人",
+                label: "receiver",
+                show: true,
+            },
+            {
+                prop: "发送日期",
+                label: "send_date",
+                show: true,
+            },
+            {
+                prop: "操作类型",
+                label: "send_type",
+                show: true,
+            },
+            {
+                prop: "发送人",
+                label: "sender",
+                show: true,
+            },
+            {
+                prop: "发送状态",
+                label: "status",
+                show: true,
+            },
+        ],
+        pageSizes: [10, 20, 30, 40, 50],
+        page_size: 10,
+        page: 1,
+        total: 1
+    },
+    // 短信通知列表
+    "msgtable": {
+        columns: [
+            {
+                prop: "id",
+                label: "id",
+                show: false
+            },
+            {
+                prop: "邮件标题",
+                label: "object",
+                show: true,
+            },
+            {
+                prop: "接收人",
+                label: "receiver",
+                show: true,
+            },
+            {
+                prop: "发送日期",
+                label: "send_date",
+                show: true,
+            },
+            {
+                prop: "操作类型",
+                label: "send_type",
+                show: true,
+            },
+            {
+                prop: "发送人",
+                label: "sender",
+                show: true,
+            },
+            {
+                prop: "发送状态",
+                label: "status",
+                show: true,
+            },
+        ],
+        pageSizes: [10, 20, 30, 40, 50],
+        page_size: 10,
+        page: 1,
+        total: 1
     }
 };

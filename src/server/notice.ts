@@ -46,10 +46,16 @@ class Notice extends Restful {
     }
 
 
-    public getNotice() {
+    public getNotice(opt: {
+        key_word: string;
+        new: boolean;
+        page: string;
+        page_size: string;
+        send_time: string[];
+    }) {
         return this.get({
             url: `/api/v20/bulletin/notification/`,
-            params: {}
+            params: opt
         });
     }
 
@@ -65,6 +71,15 @@ class Notice extends Restful {
         });
     }
 
+    public getMessageDetail(id: string) {
+        return this.get({
+            url: `/api/v20/bulletin/msg/detail/`,
+            params: {
+                id: id
+            }
+        });
+    }
+
 
     public getEmailRecord(opt: {
         send_date: string;
@@ -76,4 +91,17 @@ class Notice extends Restful {
             params: opt
         });
     }
+
+    public getEmailDetail(id: string) {
+        return this.get({
+            url: `/api/v20/bulletin/email/detail/`,
+            params: {
+                id: id
+            }
+        });
+    }
+
 }
+
+
+export const NoticeServer = new Notice();
