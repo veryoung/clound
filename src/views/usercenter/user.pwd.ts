@@ -4,14 +4,19 @@ import { mapGetters } from "vuex";
 
 
 import { ModuleTitle } from "@components/title/module.title";
-import { UserCenterType, UserMessageType } from "@store/user.center.type";
+import { UserCenterType, DefaultUserType, USER } from "@store/user.center.type";
 import { FormRuleType, FromValidator } from "@utils/index";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
+import { EventBus, CONSTANT } from "@utils/event";
 
 
-
+interface MiniUserMessageType {
+    user_name: string;
+    role: string;
+    compay: string;
+}
 
 require("./user.pwd.styl");
 @Component({
@@ -22,19 +27,22 @@ require("./user.pwd.styl");
     },
     computed: {
         ...mapGetters([
-            "personInfo"
+            "personInfo",
+            "defaultUser"
         ])
     }
 })
 export class UserPwd extends Vue {
+    // init computed
+    public personInfo: UserCenterType;
+    public defaultUser: DefaultUserType;
+
     // init data
     public form = {
         opwd: "",
         npwd: "",
         npwdAgain: ""
     };
-
-    public userMessage: UserMessageType;
 
     public rules: FormRuleType = {
         opwd: [
@@ -50,13 +58,21 @@ export class UserPwd extends Vue {
             { message: "与密码不符合", validator: this.npwdAgain, trigger: "blur" }
         ]
     };
-    // init computed
-    public personInfo: UserCenterType;
+    public userMessage: MiniUserMessageType = {
+        user_name: "",
+        role: "",
+        compay: ""
+    };
 
 
     // lifecircle hook 
     created() {
-        this.userMessage = this.personInfo.default;
+        let that = this;
+        this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
+        let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+            that.userMessage = (<any>Object).assign({}, that.personInfo[that.defaultUser.uid]);
+        });
+        this.userMessage = (<any>Object).assign({}, this.personInfo[this.defaultUser.uid]);
     }
 
     // init methods

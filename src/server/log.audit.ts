@@ -1,4 +1,4 @@
-import { Restful } from "server";
+import { Restful } from "@server/index";
 
 class LogAudit extends Restful {
     constructor() {

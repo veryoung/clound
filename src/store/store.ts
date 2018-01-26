@@ -22,7 +22,3 @@ export const Store = new Vuex.Store({
         NoticeStore: NoticeStore
     }
 });
-
-export interface EventType {
-    [extra: string]: string;
-}

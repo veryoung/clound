@@ -1,7 +1,4 @@
-import { EventType } from "@store/store";
-
-
-export const LOGADUITEVENT: EventType = {
+export const LOGADUITEVENT = {
     GETLOGAUDITLIST: "获取日志审计列表",
 };
 

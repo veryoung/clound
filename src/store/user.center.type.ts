@@ -1,5 +1,3 @@
-import { EventType } from "@store/store";
-
 /**
 
 ads_enable	是否CC攻击	string	@mock=ads_enable
@@ -73,7 +71,7 @@ export interface UserListColumnType {
     uid: string;
 }
 
-export const USER: EventType = {
+export const USER = {
     ADDUSERMESSAGE: "新增用户信息",
     // UPDATEMESSAGE: "更新用户信息",
     // CHANGEPWD: "修改用户密码",
