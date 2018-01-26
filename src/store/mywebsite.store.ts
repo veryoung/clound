@@ -168,7 +168,7 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
             }
         };
     },
-
+ 
     mutations: {
         [MYWEBSITEEVENT.GETLISTMESSAGE]: (state, payload) => {
             if (!state.tableData[Math.floor(payload.page) - 1]) {

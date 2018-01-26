@@ -2,8 +2,8 @@ import { EventType } from "@store/store";
 
 
 export const LOGSADUITEVENT: EventType = {
-    GETLISTMESSAGE: "获取我的网站列表数据",
-    GETWEBSITECONFIG: "获取网站配置信息",
+    GETLISTMESSAGE: "获取日志审计列表数据",
+    GETLOGSADUITCONFIG: "获取日志审计列表配置信息",
 };
 
 export interface LogsAduitType {
