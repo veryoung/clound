@@ -38,7 +38,7 @@ export class AttackLogs extends Vue {
     public tableConfig: TableConfigType;
 
     // init data
-    public titles: string[] = ["网站分析"];
+    public titles: string[] = ["攻击日志"];
     public filterData: SearchType = {
         start_time: "",
         end_time: "",

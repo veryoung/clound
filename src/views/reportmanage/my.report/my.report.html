@@ -6,12 +6,10 @@
                 <el-input v-model="filter.name" placeholder="请输入报告名称"></el-input>
             </el-form-item>
             <el-form-item label="统计范围">
-                <el-popover ref="popover1" placement="top-start" title="标题" width="200" trigger="hover" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-                </el-popover>
                 <el-select v-model="filter.count_range" filterable remote clearable reserve-keyword placeholder="请输入关键词" :remote-method="remoteMethod"
                     :loading="loading">
-                    <el-tooltip  v-for="item in options4" :key="item.value" class="item" effect="dark"  placement="bottom-end">
-                         <p  style="height:10px;"slot="content" class="tooltip-content">{{item.value}}</p>
+                    <el-tooltip v-for="item in options4" :key="item.value" class="item" effect="dark" placement="bottom-end">
+                        <p style="height:10px;" slot="content" class="tooltip-content">{{item.value}}</p>
                         <el-option :label="item.label" :value="item.value">
                         </el-option>
                     </el-tooltip>
@@ -20,7 +18,7 @@
             <el-form-item label="统计周期">
                 <el-select v-model="filter.count_cycle" placeholder="状态" size="small">
                     <el-option label="全部" value=""></el-option>
-                    <el-option label="日报" v-popover:popover1 value="0"></el-option>
+                    <el-option label="日报" value="0"></el-option>
                     <el-option label="周报" value="1"></el-option>
                     <el-option label="月报" value="2"></el-option>
                     <el-option label="自定义" value="3"></el-option>
@@ -44,21 +42,21 @@
         <div class="btn-group">
             <div>
                 <div class="btn-first">
-                    <el-button v-permissions="'WebsiteManagement.MyWebsite.Add'" type="primary" @click="handle('add')" size="small">
+                    <el-button type="primary" @click="handle('add')" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         批量下载
                     </el-button>
-                    <el-button v-permissions="'WebsiteManagement.MyWebsite.OpenDefense'" type="primary" @click="openwaf('openWaf')" size="small">
+                    <el-button type="primary" @click="openwaf('openWaf')" size="small">
                         <span class="iconfont">&#xe61b;</span>
                         删除报告
                     </el-button>
                 </div>
             </div>
             <div class="btn-last">
-                <SetCol moduleName="mywebsitetable" />
+                <SetCol moduleName="myreporttable" />
             </div>
         </div>
-        <CloudTable moduleName="mywebsitetable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+        <CloudTable moduleName="myreporttable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
             @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
             </el-table-column>
