@@ -17,3 +17,18 @@ interface LogAuditTableType {
     op_type: string;
     user: string;
 }
+
+
+export interface LogAuditsTableType {
+    [extra: string]: TableCloums[];
+}
+
+interface TableCloums {
+    email: string;
+    ip: string;
+    op_detail: string;
+    op_ret: string;
+    op_time: string;
+    op_type: string;
+    user: string;
+}

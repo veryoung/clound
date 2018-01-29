@@ -1,9 +1,10 @@
-import { LogsDetail } from "@views/websiteAnalysis/AttackLogs/logsDetail/logs.detail";
-import { AttackLogs } from "@views/websiteAnalysis/AttackLogs/attack.logs";
-import { WebsitePandect } from "@views/websiteAnalysis/websitePandect/website.pandect";
+
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
-import { WebsiteDetail } from "@views/websiteAnalysis/websitePandect/websiteDetail/website.detail";
+import { WebsitePandect } from "@views/websiteanalysis/website.pandect/website.pandect";
+import { AttackLogs } from "@views/websiteanalysis/attack.logs/attack.logs";
+import { WebsiteDetail } from "@views/websiteanalysis/website.pandect/website.detail/website.detail";
+import { LogsDetail } from "@views/websiteanalysis/attack.logs/logs.detail/logs.detail";
 
 
 export const WebsiteAnalysisRouter: RouteConfig[] = [

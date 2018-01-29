@@ -2,35 +2,27 @@
         <div class="form-part">
             <ModuleTitle :titles="titles" />
             <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
-                <el-form-item label="访问时间">
-                    <el-date-picker 
-                    v-model="currentDateDay" 
-                    type="daterange" 
-                    value-format="yyyyMMdd"
-                    range-separator="至" 
-                    start-placeholder="开始日期" 
-                    end-placeholder="结束日期">
-                    </el-date-picker>
+                <el-form-item label="关键字">
+                    <el-input v-model="filter.name" placeholder="请输入关键字"></el-input>
                 </el-form-item>
-                <el-form-item label="访问用户">
-                    <el-input v-model="filter.name" placeholder="请输入访问用户"></el-input>
-                </el-form-item>
-                <el-form-item label="访问IP">
-                    <el-input v-model="filter.attackedUrl" placeholder="请输入访问IP"></el-input>
-                </el-form-item>
-                <el-form-item label="操作详情">
-                    <el-input v-model="filter.attactIP" placeholder="请输入网站名称"></el-input>
-                </el-form-item>
-                <el-form-item label="操作类型">
-                    <el-select v-model="filter.domain" placeholder="请选择操作类型">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
+                <el-form-item label="发送方式">
+                    <el-select v-model="filter.open_waf" placeholder="状态" size="small">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option label="人工发送" value="0"></el-option>
+                        <el-option label="系统发送" value="1"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="操作结果">
-                    <el-select v-model="filter.domain" placeholder="请选择操作结果">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
+                <el-form-item label="访问时间">
+                    <el-date-picker v-model="currentDateDay" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="发送状态">
+                    <el-select v-model="filter.open_waf" placeholder="状态" size="small">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option label="发送中" value="2"></el-option>
+                        <el-option label="发送成功" value="0"></el-option>
+                        <el-option label="发送失败" value="1"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -41,6 +33,14 @@
             <div class="btn-group">
                 <div>
                     <div class="btn-first">
+                        <el-button  type="primary" @click="handle('write')" size="small">
+                            <span class="iconfont">&#xe61a;</span>
+                            写短信
+                        </el-button>
+                        <el-button type="primary" @click="handle('del')" size="small">
+                            <span class="iconfont">&#xe61a;</span>
+                            删除
+                        </el-button>
                     </div>
                 </div>
                 <div class="btn-last">

@@ -1,5 +1,4 @@
 import { RouterComponent } from "@components/router/router.component";
-import { LogsAudit } from "@views/systemmanage/logsAudit/logs.audit";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 
@@ -8,6 +7,7 @@ import { OrganizationComponent } from "@views/organization/organization";
 import { UserManagement } from "@views/usermanage/user.manage";
 import { UserOperation } from "@views/usermanage/operation/operation";
 import { UserMessage } from "@views/usercenter/user.message";
+import { LogsAudit } from "@views/systemmanage/logs.audit/logs.audit";
 
 
 // /SystemManagement/UserManagement/

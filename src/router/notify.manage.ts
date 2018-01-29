@@ -1,10 +1,11 @@
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
+import { PublicNotice } from "@views/systemmanage/noti.manage/public.notice/pubilc.notice";
+import { EmailsNotice } from "@views/systemmanage/noti.manage/email.notice/emails.notice";
+import { MessageNotice } from "@views/systemmanage/noti.manage/message.notice/message.notice";
 
 
-import { PublicNotice } from "@views/systemmanage/notiManage/publicNotice/pubilc.notice";
-import { EmailsNotice } from "@views/systemmanage/notiManage/emailNotice/emails.notice";
-import { MessageNotice } from "@views/systemmanage/notiManage/messageNotice/message.notice";
+
 
 
 export const notifyRouter: RouteConfig[] = [
