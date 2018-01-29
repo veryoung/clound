@@ -16,8 +16,9 @@ reset_pwd = "SystemManagement.userManagement.ResetPassword
  */
 
 export const PermissionsSet: string[] = [
-    // 系统管理
-    // 用户管理
+    /************************* 系统管理 ****************************/
+    // # 系统管理
+    // ## 用户管理
     // 显示用户详情
     "SystemManagement.userManagement.Detail",
     // 添加用户
@@ -33,7 +34,7 @@ export const PermissionsSet: string[] = [
     // 导出当前过滤条件用户信息列表
     "SystemManagement.userManagement.ExportAll",
     "SystemManagement.userManagement.ResetPassword",
-    // 组织机构
+    // ## 组织机构
     // 显示组织详情
     "SystemManagement.Organization.Check",
     // 添加组织信息
@@ -42,14 +43,71 @@ export const PermissionsSet: string[] = [
     "SystemManagement.Organization.Delete",
     // 更新组织信息
     "SystemManagement.Organization.Edit",
-    // 个人中心
-    // 公告通知
+    // ## 角色管理
+    // 查看
+    "SystemManagement.RoleManagement.Check",
+    // 添加
+    "SystemManagement.RoleManagement.Add",
+    // 删除
+    "SystemManagement.RoleManagement.Delete",
+    // 编辑
+    "SystemManagement.RoleManagement.Edit",
+    // 权限查看
+    "SystemManagement.RoleManagement.PermissionView",
+    // ## 日志审计
+    // 查看
+    "SystemManagement.LogAudit.Check",
+    // 下载
+    "SystemManagement.LogAudit.Download",
+    // ## 站内公告
+    // 查看
+    "SystemManagement.Notice.Check",
+    // 添加
+    "SystemManagement.Notice.Add",
+    // 删除
+    "SystemManagement.Notice.Delete",
+    // 编辑
+    "SystemManagement.Notice.Edit",
+    // ## 邮件通知
+    // 查看
+    "SystemManagement.MailNotification.Check",
+    // 添加
+    "SystemManagement.MailNotification.Add",
+    // 删除
+    "SystemManagement.MailNotification.Delete",
+    // ## 短信通知
+    // 查看
+    "SystemManagement.SMSNotification.Check",
+    // 添加
+    "SystemManagement.SMSNotification.Add",
+    // 删除
+    "SystemManagement.SMSNotification.Delete",
+    /*******************************态势感知*************************/
+    // # 态势感知
+    // 概括
+    "SituationalAwareness.Generalization",
+    // 网站态势
+    "SituationalAwareness.WebsiteSituation",
+    // 攻击趋势
+    "SituationalAwareness.AttackTrend",
+    // 被攻击网站TOP5
+    "SituationalAwareness.AttackedWebsiteTOP5",
+    // 攻击源地域TOP5
+    "SituationalAwareness.AttackSourceRegionTOP5",
+    // 地图
+    "SituationalAwareness.Map",
+    // 实时攻击信息
+    "SituationalAwareness.RealTimeAttackInformation",
+    /************************个人中心****************************/
+    // # 个人中心
+    // ## 公告通知
     // 查看
     "Personal.Announcement.Check",
     // 修改
     "Personal.Announcement.Modify",
-    // 网站管理
-    // 我的网站
+    /********************************网站管理************************* */
+    // # 网站管理
+    // ## 我的网站
     // 查看
     "WebsiteManagement.MyWebsite.Check",
     // 添加
@@ -67,7 +125,78 @@ export const PermissionsSet: string[] = [
     // 编辑
     "WebsiteManagement.MyWebsite.Edit",
     // 删除
-    "WebsiteManagement.MyWebsite.Delete"
+    "WebsiteManagement.MyWebsite.Delete",
+    /*************************主页*********************/
+    // # 主页
+    // 接入企业用户总数 
+    "Home.AccessUsersTotal",
+    // 接入网站总数
+    "Home.AccessSitesTotal",
+    // 服务到期提醒
+    "Home.ServiceReminding",
+    // 最近7天添加网站
+    "Home.AddWebsiteLast7",
+    // 今日高危网站
+    "Home.TodayHighRiskWebsite",
+    // 最近7天退出网站  
+    "Home.ExitWebsiteLast7",
+    /************************网站分析************************/
+    // # 分析
+    // ## 网站总览
+    "WebsiteAnalysis.WebOverview.SecurityRating", // 安全评级
+    "WebsiteAnalysis.WebOverview.TrendOfAttack", // 攻击次数趋势
+    "WebsiteAnalysis.WebOverview.AttackTypeDistribution", // 攻击类型分布
+    "WebsiteAnalysis.WebOverview.AttackSourceRegionTOP10", // 攻击源地域TOP10
+    "WebsiteAnalysis.WebOverview.AttackIPTOP10", // 攻击IPTOP10
+    "WebsiteAnalysis.WebOverview.AccessTrafficTrend", // 访问流量趋势
+    "WebsiteAnalysis.WebOverview.AccessTimesTrend", // 访问次数趋势
+    "WebsiteAnalysis.WebOverview.AccessIPTrend", // IP访问次数趋势
+    "WebsiteAnalysis.WebOverview.regionalVisitsTOP10", // 地域访问次数TOP10
+    "WebsiteAnalysis.WebOverview.SiteTrafficTOP10", // 地域网站流量TOP10
+    /************************攻击日志************************/
+    // # 攻击日志
+    "AttackLog.Check", // 查看
+    "AttackLog.ExportSelection", // 导出选中
+    "AttackLog.ExportAll", // 导出所有
+    "AttackLog.AttackDetails", // 攻击详情
+    /************************报告管理************************/
+    // # 报告管理
+    // ## 我的报告
+    // 查看
+    "ReportManagement.Myreport.Check",
+    // 下载
+    "ReportManagement.Myreport.Download",
+    // 删除
+    "ReportManagement.Myreport.Delete",
+    // ## 报告模板
+    // 查看
+    "ReportManagement.Reporttemplate.Check",
+    // 添加
+    "ReportManagement.Reporttemplate.Add",
+    // 编辑
+    "ReportManagement.Reporttemplate.Edit",
+    // 删除
+    "ReportManagement.Reporttemplate.Delete",
+    // 生成报告
+    "ReportManagement.Reporttemplate.GenerationReport",
+    /************************运维管理************************/
+    // # 运维管理
+    // ## 我的节点
+    // 查看
+    "OperationsManagement.MyNode.Check",
+    // 添加
+    "OperationsManagement.MyNode.Add",
+    // 编辑
+    "OperationsManagement.MyNode.Edit",
+    // 删除
+    "OperationsManagement.MyNode.Delete",
+    // ## 节点状态
+    // 节点服务状态
+    "OperationsManagement.NodeState.NodeServiceState",
+    // 节点资产状态
+    "OperationsManagement.NodeState.NodeAssetsState"
+
+
 ];
 
 

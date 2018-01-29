@@ -19,7 +19,6 @@ import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { session } from "@utils/sessionstorage";
 import { ListBaseClass } from "@views/base/base.class";
-import { open } from "fs";
 import * as moment from "moment";
 
 
@@ -164,7 +163,7 @@ export class MyReport extends ListBaseClass {
             } else if (type === "settings") {
                 this.$router.push(`/WebsiteManagement/myWebsite/settings/${row.id}`);
             } else if (type === "look") {
-                this.$router.push(`/WebsiteManagement/myWebsite/look/${row.id}`);
+                this.$router.push(`/ReportManagement/RreviewReport/${row.id}`);
             } else if (type === "del") {
                 WebsiteManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
             }

@@ -23,6 +23,7 @@ import { WebsiteManageRouter } from "@router/website.manage";
 import { LoginPortal } from "@views/loginportal/login.portal";
 import { WebsiteAnalysisRouter } from "@router/website.analysis";
 import { CountReportRouter } from "@router/count.report";
+import { PreviewReport } from "@views/reportmanage/preview.report/preview.report";
 
 
 Vue.use(Router);
@@ -164,6 +165,14 @@ let tempRouter: RouteConfig[] = [
             }
         },
         children: userCenterRouter,
+    },
+    {
+        path: "/report",
+        name: "统计报告",
+        meta: {
+            hidden: true
+        },
+        component: PreviewReport
     }
 ];
 
