@@ -3,7 +3,8 @@ export const NOTICEEVENT = {
     GETEMAILDETAIL: "获取邮件详情",
     GETMSGLIST: "获取短信列表",
     GETMSGDETAIL: "获取短信详情",
-    GETNOTICELIST: "获取公告列表"
+    GETNOTICELIST: "获取公告列表",
+    GETNOTICEDETAIL: "获取公告详情",
 };
 
 export interface NoticeType {
@@ -21,6 +22,9 @@ export interface NoticeType {
     };
     noticeTable: {
         [extra: string]: NoticeListType[]
+    };
+    noticeDetail: {
+        [extra: string]: NoticeDetailType[]
     };
 }
 
@@ -43,6 +47,14 @@ export interface MsgDetailType {
     send_date: string;
     sender: string;
     status: string;
+}
+
+export interface NoticeDetailType {
+    content: string;
+    cperson: string;
+    ctime: string;
+    id: string;
+    title: string;
 }
 
 

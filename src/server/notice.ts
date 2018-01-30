@@ -59,6 +59,15 @@ class Notice extends Restful {
         });
     }
 
+    public getNoticeDetail(id: string) {
+        return this.get({
+            url: `/api/v20/bulletin/notification/detail/`,
+            params: {
+                id: id
+            }
+        });
+    }
+
     public getMessageRecord(opt: {
         end_date: string;
         msg_type: string;
