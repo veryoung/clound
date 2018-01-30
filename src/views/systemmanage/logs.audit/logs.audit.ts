@@ -43,7 +43,7 @@ export class LogsAudit extends ListBaseClass {
     public titles: string[] = ["日志审计"];
     public filterData: SearchType = {
         detail: "",
-        send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")];
+        send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
         ip: "",
         op_result: "",
         op_type: "",
@@ -66,34 +66,34 @@ export class LogsAudit extends ListBaseClass {
             value: "",
             label: "全部"
         }, {
-            value: "AUTH_MODULE",
+            value: "认证管理",
             label: "认证管理"
         }, {
-            value: "ANALYSIS_MODULE",
+            value: "运营分析",
             label: "运营分析"
         }, {
-            value: "ATTACK_LOG_MODULE",
+            value: "攻击日志",
             label: "攻击日志"
         }, {
-            value: "WEB_MANAGE_MODULE",
+            value: "网站管理",
             label: "网站管理"
         }, {
-            value: "REPORT_MODULE",
+            value: "统计报告",
             label: "统计报告"
         }, {
-            value: "NODE_MAINTAIN_MODULE",
+            value: "运维管理",
             label: "运维管理"
         }, {
-            value: "USER_MANAGE_MODULE",
+            value: "用户管理",
             label: "用户管理"
         }, {
-            value: "ORG_MANAGE_MODULE",
+            value: "组织机构管理",
             label: "组织机构管理"
         }, {
-            value: "OP_LOG_MODULE",
+            value: "日志审计",
             label: "日志审计"
         }, {
-            value: "NOTIFICATION_MODULE",
+            value: "通知管理",
             label: "通知管理"
         }];
     public value: string = "";
@@ -146,6 +146,7 @@ export class LogsAudit extends ListBaseClass {
         this.ids = [];
         options.map((item: LogsAuditColumnType, $index: number) => {
             this.ids.push(item.id);
+            console.log(this.ids);
         });
     }
 
@@ -153,7 +154,7 @@ export class LogsAudit extends ListBaseClass {
     handle(type: "download", rowObj?: any) {
         console.log(this.ids);
         if (type === "download") {
-            if (this.ids === []) {
+            if (this.ids.length === 0) {
                 this.downLoadAll();
             } else {
                 this.downLoadChoose();
@@ -165,12 +166,12 @@ export class LogsAudit extends ListBaseClass {
 
     // 下载
     downLoadChoose() {
-        console.log(this.filter);
-        this.exportFile(`/api/v20/bulletin/op_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
+        console.log(`/api/v20/syslog/export_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
+        // this.exportFile(`/api/v20/syslog/export_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
     }
     downLoadAll() {
         let data = this.filter;
-        this.exportFile(`/api/v20/bulletin/op_log/?ids=[]${this.objToUrl(this.filter)}`);
+        this.exportFile(`/api/v20/syslog/export_log/?ids=[]${this.objToUrl(this.filter)}`);
     }
 
 }

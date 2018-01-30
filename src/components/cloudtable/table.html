@@ -6,7 +6,7 @@
                 :sortable="column.sortable?column.sortable:false" align="center" header-align="center" :key="$index">
                 <template slot-scope="scope">
                     <span v-if="column.type==='date'" class="ellipsis" :title="scope.row[column.prop] | date |none">{{scope.row[column.prop] | date |none}}</span>
-                    <span v-if="column.type==='datetime'" class="ellipsis" :title="scope.row[column.prop] | datetime |none">{{scope.row[column.prop] | datetime |none}}</span>
+                    <span v-else-if="column.type==='dateTime'" class="ellipsis" :title="scope.row[column.prop] | datetime |none">{{scope.row[column.prop] | datetime |none}}</span>
                     <span v-else-if="column.type==='website_server'">
                         <!-- <el-popover trigger="hover" placement="left">
                             <p class="ellipsis turn_left margin5-0" :title="scope.row[column.prop].waf_enable==='1'?'开启':'关闭'">
@@ -52,7 +52,6 @@
                     <span v-else-if="column.type==='source_info'" class="ellipsis" :title="scope.row[column.prop]">
                         <span v-for="item in scope.row[column.prop]">{{item}}</span>
                     </span>
-
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>
             </el-table-column>

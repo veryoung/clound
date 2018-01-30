@@ -277,14 +277,16 @@ export const systemTable: TableConfigType = {
                 label: "访问时间",
                 prop: "op_time",
                 show: true,
-                type: "datetime",
+                type: "dateTime",
                 sortable: "custom",
-                width: "180px"
+                width: "180px",
+                disable: true
             },
             {
                 label: "访问用户",
                 prop: "username",
                 show: true,
+                disable: true
             },
             {
                 label: "用户邮箱",
@@ -305,11 +307,13 @@ export const systemTable: TableConfigType = {
                 label: "操作详情",
                 prop: "op_detail",
                 show: true,
+                disable: true
             },
             {
                 label: "操作结果",
                 prop: "op_ret",
                 show: true,
+                disable: true
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],
