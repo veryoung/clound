@@ -139,7 +139,9 @@ export const systemTable: TableConfigType = {
                 prop: "service",
                 label: "服务项",
                 show: true,
-                type: "website_server"
+                type: "website_server",
+                width: "150px"
+
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],
@@ -275,10 +277,13 @@ export const systemTable: TableConfigType = {
                 label: "访问时间",
                 prop: "op_time",
                 show: true,
+                type: "datetime",
+                sortable: "custom",
+                width: "180px"
             },
             {
                 label: "访问用户",
-                prop: "user",
+                prop: "username",
                 show: true,
             },
             {
