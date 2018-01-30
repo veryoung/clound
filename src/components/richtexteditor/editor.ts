@@ -79,7 +79,7 @@ export class RichTextEditor extends Vue {
         modules: {
             // toolbar: "#toolbar"
             // { "size": ["small", false, "large", "huge"] }, 
-            toolbar: [{ "header": [1, 2, 3, 4, 5, 6, false] }, { "list": "ordered" }, { "list": "bullet" }, "bold", "italic", "underline", "strike", "link", "blockquote", "code-block", { "font": [] }, "clean"]
+            toolbar: [{ "header": [1, 2, 3, 4, 5, 6, false] }, { "list": "ordered" }, { "list": "bullet" }, "bold", "italic", "underline", "strike", "link", "blockquote", "code-block", { "color": [] }, { "background": [] }, "clean"]
         },
         placeholder: "请输入内容",
         theme: "snow"

@@ -2,8 +2,7 @@ $main-color = #f4f5f7
 $circle-color = #439ABC
 
 .report-panel
-    // width 1000px
-    // margin 0 auto
+    position absolute
     >.report-header
         background-color $main-color
         height 60px
@@ -49,6 +48,21 @@ $circle-color = #439ABC
             background-color $main-color
             margin 10px 20px 20px 10px
             border-radius 5px
+            justify-content space-between
+            align-items center
+            >.left
+                margin-left 30px
+                font-weight bolder
+                text-align left
+                >.data
+                    font-size 40px
+                    >sub 
+                        font-weight normal
+                        font-size 20px
+            >.right
+                margin-right 30px
+                font-size 80px
+                color #bebebe
     >.graph
         width 100%
         height 360px
