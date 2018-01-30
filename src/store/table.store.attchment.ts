@@ -1,5 +1,5 @@
 import { TableConfigType } from "@store/table.type";
-
+ 
 export const systemTable: TableConfigType = {
     "usertable": {
         columns: [
@@ -272,38 +272,38 @@ export const systemTable: TableConfigType = {
     "logautdittable": {
         columns: [
             {
-                prop: "访问时间",
-                label: "op_time",
+                label: "访问时间",
+                prop: "op_time",
                 show: true,
             },
             {
-                prop: "访问用户",
-                label: "user",
+                label: "访问用户",
+                prop: "user",
                 show: true,
             },
             {
-                prop: "用户邮箱",
-                label: "email",
+                label: "用户邮箱",
+                prop: "email",
                 show: true,
             },
             {
-                prop: "访问IP",
-                label: "ip",
+                label: "访问IP",
+                prop: "ip",
                 show: true,
             },
             {
-                prop: "操作类型",
-                label: "op_type",
+                label: "操作类型",
+                prop: "op_type",
                 show: true,
             },
             {
-                prop: "操作详情",
-                label: "op_detail",
+                label: "操作详情",
+                prop: "op_detail",
                 show: true,
             },
             {
-                prop: "操作结果",
-                label: "op_ret",
+                label: "操作结果",
+                prop: "op_ret",
                 show: true,
             },
         ],
@@ -316,38 +316,40 @@ export const systemTable: TableConfigType = {
     "emailtable": {
         columns: [
             {
-                prop: "id",
                 label: "id",
-                show: false
+                prop: "id",
+                show: false,
+                disable: true,
+                nonexit: true
             },
             {
-                prop: "邮件标题",
-                label: "object",
+                label: "邮件标题",
+                prop: "object",
                 show: true,
             },
             {
-                prop: "接收人",
-                label: "receiver",
+                label: "收件人",
+                prop: "receiver",
                 show: true,
             },
             {
-                prop: "发送日期",
-                label: "send_date",
+                label: "发送方式",
+                prop: "send_type",
                 show: true,
             },
             {
-                prop: "操作类型",
-                label: "send_type",
+                label: "发送人",
+                prop: "sender",
                 show: true,
             },
             {
-                prop: "发送人",
-                label: "sender",
+                label: "发送日期",
+                prop: "send_date",
                 show: true,
             },
             {
-                prop: "发送状态",
-                label: "status",
+                label: "发送状态",
+                prop: "status",
                 show: true,
             },
         ],
@@ -360,33 +362,35 @@ export const systemTable: TableConfigType = {
     "msgtable": {
         columns: [
             {
-                prop: "id",
                 label: "id",
-                show: false
+                prop: "id",
+                show: false,
+                disable: true,
+                nonexit: true
             },
             {
-                prop: "邮件标题",
-                label: "object",
+                label: "邮件标题",
+                prop: "object",
                 show: true,
             },
             {
-                prop: "接收人",
-                label: "receiver",
+                label: "接收人",
+                prop: "receiver",
                 show: true,
             },
             {
-                prop: "发送日期",
-                label: "send_date",
+                label: "发送日期",
+                prop: "send_date",
                 show: true,
             },
             {
-                prop: "操作类型",
-                label: "send_type",
+                label: "操作类型",
+                prop: "send_type",
                 show: true,
             },
             {
-                prop: "发送人",
-                label: "sender",
+                label: "发送人",
+                prop: "sender",
                 show: true,
             },
             {
@@ -404,23 +408,25 @@ export const systemTable: TableConfigType = {
     "noticetable": {
         columns: [
             {
-                prop: "id",
                 label: "id",
-                show: false
+                prop: "id",
+                show: false,
+                disable: true,
+                nonexit: true
             },
             {
-                prop: "创建人",
-                label: "c_person",
+                label: "发布人",
+                prop: "c_person",
                 show: true,
             },
             {
-                prop: "公告内容",
-                label: "content",
+                label: "公告内容",
+                prop: "content",
                 show: true,
             },
             {
-                prop: "公告标题",
-                label: "title",
+                label: "公告标题",
+                prop: "title",
                 show: true,
             }
         ],
@@ -433,28 +439,76 @@ export const systemTable: TableConfigType = {
     "myreporttable": {
         columns: [
             {
-                prop: "报告名称",
-                label: "name",
+                label: "id",
+                prop: "id",
+                show: false,
+                disable: true,
+                nonexit: true
+            },
+            {
+                label: "报告名称",
+                prop: "name",
                 show: true,
             },
             {
-                prop: "统计周期",
-                label: "count_cycle",
+                label: "统计周期",
+                prop: "count_cycle",
                 show: true,
             },
             {
-                prop: "统计对象",
-                label: "count_obj",
+                label: "统计对象",
+                prop: "count_obj",
                 show: true,
             },
             {
-                prop: "统计时间",
-                label: "count_time",
+                label: "统计时间",
+                prop: "count_time",
                 show: true,
             },
             {
-                prop: "生成时间",
-                label: "pro_time",
+                label: "生成时间",
+                prop: "pro_time",
+                show: true,
+            },
+        ],
+        pageSizes: [10, 20, 30, 40, 50],
+        page_size: 10,
+        page: 1,
+        total: 1
+    },
+    // 报告模板
+    "reporttemplatetable": {
+        columns: [
+            {
+                label: "id",
+                prop: "id",
+                show: false,
+                disable: true,
+                nonexit: true
+            },
+            {
+                label: "模板名称",
+                prop: "name",
+                show: true,
+            },
+            {
+                label: "统计周期",
+                prop: "count_cycle",
+                show: true,
+            },
+            {
+                label: "统计范围",
+                prop: "count_range",
+                show: true,
+            },
+            {
+                label: "添加时间",
+                prop: "create_time",
+                show: true,
+            },
+            {
+                label: "执行状态",
+                prop: "run_status",
                 show: true,
             },
         ],

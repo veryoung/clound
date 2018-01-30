@@ -9,20 +9,30 @@
                 <el-input v-model="filter.domain" placeholder="请输入网站域名"></el-input>
             </el-form-item>
             <el-form-item label="安全评级">
-                    <el-select v-model="filter.level" placeholder="状态" size="small">
-                            <el-option label="全部" value="0"></el-option>
-                            <el-option label="高" value="1"></el-option>
-                            <el-option label="中" value="2"></el-option>
-                            <el-option label="低" value="3"></el-option>
-                            <el-option label="安全" value="4"></el-option>
-                    </el-select>
+                <el-select v-model="filter.level" placeholder="状态" size="small">
+                    <el-option label="全部" value="0"></el-option>
+                    <el-option label="高" value="1"></el-option>
+                    <el-option label="中" value="2"></el-option>
+                    <el-option label="低" value="3"></el-option>
+                    <el-option label="安全" value="4"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item>
                 <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
                 <el-button size="small" @click="reset">重置</el-button>
             </el-form-item>
         </el-form>
-        <CloudTable moduleName="mywebsitetable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+
+        <div class="btn-group">
+            <div>
+                <div class="btn-first">
+                </div>
+            </div>
+            <div class="btn-last">
+                <SetCol moduleName="websitepandecttable" />
+            </div>
+        </div>
+        <CloudTable moduleName="websitepandecttable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
             @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
             </el-table-column>
