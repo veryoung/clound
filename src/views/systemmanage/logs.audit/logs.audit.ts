@@ -48,6 +48,7 @@ export class LogsAudit extends ListBaseClass {
         op_result: "",
         op_type: "",
         user: "",
+        sort_time: "1",
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
     // 选择当前时间
@@ -137,7 +138,12 @@ export class LogsAudit extends ListBaseClass {
         this.$store.dispatch(LOGADUITEVENT.GETLOGAUDITLIST, this.mergeData(this.tableConfig["logautdittable"], this.filter));
     }
     sortChange(opt: any) {
-
+        if (opt.order === "descending") {
+            this.filter.sort_time = "0";
+        } else {
+            this.filter.sort_time = "1";
+        }
+        this.$store.dispatch(LOGADUITEVENT.GETLOGAUDITLIST, this.mergeData(this.tableConfig["logautdittable"], this.filter));
     }
 
 
@@ -149,7 +155,7 @@ export class LogsAudit extends ListBaseClass {
             console.log(this.ids);
         });
     }
-
+ 
     // 跳转方法同统一
     handle(type: "download", rowObj?: any) {
         console.log(this.ids);
@@ -167,11 +173,11 @@ export class LogsAudit extends ListBaseClass {
     // 下载
     downLoadChoose() {
         console.log(`/api/v20/syslog/export_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
-        // this.exportFile(`/api/v20/syslog/export_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
+        this.exportFile(`/api/v20/syslog/export_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
     }
     downLoadAll() {
         let data = this.filter;
-        this.exportFile(`/api/v20/syslog/export_log/?ids=[]${this.objToUrl(this.filter)}`);
+        this.exportFile(`/api/v20/syslog/export_log/?${this.objToUrl(this.filter)}`);
     }
 
 }
@@ -187,6 +193,7 @@ export interface SearchType {
     op_type: string;
     user: string;
     send_date: Array<string>;
+    sort_time: string;
 }
 
 export interface LogsAuditColumnType {

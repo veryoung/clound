@@ -1,3 +1,4 @@
+import ElementUI  from "element-ui";
 import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TableConfigType } from "@store/table.type";
@@ -24,6 +25,7 @@ require("./pubilc.notice.styl");
     computed: {
         ...mapGetters([
             "tableConfig",
+            "noticeTable"
         ])
     }
 })
@@ -31,7 +33,7 @@ require("./pubilc.notice.styl");
 
 export class PublicNotice extends ListBaseClass {
     // init computed
-    public tableData: PubilcTableType;
+    public noticeTable: PubilcTableType;
     public tableConfig: TableConfigType;
 
     // init data
@@ -40,6 +42,7 @@ export class PublicNotice extends ListBaseClass {
         key_word: "",
         new: true,
         page: "1",
+        ids: [],
         page_size: "10",
         send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
     };
@@ -55,8 +58,8 @@ export class PublicNotice extends ListBaseClass {
         this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
         let that = this;
 
-        let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
-            that.PublicNoticeData = (<any>Object).assign([], that.tableData[that.tableConfig["noticetable"].page - 1]);
+        let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
+            that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
         });
         // 
     }
@@ -94,9 +97,30 @@ export class PublicNotice extends ListBaseClass {
         // this.$emit("handleSelectionChange", options);
     }
 
-    // 跳转方法同统一
     handle() {
 
+    }
+
+    del() {
+        if (this.filter.ids.length === 0) {
+            this.$message({
+                message: "请选择需要删除项",
+                type: "warning"
+            });
+        } else {
+            this.$confirm("删除后公告将无法恢复，您确定要删除吗？", "删除公告", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(() => {
+
+            }).catch(() => {
+                this.$message({
+                    type: "info",
+                    message: "已取消删除" 
+                });
+            });
+        }
     }
 
     sortChange(opt: any) {
@@ -116,6 +140,7 @@ export interface DomainType {
 }
 export interface SearchType {
     key_word: string;
+    ids: Array<string>;
     new: boolean;
     page: string;
     page_size: string;
