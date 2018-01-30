@@ -25,7 +25,13 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="统计时间">
-                <el-date-picker v-model="filter.count_time" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
+                <el-date-picker 
+                v-model="filter.count_time"
+                @onPick = "dateChange" 
+                type="daterange" 
+                value-format="yyyyMMdd" 
+                range-separator="至" 
+                start-placeholder="开始日期"
                     end-placeholder="结束日期">
                 </el-date-picker>
             </el-form-item>

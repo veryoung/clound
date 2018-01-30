@@ -110,6 +110,7 @@ export class LogsAudit extends ListBaseClass {
         // 获取列表
         this.$store.dispatch(LOGADUITEVENT.GETLOGAUDITLIST, this.mergeData(this.tableConfig["logautdittable"], this.filter));
         let that = this;
+
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.logAuditTableColumnData = (<any>Object).assign([], that.tableData[that.tableConfig["logautdittable"].page - 1]);
         });

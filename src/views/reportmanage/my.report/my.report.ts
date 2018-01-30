@@ -182,7 +182,12 @@ export class MyReport extends ListBaseClass {
             this.ids.push(item.id);
         });
     }
+    // 时间选择
 
+    // dateChange(date: Array<string>) {
+    //     this.filter.start_date = date[0];
+    //     this.filter.end_date = date[1];
+    // }
 
 
     // 导出

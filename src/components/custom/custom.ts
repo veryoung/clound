@@ -15,8 +15,6 @@ import Component from "vue-class-component";
             border-color: ${this.$props.color};
         }
         .el-header {
-            position: fixed !important;
-            width: 100%;
             background:linear-gradient(to right, ${this.$props.headerColor});
         }
         `);
