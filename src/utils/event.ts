@@ -3,6 +3,7 @@ import { USER } from "@store/user.center.type";
 import { TABLECONFIG } from "@store/table.type";
 import { ORGANIZATION } from "@store/organization.type";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
+import { NOTICEEVENT } from "@store/notice.type";
 
 export const vm = new Vue({});
 
@@ -15,7 +16,7 @@ interface ListenerType {
     fn: Function;
 }
 
-export const CONSTANT = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION, MYWEBSITEEVENT);
+export const CONSTANT = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION, MYWEBSITEEVENT, NOTICEEVENT);
 /**
  *Author wjt
  *Date 2017-12-26

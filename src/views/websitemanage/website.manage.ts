@@ -118,7 +118,7 @@ export class WebsiteManagement extends ListBaseClass {
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
-    // 跳转方法同统一
+    // 跳转方法统一
     handle(type: "look" | "add" | "editor" | "settings" | "del", rowObj?: any) {
         if (rowObj) {
             const { $index, row } = rowObj;
