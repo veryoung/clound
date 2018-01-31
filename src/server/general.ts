@@ -39,6 +39,14 @@ export class General extends Restful {
         });
     }
 
+    public code() {
+        return this.get({
+            url: "/api/v20/account/idcode",
+            params: {}
+        });
+    }
+
+
     // public then(fn: Function) {
     //     this.callback = fn;
     // }

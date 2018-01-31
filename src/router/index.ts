@@ -20,7 +20,6 @@ import { USER } from "@store/user.center.type";
 import { Store } from "@store/store";
 import { UserStatus } from "@utils/monitor";
 import { WebsiteManageRouter } from "@router/website.manage";
-import { LoginPortal } from "@views/loginportal/login.portal";
 import { WebsiteAnalysisRouter } from "@router/website.analysis";
 import { CountReportRouter } from "@router/count.report";
 import { PreviewReport } from "@views/reportmanage/preview.report/preview.report";
@@ -35,6 +34,13 @@ let tempRouter: RouteConfig[] = [
             hidden: true
         },
         redirect: "/home"
+    },
+    {
+        path: "/login",
+        meta: {
+            hidden: true
+        },
+        component: Login
     },
     {
         path: "/home",
@@ -176,21 +182,6 @@ let tempRouter: RouteConfig[] = [
     }
 ];
 
-tempRouter.push(
-    process.env.PLATFORM === "portal" ? {
-        path: "/portal",
-        meta: {
-            hidden: true
-        },
-        component: LoginPortal
-    } : {
-            path: "/login",
-            meta: {
-                hidden: true
-            },
-            component: Login
-        }
-);
 export const entry: RouteConfig[] = tempRouter;
 
 export const entryRouter = new Router({

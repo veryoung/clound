@@ -1,14 +1,48 @@
-<div :class="style.login">
-    <el-form :model="form" :class="style.form">
-        <el-form-item label="账号">
-            <el-input v-model="form.username" placeholder="账号"></el-input>
-        </el-form-item>
-        <el-form-item label="密码">
-            <el-input type="password" v-model="form.pwd" placeholder="密码"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit">登录</el-button>
-        </el-form-item>
-    </el-form>
-
+<div class="login_panel">
+    <div class="login_title">
+        <div class="login_line">
+            <div class="loginline"></div>
+            <div class="line left"></div>
+        </div>
+        <img v-if="env==='operation'" src="src/resource/images/logo.png" />
+        <img v-if="env==='portal'" src="src/resource/images/logo1.png" />
+        <div class="login_line">
+            <div class="loginline"></div>
+            <div class="line right"></div>
+        </div>
+    </div>
+    <div class="login_main">
+        <div v-if="env==='portal'" class="login_image_portal">
+            <img src="src/resource/images/banner1.png" />
+        </div>
+        <div v-if="env==='operation'" class="login_image_operation">
+            <img src="src/resource/images/banner2.png" />
+        </div>
+        <div class="login_fn">
+            <img src="src/resource/images/login_line.png" />
+            <div class="login_fn_panel">
+                <el-form :model="form" class="form">
+                    <el-form-item label="" class="inline-panel">
+                        <el-input v-model="form.username" placeholder="账号">
+                            <el-button slot="append" class="iconfont icon-yonghu"></el-button>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="" class="inline-panel">
+                        <el-input type="password" v-model="form.pwd" placeholder="密码">
+                            <el-button slot="append" class="iconfont icon-yuechi"></el-button>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="" class="inline-panel">
+                        <el-input class="yzm" type="text" v-model="form.code" placeholder="验证码">
+                        </el-input>
+                        <div class="yzm_image" @click="changeCode">
+                            <img :src="ubase64" />
+                        </div>
+                    </el-form-item>
+                    <el-button class="login_btn" type="primary" @click="onSubmit">登录</el-button>
+                </el-form>
+            </div>
+        </div>
+    </div>
+    <FooterComponent />
 </div>
