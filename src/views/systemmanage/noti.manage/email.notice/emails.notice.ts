@@ -23,7 +23,7 @@ require("./emails.notice.styl");
     computed: {
         ...mapGetters([
             "tableConfig",
-            "tableData",
+            "emailTable",
         ])
     }
 })
@@ -31,11 +31,12 @@ require("./emails.notice.styl");
 
 export class EmailsNotice extends ListBaseClass {
     // init computed
-    public tableData: EmailNoticeTableType;
+    public emailTable: EmailNoticeTableType;
     public tableConfig: TableConfigType;
 
     // init data
     public titles: string[] = ["邮件通知"];
+    public ids: string[] = [];
     public filterData: SearchType = {
         key_word: "",
         send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
@@ -44,14 +45,17 @@ export class EmailsNotice extends ListBaseClass {
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
     public emailnoticetableData: EmailNoticeColumnType[] = new Array<EmailNoticeColumnType>();
+
     // watch
     // lifecircle hook 
     created() {
         this.$store.dispatch(NOTICEEVENT.GETEMAILLIST, this.mergeData(this.tableConfig["emailtable"], this.filter));
         let that = this;
 
-        let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
-            that.emailnoticetableData = (<any>Object).assign([], that.tableData[that.tableConfig["noticetable"].page - 1]);
+        let ListId = EventBus.register(CONSTANT.GETEMAILLIST, function (event: string, info: any) {
+            console.log(that.emailTable);
+            that.emailnoticetableData = (<any>Object).assign([], that.emailTable[that.tableConfig["noticetable"].page - 1]);
+            
         });
     }
 
@@ -64,23 +68,35 @@ export class EmailsNotice extends ListBaseClass {
 
     // init method
     search() {
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(NOTICEEVENT.GETEMAILLIST, this.mergeData(this.tableConfig["emailtable"], this.filter));
+    }
+
+    // 填写
+    write() {
+        this.$router.push(`/SystemManagement/ReportManagement/emaillnotice/add`);
     }
 
     reset() {
-        // this.filter = (<any>Object).assign({}, filterData);
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.filter = (<any>Object).assign({}, this.filterData);
+        this.$store.dispatch(NOTICEEVENT.GETEMAILLIST, this.mergeData(this.tableConfig["emailtable"], this.filter));
     }
 
     handleSizeChange(val: number) {
-        // this.tableConfig.mywebsitetable.page_size = val;
+        this.tableConfig.emailtable.page_size = val;
+        this.$store.dispatch(NOTICEEVENT.GETEMAILLIST, this.mergeData(this.tableConfig["emailtable"], this.filter));
+
     }
     handleCurrentChange(val: number) {
-        // this.tableConfig.mywebsitetable.page = val;
+        this.tableConfig.emailtable.page = val;
+        this.$store.dispatch(NOTICEEVENT.GETEMAILLIST, this.mergeData(this.tableConfig["emailtable"], this.filter));
+
     }
 
     handleSelectionChange(options: any) {
-        // this.$emit("handleSelectionChange", options);
+        this.ids = [];
+        options.map((item: EmailNoticeColumnType, $index: number) => {
+            this.ids.push(item.id);
+        });
     }
 
     // 跳转方法同统一

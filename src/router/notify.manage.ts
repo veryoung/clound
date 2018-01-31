@@ -1,3 +1,4 @@
+import { EmailNoiceOperation } from "@views/systemmanage/noti.manage/operation/email.notice.operation";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
 import { PublicNotice } from "@views/systemmanage/noti.manage/public.notice/pubilc.notice";
@@ -46,6 +47,18 @@ export const notifyRouter: RouteConfig[] = [
             operation: "add"
         },
         component: PublicNoiceOperation
+    },
+    {
+        path: "emaillnotice/add",
+        name: "写邮件",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true,
+        },
+        props: {
+            operation: "add"
+        },
+        component: EmailNoiceOperation
     },
     {
         path: "notice/look/:id",

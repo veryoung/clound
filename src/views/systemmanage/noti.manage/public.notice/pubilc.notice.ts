@@ -13,9 +13,11 @@ import { EventBus, CONSTANT } from "@utils/event";
 import { AxiosResponse } from "axios";
 import { ResType } from "server";
 import { NoticeServer } from "@server/notice";
+import { Auxiliary } from "@utils/auxiliary";
 
 
 require("./pubilc.notice.styl");
+const Aux = new Auxiliary<string>();
 
 @Component({
     name: "publicnotice",
@@ -53,8 +55,6 @@ export class PublicNotice extends ListBaseClass {
 
     public PublicNoticeData: PublicNoticeColumnType[] = new Array<PublicNoticeColumnType>();
     // watch
-    public unwatch: Function = () => { };
-
 
     // lifecircle hook 
     created() {
@@ -68,10 +68,9 @@ export class PublicNotice extends ListBaseClass {
     }
 
     destroyed() {
-        // Aux.getIds().map((id, $idnex) => {
-        //     EventBus.unRegister(id);
-        // });
-        // this.unwatch();
+        Aux.getIds().map((id, $idnex) => {
+            EventBus.unRegister(id);
+        });
     }
 
     // init method

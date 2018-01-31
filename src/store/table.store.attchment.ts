@@ -335,11 +335,13 @@ export const systemTable: TableConfigType = {
                 label: "邮件标题",
                 prop: "object",
                 show: true,
+                disable: true,
             },
             {
                 label: "收件人",
                 prop: "receiver",
                 show: true,
+                disable: true,
             },
             {
                 label: "发送方式",
@@ -360,6 +362,7 @@ export const systemTable: TableConfigType = {
                 label: "发送状态",
                 prop: "status",
                 show: true,
+                disable: true,
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],
@@ -432,12 +435,14 @@ export const systemTable: TableConfigType = {
                 label: "公告内容",
                 prop: "content",
                 show: true,
-                type: "htmlData"
+                type: "htmlData",
+                disable: true,
             },
             {
                 label: "公告标题",
                 prop: "title",
                 show: true,
+                disable: true,
             }
         ],
         pageSizes: [10, 20, 30, 40, 50],
