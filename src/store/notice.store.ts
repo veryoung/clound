@@ -152,7 +152,7 @@ export const NoticeStore: Module<NoticeType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETEMAILDETAIL, { page: payload.id, message: res.data.data });
+                        commit(NOTICEEVENT.GETEMAILDETAIL, { id: payload.id, message: res.data.data });
                         EventBus.doNotify(CONSTANT.GETEMAILDETAIL);
                         break;
                     default:
@@ -168,7 +168,7 @@ export const NoticeStore: Module<NoticeType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETMSGDETAIL, { page: payload.id, message: res.data.data });
+                        commit(NOTICEEVENT.GETMSGDETAIL, { id: payload.id, message: res.data.data });
                         EventBus.doNotify(CONSTANT.GETMSGDETAIL);
                         break;
                     default:
@@ -185,7 +185,7 @@ export const NoticeStore: Module<NoticeType, any> = {
                 console.log(res);
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETNOTICEDETAIL, { page: payload.id, message: res.data.data });
+                        commit(NOTICEEVENT.GETNOTICEDETAIL, { id: payload.id, message: res.data.data });
                         EventBus.doNotify(CONSTANT.GETNOTICEDETAIL);
                         break;
                     default:

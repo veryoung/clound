@@ -18,10 +18,8 @@ export class General extends Restful {
             url = "/portal/api/v20/account/auth";
         }
         return this.post({
-            url: url, params: {
-                username: username,
-                pwd: pwd
-            }
+            url: url,
+            params: opt
         });
     }
 
@@ -38,6 +36,14 @@ export class General extends Restful {
             params: {}
         });
     }
+
+    public code() {
+        return this.get({
+            url: "/api/v20/account/idcode",
+            params: {}
+        });
+    }
+
 
     // public then(fn: Function) {
     //     this.callback = fn;
