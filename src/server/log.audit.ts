@@ -15,7 +15,7 @@ class LogAudit extends Restful {
         user?: string;
     }) {
         return this.get({
-            url: `/api/v20/bulletin/op_log/`,
+            url: `/api/v20/syslog/op_log/`,
             params: opt
         });
     }

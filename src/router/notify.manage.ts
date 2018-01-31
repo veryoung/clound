@@ -3,6 +3,8 @@ import { RouteConfig } from "vue-router";
 import { PublicNotice } from "@views/systemmanage/noti.manage/public.notice/pubilc.notice";
 import { EmailsNotice } from "@views/systemmanage/noti.manage/email.notice/emails.notice";
 import { MessageNotice } from "@views/systemmanage/noti.manage/message.notice/message.notice";
+import { PublicNoiceOperation } from "@views/systemmanage/noti.manage/operation/public.notice.operation";
+import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/public.notice.detail";
 
 
 
@@ -32,5 +34,29 @@ export const notifyRouter: RouteConfig[] = [
             icon: "icon-quan-"
         },
         component: MessageNotice,
+    },
+    {
+        path: "notice/add",
+        name: "写公告",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true,
+        },
+        props: {
+            operation: "add"
+        },
+        component: PublicNoiceOperation
+    },
+    {
+        path: "notice/look/:id",
+        name: "查看公告",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        props: {
+            operation: "look"
+        },
+        component: PublicNoticeDeatil,
     },
 ];

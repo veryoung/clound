@@ -68,6 +68,15 @@ export const NoticeStore: Module<NoticeType, any> = {
                         title: "",
                     }
                 ]
+            },
+            noticeDetail: {
+                "": [{
+                    content: "",
+                    cperson: "",
+                    ctime: "",
+                    id: "",
+                    title: "",
+                }]
             }
         };
     },
@@ -95,6 +104,9 @@ export const NoticeStore: Module<NoticeType, any> = {
                 state.noticeTable[Math.floor(payload.page) - 1] = [];
             }
             state.noticeTable[Math.floor(payload.page) - 1] = [].concat(payload.message);
+        },
+        [NOTICEEVENT.GETNOTICEDETAIL]: (state, payload) => {
+            state.noticeDetail[payload.id] = payload.message;
         },
     },
     actions: {
@@ -164,6 +176,23 @@ export const NoticeStore: Module<NoticeType, any> = {
                 }
             });
         },
+        [NOTICEEVENT.GETNOTICEDETAIL]: ({ state, commit, rootState }, payload) => {
+            if (payload.id in state.noticeDetail) {
+                EventBus.doNotify(CONSTANT.GETNOTICEDETAIL);
+            }
+            NoticeServer.getNoticeDetail(payload.id).then().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                console.log(res);
+                switch (res.status) {
+                    case "suc":
+                        commit(NOTICEEVENT.GETNOTICEDETAIL, { page: payload.id, message: res.data.data });
+                        EventBus.doNotify(CONSTANT.GETNOTICEDETAIL);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        },
         [NOTICEEVENT.GETNOTICELIST]: ({ state, commit, rootState }, payload) => {
             if ((Math.floor(payload.page) - 1) in state.msgTable) {
                 EventBus.doNotify(CONSTANT.GETNOTICELIST);
@@ -194,6 +223,9 @@ export const NoticeStore: Module<NoticeType, any> = {
         },
         "msgDetail": (state) => {
             return state.msgDetail;
+        },
+        "noticeDetail": (state) => {
+            return state.noticeDetail;
         },
         "noticeTable": (state) => {
             return state.noticeTable;

@@ -3,8 +3,7 @@
         <ModuleTitle :titles="titles" />
         <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
             <el-form-item label="访问时间">
-                <el-date-picker v-model="currentDateDay" 
-                @onPick = "dateChange" 
+                <el-date-picker v-model="filter.send_date" 
                 type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
                     end-placeholder="结束日期">
                 </el-date-picker>
@@ -27,8 +26,8 @@
             <el-form-item label="操作结果">
                 <el-select v-model="filter.op_result" placeholder="状态" size="small">
                     <el-option label="全部" value=""></el-option>
-                    <el-option label="成功" value="success"></el-option>
-                    <el-option label="失败" value="fail"></el-option>
+                    <el-option label="成功" value="1"></el-option>
+                    <el-option label="失败" value="0"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -41,7 +40,7 @@
                 <div class="btn-first">
                     <div class="btn-first">
                         <el-button type="primary" @click="handle('download')" size="small">
-                            <span class="iconfont">&#xe61a;</span>
+                            <span class="iconfont">&#xe61e;</span>
                             下载
                         </el-button>
                     </div>
@@ -54,17 +53,6 @@
         <CloudTable moduleName="logautdittable" :datas="logAuditTableColumnData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
             @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
-            </el-table-column>
-            <el-table-column label="操作" align="center">
-                <template slot-scope="scope">
-                    <span>
-                        <span>
-                            <p style="cursor:pointer" @click="handle('settings',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
-                                查看详情
-                            </p>
-                        </span>
-                    </span>
-                </template>
             </el-table-column>
         </CloudTable>
     </div>

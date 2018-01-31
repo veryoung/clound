@@ -1,3 +1,4 @@
+import ElementUI from "element-ui";
 import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TableConfigType } from "@store/table.type";
@@ -9,6 +10,9 @@ import { ListBaseClass } from "@views/base/base.class";
 import { NOTICEEVENT } from "@store/notice.type";
 import { mapGetters } from "vuex";
 import { EventBus, CONSTANT } from "@utils/event";
+import { AxiosResponse } from "axios";
+import { ResType } from "server";
+import { NoticeServer } from "@server/notice";
 
 
 require("./pubilc.notice.styl");
@@ -24,6 +28,7 @@ require("./pubilc.notice.styl");
     computed: {
         ...mapGetters([
             "tableConfig",
+            "noticeTable"
         ])
     }
 })
@@ -31,11 +36,12 @@ require("./pubilc.notice.styl");
 
 export class PublicNotice extends ListBaseClass {
     // init computed
-    public tableData: PubilcTableType;
+    public noticeTable: PubilcTableType;
     public tableConfig: TableConfigType;
 
     // init data
     public titles: string[] = ["站内公告"];
+    public ids: string[] = [];
     public filterData: SearchType = {
         key_word: "",
         new: true,
@@ -55,8 +61,8 @@ export class PublicNotice extends ListBaseClass {
         this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
         let that = this;
 
-        let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
-            that.PublicNoticeData = (<any>Object).assign([], that.tableData[that.tableConfig["noticetable"].page - 1]);
+        let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
+            that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
         });
         // 
     }
@@ -70,33 +76,75 @@ export class PublicNotice extends ListBaseClass {
 
     // init method
     search() {
-        // 拼接 开始时间和结束时间
-        console.log(this.filter);
-        // if (this.filter.ctime === null) {
-        //     this.filter.ctime = "";
-        // }
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
     }
 
     reset() {
-        // this.filter = (<any>Object).assign({}, filterData);
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.filter = (<any>Object).assign({}, this.filterData);
+        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
     }
 
     handleSizeChange(val: number) {
-        // this.tableConfig.mywebsitetable.page_size = val;
+        this.tableConfig.noticetable.page_size = val;
+        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
     }
     handleCurrentChange(val: number) {
-        // this.tableConfig.mywebsitetable.page = val;
+        this.tableConfig.noticetable.page = val;
+        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
     }
 
     handleSelectionChange(options: any) {
-        // this.$emit("handleSelectionChange", options);
+        this.ids = [];
+        options.map((item: PublicNoticeColumnType, $index: number) => {
+            this.ids.push(item.id);
+        });
     }
 
-    // 跳转方法同统一
-    handle() {
+    // 填写
+    write() {
+        this.$router.push(`/SystemManagement/ReportManagement/notice/add`);
+    }
 
+    // 查看详情
+    look(rowObj?: any) {
+        console.log(rowObj);
+        if (rowObj) {
+            this.$router.push(`/SystemManagement/ReportManagement/notice/look/${rowObj.row.id}`);
+        }
+    }
+    del() {
+        if (this.ids.length === 0) {
+            this.$message({
+                message: "请选择需要删除项",
+                type: "warning"
+            });
+        } else {
+            this.$confirm("删除后公告将无法恢复，您确定要删除吗？", "删除公告", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(() => {
+                NoticeServer.delNotice(this.ids).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            ElementUI.Message({
+                                message: "删除成功",
+                                type: "success"
+                            });
+                            this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: "info",
+                    message: "已取消删除"
+                });
+            });
+        }
     }
 
     sortChange(opt: any) {
@@ -127,6 +175,7 @@ export interface PublicNoticeColumnType {
     c_time: string;
     content: string;
     title: string;
+    id: string;
 }
 
 export interface PubilcTableType {
