@@ -72,16 +72,12 @@ export class MessageNotice extends ListBaseClass {
     }
 
 
-    mergeData(opt: any) {
-        const { page_size, page } = opt;
-        // return (<any>Object).assign({}, this.filter, {
-        //     page: page,
-        //     page_size: page_size,
-        // });
+    // 填写
+    write() {
+        this.$router.push(`/SystemManagement/ReportManagement/messagenotice/add`);
     }
-
-    // 跳转方法同统一
-    handle() {
+    
+    del() {
 
     }
 

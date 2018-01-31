@@ -16,7 +16,6 @@ import { setTimeout } from "timers";
 
 const Aux = new Auxiliary<string>();
 
-const style = require("./email.m.css");
 
 @Component({
     name: "emaildiploma",

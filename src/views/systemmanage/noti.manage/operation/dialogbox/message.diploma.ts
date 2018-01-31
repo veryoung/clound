@@ -5,7 +5,6 @@ import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 
-const style = require("./update.m.css");
 
 @Component({
     name: "updatediploma",

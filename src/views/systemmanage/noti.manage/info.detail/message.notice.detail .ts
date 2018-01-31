@@ -12,16 +12,16 @@ import { NOTICEEVENT } from "@store/notice.type";
 const Aux = new Auxiliary<string>();
 
 @Component({
-    name: "publicnoticedeatil",
-    template: require("./public.notice.detail.html"),
+    name: "messagenoticedeatil",
+    template: require("./message.notice.detail.html"),
     components: {
         ModuleTitle
     },
     computed: {
-        ...mapGetters(["noticeDetail"])
+        ...mapGetters(["msgDetail"])
     }
 })
-export class PublicNoticeDeatil extends Vue {
+export class MessageNoticeDeatil extends Vue {
     // init data
     public PublicNoticeInfo: PublicNoticeDetailType = {
         content: "",
@@ -32,7 +32,7 @@ export class PublicNoticeDeatil extends Vue {
     };
 
     // init computed
-    public noticeDetail: PublicNoticeDetailPageType;
+    public msgDetail: PublicNoticeDetailPageType;
 
     // lifecircle hook
     created() {
@@ -40,15 +40,16 @@ export class PublicNoticeDeatil extends Vue {
         let id = that.$route.params.id;
         this.$store.dispatch(NOTICEEVENT.GETNOTICEDETAIL, { id: id });
         let eventId = EventBus.register(CONSTANT.GETNOTICEDETAIL, function (event: string, info: any) {
-            that.PublicNoticeInfo = that.noticeDetail[id];
+            console.log(that.msgDetail);
+            that.PublicNoticeInfo = that.msgDetail[id][0];
+            console.log(that.PublicNoticeInfo);
         });
         Aux.insertId(eventId);
     }
 
     beforeDestroy() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
-        });    }
+        // Aux.getIds().map((id, $index) => {     EventBus.unRegister(id); });
+    }
 }
 
 export interface PublicNoticeDetailType {
@@ -59,8 +60,10 @@ export interface PublicNoticeDetailType {
     title: string;
 }
 
-
-
 export interface PublicNoticeDetailPageType {
+    [extra: string]: PublicNoticeDetailSoType;
+}
+
+export interface PublicNoticeDetailSoType {
     [extra: string]: PublicNoticeDetailType;
 }

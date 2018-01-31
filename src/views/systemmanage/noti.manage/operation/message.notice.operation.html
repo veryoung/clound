@@ -2,14 +2,26 @@
     <div class="panel">
         <ModuleTitle :titles="titles" />
         <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="public-notice-form">
-            <el-form-item label="公告标题" prop="title">
-                <el-input v-model="form.title" placeholder="请填写邮件标题（1-40字符）"></el-input>
+            <el-form-item label="收件人" prop="title">
+                <div>
+                    <span>
+                        已填写{{num}}人
+                    </span>
+                    <el-button @click="select">请选择</el-button>
+                </div>
+                <div v-if="num>0">
+                    <div v-for="item in chosePerson" :key="item.id">
+                        <span>
+                            11
+                        </span>
+                    </div>
+                </div>
             </el-form-item>
-            <el-form-item  class="notice-content" label="公告内容" prop="content">
+            <el-form-item class="notice-content" label="短信内容" prop="content">
                 <RichTextEditor @content="content" />
             </el-form-item>
-            <el-form-item class="btn-content" >
-                <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
+            <el-form-item class="btn-content">
+                <el-button type="primary" @click="submitForm">确定</el-button>
                 <el-button @click="back()">取消</el-button>
             </el-form-item>
         </el-form>
