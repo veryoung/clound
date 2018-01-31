@@ -1,4 +1,4 @@
-<div class="login_panel">
+<div class="login_panel" @keyup.enter="onSubmit">
     <div class="login_title">
         <div class="login_line">
             <div class="loginline"></div>
@@ -24,16 +24,16 @@
                 <el-form :model="form" class="form">
                     <el-form-item label="" class="inline-panel">
                         <el-input v-model="form.username" placeholder="账号">
-                            <el-button slot="append" class="iconfont icon-yonghu"></el-button>
+                            <i slot="append" class="iconfont icon-yonghu"></i>
                         </el-input>
                     </el-form-item>
                     <el-form-item label="" class="inline-panel">
                         <el-input type="password" v-model="form.pwd" placeholder="密码">
-                            <el-button slot="append" class="iconfont icon-yuechi"></el-button>
+                            <i slot="append" class="iconfont icon-yuechi"></i>
                         </el-input>
                     </el-form-item>
                     <el-form-item label="" class="inline-panel">
-                        <el-input class="yzm" type="text" v-model="form.code" placeholder="验证码">
+                        <el-input class="yzm" type="text" v-model="form.captcha_id" placeholder="验证码">
                         </el-input>
                         <div class="yzm_image" @click="changeCode">
                             <img :src="ubase64" />

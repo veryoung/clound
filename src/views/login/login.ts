@@ -27,10 +27,12 @@ export class Login extends Vue {
         username: string;
         pwd: string;
         idcode: string;
+        captcha_id: string;
     } = {
             username: "",
             pwd: "",
-            idcode: ""
+            idcode: "",
+            captcha_id: ""
         };
 
     public ubase64: string = "";

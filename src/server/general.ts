@@ -18,10 +18,8 @@ export class General extends Restful {
             url = "/portal/api/v20/account/auth";
         }
         return this.post({
-            url: url, params: {
-                username: username,
-                pwd: pwd
-            }
+            url: url,
+            params: opt
         });
     }
 
