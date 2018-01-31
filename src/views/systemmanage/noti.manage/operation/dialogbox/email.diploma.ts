@@ -13,6 +13,7 @@ import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
 
 import { USER, UserListColumnType, UserMessageType, RoleType, UserListType } from "@store/user.center.type";
 import { setTimeout } from "timers";
+import { fail } from "assert";
 
 const Aux = new Auxiliary<string>();
 
@@ -25,7 +26,7 @@ const style = require("./email.m.css");
         dialogVisible: Boolean,
     },
     components: {
-        TissueTree, 
+        TissueTree,
     },
     computed: {
         ...mapGetters([
@@ -45,15 +46,17 @@ export class EmailDiploma extends Vue {
     public dialogVisible: boolean;
     public tableData: Array<any> = [];
     public uid: string = "0";
-    public ids: string[] = [];
+    public ids: {
+        [extra: string]: any
+    } = {};
     public uids: string[] = [];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public ori_id: string = "";
 
     // 用户对象
     public userObj: any = {};
-
-    public temp: any = this.$refs.noticeTable;
+    // 判断标识
+    public flag: boolean = false;
 
 
     // lifecycle hook
@@ -73,34 +76,27 @@ export class EmailDiploma extends Vue {
     }
 
     selected() {
-        let that = this;
-
-        if (!(that.ori_id in that.userObj)) {
-            that.userObj[that.ori_id] = [];
+        if (!(this.ori_id in this.userObj)) {
+            return false;
         }
-
         // 将已经选中的勾选上
         // 判断不为空值
-        if (that.userObj[that.ori_id].length !== 0) {
-            that.userObj[that.ori_id].map((row: any) => {
-                // 選中 uid = uid 那行
-                that.tableData.map((d: any, index: number) => {
-                    if (d.uid === row.uid) {
-                        let temp1: any = that.$refs.noticeTable;
-                        temp1.toggleRowSelection(row);
-
+        let temp: any = this.$refs.noticeTable;
+        if (Object.keys(this.userObj[this.ori_id]).length > 0) {
+            for (let key in this.userObj[this.ori_id]) {
+                this.tableData.map((d: any, index: number) => {
+                    if (d.uid === key) {
+                        this.flag = true;
+                        temp.toggleRowSelection(d, true);
+                        this.flag = false;
                     }
                 });
-
-            });
+            }
         }
     }
     test1() {
-        this.temp.toggleRowSelection(this.tableData[0], true);
-    }
-    test(temp: any) {
-        this.temp = temp;
-        // this.selected();
+        let temp: any = this.$refs.noticeTable;
+        temp.toggleRowSelection(this.tableData[0], true);
     }
     destroyed() {
         Aux.getIds().map((id, $index) => {
@@ -114,14 +110,18 @@ export class EmailDiploma extends Vue {
 
     handleSelectionChange(val: any) {
         // 判断当前是增还是减  通过 val的长度和this.uids的长度进行对比 val长为增 反之为减少
-        this.uids = [];
-        val.map((item: any, $index: number) => {
-            this.uids.push(item);
-        });
-        if (!this.userObj[this.ori_id]) {
-            this.userObj[this.ori_id] = [];
+        if (this.flag) {
+            return false;
         }
-        this.userObj[this.ori_id] = this.userObj[this.ori_id].concat(this.uids);
+        console.log(this.userObj);
+        this.userObj[this.ori_id] = {};
+
+        val.map((item: any, $index: number) => {
+            this.userObj[this.ori_id][item.uid] = item;
+        });
+        this.userObj[this.ori_id] = (<any>Object).assign({}, this.userObj[this.ori_id]);
+        console.log(this.userObj);
+
     }
 
     clickNode(opt: OrganizationTreeType) {
