@@ -45,7 +45,22 @@ class Notice extends Restful {
         });
     }
 
-
+    // 添加公告
+    public addNotice(opt: any) {
+        return this.post({
+            url: ` /api/v20/bulletin/notification/`,
+            params: opt,
+        });
+    }
+    // 删除公告
+    public delNotice(ids: Array<string>) {
+        return this.del({
+            url: "/api/v20/bulletin/notification/",
+            params: {
+                ids: ids
+            }
+        });
+    }
     public getNotice(opt: {
         key_word: string;
         new: boolean;

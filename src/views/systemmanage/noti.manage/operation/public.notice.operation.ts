@@ -8,6 +8,7 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 import { Auxiliary } from "@utils/auxiliary";
 import { FormRuleType } from "@utils/form.validator";
+import { NoticeServer } from "@server/notice";
 
 
 const Aux = new Auxiliary<string>();
@@ -36,7 +37,7 @@ export class PublicNoiceOperation extends Vue {
 
     // init data
     public form: PublicNoticeFormType = {
-        cotent: "",
+        content: "",
         title: "",
     };
 
@@ -45,7 +46,7 @@ export class PublicNoiceOperation extends Vue {
 
     // 表单验证
     public rules: FormRuleType = {
-        name: [
+        title: [
             { required: true, message: "请填写公告标题", trigger: "blur" },
             { min: 1, max: 40, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
         ],
@@ -78,7 +79,27 @@ export class PublicNoiceOperation extends Vue {
     // init methods
 
     submitForm(formBasic: string) {
+        NoticeServer.addNotice(this.form).then((response: AxiosResponse<ResType> ) => {
+            let res: ResType = response.data;
+            switch (res.status) {
+                case "suc":
+                    this.$message({
+                        message: "公告填写成功",
+                        type: "success"
+                    });
+                    this.$router.push("/SystemManagement/ReportManagement/notice");
+                    break;
+                case "error":
+                    this.$message({
+                        message: res.message || "公告填写失败",
+                        type: "error"
+                    });
+                    break;
+                default:
+                    break;
+            }
 
+        });
     }
 
     back() {
@@ -86,13 +107,13 @@ export class PublicNoiceOperation extends Vue {
     }
 
     content(val: string) {
-        this.form.cotent = val;
+        this.form.content = val;
     }
 
 }
 
 
 export interface PublicNoticeFormType {
-    cotent: string;
+    content: string;
     title: string;
 }

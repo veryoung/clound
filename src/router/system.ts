@@ -47,6 +47,7 @@ export const systemRouter: RouteConfig[] = [
         path: "ReportManagement",
         name: "通知管理",
         children: notifyRouter,
+        redirect: "ReportManagement/notice",
         meta: {
             icon: "icon-tongzhiguanli"
         },

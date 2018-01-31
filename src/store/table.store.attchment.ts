@@ -425,13 +425,14 @@ export const systemTable: TableConfigType = {
             },
             {
                 label: "发布人",
-                prop: "c_person",
+                prop: "cperson",
                 show: true,
             },
             {
                 label: "公告内容",
                 prop: "content",
                 show: true,
+                type: "htmlData"
             },
             {
                 label: "公告标题",

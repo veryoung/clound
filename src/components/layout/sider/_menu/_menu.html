@@ -16,7 +16,7 @@
                     </template>
 
                     <template v-for="(menu,$index) in menu.children">
-                        <el-menu-item :index="menu.name" @click="go(menu)">
+                        <el-menu-item :index="menu.name" @click="go(menu)" v-if="menu.meta&&!menu.meta.hidden">
                             <i class="iconfont" :class="menu.meta.icon"></i>
                             <span slot="title">{{menu.name}}</span>
                         </el-menu-item>

@@ -182,6 +182,7 @@ export const NoticeStore: Module<NoticeType, any> = {
             }
             NoticeServer.getNoticeDetail(payload.id).then().then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
+                console.log(res);
                 switch (res.status) {
                     case "suc":
                         commit(NOTICEEVENT.GETNOTICEDETAIL, { page: payload.id, message: res.data.data });
