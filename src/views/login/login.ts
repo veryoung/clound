@@ -14,7 +14,12 @@ import { FooterComponent } from "@components/layout/footer/footer";
 
 
 
-const style = require("./login.styl");
+require("./login.styl");
+const operation_logo = require("src/resource/images/logo.png");
+const portal_logo = require("src/resource/images/logo1.png");
+const protal_banner = require("src/resource/images/banner1.png");
+const operation_banner = require("src/resource/images/banner2.png");
+const form_frame = require("src/resource/images/login_line.png");
 @Component({
     name: "login",
     template: require("./login.html"),
@@ -23,6 +28,9 @@ const style = require("./login.styl");
     }
 })
 export class Login extends Vue {
+    // init data
+    // public : string = "src/resource/images/logo.png";
+    // public portal_logo:string = "";
     public form: {
         username: string;
         pwd: string;
@@ -43,8 +51,20 @@ export class Login extends Vue {
         this.changeCode();
     }
     // computed
-    get style() {
-        return style;
+    get operation_logo() {
+        return operation_logo;
+    }
+    get portal_logo() {
+        return portal_logo;
+    }
+    get protal_banner() {
+        return protal_banner;
+    }
+    get operation_banner() {
+        return operation_banner;
+    }
+    get form_frame() {
+        return form_frame;
     }
     get env() {
         return process.env.PLATFORM;

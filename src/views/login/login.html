@@ -4,8 +4,8 @@
             <div class="loginline"></div>
             <div class="line left"></div>
         </div>
-        <img v-if="env==='operation'" src="src/resource/images/logo.png" />
-        <img v-if="env==='portal'" src="src/resource/images/logo1.png" />
+        <img v-if="env==='operation'" :src="operation_logo" />
+        <img v-if="env==='portal'" :src="portal_logo" />
         <div class="login_line">
             <div class="loginline"></div>
             <div class="line right"></div>
@@ -13,13 +13,13 @@
     </div>
     <div class="login_main">
         <div v-if="env==='portal'" class="login_image_portal">
-            <img src="src/resource/images/banner1.png" />
+            <img :src="protal_banner" />
         </div>
         <div v-if="env==='operation'" class="login_image_operation">
-            <img src="src/resource/images/banner2.png" />
+            <img :src="operation_banner" />
         </div>
         <div class="login_fn">
-            <img src="src/resource/images/login_line.png" />
+            <img :src="form_frame" />
             <div class="login_fn_panel">
                 <el-form :model="form" class="form">
                     <el-form-item label="" class="inline-panel">
