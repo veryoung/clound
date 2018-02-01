@@ -9,19 +9,6 @@
                     <span v-else-if="column.type==='dateTime'" class="ellipsis" :title="scope.row[column.prop] | datetime |none">{{scope.row[column.prop] | datetime |none}}</span>
                     <span v-else-if="column.type==='htmlData'" class="ellipsis" v-html="scope.row[column.prop]">{{scope.row[column.prop]}}</span>
                     <span v-else-if="column.type==='website_server'">
-                        <!-- <el-popover trigger="hover" placement="left">
-                            <p class="ellipsis turn_left margin5-0" :title="scope.row[column.prop].waf_enable==='1'?'开启':'关闭'">
-                                Web应用防火墙:{{scope.row[column.prop].waf_enable==="1"?"开启":"关闭" }}
-                            </p>
-                            <p class="ellipsis turn_left margin5-0">
-                                CC防御:{{scope.row[column.prop].ads_enable==="1"?"开启":"关闭"}}
-                            </p>
-                            <p class="ellipsis turn_left margin5-0">
-                                网站替身:{{scope.row[column.prop].mirror_enable==="1"?"开启":"关闭"}}
-                            </p>
-                            <p class="ellipsis turn_left margin5-0">
-                                网站加速:{{scope.row[column.prop].cdn_enable==="1"?"开启":"关闭"}}
-                            </p> -->
                         <div slot="reference" class="name-wrapper">
                             <p class="ellipsis turn_left margin5-0" :title="scope.row[column.prop].waf_enable==='1'?'Web应用防火墙: 开启':'Web应用防火墙: 关闭'">
                                 Web应用防火墙:{{scope.row[column.prop].waf_enable==="1"?"开启":"关闭" }}
@@ -36,7 +23,6 @@
                                 网站加速:{{scope.row[column.prop].cdn_enable==="1"?"开启":"关闭"}}
                             </p>
                         </div>
-                        <!-- </el-popover> -->
                     </span>
                     <span v-else-if="column.type==='website_port'">
                         <div slot="reference" class="name-wrapper">
@@ -45,7 +31,7 @@
                                 <span v-for="port in scope.row[column.prop].http_port">{{scope.row[column.prop].http_port.join(",")}}</span>
                             </p>
                             <p class="ellipsis turn_left margin5-0" v-if="scope.row[column.prop].https_port.length>0" :title="'https: '+scope.row[column.prop].https_port">
-                                    HTTPS:
+                                HTTPS:
                                 <span v-for="port in scope.row[column.prop].https_port">{{ scope.row[column.prop].https_port.join(",") }}</span>
                             </p>
                         </div>
@@ -53,6 +39,16 @@
                     <span v-else-if="column.type==='source_info'" class="ellipsis" :title="scope.row[column.prop]">
                         <span v-for="item in scope.row[column.prop]">{{item}}</span>
                     </span>
+                    <span v-else-if="column.type==='notice_status'" class="ellipsis" :title="scope.row[column.prop]">
+                        <span  :title="scope.row[column.prop].status?'成功':'失败'">
+                            {{scope.row[column.prop].status?"成功":"失败"}}
+                        </span>
+                    </span>
+                    <span v-else-if="column.type==='send_type'" class="ellipsis" :title="scope.row[column.prop]">
+                            <span  :title="scope.row[column.prop].status?'成功':'失败'">
+                                {{scope.row[column.prop].send_type === "auto"?"系统发送":"人工发送"}}
+                            </span>
+                        </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>
             </el-table-column>

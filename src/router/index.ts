@@ -1,3 +1,4 @@
+import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/public.notice.detail";
 import { Home } from "@views/home/home";
 import Vue from "vue";
 import Router from "vue-router";
@@ -34,6 +35,28 @@ let tempRouter: RouteConfig[] = [
             hidden: true
         },
         redirect: "/home"
+    },
+    // {
+    //     path: "/home",
+    //     name: "首页",
+    //     components: {
+    //         header: HeaderComponent,
+    //         // sider: SiderComponent,
+    //         main: Home
+    //     },
+    // },
+    {
+        path: "/noticelook/:id",
+        name: "查看公告",
+        components: {
+            header: HeaderComponent,
+            // sider: SiderComponent,
+            main: PublicNoticeDeatil
+        },
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
     },
     {
         path: "/login",

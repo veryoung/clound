@@ -347,6 +347,7 @@ export const systemTable: TableConfigType = {
                 label: "发送方式",
                 prop: "send_type",
                 show: true,
+                type: "send_type"
             },
             {
                 label: "发送人",
@@ -357,12 +358,14 @@ export const systemTable: TableConfigType = {
                 label: "发送日期",
                 prop: "send_date",
                 show: true,
+                type: "dateTime"
             },
             {
                 label: "发送状态",
                 prop: "status",
                 show: true,
                 disable: true,
+                type: "notice_status",
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],
@@ -394,6 +397,7 @@ export const systemTable: TableConfigType = {
                 label: "发送方式",
                 prop: "msg_type",
                 show: true,
+                type: "send_type"
             },
             {
                 label: "发件人",
@@ -404,12 +408,13 @@ export const systemTable: TableConfigType = {
                 label: "发送时间",
                 prop: "send_date",
                 show: true,
-                type: "datetime"
+                type: "dateTime"
             },
             {
                 prop: "status",
                 label: "发送状态",
                 show: true,
+                type: "notice_status",
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],

@@ -8,8 +8,8 @@
             <el-form-item label="发送方式">
                 <el-select v-model="filter.msg_type" placeholder="状态" size="small">
                     <el-option label="全部" value=""></el-option>
-                    <el-option label="人工发送" value="0"></el-option>
-                    <el-option label="系统发送" value="1"></el-option>
+                    <el-option label="人工发送" value="manual"></el-option>
+                    <el-option label="系统发送" value="auto"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="访问时间">

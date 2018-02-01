@@ -1,17 +1,18 @@
 <div class="user-menu">
     <div class="notice">
-        <el-dropdown :hide-on-click="false">
-            <span class="el-dropdown-link">
-                <el-badge :value="NoticeNum" class="item">
-                    <span class="iconfont">&#xe609;</span>
-                </el-badge>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="(router,$index) in Routers" :key="$index">
-                    <router-link :to="router.path" tag="span">{{router.name}}</router-link>
-                </el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
+        <el-popover visible-arrow="true" style="height:100px;overflow:auto;" popper-class="user-notice" trigger="hover" placement="bottom-end"
+            ref="popover1">
+            <div class="user-popover">
+                <div class="item-box" v-for="item in PublicNoticeData" :key="item.id">
+                    <div style="cursor:pointer" @click="look(item)" class="ellipsis  margin5-0">
+                        {{item.title}}
+                    </div>
+                </div>
+            </div>
+        </el-popover>
+        <el-badge :value="NoticeNum" class="item" v-popover:popover1>
+            <span class="iconfont">&#xe609;</span>
+        </el-badge>
     </div>
     <div class="down-menu">
         <el-dropdown :hide-on-click="false">

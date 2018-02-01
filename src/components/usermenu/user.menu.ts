@@ -40,6 +40,39 @@ export class UserMenu extends ListBaseClass {
     public tableConfig: TableConfigType;
     public noticeTable: PubilcTableType;
 
+    public demoArray = {
+        "0": {
+            item: 1,
+        },
+        "1": {
+            item: 1,
+        },
+        "2": {
+            item: 1,
+        },
+        "3": {
+            item: 1,
+        },
+        "4": {
+            item: 1,
+        },
+        "5": {
+            item: 1,
+        },
+        "6": {
+            item: 1,
+        },
+        "70": {
+            item: 1,
+        }, 
+        "8": {
+            item: 1,
+        }
+        , 
+        "90": {
+            item: 1,
+        }
+    };
 
     // init computed
     public personInfo: UserCenterType;
@@ -49,7 +82,7 @@ export class UserMenu extends ListBaseClass {
         key_word: "",
         new: true,
         page: "1",
-        page_size: "10",
+        page_size: "9999",
         send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
@@ -69,6 +102,7 @@ export class UserMenu extends ListBaseClass {
         this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
         let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
             that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
+            that.NoticeNum  = that.PublicNoticeData.length;
         });
     }
     logout() {
@@ -86,6 +120,12 @@ export class UserMenu extends ListBaseClass {
                     break;
             }
         });
+    }
+
+    look(rowObj?: any) {
+        if (rowObj) {
+            this.$router.push(`/noticelook/${rowObj.id}`);
+        }
     }
 }
 
