@@ -17,7 +17,7 @@ import { fail } from "assert";
 
 const Aux = new Auxiliary<string>();
 
-
+require("./email.diploma.styl");
 @Component({
     name: "emaildiploma",
     template: require("./email.diploma.html"),

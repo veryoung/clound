@@ -1,7 +1,7 @@
 <div class="public-notice-operation">
     <div class="panel">
         <ModuleTitle :titles="titles" />
-        <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="public-notice-form">
+        <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
             <el-form-item label="公告标题" prop="title">
                 <el-input v-model="form.title" placeholder="请填写邮件标题（1-40字符）"></el-input>
             </el-form-item>
@@ -9,7 +9,7 @@
                 <RichTextEditor @content="content" />
             </el-form-item>
             <el-form-item class="btn-content" >
-                <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
+                <el-button type="primary" @click="submitForm">确定</el-button>
                 <el-button @click="back()">取消</el-button>
             </el-form-item>
         </el-form>

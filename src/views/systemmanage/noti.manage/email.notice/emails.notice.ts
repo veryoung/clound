@@ -58,7 +58,6 @@ export class EmailsNotice extends ListBaseClass {
         let that = this;
 
         let ListId = EventBus.register(CONSTANT.GETEMAILLIST, function (event: string, info: any) {
-            console.log(that.emailTable);
             that.emailnoticetableData = (<any>Object).assign([], that.emailTable[that.tableConfig["emailtable"].page - 1]);
         });
     }

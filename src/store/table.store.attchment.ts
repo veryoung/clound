@@ -387,15 +387,19 @@ export const systemTable: TableConfigType = {
                 label: "短信内容",
                 prop: "content",
                 show: true,
+                disable: true,
+
             },
             {
                 label: "收件人",
                 prop: "receiver",
                 show: true,
+                disable: true,
+
             },
             {
                 label: "发送方式",
-                prop: "msg_type",
+                prop: "send_type",
                 show: true,
                 type: "send_type"
             },
@@ -415,6 +419,7 @@ export const systemTable: TableConfigType = {
                 label: "发送状态",
                 show: true,
                 type: "notice_status",
+                disable: true,
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],

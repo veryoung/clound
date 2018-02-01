@@ -43,6 +43,7 @@ export class MessageNoticeDeatil extends Vue {
         this.$store.dispatch(NOTICEEVENT.GETMSGDETAIL, { id: id });
         let eventId = EventBus.register(CONSTANT.GETMSGDETAIL, function (event: string, info: any) {
             that.MessageNoticeInfo = that.msgDetail[id];
+            console.log(that.MessageNoticeInfo);
         });
         Aux.insertId(eventId);
     }

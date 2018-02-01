@@ -45,7 +45,7 @@ export class MessageNotice extends ListBaseClass {
     public filterData: SearchType = {
         key_word: "",
         send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
-        msg_type: "",
+        send_type: "",
         status: "",
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
@@ -63,10 +63,9 @@ export class MessageNotice extends ListBaseClass {
     }
 
     destroyed() {
-        // Aux.getIds().map((id, $idnex) => {
-        //     EventBus.unRegister(id);
-        // });
-        // this.unwatch();
+        Aux.getIds().map((id, $idnex) => {
+            EventBus.unRegister(id);
+        });
     }
 
     // init method
@@ -80,10 +79,12 @@ export class MessageNotice extends ListBaseClass {
     }
 
     handleSizeChange(val: number) {
-        // this.tableConfig.mywebsitetable.page_size = val;
+        this.tableConfig.msgtable.page_size = val;
+        this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
     }
     handleCurrentChange(val: number) {
-        // this.tableConfig.mywebsitetable.page = val;
+        this.tableConfig.msgtable.page = val;
+        this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
     }
 
     handleSelectionChange(options: any) {
@@ -179,14 +180,14 @@ export class MessageNotice extends ListBaseClass {
 export interface SearchType {
     key_word: string;
     send_date: Array<string>;
-    msg_type: string;
+    send_type: string;
     status: string;
 }
 
 export interface MsgNoticeColumnType {
     id: string;
     content: string;
-    msg_type: string;
+    send_type: string;
     receiver: string;
     send_date: string;
     sender: string;

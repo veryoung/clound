@@ -3,24 +3,24 @@
         <ModuleTitle :titles="['邮件详情']" />
         <ul>
             <li>
-                <div class="label">标题：</div>
+                <div class="label">标题:</div>
                 <div class="message">{{ EmailNoticeInfo.object |none }}</div>
             </li>
             <li>
-                <div class="label">接收人：</div>
+                <div class="label">接收人:</div>
                 <div class="message">{{ EmailNoticeInfo.receiver|none }}</div>
             </li>
             <li>
-                <div class="label">发送人：</div>
+                <div class="label">发送人:</div>
                 <div class="message">{{ EmailNoticeInfo.sender |none}}</div>
             </li>
             <li>
-                <div class="label">发送状态：</div>
+                <div class="label">发送状态:</div>
                 <div class="message">{{ EmailNoticeInfo.status |none}}</div>
             </li>
             <li>
                 <div class="label">邮件内容:</div>
-                <div class="message">{{  EmailNoticeInfo.content |none}}</div>
+                <div class="message" v-html="EmailNoticeInfo.content"></div>
             </li>
         </ul>
     </div>

@@ -48,10 +48,12 @@ export class PublicNoiceOperation extends Vue {
     public rules: FormRuleType = {
         title: [
             { required: true, message: "请填写公告标题", trigger: "blur" },
-            { min: 1, max: 40, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
+            { min: 1, max: 40, message: "不符合字符规范，字符长度1-40字符", trigger: "blur" }
         ],
         content: [
             { required: true, message: "请添加公告内容", trigger: "blur" },
+            { min: 1, max: 1000, message: "不符合字符规范，字符长度1-1000字符", trigger: "blur" }
+
         ],
     };
 
@@ -65,7 +67,7 @@ export class PublicNoiceOperation extends Vue {
             // this.$store.dispatch(MYWEBSITEEVENT.GETWEBEDIT, { website_id: id, operation: this.operation });
         }
         let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
-       
+
         });
         Aux.insertId(eventId);
     }
@@ -79,27 +81,33 @@ export class PublicNoiceOperation extends Vue {
     // init methods
 
     submitForm(formBasic: string) {
-        NoticeServer.addNotice(this.form).then((response: AxiosResponse<ResType> ) => {
-            let res: ResType = response.data;
-            switch (res.status) {
-                case "suc":
-                    this.$message({
-                        message: "公告填写成功",
-                        type: "success"
-                    });
-                    this.$router.push("/SystemManagement/ReportManagement/notice");
-                    break;
-                case "error":
-                    this.$message({
-                        message: res.message || "公告填写失败",
-                        type: "error"
-                    });
-                    break;
-                default:
-                    break;
-            }
-
+        let temp: any = this.$refs.noticeform;
+        let flag: boolean = false;
+        temp.validate((valid: any) => {
+            flag = valid;
         });
+        if (flag) {
+            NoticeServer.addNotice(this.form).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        this.$message({
+                            message: "公告填写成功",
+                            type: "success"
+                        });
+                        this.$router.push("/SystemManagement/ReportManagement/notice");
+                        break;
+                    case "error":
+                        this.$message({
+                            message: res.message || "公告填写失败",
+                            type: "error"
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
     }
 
     back() {
