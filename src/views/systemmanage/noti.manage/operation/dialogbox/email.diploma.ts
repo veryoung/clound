@@ -7,7 +7,7 @@ import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 import { mapGetters } from "vuex";
 import { OrganizationTreeType } from "@store/organization.type";
-import { EventBus, CONSTANT } from "@utils/event";
+import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
 
@@ -61,16 +61,12 @@ export class EmailDiploma extends Vue {
     // lifecycle hook
     created() {
         let that = this;
-        let id1 = EventBus.register(CONSTANT.INITORGANIZATIONTREE, (event: string, info: any) => {
-            // that.clickNod(that.OrganizationTree[0]);
-        });
         let id2 = EventBus.register(CONSTANT.GETUSERLIST, function (event: string, info: any) {
             that.tableData = that.userlist[info.id][that.tableConfig.usertable.page - 1];
             setTimeout(() => {
                 that.selected();
             }, 1000);
         });
-        Aux.insertId(id1);
         Aux.insertId(id2);
     }
 
@@ -93,10 +89,6 @@ export class EmailDiploma extends Vue {
             }
         }
     }
-    test1() {
-        let temp: any = this.$refs.noticeTable;
-        temp.toggleRowSelection(this.tableData[0], true);
-    }
     destroyed() {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
@@ -104,8 +96,7 @@ export class EmailDiploma extends Vue {
     }
     // init method
     sumbit() {
-        let userArray: Array<object> = [];
-
+        let userArray: Array<UserListColumnType> = [];
         for (let key in this.userObj) {
             for ( let key2 in this.userObj[key]) {
                 userArray.push(this.userObj[key][key2]);
@@ -116,18 +107,15 @@ export class EmailDiploma extends Vue {
 
     handleSelectionChange(val: any) {
         // 判断当前是增还是减  通过 val的长度和this.uids的长度进行对比 val长为增 反之为减少
-        if (this.flag) {
+        if (this.flag || val.length === 0) {
             return false;
         }
-        console.log(this.userObj);
         this.userObj[this.ori_id] = {};
 
         val.map((item: any, $index: number) => {
             this.userObj[this.ori_id][item.uid] = item;
         });
         this.userObj[this.ori_id] = (<any>Object).assign({}, this.userObj[this.ori_id]);
-        console.log(this.userObj);
-
     }
 
     clickNode(opt: OrganizationTreeType) {
