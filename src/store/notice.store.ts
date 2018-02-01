@@ -168,7 +168,7 @@ export const NoticeStore: Module<NoticeType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETMSGDETAIL, { id: payload.id, message: res.data.data });
+                        commit(NOTICEEVENT.GETMSGDETAIL, { id: payload.id, message: res.data});
                         EventBus.doNotify(CONSTANT.GETMSGDETAIL);
                         break;
                     default:

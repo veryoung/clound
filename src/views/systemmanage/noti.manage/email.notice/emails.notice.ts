@@ -1,4 +1,3 @@
-import ElementUI from "element-ui";
 import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TableConfigType } from "@store/table.type";
@@ -123,7 +122,7 @@ export class EmailsNotice extends ListBaseClass {
                     switch (res.status) {
                         case "suc":
                             setTimeout(() => {
-                                ElementUI.Message({
+                                this.$message({
                                     message: "删除成功",
                                     type: "success"
                                 });
@@ -157,7 +156,7 @@ export class EmailsNotice extends ListBaseClass {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                ElementUI.Message({
+                                this.$message({
                                     message: "删除成功",
                                     type: "success"
                                 });

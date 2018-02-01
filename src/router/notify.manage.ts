@@ -1,3 +1,4 @@
+import { MessageNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/message.notice.detail";
 import { EmailNoiceOperation } from "@views/systemmanage/noti.manage/operation/email.notice.operation";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
@@ -97,6 +98,18 @@ export const notifyRouter: RouteConfig[] = [
             operation: "add"
         },
         component: MessageNoiceOperation
+    },
+    {
+        path: "messagenotice/look/:id",
+        name: "查看邮件",
+        meta: {
+            icon: "icon-quan-",
+            hidden: true
+        },
+        props: {
+            operation: "look"
+        },
+        component: MessageNoticeDeatil,
     },
 
 ];

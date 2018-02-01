@@ -145,33 +145,10 @@ export class EmailDiploma extends Vue {
     }
 }
 
-export interface ResetType {
-    pwd: string;
-    pwd1: string;
-}
-
 export default interface SearchType {
-    user_name: string;
-    role_id?: string;
-    phone: string;
-    email: string;
-    ctime: string;
-    expiry_date: string;
-    is_active: string;
     ori_id?: string;
-    sort_ctime?: string;
-    sort_expiry_date?: string;
 }
 
 export const filterData: SearchType = {
-    user_name: "",
-    role_id: "",
-    phone: "",
-    email: "",
-    ctime: "",
-    expiry_date: "",
-    is_active: "",
     ori_id: "",
-    sort_ctime: "",
-    sort_expiry_date: ""
 };

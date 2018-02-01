@@ -23,47 +23,46 @@ const Aux = new Auxiliary<string>();
 })
 export class MessageNoticeDeatil extends Vue {
     // init data
-    public PublicNoticeInfo: PublicNoticeDetailType = {
+    public MessageNoticeInfo: MessageNoticeDetailType = {
         content: "",
-        cperson: "",
-        ctime: "",
         id: "",
-        title: "",
+        msg_type: "",
+        receiver: "",
+        send_date: "",
+        sender: "",
+        status: "",
     };
 
     // init computed
-    public msgDetail: PublicNoticeDetailPageType;
+    public msgDetail: MessageNoticeDetailPageType;
 
     // lifecircle hook
     created() {
         let that = this;
         let id = that.$route.params.id;
-        this.$store.dispatch(NOTICEEVENT.GETNOTICEDETAIL, { id: id });
-        let eventId = EventBus.register(CONSTANT.GETNOTICEDETAIL, function (event: string, info: any) {
-            console.log(that.msgDetail);
-            that.PublicNoticeInfo = that.msgDetail[id][0];
-            console.log(that.PublicNoticeInfo);
+        this.$store.dispatch(NOTICEEVENT.GETMSGDETAIL, { id: id });
+        let eventId = EventBus.register(CONSTANT.GETMSGDETAIL, function (event: string, info: any) {
+            that.MessageNoticeInfo = that.msgDetail[id];
         });
         Aux.insertId(eventId);
     }
 
     beforeDestroy() {
-        // Aux.getIds().map((id, $index) => {     EventBus.unRegister(id); });
+        Aux.getIds().map((id, $index) => {     EventBus.unRegister(id); });
     }
 }
 
-export interface PublicNoticeDetailType {
+export interface MessageNoticeDetailType {
     content: string;
-    cperson: string;
-    ctime: string;
     id: string;
-    title: string;
+    msg_type: string;
+    receiver: string;
+    send_date: string;
+    sender: string;
+    status: string;
 }
 
-export interface PublicNoticeDetailPageType {
-    [extra: string]: PublicNoticeDetailSoType;
+export interface MessageNoticeDetailPageType {
+    [extra: string]: MessageNoticeDetailType;
 }
 
-export interface PublicNoticeDetailSoType {
-    [extra: string]: PublicNoticeDetailType;
-}

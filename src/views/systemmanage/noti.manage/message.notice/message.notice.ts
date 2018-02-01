@@ -1,4 +1,3 @@
-import  ElementUI  from "element-ui";
 import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TableConfigType } from "@store/table.type";
@@ -52,7 +51,7 @@ export class MessageNotice extends ListBaseClass {
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
     public MessageNoticetableData: MsgNoticeColumnType[] = new Array<MsgNoticeColumnType>();
     // watch
- 
+
     // lifecircle hook 
     created() {
         this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
@@ -94,12 +93,18 @@ export class MessageNotice extends ListBaseClass {
         });
     }
 
+    // 查看详情
+    look(rowObj?: any) {
+        if (rowObj) {
+            this.$router.push(`/SystemManagement/ReportManagement/messagenotice/look/${rowObj.row.id}`);
+        }
+    }
 
     // 填写
     write() {
         this.$router.push(`/SystemManagement/ReportManagement/messagenotice/add`);
     }
-    
+
     del(rowObj?: any) {
         if (rowObj) {
             let delArray: any = [];
@@ -113,7 +118,7 @@ export class MessageNotice extends ListBaseClass {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            ElementUI.Message({
+                            this.$message({
                                 message: "删除成功",
                                 type: "success"
                             });
@@ -145,7 +150,7 @@ export class MessageNotice extends ListBaseClass {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                ElementUI.Message({
+                                this.$message({
                                     message: "删除成功",
                                     type: "success"
                                 });
