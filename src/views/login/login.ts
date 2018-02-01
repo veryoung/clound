@@ -5,10 +5,8 @@ import Vue from "vue";
 import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
-import { Store } from "@store/store";
 import { USER } from "@store/user.center.type";
 import { session } from "@utils/sessionstorage";
-import { Permissions } from "@directives/permissions";
 import { UserStatus } from "@utils/monitor";
 import { FooterComponent } from "@components/layout/footer/footer";
 
