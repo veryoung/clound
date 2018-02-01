@@ -5,21 +5,21 @@ class Notice extends Restful {
         super();
     }
 
-    public delMessageRecord(id: string) {
+    public delMessageRecord(ids: Array<string>) {
         return this.del({
             url: `/api/v20/bulletin/msg/`,
             params: {
-                id: id
+                ids: ids
             }
         });
     }
 
 
-    public delEmailRecord(id: string) {
+    public delEmailRecord(ids: Array<string>) {
         return this.del({
-            url: ` /api/v20/bulletin/msg/`,
+            url: `/api/v20/bulletin/email/`,
             params: {
-                id: id
+                ids: ids
             }
         });
     }

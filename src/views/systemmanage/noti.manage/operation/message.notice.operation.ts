@@ -13,46 +13,51 @@ import { NoticeServer } from "@server/notice";
 
 
 const Aux = new Auxiliary<string>();
-require("./public.notice.operation.styl");
+require("./message.notice.operation.styl");
 @Component({
-    name: "publicnoiceoperation",
-    template: require("./public.notice.operation.html"),
+    name: "messagenoiceoperation",
+    template: require("./message.notice.operation.html"),
     props: {
     },
     computed: {
         ...mapGetters([
-            "websiteEdit"
         ])
     },
     components: {
         ModuleTitle,
         RichTextEditor,
+        EmailDiploma
     }
 })
 
-export class PublicNoiceOperation extends Vue {
+export class MessageNoiceOperation extends Vue {
     // init props
 
     // init computed
 
 
     // init data
-    public form: PublicNoticeFormType = {
+    public form: MessagelNoticeFormType = {
         content: "",
-        title: "",
+        receiver_ids: [],
     };
+    public num: number = 0;
+    public chosePerson: Array<string> = [];
 
     // 标题
-    public titles: string[] = ["写公告"];
+    public titles: string[] = ["写短信"];
+
+    // 选择用户
+    public dialogVisibleDiploma: boolean = false;
 
     // 表单验证
     public rules: FormRuleType = {
         title: [
-            { required: true, message: "请填写公告标题", trigger: "blur" },
-            { min: 1, max: 40, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
+            { required: true, message: "请填写短信标题", trigger: "blur" },
+            { min: 1, max: 40, message: "不符合字符规范，字符长度1-40字符", trigger: "blur" }
         ],
         content: [
-            { required: true, message: "请添加公告内容", trigger: "blur" },
+            { required: true, message: "请添加短信内容", trigger: "blur" },
         ],
     };
 
@@ -60,39 +65,39 @@ export class PublicNoiceOperation extends Vue {
 
     // init lifecircle hook
     created() {
-        let that = this;
-        let id = this.$route.params.id;
-        if (id) {
-            // this.$store.dispatch(MYWEBSITEEVENT.GETWEBEDIT, { website_id: id, operation: this.operation });
-        }
-        let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
-       
-        });
-        Aux.insertId(eventId);
+
     }
 
     destroyed() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
-        });
+
     }
 
     // init methods
 
+    getUser(val: Array<object>) {
+        let valArray: any = val;
+        for ( let key in valArray) {
+            this.form.receiver_ids.push(valArray[key].uid);
+        }
+        this.num = valArray.length;
+        this.chosePerson = valArray;
+        this.closeDiploma();
+    }
+
     submitForm(formBasic: string) {
-        NoticeServer.addNotice(this.form).then((response: AxiosResponse<ResType> ) => {
+        NoticeServer.sendMessage(this.form).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     this.$message({
-                        message: "公告填写成功",
+                        message: "短信填写成功",
                         type: "success"
                     });
-                    this.$router.push("/SystemManagement/ReportManagement/notice");
+                    this.$router.push("/SystemManagement/ReportManagement/messagenotice");
                     break;
                 case "error":
                     this.$message({
-                        message: res.message || "公告填写失败",
+                        message: res.message || "短信填写失败",
                         type: "error"
                     });
                     break;
@@ -101,6 +106,9 @@ export class PublicNoiceOperation extends Vue {
             }
 
         });
+    }
+    select() {
+        this.dialogVisibleDiploma = true;
     }
 
     back() {
@@ -111,10 +119,14 @@ export class PublicNoiceOperation extends Vue {
         this.form.content = val;
     }
 
+    // 关闭窗口
+    closeDiploma() {
+        this.dialogVisibleDiploma = false;
+    }
 }
 
 
-export interface PublicNoticeFormType {
+export interface MessagelNoticeFormType {
     content: string;
-    title: string;
+    receiver_ids: Array<number>;
 }

@@ -12,16 +12,16 @@ import { NOTICEEVENT } from "@store/notice.type";
 const Aux = new Auxiliary<string>();
 
 @Component({
-    name: "publicnoticedeatil",
-    template: require("./public.notice.detail.html"),
+    name: "messagenoticedeatil",
+    template: require("./message.notice.detail.html"),
     components: {
         ModuleTitle
     },
     computed: {
-        ...mapGetters(["noticeDetail"])
+        ...mapGetters(["msgDetail"])
     }
 })
-export class PublicNoticeDeatil extends Vue {
+export class MessageNoticeDeatil extends Vue {
     // init data
     public PublicNoticeInfo: PublicNoticeDetailType = {
         content: "",
@@ -32,22 +32,17 @@ export class PublicNoticeDeatil extends Vue {
     };
 
     // init computed
-    public noticeDetail: PublicNoticeDetailType;
+    public msgDetail: PublicNoticeDetailPageType;
 
     // lifecircle hook
     created() {
-        console.log(this.noticeDetail);
         let that = this;
-        let id = this.$route.params.id;
-        if (id) {
-            this.$store.dispatch(NOTICEEVENT.GETNOTICEDETAIL, { id: id });
-        } else {
-            this.PublicNoticeInfo = this.noticeDetail;
-        }
-        let eventId = EventBus.register(CONSTANT.GETWEBMESSAGE, function (event: string, info: any) {
-            console.log(that.noticeDetail);
-            that.PublicNoticeInfo = that.noticeDetail;
-
+        let id = that.$route.params.id;
+        this.$store.dispatch(NOTICEEVENT.GETNOTICEDETAIL, { id: id });
+        let eventId = EventBus.register(CONSTANT.GETNOTICEDETAIL, function (event: string, info: any) {
+            console.log(that.msgDetail);
+            that.PublicNoticeInfo = that.msgDetail[id][0];
+            console.log(that.PublicNoticeInfo);
         });
         Aux.insertId(eventId);
     }
@@ -63,4 +58,12 @@ export interface PublicNoticeDetailType {
     ctime: string;
     id: string;
     title: string;
+}
+
+export interface PublicNoticeDetailPageType {
+    [extra: string]: PublicNoticeDetailSoType;
+}
+
+export interface PublicNoticeDetailSoType {
+    [extra: string]: PublicNoticeDetailType;
 }
