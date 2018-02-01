@@ -1,7 +1,29 @@
 import Vue from "vue";
+import * as moment from "moment";
 import { Config } from "@store/table.type";
+import { CONSTANT, vm, EventBus } from "@utils/event";
+import { RegValidate, FromValidator } from "@utils/form.validator";
 
-export class ListBaseClass extends Vue {
+
+
+
+
+export class BaseLibrary extends Vue {
+    protected moment = moment;
+    protected vm = vm;
+    protected CONSTANT = CONSTANT;
+    protected EventBus = EventBus;
+    protected RegValidate = RegValidate;
+    protected FromValidator = FromValidator;
+}
+
+
+export class DiplomaBaseClass extends BaseLibrary {
+    protected close() {
+        this.$emit("close", false);
+    }
+}
+export class ListBaseClass extends BaseLibrary {
     /**
      * @param href 导出路径
      */
