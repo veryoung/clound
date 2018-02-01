@@ -40,40 +40,6 @@ export class UserMenu extends ListBaseClass {
     public tableConfig: TableConfigType;
     public noticeTable: PubilcTableType;
 
-    public demoArray = {
-        "0": {
-            item: 1,
-        },
-        "1": {
-            item: 1,
-        },
-        "2": {
-            item: 1,
-        },
-        "3": {
-            item: 1,
-        },
-        "4": {
-            item: 1,
-        },
-        "5": {
-            item: 1,
-        },
-        "6": {
-            item: 1,
-        },
-        "70": {
-            item: 1,
-        }, 
-        "8": {
-            item: 1,
-        }
-        , 
-        "90": {
-            item: 1,
-        }
-    };
-
     // init computed
     public personInfo: UserCenterType;
     public defaultUser: DefaultUserType;

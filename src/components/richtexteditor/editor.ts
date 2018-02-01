@@ -62,6 +62,10 @@ import "quill/dist/quill.snow.css";
 
                 ];
             }
+        },
+        placeholderText: {
+            type: String,
+            default: "请输入内容"
         }
     }
 })
@@ -69,6 +73,8 @@ export class RichTextEditor extends Vue {
     // init props
     public content: string;
     public toolbarOptions: any[];
+    public placeholderText: String;
+
     // init computed
     get editor() {
         let temp: any = this.$refs.myQuillEditor;
@@ -81,7 +87,7 @@ export class RichTextEditor extends Vue {
             // { "size": ["small", false, "large", "huge"] }, 
             toolbar: [{ "header": [1, 2, 3, 4, 5, 6, false] }, { "list": "ordered" }, { "list": "bullet" }, "bold", "italic", "underline", "strike", "link", "blockquote", "code-block", { "color": [] }, { "background": [] }, "clean"]
         },
-        placeholder: "请输入内容",
+        placeholder: this.placeholderText,
         theme: "snow"
     };
 
