@@ -111,19 +111,16 @@ export class PublicNotice extends ListBaseClass {
             this.$router.push(`/SystemManagement/ReportManagement/notice/look/${rowObj.row.id}`);
         }
     }
-    del() {
-        if (this.ids.length === 0) {
-            this.$message({
-                message: "请选择需要删除项",
-                type: "warning"
-            });
-        } else {
+    del(rowObj?: any) {
+        if (rowObj) {
+            let delArray: any = [];
+            delArray.push(rowObj.row.id);
             this.$confirm("删除后公告将无法恢复，您确定要删除吗？", "删除公告", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             }).then(() => {
-                NoticeServer.delNotice(this.ids).then((response: AxiosResponse<ResType>) => {
+                NoticeServer.delNotice(delArray).then((response: AxiosResponse<ResType>) => {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
@@ -143,7 +140,51 @@ export class PublicNotice extends ListBaseClass {
                     message: "已取消删除"
                 });
             });
+        } else {
+            if (this.ids.length === 0) {
+                this.$message({
+                    message: "请选择需要删除项",
+                    type: "warning"
+                });
+            } else {
+                this.$confirm("删除后公告将无法恢复，您确定要删除吗？", "删除公告", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(() => {
+                    NoticeServer.delNotice(this.ids).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Message({
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消删除"
+                    });
+                });
+            }
         }
+
+
+
+
+
+
+
+
+
+
+
     }
 
     sortChange(opt: any) {

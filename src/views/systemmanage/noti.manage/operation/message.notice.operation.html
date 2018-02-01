@@ -1,4 +1,5 @@
 <div class="public-notice-operation">
+    <EmailDiploma v-if="dialogVisibleDiploma" :dialogVisible="dialogVisibleDiploma" @close="closeDiploma" @userData="getUser"/>
     <div class="panel">
         <ModuleTitle :titles="titles" />
         <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="public-notice-form">

@@ -26,6 +26,7 @@ require("./message.notice.operation.styl");
     components: {
         ModuleTitle,
         RichTextEditor,
+        EmailDiploma
     }
 })
 
@@ -72,6 +73,16 @@ export class MessageNoiceOperation extends Vue {
     }
 
     // init methods
+
+    getUser(val: Array<object>) {
+        let valArray: any = val;
+        for ( let key in valArray) {
+            this.form.receiver_ids.push(valArray[key].uid);
+        }
+        this.num = valArray.length;
+        this.chosePerson = valArray;
+        this.closeDiploma();
+    }
 
     submitForm(formBasic: string) {
         NoticeServer.sendMessage(this.form).then((response: AxiosResponse<ResType>) => {

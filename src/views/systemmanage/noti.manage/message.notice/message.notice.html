@@ -3,10 +3,10 @@
         <ModuleTitle :titles="titles" />
         <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
             <el-form-item label="关键字">
-                <el-input v-model="filter.name" placeholder="请输入关键字"></el-input>
+                <el-input v-model="filter.key_word" placeholder="请输入关键字"></el-input>
             </el-form-item>
             <el-form-item label="发送方式">
-                <el-select v-model="filter.open_waf" placeholder="状态" size="small">
+                <el-select v-model="filter.msg_type" placeholder="状态" size="small">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="人工发送" value="0"></el-option>
                     <el-option label="系统发送" value="1"></el-option>
@@ -18,7 +18,7 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="发送状态">
-                <el-select v-model="filter.open_waf" placeholder="状态" size="small">
+                <el-select v-model="filter.status" placeholder="状态" size="small">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="发送中" value="2"></el-option>
                     <el-option label="发送成功" value="0"></el-option>
@@ -37,7 +37,7 @@
                         <span class="iconfont">&#xe61a;</span>
                         写短信
                     </el-button>
-                    <el-button type="primary" @click="del" size="small">
+                    <el-button type="primary" @click="del()" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         删除
                     </el-button>
@@ -57,6 +57,11 @@
                         <span>
                             <p style="cursor:pointer" @click="handle('settings',{$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 查看详情
+                            </p>
+                        </span>
+                        <span>
+                            <p style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                                删除
                             </p>
                         </span>
                     </span>

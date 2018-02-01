@@ -381,33 +381,34 @@ export const systemTable: TableConfigType = {
                 nonexit: true
             },
             {
-                label: "邮件标题",
-                prop: "object",
+                label: "短信内容",
+                prop: "content",
                 show: true,
             },
             {
-                label: "接收人",
+                label: "收件人",
                 prop: "receiver",
                 show: true,
             },
             {
-                label: "发送日期",
-                prop: "send_date",
+                label: "发送方式",
+                prop: "msg_type",
                 show: true,
             },
             {
-                label: "操作类型",
-                prop: "send_type",
-                show: true,
-            },
-            {
-                label: "发送人",
+                label: "发件人",
                 prop: "sender",
                 show: true,
             },
             {
-                prop: "发送状态",
-                label: "status",
+                label: "发送时间",
+                prop: "send_date",
+                show: true,
+                type: "datetime"
+            },
+            {
+                prop: "status",
+                label: "发送状态",
                 show: true,
             },
         ],
