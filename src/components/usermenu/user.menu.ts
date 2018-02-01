@@ -15,6 +15,7 @@ import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
 import { ListBaseClass } from "@views/base/base.class";
 import { TableConfigType } from "@store/table.type";
+import * as moment from "moment";
 
 
 
@@ -37,12 +38,21 @@ export class UserMenu extends ListBaseClass {
     public Routers: Array<RouteConfig> = userCenterRouter;
     public user_name: string = "";
     public tableConfig: TableConfigType;
+    public noticeTable: PubilcTableType;
+
 
     // init computed
     public personInfo: UserCenterType;
     public defaultUser: DefaultUserType;
     public PublicNoticeData: PublicNoticeColumnType[] = new Array<PublicNoticeColumnType>();
-
+    public filterData: SearchType = {
+        key_word: "",
+        new: true,
+        page: "1",
+        page_size: "10",
+        send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+    };
+    public filter: SearchType = (<any>Object).assign({}, this.filterData);
 
     public NoticeNum: number = 0;
     // lifecircle hook
