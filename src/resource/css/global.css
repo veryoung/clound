@@ -1,7 +1,8 @@
-@font-face{
-    font-family: wwyh;
-    src:url("../fonts/wryh.ttf");
+@font-face {
+    font-family: "微软雅黑", wwyh;
+    src: url("../fonts/wryh.ttf");
 }
+
 html,
 body {
     font-family: wwyh;

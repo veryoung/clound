@@ -1,19 +1,20 @@
 <div class="public-notice-operation">
-    <EmailDiploma v-if="dialogVisibleDiploma" :dialogVisible="dialogVisibleDiploma" @close="closeDiploma" @userData="getUser"/>
+    <EmailDiploma v-if="dialogVisibleDiploma" :dialogVisible="dialogVisibleDiploma" @close="closeDiploma" @userData="getUser"
+    />
     <div class="panel">
         <ModuleTitle :titles="titles" />
-        <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="public-notice-form">
-            <el-form-item label="收件人" prop="title">
+        <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
+            <el-form-item class="choose-content" label="收件人" prop="receiver_ids">
                 <div>
                     <span>
                         已填写{{num}}人
                     </span>
                     <el-button @click="select">请选择</el-button>
                 </div>
-                <div v-if="num>0">
-                    <div v-for="item in chosePerson" :key="item.id">
+                <div class="choose-box" v-if="num>0">
+                    <div class="choosed" v-for="item in chosePerson" :key="item.id">
                         <span>
-                            11
+                            {{item.cperson}}({{item.email}})
                         </span>
                     </div>
                 </div>
