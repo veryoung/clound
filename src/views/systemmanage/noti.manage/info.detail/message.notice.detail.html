@@ -1,0 +1,31 @@
+<div class="notice-common-detail">
+    <div class="panel">
+        <ModuleTitle :titles="['短信详情']" />
+        <ul>
+            <li>
+                <div class="label">短信内容:</div>
+                <div class="message">{{ MessageNoticeInfo.content |none }}</div>
+            </li>
+            <li>
+                <div class="label">消息类型:</div>
+                <div class="message">{{ MessageNoticeInfo.send_type==="manual"?"人工发送":"系统发送" }}</div>
+            </li>
+            <li>
+                <div class="label">接收人:</div>
+                <div class="message">{{ MessageNoticeInfo.receiver|none}}</div>
+            </li>
+            <li>
+                <div class="label">发送时间:</div>
+                <div class="message">{{ MessageNoticeInfo.send_date | datetime |none}}</div>
+            </li>
+            <li>
+                <div class="label">发送人:</div>
+                <div class="message">{{ MessageNoticeInfo.sender |none}}</div>
+            </li>
+            <!-- <li>
+                <div class="label">发送状态:</div>
+                <div class="message">{{MessageNoticeInfo.status |none}}</div>
+            </li> -->
+        </ul>
+    </div>
+</div>
