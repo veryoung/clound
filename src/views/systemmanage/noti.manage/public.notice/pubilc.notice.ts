@@ -173,17 +173,6 @@ export class PublicNotice extends ListBaseClass {
                 });
             }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 
     sortChange(opt: any) {

@@ -1,8 +1,17 @@
 <div class="user-menu">
     <div class="notice">
-        <el-badge :value="12" class="item">
-            <span class="iconfont">&#xe609;</span>
-        </el-badge>
+        <el-dropdown :hide-on-click="false">
+            <span class="el-dropdown-link">
+                <el-badge :value="NoticeNum" class="item">
+                    <span class="iconfont">&#xe609;</span>
+                </el-badge>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item v-for="(router,$index) in Routers" :key="$index">
+                    <router-link :to="router.path" tag="span">{{router.name}}</router-link>
+                </el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
     </div>
     <div class="down-menu">
         <el-dropdown :hide-on-click="false">

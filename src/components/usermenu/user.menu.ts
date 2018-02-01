@@ -12,6 +12,9 @@ import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
 import { UserStatus } from "@utils/monitor";
 import { Auxiliary } from "@utils/auxiliary";
+import { NOTICEEVENT } from "@store/notice.type";
+import { ListBaseClass } from "@views/base/base.class";
+import { TableConfigType } from "@store/table.type";
 
 
 
@@ -24,16 +27,24 @@ require("./user.menu.styl");
         ...mapGetters([
             "personInfo",
             "defaultUser",
+            "tableConfig",
+            "noticeTable"
         ])
     }
 })
-export class UserMenu extends Vue {
+export class UserMenu extends ListBaseClass {
     // init data
     public Routers: Array<RouteConfig> = userCenterRouter;
     public user_name: string = "";
+    public tableConfig: TableConfigType;
+
     // init computed
     public personInfo: UserCenterType;
     public defaultUser: DefaultUserType;
+    public PublicNoticeData: PublicNoticeColumnType[] = new Array<PublicNoticeColumnType>();
+
+
+    public NoticeNum: number = 0;
     // lifecircle hook
     created() {
         let that = this;
@@ -42,6 +53,12 @@ export class UserMenu extends Vue {
         this.user_name = this.personInfo[this.defaultUser.uid].user_name;
         EventBus.register(CONSTANT.DEFAULTUSER, function () {
             that.user_name = that.personInfo[that.defaultUser.uid].user_name;
+        });
+
+        // 获取公告
+        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
+            that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
         });
     }
     logout() {
@@ -60,4 +77,26 @@ export class UserMenu extends Vue {
             }
         });
     }
+}
+
+
+// 公告详情内容
+export interface SearchType {
+    key_word: string;
+    new: boolean;
+    page: string;
+    page_size: string;
+    send_time: Array<string>;
+}
+
+export interface PublicNoticeColumnType {
+    c_person: string;
+    c_time: string;
+    content: string;
+    title: string;
+    id: string;
+}
+
+export interface PubilcTableType {
+    [extra: string]: PublicNoticeColumnType[];
 }
