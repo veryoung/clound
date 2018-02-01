@@ -1,27 +1,31 @@
-<div class="public-notice-detail">
+<div class="notice-common-detail">
     <div class="panel">
         <ModuleTitle :titles="['短信详情']" />
-        <div>
-            <div class="message">发送时间:{{ MessageNoticeInfo.content }}</div>
-        </div>
-        <div>
-            <div class="message">消息类型 :{{ MessageNoticeInfo.msg_type }}</div>
-        </div>
-        <div>
-            <div class="message">接收人 :{{ MessageNoticeInfo.receiver }}</div>
-        </div>
-
-        <div>
-            <div class="message">发送时间:{{ MessageNoticeInfo.send_date | datetime |none}}</div>
-        </div>
-        <div>
-            <div class="message">发送人:{{ MessageNoticeInfo.sender}}</div>
-        </div>
-        <div>
-            <div class="message">发送状态 :{{ MessageNoticeInfo.status}}</div>
-        </div>
-
-        <div>
-        </div>
+        <ul>
+            <li>
+                <div class="label">发送时间：</div>
+                <div class="message">{{ MessageNoticeInfo.content |none }}</div>
+            </li>
+            <li>
+                <div class="label">消息类型：</div>
+                <div class="message">{{ MessageNoticeInfo.msg_type|none }}</div>
+            </li>
+            <li>
+                <div class="label">接收人：</div>
+                <div class="message">{{ MessageNoticeInfo.receiver|none}}</div>
+            </li>
+            <li>
+                <div class="label">发送时间：</div>
+                <div class="message">{{ MessageNoticeInfo.send_date | datetime |none}}</div>
+            </li>
+            <li>
+                <div class="label">发送人：</div>
+                <div class="message">{{ MessageNoticeInfo.sender |none}}</div>
+            </li>
+            <li>
+                <div class="label">发送状态</div>
+                <div class="message">{{MessageNoticeInfo.status |none}}</div>
+            </li>
+        </ul>
     </div>
 </div>
