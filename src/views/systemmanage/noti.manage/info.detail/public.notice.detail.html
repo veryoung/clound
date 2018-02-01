@@ -1,19 +1,23 @@
-<div class="public-notice-detail">
+<div class="notice-common-detail">
     <div class="panel">
         <ModuleTitle :titles="['公告详情']" />
-        <div>
-            <div class="message">{{ PublicNoticeInfo.title }}</div>
-        </div>
-
-        <div>
-            <div class="message">发送时间:{{ PublicNoticeInfo.ctime | datetime |none}}</div>
-        </div>
-        <div>
-            <div class="message">发送人:{{ PublicNoticeInfo.cperson}}</div>
-        </div>
-
-        <div>
-            <div class="message" v-html=" PublicNoticeInfo.content"></div>
-        </div>
+        <ul>
+            <li>
+                <div class="label">公告标题</div>
+                <div class="message">{{ PublicNoticeInfo.title |none }}</div>
+            </li>
+            <li>
+                <div class="label">发送时间：</div>
+                <div class="message">{{ PublicNoticeInfo.ctime | datetime |none}}</div>
+            </li>
+            <li>
+                <div class="label">发送人：</div>
+                <div class="message">{{ PublicNoticeInfo.cperson |none}}</div>
+            </li>
+            <li>
+                <div class="label">内容</div>
+                <div class="message" v-html="PublicNoticeInfo.content | none"></div>
+            </li>
+        </ul>
     </div>
 </div>
