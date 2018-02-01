@@ -89,10 +89,6 @@ export class EmailDiploma extends Vue {
             }
         }
     }
-    test1() {
-        let temp: any = this.$refs.noticeTable;
-        temp.toggleRowSelection(this.tableData[0], true);
-    }
     destroyed() {
         Aux.getIds().map((id, $index) => {
             EventBus.unRegister(id);
@@ -100,8 +96,7 @@ export class EmailDiploma extends Vue {
     }
     // init method
     sumbit() {
-        let userArray: Array<object> = [];
-
+        let userArray: Array<UserListColumnType> = [];
         for (let key in this.userObj) {
             for ( let key2 in this.userObj[key]) {
                 userArray.push(this.userObj[key][key2]);
