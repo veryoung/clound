@@ -17,7 +17,6 @@ import { fail } from "assert";
 
 const Aux = new Auxiliary<string>();
 
-const style = require("./email.m.css");
 
 @Component({
     name: "emaildiploma",
@@ -101,7 +100,14 @@ export class EmailDiploma extends Vue {
     }
     // init method
     sumbit() {
-        console.log(this.userObj);
+        let userArray: Array<object> = [];
+
+        for (let key in this.userObj) {
+            for ( let key2 in this.userObj[key]) {
+                userArray.push(this.userObj[key][key2]);
+            }
+        }
+        this.$emit("userData", userArray);
     }
 
     handleSelectionChange(val: any) {

@@ -1,3 +1,4 @@
+import  ElementUI  from "element-ui";
 import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TableConfigType } from "@store/table.type";
@@ -6,8 +7,16 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import * as moment from "moment";
 import { ListBaseClass } from "@views/base/base.class";
+import { mapGetters } from "vuex";
+import { NOTICEEVENT } from "@store/notice.type";
+import { EventBus, CONSTANT } from "@utils/event";
+import { Auxiliary } from "@utils/auxiliary";
+import { NoticeServer } from "@server/notice";
+import { AxiosResponse } from "axios";
+import { ResType } from "server";
 
 require("./message.notice.styl");
+const Aux = new Auxiliary<string>();
 
 @Component({
     name: "messagenotice",
@@ -17,16 +26,23 @@ require("./message.notice.styl");
         CloudTable
     },
     template: require("./message.notice.html"),
+    computed: {
+        ...mapGetters([
+            "tableConfig",
+            "msgTable",
+        ])
+    }
 })
 
 
 export class MessageNotice extends ListBaseClass {
     // init computed
-    // public tableData: WebsiteTableType;
+    public msgTable: MsgNoticeTableType;
     public tableConfig: TableConfigType;
 
     // init data
     public titles: string[] = ["短信通知"];
+    public ids: string[] = [];
     public filterData: SearchType = {
         key_word: "",
         send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
@@ -39,8 +55,12 @@ export class MessageNotice extends ListBaseClass {
  
     // lifecircle hook 
     created() {
+        this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
+        let that = this;
+        let ListId = EventBus.register(CONSTANT.GETMSGLIST, function (event: string, info: any) {
+            that.MessageNoticetableData = (<any>Object).assign([], that.msgTable[that.tableConfig["msgtable"].page - 1]);
 
-        // 
+        });
     }
 
     destroyed() {
@@ -52,12 +72,12 @@ export class MessageNotice extends ListBaseClass {
 
     // init method
     search() {
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
     }
 
     reset() {
-        // this.filter = (<any>Object).assign({}, filterData);
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.filter = (<any>Object).assign({}, this.filterData);
+        this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
     }
 
     handleSizeChange(val: number) {
@@ -68,21 +88,81 @@ export class MessageNotice extends ListBaseClass {
     }
 
     handleSelectionChange(options: any) {
-        // this.$emit("handleSelectionChange", options);
+        this.ids = [];
+        options.map((item: MsgNoticeColumnType, $index: number) => {
+            this.ids.push(item.id);
+        });
     }
 
 
-    mergeData(opt: any) {
-        const { page_size, page } = opt;
-        // return (<any>Object).assign({}, this.filter, {
-        //     page: page,
-        //     page_size: page_size,
-        // });
+    // 填写
+    write() {
+        this.$router.push(`/SystemManagement/ReportManagement/messagenotice/add`);
     }
-
-    // 跳转方法同统一
-    handle() {
-
+    
+    del(rowObj?: any) {
+        if (rowObj) {
+            let delArray: any = [];
+            delArray.push(rowObj.row.id);
+            this.$confirm("删除后公告将无法恢复，您确定要删除吗？", "删除公告", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(() => {
+                NoticeServer.delMessageRecord(delArray).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            ElementUI.Message({
+                                message: "删除成功",
+                                type: "success"
+                            });
+                            this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: "info",
+                    message: "已取消删除"
+                });
+            });
+        } else {
+            if (this.ids.length === 0) {
+                this.$message({
+                    message: "请选择需要删除项",
+                    type: "warning"
+                });
+            } else {
+                this.$confirm("删除后公告将无法恢复，您确定要删除吗？", "删除公告", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(() => {
+                    NoticeServer.delMessageRecord(this.ids).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Message({
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消删除"
+                    });
+                });
+            }
+        }
     }
 
     sortChange(opt: any) {

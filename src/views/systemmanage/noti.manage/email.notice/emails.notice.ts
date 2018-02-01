@@ -1,3 +1,4 @@
+import ElementUI from "element-ui";
 import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TableConfigType } from "@store/table.type";
@@ -9,8 +10,13 @@ import { ListBaseClass } from "@views/base/base.class";
 import { NOTICEEVENT } from "@store/notice.type";
 import { mapGetters } from "vuex";
 import { EventBus, CONSTANT } from "@utils/event";
+import { NoticeServer } from "@server/notice";
+import { AxiosResponse } from "axios";
+import { ResType } from "server";
+import { Auxiliary } from "@utils/auxiliary";
 
 require("./emails.notice.styl");
+const Aux = new Auxiliary<string>();
 
 @Component({
     name: "emailsnotice",
@@ -54,16 +60,14 @@ export class EmailsNotice extends ListBaseClass {
 
         let ListId = EventBus.register(CONSTANT.GETEMAILLIST, function (event: string, info: any) {
             console.log(that.emailTable);
-            that.emailnoticetableData = (<any>Object).assign([], that.emailTable[that.tableConfig["noticetable"].page - 1]);
-            
+            that.emailnoticetableData = (<any>Object).assign([], that.emailTable[that.tableConfig["emailtable"].page - 1]);
         });
     }
 
     destroyed() {
-        // Aux.getIds().map((id, $idnex) => {
-        //     EventBus.unRegister(id);
-        // });
-        // this.unwatch();
+        Aux.getIds().map((id, $idnex) => {
+            EventBus.unRegister(id);
+        });
     }
 
     // init method
@@ -76,6 +80,12 @@ export class EmailsNotice extends ListBaseClass {
         this.$router.push(`/SystemManagement/ReportManagement/emaillnotice/add`);
     }
 
+    // 查看详情
+    look(rowObj?: any) {
+        if (rowObj) {
+            this.$router.push(`/SystemManagement/ReportManagement/emaillnotice/look/${rowObj.row.id}`);
+        }
+    }
     reset() {
         this.filter = (<any>Object).assign({}, this.filterData);
         this.$store.dispatch(NOTICEEVENT.GETEMAILLIST, this.mergeData(this.tableConfig["emailtable"], this.filter));
@@ -99,10 +109,76 @@ export class EmailsNotice extends ListBaseClass {
         });
     }
 
-    // 跳转方法同统一
-    handle() {
-
+    del(rowObj?: any) {
+        if (rowObj) {
+            let delArray: any = [];
+            delArray.push(rowObj.row.id);
+            this.$confirm("删除后邮件将无法恢复，您确定要删除吗？", "删除邮件", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(() => {
+                NoticeServer.delEmailRecord(delArray).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            setTimeout(() => {
+                                ElementUI.Message({
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.$store.dispatch(NOTICEEVENT.GETEMAILLIST, this.mergeData(this.tableConfig["emailtable"], this.filter));
+                            }, 2000);
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: "info",
+                    message: "已取消删除"
+                });
+            });
+        } else {
+            console.log(this.ids);
+            if (this.ids.length === 0) {
+                this.$message({
+                    message: "请选择需要删除项",
+                    type: "warning"
+                });
+            } else {
+                this.$confirm("删除后邮件将无法恢复，您确定要删除吗？", "删除邮件", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(() => {
+                    NoticeServer.delEmailRecord(this.ids).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Message({
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消删除"
+                    });
+                });
+            }
+        }
     }
+
+
+
 
     sortChange(opt: any) {
 

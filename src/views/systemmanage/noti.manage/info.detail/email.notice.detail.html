@@ -1,0 +1,30 @@
+<div class="public-notice-detail">
+    <div class="panel">
+        <ModuleTitle :titles="['邮件详情']" />
+        <div>
+            <div class="message">标题：{{ EmailNoticeInfo.object }}</div>
+        </div>
+        <div>
+            <div class="message">接收人: {{ EmailNoticeInfo.receiver }}</div>
+        </div>
+        <div>
+            <!-- <div class="message">发送日期:{{ EmailNoticeInfo.send_date | datetime | none }}</div> -->
+        </div>
+        <div>
+            <div class="message">发送方式:{{ EmailNoticeInfo.send_type }}</div>
+        </div>
+
+        <div>
+            <div class="message">发送人:{{ EmailNoticeInfo.sender}}</div>
+        </div>
+
+        <div>
+            <div class="message">发送状态:{{ EmailNoticeInfo.status}}</div>
+        </div>
+        <div>
+            <div class="message">邮件内容:{{ EmailNoticeInfo.content}}</div>
+        </div>
+
+
+    </div>
+</div>
