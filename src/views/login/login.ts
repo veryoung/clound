@@ -88,7 +88,7 @@ export class Login extends Vue {
         GeneralServer.code().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             this.ubase64 = `data:image/png;base64,${res.data.ubase64}`;
-            this.form.idcode = res.data.idcode;
+            this.form.captcha_id = res.data.captcha_id;
         });
     }
 }
