@@ -51,6 +51,9 @@ export class MessageNoticeDeatil extends Vue {
     beforeDestroy() {
         Aux.getIds().map((id, $index) => {     EventBus.unRegister(id); });
     }
+    back() {
+        this.$router.go(-1);
+    }
 }
 
 export interface MessageNoticeDetailType {

@@ -1,51 +1,26 @@
 @import "../../../../resource/mixins.styl"
 
-.public-notice-operation
+.messagenotice-operation
     common-panel(0,20px)
-    flex-direction column
-    padding-left 40px
-    overflow auto
-    position relative
-    >.panel
-        position absolute
+    >.plane
         width 100%
-        >.public-notice-form
-            width 1200px
-            >.el-form-item
-                >.el-form-item__content
-                    display flex
-                    justify-content flex-start
-                    align-items center
-                    >.quill-editor
-                        width 100%
-                        height 400px
-                        .ql-toolbar
-                            display flex
-                        .ql-container
-                            height: 350px    
-            >.notice-content
-                height 420px
-                margin-bottom 0px
-            >.btn-content
-                display flex
-            >.choose-content
-                >.el-form-item__content
-                    display flex
-                    flex-direction column
-                    >div
-                        align-self flex-start
-                    >.choose-box
-                        width 100%
-                        display flex
-                        flex-direction row
-                        flex-wrap wrap
-                        >.choosed 
-                            align-self flex-start
-                            width 200px
-                            border 1px solid #dcdfe6
-                            margin 10px 10px
-                            border-radius 5px
-                            color #606266  
+        display flex
+        flex 0 1 auto
+        flex-direction column
+        >.contentbox
+            width: 100%
+            display flex
+            >.left
+                width 300px
+                float left 
+                height 100px
+            >.right
+                flex 1
+
+
+
+
+        
 
 
 

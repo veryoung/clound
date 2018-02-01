@@ -55,6 +55,10 @@ export class EmailNoticeDeatil extends Vue {
             EventBus.unRegister(id);
         });
     }
+
+    back() {
+        this.$router.go(-1);
+    }
 }
 
 export interface EmailNoticeDetailType {

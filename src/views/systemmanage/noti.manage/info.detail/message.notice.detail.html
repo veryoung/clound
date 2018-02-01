@@ -22,10 +22,13 @@
                 <div class="label">发送人:</div>
                 <div class="message">{{ MessageNoticeInfo.sender |none}}</div>
             </li>
-            <!-- <li>
+            <li>
                 <div class="label">发送状态:</div>
                 <div class="message">{{MessageNoticeInfo.status |none}}</div>
-            </li> -->
+            </li>
+            <li>
+                <el-button @click="back()">返回</el-button>
+            </li>
         </ul>
     </div>
 </div>
