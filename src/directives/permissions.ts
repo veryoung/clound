@@ -231,6 +231,12 @@ export class PermissionsObj {
         if (permissions === null) {
             return false;
         }
+
+        // if (permissions.indexOf(value) !== -1) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
         for (let permission of permissions) {
             if (permission.indexOf(value) !== -1) {
                 return true;

@@ -22,7 +22,7 @@
                         </el-menu-item>
                     </template>
                 </el-submenu>
-                <el-menu-item  v-permissions="menu.meta.permission" v-if="menu.meta&&!menu.meta.hidden" v-show="!menu.children" :index="menu.name" @click="go(menu)" :style="{'background':defaultIndex === menu.name?'#1f4c6f':''}">
+                <el-menu-item  v-if="menu.meta&&!menu.meta.hidden" v-show="!menu.children" :index="menu.name" @click="go(menu)" :style="{'background':defaultIndex === menu.name?'#1f4c6f':''}"  v-permissions="menu.meta.permission" >
                     <i class="iconfont" :class="menu.meta.icon"></i>
                     <span slot="title">{{menu.name}}</span>
                 </el-menu-item>

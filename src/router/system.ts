@@ -54,7 +54,7 @@ export const systemRouter: RouteConfig[] = [
         redirect: "ReportManagement/notice",
         meta: {
             icon: "icon-tongzhiguanli",
-            permission: "SystemManagement.LogAudit",
+            permission: "SystemManagement.NoticeManagement",
         },
         component: RouterComponent
     },
