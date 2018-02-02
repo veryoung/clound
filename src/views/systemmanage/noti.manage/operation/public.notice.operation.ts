@@ -91,14 +91,16 @@ export class PublicNoiceOperation extends Vue {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             message: "公告填写成功",
                             type: "success"
                         });
                         this.$router.push("/SystemManagement/ReportManagement/notice");
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             message: res.message || "公告填写失败",
                             type: "error"
                         });

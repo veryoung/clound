@@ -91,7 +91,8 @@ export class UserPwd extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            this.$message({
+                            this.$notify({
+                                title: "提示",
                                 message: res.message || "修改密码成功",
                                 type: "success"
                             });

@@ -148,19 +148,22 @@ export class WebsiteSettings extends Vue {
                 switch (res.status) {
                     // "suc" | "error" | "red"
                     case "suc":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: res.message || "更新成功"
                         });
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message || "更新失败"
                         });
                         break;
                     case "red":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "info",
                             message: res.message
                         });
@@ -169,8 +172,9 @@ export class WebsiteSettings extends Vue {
 
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
                 type: "info",
+                title: "提示",
                 message: "已取消更新"
             });
         });
@@ -194,19 +198,22 @@ export class WebsiteSettings extends Vue {
                     // "suc" | "error" | "red"
                     case "suc":
                         this.MirrorValue = val;
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: res.message || "更新成功"
                         });
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message || "更新失败"
                         });
                         break;
                     case "red":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "info",
                             message: res.message
                         });
@@ -215,7 +222,8 @@ export class WebsiteSettings extends Vue {
 
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 type: "info",
                 message: "已取消刷新"
             });
@@ -242,13 +250,15 @@ export class WebsiteSettings extends Vue {
                 switch (res.status) {
                     // "suc" | "error" | "red"
                     case "suc":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: "刷新成功!"
                         });
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message
                         });
@@ -256,7 +266,8 @@ export class WebsiteSettings extends Vue {
                 }
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 type: "info",
                 message: "已取消刷新"
             });
@@ -314,13 +325,15 @@ export class WebsiteSettings extends Vue {
                     // "suc" | "error" | "red"
                     case "suc":
                         this.form.cdn_enable = val;
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: text + "成功!"
                         });
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message
                         });
@@ -328,7 +341,8 @@ export class WebsiteSettings extends Vue {
                 }
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 type: "info",
                 message: "已取消" + text
             });
@@ -363,13 +377,15 @@ export class WebsiteSettings extends Vue {
                     // "suc" | "error" | "red"
                     case "suc":
                         this.form.mirror_enable = val;
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: text + "成功!"
                         });
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message
                         });
@@ -377,7 +393,8 @@ export class WebsiteSettings extends Vue {
                 }
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 type: "info",
                 message: "已取消" + text
             });
@@ -412,13 +429,15 @@ export class WebsiteSettings extends Vue {
                     // "suc" | "error" | "red"
                     case "suc":
                         this.form.waf_enable = val;
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: text + "成功!"
                         });
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message
                         });
@@ -426,7 +445,8 @@ export class WebsiteSettings extends Vue {
                 }
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 type: "info",
                 message: "已取消" + text
             });
@@ -462,13 +482,15 @@ export class WebsiteSettings extends Vue {
                     // "suc" | "error" | "red"
                     case "suc":
                         this.form.ads_enable = val;
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: text + "成功!"
                         });
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message
                         });
@@ -476,7 +498,8 @@ export class WebsiteSettings extends Vue {
                 }
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 type: "info",
                 message: "已取消" + text
             });

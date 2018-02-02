@@ -57,7 +57,8 @@ export class MirrorFrame extends Vue {
                 this.defalutUrl.push(tagVal);
                 return;
             }
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "输入格式不正确",
                 type: "warning"
             });
@@ -89,7 +90,8 @@ export class MirrorFrame extends Vue {
             switch (res.status) {
                 // "suc" | "error" | "red"
                 case "suc":
-                    this.$message({
+                    this.$notify({
+                        title: "提示",
                         type: "success",
                         message: "设置成功!"
                     });
@@ -108,7 +110,8 @@ export class MirrorFrame extends Vue {
     }
 
     error(res: any) {
-        this.$message({
+        this.$notify({
+            title: "提示",
             message: res.message,
             type: "warning"
         });

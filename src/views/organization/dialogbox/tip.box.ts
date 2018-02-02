@@ -76,7 +76,8 @@ export class TipBox extends Vue {
                     switch (res.status) {
                         case "suc":
                             // 'success' | 'warning' | 'info' | 'error'
-                            this.$message({
+                            this.$notify({
+                                title: "提示",
                                 message: res.message || "组织机构添加成功",
                                 type: "success"
                             });

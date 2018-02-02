@@ -202,7 +202,8 @@ export class MyReport extends ListBaseClass {
     exportChoose(type: string) {
         let data: SearchType = this.filter;
         if (this.ids.length === 0) {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "请选择导出项",
                 type: "warning"
             });

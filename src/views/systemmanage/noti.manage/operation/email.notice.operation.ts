@@ -238,7 +238,8 @@ export class EmailNoiceOperation extends Vue {
         console.log(this.form.receiver_ids);
 
         if (this.form.receiver_ids.length === 0) {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "请选择收件人",
                 type: "warning"
             });
@@ -252,14 +253,16 @@ export class EmailNoiceOperation extends Vue {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             message: "邮件填写成功",
                             type: "success"
                         });
                         this.$router.push("/SystemManagement/ReportManagement/emaillnotice");
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             message: res.message || "邮件填写失败",
                             type: "error"
                         });

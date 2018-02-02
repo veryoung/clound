@@ -59,14 +59,16 @@ export class SpeedUpdateFrame extends Vue {
                 switch (res.status) {
                     // "suc" | "error" | "red"
                     case "suc":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "success",
                             message: "刷新成功!"
                         });
                         this.cancel();
                         break;
                     case "error":
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             type: "error",
                             message: res.message
                         });
@@ -74,7 +76,8 @@ export class SpeedUpdateFrame extends Vue {
                 }
             });
         }).catch(() => {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 type: "info",
                 message: "已取消刷新"
             });
@@ -92,7 +95,8 @@ export class SpeedUpdateFrame extends Vue {
                 this.defalutUrl.push(tagVal);
                 return;
             }
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "输入格式不正确",
                 type: "warning"
             });
@@ -106,7 +110,8 @@ export class SpeedUpdateFrame extends Vue {
     }
 
     error(res: any) {
-        this.$message({
+        this.$notify({
+            title: "提示",
             message: res.message,
             type: "warning"
         });

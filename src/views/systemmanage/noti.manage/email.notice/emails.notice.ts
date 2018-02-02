@@ -121,7 +121,8 @@ export class EmailsNotice extends ListBaseClass {
                     switch (res.status) {
                         case "suc":
                             setTimeout(() => {
-                                this.$message({
+                                this.$notify({
+                                    title: "提示",
                                     message: "删除成功",
                                     type: "success"
                                 });
@@ -133,7 +134,8 @@ export class EmailsNotice extends ListBaseClass {
                     }
                 });
             }).catch(() => {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     type: "info",
                     message: "已取消删除"
                 });
@@ -141,7 +143,8 @@ export class EmailsNotice extends ListBaseClass {
         } else {
             console.log(this.ids);
             if (this.ids.length === 0) {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "请选择需要删除项",
                     type: "warning"
                 });
@@ -155,7 +158,8 @@ export class EmailsNotice extends ListBaseClass {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                this.$message({
+                                this.$notify({
+                                    title: "提示",
                                     message: "删除成功",
                                     type: "success"
                                 });
@@ -166,7 +170,8 @@ export class EmailsNotice extends ListBaseClass {
                         }
                     });
                 }).catch(() => {
-                    this.$message({
+                    this.$notify({
+                        title: "提示",
                         type: "info",
                         message: "已取消删除"
                     });

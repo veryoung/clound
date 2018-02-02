@@ -41,7 +41,8 @@ export class ImportUserFrame extends Vue {
         if (/\.xls$/.test(file.name) || /\.xlsx$/.test(file.name)) {
             this.loading = true;
         } else {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "请导入指定的模板文件",
                 type: "info"
             });

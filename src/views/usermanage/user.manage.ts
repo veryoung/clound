@@ -89,7 +89,8 @@ export class UserManagement extends ListBaseClass {
             console.log(`/api/v20/account/user/excel/?ids=[]${this.objToUrl((<any>Object).assign(this.filter, { ori_id: this.ori_id }))}`);
         } else {
             if (this.ids.length === 0) {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "请选择导出项",
                     type: "info"
                 });

@@ -59,7 +59,8 @@ export class ResetPwd extends Vue {
                     let res: ResType = response.data;
                     switch (res.status) {
                         case "suc":
-                            this.$message({
+                            this.$notify({
+                                title: "提示",
                                 message: "修改成功",
                                 type: "success"
                             });
@@ -70,7 +71,11 @@ export class ResetPwd extends Vue {
                     }
                 });
             } else {
-                this.$message.error("表单验证不成功");
+                this.$notify({
+                    title: "提示",
+                    message: "表单验证不成功",
+                    type: "error"
+                });
                 return false;
             }
         });

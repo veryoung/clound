@@ -171,7 +171,8 @@ export class WebsiteOperation extends Vue {
     // 控制多选框不能少选
     chooseHttpType() {
         if (!this.httpsTpye && !this.httpTpye) {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "协议类型必须选择一个",
                 type: "warning"
             });
@@ -194,7 +195,8 @@ export class WebsiteOperation extends Vue {
                 this.sourceIPData.push(tagVal);
                 return;
             }
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "输入格式不正确",
                 type: "warning"
             });
@@ -213,7 +215,8 @@ export class WebsiteOperation extends Vue {
                 this.sourceDomainData.push(tagVal);
                 return;
             }
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "输入格式不正确",
                 type: "warning"
             });
@@ -237,7 +240,8 @@ export class WebsiteOperation extends Vue {
             done(true);
         } else {
             if (!/^[0-9]+$/.test(tagVal)) {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "输入格式不正确",
                     type: "warning"
                 });
@@ -245,7 +249,8 @@ export class WebsiteOperation extends Vue {
             }
             let tagValNum: number = parseInt(tagVal);
             if (this.containsPort(this.httpTags, tagValNum)) {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "请不要添加重复数据",
                     type: "warning"
                 });
@@ -256,7 +261,8 @@ export class WebsiteOperation extends Vue {
                 this.httpTags.push(parseInt(tagVal));
                 return;
             }
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "输入格式不正确",
                 type: "warning"
             });
@@ -271,7 +277,8 @@ export class WebsiteOperation extends Vue {
             done(true);
         } else {
             if (!/^[0-9]+$/.test(tagVal)) {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "输入格式不正确",
                     type: "warning"
                 });
@@ -279,7 +286,8 @@ export class WebsiteOperation extends Vue {
             }
             let tagValNum: number = parseInt(tagVal);
             if (this.containsPort(this.httpsTags, tagValNum)) {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "请不要添加重复数据",
                     type: "warning"
                 });
@@ -290,7 +298,8 @@ export class WebsiteOperation extends Vue {
                 this.httpsTags.push(parseInt(tagVal));
                 return;
             }
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "输入格式不正确",
                 type: "warning"
             });
@@ -315,14 +324,16 @@ export class WebsiteOperation extends Vue {
                 this.form.cid = "";
             } else {
                 if (this.form.https_port && this.form.https_port.length === 0) {
-                    this.$message({
+                    this.$notify({
+                        title: "提示",
                         message: "请输入https端口",
                         type: "warning"
                     });
                     return;
                 }
                 if (this.form.cid === "") {
-                    this.$message({
+                    this.$notify({
+                        title: "提示",
                         message: "请上传证书",
                         type: "warning"
                     });
@@ -358,7 +369,8 @@ export class WebsiteOperation extends Vue {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                this.$message({
+                                this.$notify({
+                                    title: "提示",
                                     message: "创建网站成功",
                                     type: "success"
                                 });
@@ -366,7 +378,8 @@ export class WebsiteOperation extends Vue {
                                 this.$router.push("/WebsiteManagement/myWebsite");
                                 break;
                             case "error":
-                                this.$message({
+                                this.$notify({
+                                    title: "提示",
                                     message: res.message,
                                     type: "error"
                                 });
@@ -383,7 +396,8 @@ export class WebsiteOperation extends Vue {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                this.$message({
+                                this.$notify({
+                                    title: "提示",
                                     message: "编辑网站成功",
                                     type: "success"
                                 });
@@ -423,7 +437,8 @@ export class WebsiteOperation extends Vue {
 
     // 错误提示
     error(res: any) {
-        this.$message({
+        this.$notify({
+            title: "提示",
             message: res.message,
             type: "warning"
         });

@@ -40,10 +40,17 @@ export class UpdateDiploma extends Vue {
         const extension = file.name.split(".")[1] === "pem";
         const isLt1M = file.size / 1024 / 1024 < 1;
         if (!extension) {
-            this.$message({ message: "上传文件格式只能支持pem格式", type: "info" });
+            this.$notify({ 
+                title: "提示",
+                message: "上传文件格式只能支持pem格式", 
+                type: "info" });
         }
         if (!isLt1M) {
-            this.$message({ message: "请导入1M以内的文件", type: "info" });
+            this.$notify({ 
+                title: "提示",
+                message: "请导入1M以内的文件", 
+                type: "info" 
+            });
         }
 
         return isLt1M && extension;
@@ -53,10 +60,18 @@ export class UpdateDiploma extends Vue {
         const extension = file.name.split(".")[1] === "pem";
         const isLt1M = file.size / 1024 / 1024 < 1;
         if (!extension) {
-            this.$message({ message: "上传文件格式只能支持pem格式", type: "info" });
+            this.$notify({ 
+                title: "提示",
+                message: "上传文件格式只能支持pem格式", 
+                type: "info" 
+            });
         }
         if (!isLt1M) {
-            this.$message({ message: "请导入1M以内的文件", type: "info" });
+            this.$notify({ 
+                title: "提示",
+                message: "请导入1M以内的文件", 
+                type: "info" 
+            });
         }
         return isLt1M && extension;
     }
@@ -66,7 +81,8 @@ export class UpdateDiploma extends Vue {
 
         switch (res.status) {
             case "suc":
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "导入证书成功",
                     type: "success"
                 });
@@ -75,7 +91,8 @@ export class UpdateDiploma extends Vue {
                 this.Keytemp.submit();
                 break;
             case "error":
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "导入证书失败",
                     type: "error"
                 });
@@ -90,7 +107,8 @@ export class UpdateDiploma extends Vue {
         let res: ResType = response;
         switch (res.status) {
             case "suc":
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "导入密匙成功",
                     type: "success"
                 });
@@ -99,7 +117,8 @@ export class UpdateDiploma extends Vue {
                 this.$emit("close", false);
                 break;
             case "error":
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "导入证书失败",
                     type: "error"
                 });

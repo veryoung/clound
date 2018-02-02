@@ -39,7 +39,8 @@ export class AddOrganizationFrame extends Vue {
     }
     importOrganization() {
         if (this.selectNode.id === "") {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "不能选择全部组织机构",
                 type: "info"
             });

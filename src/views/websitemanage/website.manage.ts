@@ -153,7 +153,8 @@ export class WebsiteManagement extends ListBaseClass {
     exportChoose(type: string) {
         let data: SearchType = this.filter;
         if (this.ids.length === 0) {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "请选择导出项",
                 type: "warning"
             });
@@ -184,7 +185,8 @@ export class WebsiteManagement extends ListBaseClass {
             open_title = "批量回源";
         }
         if (this.ids.length === 0) {
-            this.$message({
+            this.$notify({
+                title: "提示",
                 message: "请选择" + open_text + "项",
                 type: "warning"
             });
@@ -201,7 +203,8 @@ export class WebsiteManagement extends ListBaseClass {
                 MywebsiteServer.batchWebsite(params).then((response: AxiosResponse<ResType>) => {
                     let data = response.data;
                     if (data.status === "suc") {
-                        this.$message({
+                        this.$notify({
+                            title: "提示",
                             message: "开启" + open_text + "成功",
                             type: "success"
                         });
@@ -209,7 +212,8 @@ export class WebsiteManagement extends ListBaseClass {
                     this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
                 });
             }).catch(() => {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     type: "info",
                     message: "已取消" + open_title
                 });
@@ -226,7 +230,8 @@ export class WebsiteManagement extends ListBaseClass {
         MywebsiteServer.refreshState(params).then((response: AxiosResponse<ResType>) => {
             let data = response.data;
             if (data.status === "suc") {
-                this.$message({
+                this.$notify({
+                    title: "提示",
                     message: "验证成功",
                     type: "success"
                 });

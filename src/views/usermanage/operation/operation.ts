@@ -236,7 +236,8 @@ export class UserOperation extends Vue {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                this.$message({
+                                this.$notify({
+                                    title: "提示",
                                     message: "添加用户成功",
                                     type: "success"
                                 });
@@ -253,7 +254,8 @@ export class UserOperation extends Vue {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                this.$message({
+                                this.$notify({
+                                    title: "提示",
                                     message: "编辑用户成功",
                                     type: "success"
                                 });
