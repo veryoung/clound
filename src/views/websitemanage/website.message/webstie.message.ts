@@ -76,4 +76,8 @@ export class WebsiteMessage extends Vue {
     beforeDestroy() {
         // Aux.getIds().map((id, $index) => {     EventBus.unRegister(id); });
     }
+
+    back() {
+        this.$router.go(-1);
+    }
 }

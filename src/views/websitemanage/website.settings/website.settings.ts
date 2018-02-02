@@ -2,7 +2,6 @@ import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import { MywebsiteServer } from "@server/mywebsite";
 import { WebSiteConfig } from "@store/mywebsite.type";
-import { CONSTANT, EventBus } from "@utils/event";
 import { SpeedUpdateFrame } from "./dialogbox/speedUpdate";
 import { SpeedListFrame } from "./dialogbox/speedlist.frame";
 import { MirrorFrame } from "./dialogbox/mirror.frame";
@@ -15,11 +14,10 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
-import { Auxiliary } from "@utils/auxiliary";
 import { MirrorOptionsType } from "@views/websitemanage/website.operation/website.operation.attachement";
+import { DiplomaBaseClass } from "@views/base/base.class";
 
 
-const Aux = new Auxiliary<string>();
 require("./website.settings.styl");
 @Component({
     name: "websitesettings",
@@ -38,9 +36,11 @@ require("./website.settings.styl");
         ])
     },
 })
-export class WebsiteSettings extends Vue {
+export class WebsiteSettings extends DiplomaBaseClass {
     // init computed
     public websiteConfig: WebSiteConfig;
+    public Aux = new this.Auxiliary<string>();
+
     // init computed init data
     public value: boolean = false;
     public listType: string = "";
@@ -96,16 +96,16 @@ export class WebsiteSettings extends Vue {
         let that = this;
         let id = this.$route.params.id;
         this.$store.dispatch(MYWEBSITEEVENT.GETWEBSITECONFIG, { website_id: id, });
-        let eventId = EventBus.register(CONSTANT.GETWEBSITECONFIG, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETWEBSITECONFIG, function (event: string, info: any) {
             that.form = that.websiteConfig[id];
             that.MirrorValue = that.form.mirror_interval;
         });
-        Aux.insertId(eventId);
+        this.Aux.insertId(eventId);
     }
 
     destroyed() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $index) => {
+            this.EventBus.unRegister(id);
         });
     }
 

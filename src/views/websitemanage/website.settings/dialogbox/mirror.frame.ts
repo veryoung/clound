@@ -8,6 +8,7 @@ import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
+import { DiplomaBaseClass } from "@views/base/base.class";
 
 
 
@@ -30,7 +31,7 @@ require("./mirror.frame.styl");
     computed: {
     }
 })
-export class MirrorFrame extends Vue {
+export class MirrorFrame extends DiplomaBaseClass {
     // init props
     public uid: string;
     public data: FormType;
@@ -106,7 +107,7 @@ export class MirrorFrame extends Vue {
     }
 
     cancel() {
-        this.$emit("close", false);
+        this.close();
     }
 
     error(res: any) {
