@@ -61,27 +61,27 @@ export const PermissionsSet: string[] = [
     "SystemManagement.LogAudit.Download",
     // ## 站内公告
     // 查看
-    "SystemManagement.Notice.Check",
+    "SystemManagement.NoticeManagement.Notice.Check",
     // 添加
-    "SystemManagement.Notice.Add",
+    "SystemManagement.NoticeManagement.Notice.Add",
     // 删除
-    "SystemManagement.Notice.Delete",
+    "SystemManagement.NoticeManagement.Notice.Delete",
     // 编辑
-    "SystemManagement.Notice.Edit",
+    "SystemManagement.NoticeManagement.Notice.Edit",
     // ## 邮件通知
     // 查看
-    "SystemManagement.MailNotification.Check",
+    "SystemManagement.NoticeManagement.MailNotification.Check",
     // 添加
-    "SystemManagement.MailNotification.Add",
+    "SystemManagement.NoticeManagement.MailNotification.Add",
     // 删除
-    "SystemManagement.MailNotification.Delete",
+    "SystemManagement.NoticeManagement.MailNotification.Delete",
     // ## 短信通知
     // 查看
-    "SystemManagement.SMSNotification.Check",
+    "SystemManagement.NoticeManagement.SMSNotification.Check",
     // 添加
-    "SystemManagement.SMSNotification.Add",
+    "SystemManagement.NoticeManagement.SMSNotification.Add",
     // 删除
-    "SystemManagement.SMSNotification.Delete",
+    "SystemManagement.NoticeManagement.SMSNotification.Delete",
     /*******************************态势感知*************************/
     // # 态势感知
     // 概括

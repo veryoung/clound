@@ -9,14 +9,14 @@
             @close="handleClose" 
             :collapse="IsCollapse">
             <template v-for="(menu,$index) in menus">
-                <el-submenu v-show="menu.children" :index="menu.name"  >
+                <el-submenu v-show="menu.children" :index="menu.name"  v-permissions="menu.meta.permission">
                     <template slot="title">
                         <i class="iconfont" :class="menu.meta.icon"></i>
                         <span slot="title">{{menu.name}}</span>
                     </template>
 
                     <template v-for="(menu,$index) in menu.children">
-                        <el-menu-item :index="menu.name" @click="go(menu)" v-if="menu.meta&&!menu.meta.hidden">
+                        <el-menu-item :index="menu.name" @click="go(menu)" v-if="menu.meta&&!menu.meta.hidden" v-permissions="menu.meta.permission">
                             <i class="iconfont" :class="menu.meta.icon"></i>
                             <span slot="title">{{menu.name}}</span>
                         </el-menu-item>
