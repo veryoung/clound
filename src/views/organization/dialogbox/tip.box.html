@@ -1,4 +1,4 @@
-<el-dialog :visible="dialogVisible" width="340px" top="10%" @close="cancel" class="dialog-plane">
+<el-dialog :visible="dialogVisible" width="600px" top="10%" @close="cancel" class="dialog-plane">
     <span slot="title" class="dialog-title">
         <span class="iconfont">&#xe63b;</span>
         添加企业
@@ -11,8 +11,8 @@
             <el-form-item label="企业简称" prop="sname">
                 <el-input size="small" v-model="form.sname"></el-input>
             </el-form-item>
-            <el-form-item label="企业简介" prop="desc">
-                <el-input size="small" type="textarea" v-model="form.desc" :rows="2"></el-input>
+            <el-form-item label="企业简介" prop="desc" >
+                <el-input class="organization-textarea" size="small" type="textarea" v-model="form.desc" :rows="2"></el-input>
             </el-form-item>
         </el-form>
     </div>

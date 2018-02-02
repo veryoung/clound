@@ -21,8 +21,8 @@
             <li>
                 <div class="label">协议类型:</div>
                 <div class="httpType">
-                        <div class="message" v-if="WebsiteInfo.port.http_port.length !== 0">http: {{ httpString }}</div>
-                        <div class="message" v-if="WebsiteInfo.port.https_port.length !== 0">https: {{ httpsString }}</div>
+                    <div class="message" v-if="WebsiteInfo.port.http_port.length !== 0">http: {{ httpString }}</div>
+                    <div class="message" v-if="WebsiteInfo.port.https_port.length !== 0">https: {{ httpsString }}</div>
                 </div>
             </li>
             <li>
@@ -39,9 +39,8 @@
             </li>
             <li>
                 <div class="label">创建时间:</div>
-                <div class="message">{{ 
-                    WebsiteInfo.ctime|date
-                }}</div>
+                <div class="message">{{ WebsiteInfo.ctime|date }}
+                </div>
             </li>
             <li>
                 <div class="label">接入状态:</div>
@@ -64,6 +63,9 @@
                     <div>网站替身:{{ WebsiteInfo.service.mirror_enable==="1"?"开启":"关闭" }}</div>
                     <div>网站加速:{{ WebsiteInfo.service.cdn_enable==="1"?"开启":"关闭" }}</div>
                 </div>
+            </li>
+            <li>
+                <el-button @click="back()">返回</el-button>
             </li>
         </ul>
     </div>

@@ -84,4 +84,8 @@ export class UserMessage extends Vue {
         });
         this.unwatch();
     }
+
+    back() {
+        this.$router.go(-1);
+    }
 }

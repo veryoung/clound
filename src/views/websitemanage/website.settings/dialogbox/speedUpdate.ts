@@ -1,13 +1,12 @@
-import { RegValidate } from "./../../../../utils/form.validator";
 import { ResType } from "@server/index";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
-import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
+import { DiplomaBaseClass } from "@views/base/base.class";
 
 
 require("./speedUpdate.styl");
@@ -23,7 +22,7 @@ require("./speedUpdate.styl");
         CustomTags
     } 
 })
-export class SpeedUpdateFrame extends Vue {
+export class SpeedUpdateFrame extends DiplomaBaseClass {
     // init props
     public types: string;
     public data: FormType;
@@ -87,7 +86,7 @@ export class SpeedUpdateFrame extends Vue {
             this.defalutUrl.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.uri(tagVal)) {
+            if (this.RegValidate.uri(tagVal)) {
                 done(true);
                 this.defalutUrl.push(tagVal);
                 return;
@@ -102,7 +101,7 @@ export class SpeedUpdateFrame extends Vue {
     }
 
     cancel() {
-        this.$emit("close", false);
+        this.close();
     }
 
     error(res: any) {
