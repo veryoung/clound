@@ -148,7 +148,8 @@ export class WebsiteManager {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        ElementUI.Message({
+                        ElementUI.Notification({
+                            title: "提示",
                             message: "删除成功",
                             type: "success"
                         });
