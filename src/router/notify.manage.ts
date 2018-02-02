@@ -9,6 +9,7 @@ import { PublicNoiceOperation } from "@views/systemmanage/noti.manage/operation/
 import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/public.notice.detail";
 import { MessageNoiceOperation } from "@views/systemmanage/noti.manage/operation/message.notice.operation";
 import { EmailNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/email.notice.detail";
+import { Permissions } from "@directives/permissions";
 
 
 
@@ -19,7 +20,8 @@ export const notifyRouter: RouteConfig[] = [
         path: "notice",
         name: "站内公告",
         meta: {
-            icon: "icon-quan-"
+            icon: "icon-quan-",
+            permission: "SystemManagement.NoticeManagement.Notice"
         },
         component: PublicNotice,
     },
@@ -51,7 +53,8 @@ export const notifyRouter: RouteConfig[] = [
         path: "emaillnotice",
         name: "邮件通知",
         meta: {
-            icon: "icon-quan-"
+            icon: "icon-quan-",
+            permission: "SystemManagement.NoticeManagement.MailNotification"
         },
         component: EmailsNotice,
     },
@@ -83,7 +86,8 @@ export const notifyRouter: RouteConfig[] = [
         path: "messagenotice",
         name: "短信通知",
         meta: {
-            icon: "icon-quan-"
+            icon: "icon-quan-",
+            permission: "SystemManagement.NoticeManagement.SMSNotification"
         },
         component: MessageNotice,
     },
@@ -104,7 +108,8 @@ export const notifyRouter: RouteConfig[] = [
         name: "查看邮件",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+
         },
         props: {
             operation: "look"

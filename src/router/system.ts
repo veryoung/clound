@@ -17,7 +17,7 @@ export const systemRouter: RouteConfig[] = [
         name: "用户管理",
         meta: {
             icon: "icon-yonghuguanli",
-            permission: "'SystemManagement.userManagement.*'",
+            permission: "SystemManagement.userManagement",
         },
         component: UserManagement,
     },
@@ -27,7 +27,7 @@ export const systemRouter: RouteConfig[] = [
         component: OrganizationComponent,
         meta: {
             icon: "icon-zuzhijigou",
-            permission: "SystemManagement.Organization.*",
+            permission: "SystemManagement.Organization",
         }
     },
     {
@@ -35,7 +35,7 @@ export const systemRouter: RouteConfig[] = [
         name: "角色管理",
         meta: {
             icon: "icon-jiaoseguanli",
-            permission: "SystemManagement.RoleManagement.*",
+            permission: "SystemManagement.RoleManagement",
         }
     },
     {
@@ -43,7 +43,7 @@ export const systemRouter: RouteConfig[] = [
         name: "日志审计",
         meta: {
             icon: "icon-rizhishenji",
-            permission: "'SystemManagement.LogAudit.*'",
+            permission: "SystemManagement.LogAudit",
         },
         component: LogsAudit,
     },
@@ -54,6 +54,7 @@ export const systemRouter: RouteConfig[] = [
         redirect: "ReportManagement/notice",
         meta: {
             icon: "icon-tongzhiguanli",
+            permission: "SystemManagement.NoticeManagement",
         },
         component: RouterComponent
     },

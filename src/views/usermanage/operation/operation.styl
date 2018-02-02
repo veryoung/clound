@@ -1,28 +1,18 @@
-@import "../../../resource/mixins.styl"
-
 .user-operation
-    common-panel(0,20px)
-    flex-direction column
-    padding-left 40px
-    overflow auto
-    position relative
-    >.panel
-        position absolute
-        width 100%;
-        >.demo-form
-            width 600px
-            >.el-form-item
-                >.el-form-item__content
+    >.demo-form
+        width 600px
+        >.el-form-item
+            >.el-form-item__content
+                display flex
+                justify-content flex-start
+                align-items center
+                >.switch
+                    margin-right 20px
                     display flex
-                    justify-content flex-start
-                    align-items center
-                    >.switch
-                        margin-right 20px
-                        display flex
-                        align-items baseline
-            .el-input
-                width 300px
-            .el-textarea
-                width 300px
-            .el-input-number__increase
-                right -169px
+                    align-items baseline
+        .el-input
+            width 300px
+        .el-textarea
+            width 300px
+        .el-input-number__increase
+            right -169px
