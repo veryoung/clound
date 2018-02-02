@@ -1,17 +1,19 @@
-<div class="publicnotice-operation">
-    <div class="plane">
-        <ModuleTitle :titles="titles" />
-        <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
-            <el-form-item label="公告标题" prop="title">
-                <el-input v-model="form.title" placeholder="请填写邮件标题（1-40字符）"></el-input>
-            </el-form-item>
-            <el-form-item class="notice-content" label="公告内容" prop="content">
-                <RichTextEditor @content="content" :placeholderText="'请填写公告内容(1-1000字符)'" />
-            </el-form-item>
-            <el-form-item class="btn-content">
-                <el-button type="primary" @click="submitForm">确定</el-button>
-                <el-button @click="back()">取消</el-button>
-            </el-form-item>
-        </el-form>
+<div class="system-template-panel">
+    <div class="system-inner-template">
+        <div class="notice-send">
+            <ModuleTitle :titles="titles" />
+            <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
+                <el-form-item label="公告标题" prop="title">
+                    <el-input v-model="form.title" placeholder="请填写邮件标题（1-40字符）"></el-input>
+                </el-form-item>
+                <el-form-item class="notice-content" label="公告内容" prop="content">
+                    <RichTextEditor @content="content" :placeholderText="'请填写公告内容(1-1000字符)'" />
+                </el-form-item>
+                <el-form-item class="btn-content">
+                    <el-button type="primary" @click="submitForm">确定</el-button>
+                    <el-button @click="back()">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </div>

@@ -1,4 +1,3 @@
-import { EmailDiploma } from "./dialogbox/email.diploma";
 import { RichTextEditor } from "@components/richtexteditor/editor";
 import { ModuleTitle } from "@components/title/module.title";
 import { EventBus, CONSTANT } from "@utils/event";
@@ -28,7 +27,6 @@ require("./message.notice.operation.styl");
     components: {
         ModuleTitle,
         RichTextEditor,
-        EmailDiploma
     }
 })
 

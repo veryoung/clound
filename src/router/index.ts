@@ -32,19 +32,11 @@ let tempRouter: RouteConfig[] = [
     {
         path: "/",
         meta: {
-            hidden: true
+            hidden: true,
+            permission: "*"
         },
         redirect: "/home"
     },
-    // {
-    //     path: "/home",
-    //     name: "首页",
-    //     components: {
-    //         header: HeaderComponent,
-    //         // sider: SiderComponent,
-    //         main: Home
-    //     },
-    // },
     {
         path: "/noticelook/:id",
         name: "查看公告",
@@ -55,13 +47,15 @@ let tempRouter: RouteConfig[] = [
         },
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "*"
         },
     },
     {
         path: "/login",
         meta: {
-            hidden: true
+            hidden: true,
+            permission: "*"
         },
         component: Login
     },
@@ -73,6 +67,9 @@ let tempRouter: RouteConfig[] = [
             // sider: SiderComponent,
             main: Home
         },
+        meta: {
+            permission: "Home"
+        }
     },
     {
         path: "/OperationAnalysis",
@@ -86,6 +83,10 @@ let tempRouter: RouteConfig[] = [
             sider: {
                 menus: systemRouter
             }
+        },
+        meta: {
+            permission: "*",
+            hidden: true
         }
     },
     {
@@ -104,6 +105,7 @@ let tempRouter: RouteConfig[] = [
         },
         meta: {
             hidden: false,
+            permission: "WebsiteAnalysis"
         },
         children: WebsiteAnalysisRouter
     },
@@ -123,6 +125,7 @@ let tempRouter: RouteConfig[] = [
         },
         meta: {
             hidden: false,
+            permission: "WebsiteManagement"
         },
         children: WebsiteManageRouter
     },
@@ -140,6 +143,9 @@ let tempRouter: RouteConfig[] = [
                 menus: CountReportRouter
             }
         },
+        meta: {
+            permission: "ReportManagement"
+        },
         children: CountReportRouter
     },
     {
@@ -150,6 +156,10 @@ let tempRouter: RouteConfig[] = [
             sider: SiderComponent,
             main: ViewContainer
         },
+        meta: {
+            permission: "*",
+            hidden: true
+        }
     },
     {
         path: "/SystemManagement",
@@ -165,7 +175,10 @@ let tempRouter: RouteConfig[] = [
                 menus: systemRouter
             }
         },
-        children: systemRouter
+        children: systemRouter,
+        meta: {
+            permission: "SystemManagement"
+        }
     },
     {
         path: "/SituationalAwareness",
@@ -175,6 +188,9 @@ let tempRouter: RouteConfig[] = [
             sider: SiderComponent,
             main: ViewContainer
         },
+        meta: {
+            permission: "SituationalAwareness"
+        }
     },
     {
         path: "/usercenter",
@@ -186,7 +202,8 @@ let tempRouter: RouteConfig[] = [
             main: ViewContainer
         },
         meta: {
-            hidden: true
+            hidden: true,
+            permission: "Personal"
         },
         props: {
             sider: {
@@ -199,7 +216,8 @@ let tempRouter: RouteConfig[] = [
         path: "/report",
         name: "统计报告",
         meta: {
-            hidden: true
+            hidden: true,
+            permission: "ReportManagement.Reporttemplate.Check"
         },
         component: PreviewReport
     }
