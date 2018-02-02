@@ -76,6 +76,9 @@ export class Login extends Vue {
                 case "suc":
                     this.$router.push("/");
                     break;
+                case "error":
+                    this.changeCode();
+                    break;
                 default:
                     break;
             }

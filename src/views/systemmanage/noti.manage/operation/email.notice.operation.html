@@ -1,33 +1,41 @@
 <div class="public-notice-operation">
-    <EmailDiploma v-if="dialogVisibleDiploma" :dialogVisible="dialogVisibleDiploma" @close="closeDiploma" @userData="getUser"/>
     <div class="panel">
         <ModuleTitle :titles="titles" />
-        <el-form  size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
-            <el-form-item class="choose-content" label="收件人" prop="receiver_ids">
-                <div>
-                    <span>
-                        已填写{{num}}人
-                    </span>
-                    <el-button @click="select">请选择</el-button>
+        <div class="fn-panel">
+            <div class="receive">
+                <el-form size="small" :rules="rules">
+                    <el-form-item class="choose-content" label="收件人" prop="receiver_ids">
+                    </el-form-item>
+                </el-form>
+                <div class="remote-tree">
+                    <el-tree
+                        :props="{
+                            children: 'nodes',
+                            label: 'tree_label',
+                            isLeaf:'is_leaf'
+                        }"
+                        :load="loadNode"
+                        node-key="id"
+                        ref="mailList"
+                        lazy
+                        show-checkbox
+                        @check-change="handleCheckChange">
+                    </el-tree>
                 </div>
-                <div  class="choose-box"v-if="num>0">
-                    <div class="choosed"v-for="item in chosePerson" :key="item.id">
-                        <span>
-                                {{item.cperson}}({{item.email}})
-                        </span>
-                    </div>
-                </div>
-            </el-form-item>
-            <el-form-item label="邮件标题" prop="object">
-                <el-input v-model="form.object" placeholder="请填写邮件标题（1-40字符）"></el-input>
-            </el-form-item>
-            <el-form-item class="notice-content" label="邮件内容" prop="content">
-                <RichTextEditor @content="content" :placeholderText="'请填写邮件内容(1-1000字符)'"/>
-            </el-form-item>
-            <el-form-item class="btn-content">
-                <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
-                <el-button @click="back()">取消</el-button>
-            </el-form-item>
-        </el-form>
+            </div>
+            <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
+                <el-form-item label="邮件标题" prop="object">
+                    <el-input v-model="form.object" placeholder="请填写邮件标题（1-40字符）"></el-input>
+                </el-form-item>
+                <el-form-item class="notice-content" label="邮件内容" prop="content">
+                    <RichTextEditor @content="content" />
+                </el-form-item>
+                <el-form-item class="btn-content">
+                    <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
+                    <el-button @click="back()">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+
     </div>
 </div>
