@@ -58,6 +58,7 @@ export class EmailNoiceOperation extends Vue {
         ],
         receiver_ids: [
             { required: true, message: "请选择收件人", trigger: "blur" },
+            
         ],
     };
 
@@ -65,7 +66,6 @@ export class EmailNoiceOperation extends Vue {
 
     // init lifecircle hook
     created() {
-
     }
     destroyed() {
     }
@@ -74,6 +74,7 @@ export class EmailNoiceOperation extends Vue {
     /***************tree */
 
     handleCheckChange(data: any, checked: any, indeterminate: any) {
+        this.getData();
         // console.log(data, checked, indeterminate);
         // if (checked) {
         //     if (data.is_leaf) {
@@ -146,7 +147,37 @@ export class EmailNoiceOperation extends Vue {
         //         });
         //     }
         // }
+    }
 
+    getData() {
+        let temp: any = this.$refs.mailList;
+        let sourceData: any[] = temp.getCheckedNodes();
+        this.form.receiver_ids = [];
+        this.checkoutData = {};
+        for (let item of sourceData) {
+            if (item.is_leaf) {
+                this.checkoutData[item.id] = item;
+                this.form.receiver_ids.push(item.id);
+                continue;
+            }
+            UserServer.getUserList({
+                ori_id: item.id,
+                page: "1",
+                page_size: "999"
+            }).then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        for (let item of res.data.data) {
+                            this.checkoutData[item.uid] = item;
+                            this.form.receiver_ids.push(item.id);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
     }
     loadNode(node: any, resolve: any) {
         if (node.level === 0) {
@@ -204,11 +235,20 @@ export class EmailNoiceOperation extends Vue {
     submitForm(formBasic: string) {
         let temp: any = this.$refs.noticeform;
         let flag: boolean = false;
+        console.log(this.form.receiver_ids);
+
+        if (this.form.receiver_ids.length === 0) {
+            this.$message({
+                message: "请选择收件人",
+                type: "warning"
+            });
+            return;
+        }
         temp.validate((valid: any) => {
             flag = valid;
         });
         if (flag) {
-            NoticeServer.sendMessage(this.form).then((response: AxiosResponse<ResType>) => {
+            NoticeServer.sendEmail(this.form).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":

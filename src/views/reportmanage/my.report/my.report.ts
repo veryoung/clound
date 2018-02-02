@@ -174,6 +174,14 @@ export class MyReport extends ListBaseClass {
         }
     }
 
+    download() {
+
+    }
+
+    del() {
+        
+    }
+
 
 
     handleSelectionChange(options: any[]) {

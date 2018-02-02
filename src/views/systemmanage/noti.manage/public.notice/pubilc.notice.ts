@@ -45,7 +45,6 @@ export class PublicNotice extends ListBaseClass {
     public ids: string[] = [];
     public filterData: SearchType = {
         key_word: "",
-        new: true,
         page: "1",
         page_size: "10",
         send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
@@ -192,7 +191,6 @@ export interface DomainType {
 }
 export interface SearchType {
     key_word: string;
-    new: boolean;
     page: string;
     page_size: string;
     send_time: Array<string>;

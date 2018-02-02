@@ -4,7 +4,7 @@
         <div class="fn-panel">
             <div class="receive">
                 <el-form size="small" :rules="rules">
-                    <el-form-item class="choose-content" label="收件人">
+                    <el-form-item class="choose-content" label="收件人" prop="receiver_ids">
                     </el-form-item>
                 </el-form>
                 <div class="remote-tree">
@@ -18,15 +18,13 @@
                         node-key="id"
                         ref="mailList"
                         lazy
-                        show-checkbox>
+                        show-checkbox
+                        @check-change="handleCheckChange">
                     </el-tree>
                 </div>
             </div>
-            <el-form class="public-notice-form" size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px">
-                <el-form-item label="邮件标题" prop="object">
-                    <el-input v-model="form.object" placeholder="请填写邮件标题（1-40字符）"></el-input>
-                </el-form-item>
-                <el-form-item class="notice-content" label="邮件内容" prop="content">
+            <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
+                <el-form-item class="notice-content" label="短信内容" prop="content">
                     <RichTextEditor @content="content" />
                 </el-form-item>
                 <el-form-item class="btn-content">
@@ -35,5 +33,6 @@
                 </el-form-item>
             </el-form>
         </div>
+
     </div>
 </div>
