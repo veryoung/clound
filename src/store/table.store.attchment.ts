@@ -438,9 +438,10 @@ export const systemTable: TableConfigType = {
                 nonexit: true
             },
             {
-                label: "发布人",
-                prop: "cperson",
+                label: "公告标题",
+                prop: "title",
                 show: true,
+                disable: true,
             },
             {
                 label: "公告内容",
@@ -450,11 +451,16 @@ export const systemTable: TableConfigType = {
                 disable: true,
             },
             {
-                label: "公告标题",
-                prop: "title",
+                label: "发布人",
+                prop: "cperson",
                 show: true,
-                disable: true,
-            }
+            },
+            {
+                label: "发布时间",
+                prop: "ctime",
+                show: true,
+                type: "dateTime"
+            },
         ],
         pageSizes: [10, 20, 30, 40, 50],
         page_size: 10,

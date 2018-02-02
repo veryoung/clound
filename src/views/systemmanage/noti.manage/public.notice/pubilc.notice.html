@@ -18,11 +18,11 @@
         <div class="btn-group">
             <div>
                 <div class="btn-first">
-                    <el-button type="primary" @click="write" size="small">
+                    <el-button type="primary" @click="write" size="small" v-permissions="'SystemManagement.Notice.Add'">
                         <span class="iconfont">&#xe61a;</span>
                         写公告
                     </el-button>
-                    <el-button type="primary" @click="del()" size="small">
+                    <el-button type="primary" @click="del()" size="small" v-permissions="'SystemManagement.Notice.Delete'">
                         <span class="iconfont">&#xe601;</span>
                         删除
                     </el-button>
@@ -40,12 +40,12 @@
                 <template slot-scope="scope">
                     <span>
                         <span>
-                            <p style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                            <p  style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 查看详情
                             </p>
                         </span>
                         <span>
-                            <p style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                            <p v-permissions="'SystemManagement.Notice.Delete'" style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 删除
                             </p>
                         </span>

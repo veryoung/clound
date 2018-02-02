@@ -27,8 +27,8 @@
             <el-form-item label="统计时间">
                 <el-date-picker 
                 v-model="filter.count_time"
-                @onPick = "dateChange" 
                 type="daterange" 
+                :clearable="false"
                 value-format="yyyyMMdd" 
                 range-separator="至" 
                 start-placeholder="开始日期"
@@ -36,11 +36,11 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="生成时间">
-                <el-date-picker v-model="filter.pro_time" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
+                <el-date-picker v-model="filter.pro_time" :clearable="false" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
                     end-placeholder="结束日期">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item>
+            <el-form-item style="padding-left:0px;text-align:left;">
                 <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
                 <el-button size="small" @click="reset">重置</el-button>
             </el-form-item>
@@ -48,11 +48,11 @@
         <div class="btn-group">
             <div>
                 <div class="btn-first">
-                    <el-button type="primary" @click="handle('add')" size="small">
+                    <el-button type="primary" @click="download()" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         批量下载
                     </el-button>
-                    <el-button type="primary" @click="openwaf('openWaf')" size="small">
+                    <el-button type="primary" @click="del()" size="small">
                         <span class="iconfont">&#xe61b;</span>
                         删除报告
                     </el-button>

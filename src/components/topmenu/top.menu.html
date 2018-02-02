@@ -1,6 +1,13 @@
 <div class="top-menu">
     <ul class="nav-menu">
-        <router-link active-class="active" v-for="(item, $index) in entryRouter" :key="$index" :to=item.path replace tag="li" v-hide="item.meta&&item.meta.hidden">
+        <router-link 
+        active-class="active" 
+        v-for="(item, $index) in entryRouter" 
+        :key="$index" 
+        :to=item.path 
+        replace tag="li" 
+        v-hide="item.meta&&item.meta.hidden"
+        >
             <div>{{item.name}}</div>
         </router-link>
     </ul>

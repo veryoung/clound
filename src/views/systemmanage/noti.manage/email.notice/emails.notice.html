@@ -32,11 +32,11 @@
         <div class="btn-group">
             <div>
                 <div class="btn-first">
-                    <el-button type="primary" @click="write" size="small">
+                    <el-button type="primary"  v-permissions="'SystemManagement.MailNotification.Add'" @click="write" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         写邮件
                     </el-button>
-                    <el-button type="primary" @click="del()" size="small">
+                    <el-button type="primary" v-permissions="'SystemManagement.MailNotification.Delete'" @click="del()" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         删除
                     </el-button>
@@ -59,7 +59,7 @@
                             </p>
                         </span>
                         <span>
-                            <p style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                            <p v-permissions="'SystemManagement.MailNotification.Delete'" style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 删除
                             </p>
                         </span>

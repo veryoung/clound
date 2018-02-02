@@ -17,6 +17,7 @@ export const systemRouter: RouteConfig[] = [
         name: "用户管理",
         meta: {
             icon: "icon-yonghuguanli",
+            permission: "'SystemManagement.userManagement.*'",
         },
         component: UserManagement,
     },
@@ -25,21 +26,24 @@ export const systemRouter: RouteConfig[] = [
         name: "组织机构",
         component: OrganizationComponent,
         meta: {
-            icon: "icon-zuzhijigou"
+            icon: "icon-zuzhijigou",
+            permission: "SystemManagement.Organization.*",
         }
     },
     {
         path: "WebsiteAnalysis",
         name: "角色管理",
         meta: {
-            icon: "icon-jiaoseguanli"
+            icon: "icon-jiaoseguanli",
+            permission: "SystemManagement.RoleManagement.*",
         }
     },
     {
-        path: "WebsiteManagement",
+        path: "LogAudit",
         name: "日志审计",
         meta: {
-            icon: "icon-rizhishenji"
+            icon: "icon-rizhishenji",
+            permission: "'SystemManagement.LogAudit.*'",
         },
         component: LogsAudit,
     },
@@ -49,7 +53,7 @@ export const systemRouter: RouteConfig[] = [
         children: notifyRouter,
         redirect: "ReportManagement/notice",
         meta: {
-            icon: "icon-tongzhiguanli"
+            icon: "icon-tongzhiguanli",
         },
         component: RouterComponent
     },

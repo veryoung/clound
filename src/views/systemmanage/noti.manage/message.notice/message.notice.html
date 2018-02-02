@@ -25,18 +25,18 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                <el-button  v-permissions="'SystemManagement.SMSNotification.Check'"  size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
                 <el-button size="small" @click="reset">重置</el-button>
             </el-form-item>
         </el-form>
         <div class="btn-group">
             <div>
                 <div class="btn-first">
-                    <el-button type="primary" @click="write" size="small">
+                    <el-button type="primary" v-permissions="'SystemManagement.SMSNotification.Add'" @click="write" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         写短信
                     </el-button>
-                    <el-button type="primary" @click="del()" size="small">
+                    <el-button type="primary" v-permissions="'SystemManagement.SMSNotification.Delete'" @click="del()" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         删除
                     </el-button>
@@ -54,12 +54,12 @@
                 <template slot-scope="scope">
                     <span>
                         <span>
-                            <p style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                            <p  v-permissions="'SystemManagement.SMSNotification.Check'" style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 查看详情
                             </p>
                         </span>
                         <span>
-                            <p style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                            <p  v-permissions="'SystemManagement.SMSNotification.Delete'" style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
                                 删除
                             </p>
                         </span>

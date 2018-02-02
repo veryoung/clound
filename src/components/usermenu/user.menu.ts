@@ -54,6 +54,9 @@ export class UserMenu extends ListBaseClass {
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
 
     public NoticeNum: number = 0;
+    // 当前未读数组
+    public NotReaderArray: PublicNoticeColumnType[] = new Array<PublicNoticeColumnType>();
+
     // lifecircle hook
     created() {
         let that = this;
@@ -68,7 +71,8 @@ export class UserMenu extends ListBaseClass {
         this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
         let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
             that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
-            that.NoticeNum  = that.PublicNoticeData.length;
+            that.NotReaderArray = that.PublicNoticeData;
+            that.NoticeNum = that.NotReaderArray.length;
         });
     }
     logout() {
@@ -88,8 +92,14 @@ export class UserMenu extends ListBaseClass {
         });
     }
 
+    // 返回一个未读数组
+    // retrunNoRead(Array: Array<any>, rowid: string ) {
+        
+    // }
+
     look(rowObj?: any) {
         if (rowObj) {
+            // this.retrunNoRead(this.NotReaderArray , rowObj);
             this.$router.push(`/noticelook/${rowObj.id}`);
         }
     }
