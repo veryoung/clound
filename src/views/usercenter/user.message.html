@@ -1,66 +1,68 @@
-<div class="user-message">
-    <div class="panel">
-        <ModuleTitle :titles="['基本信息']" />
-        <ul class="basicmessage">
-            <li>
-                <div class="label">用户名：</div>
-                <div class="message">{{ userMessage.user_name |none }}</div>
-            </li>
-            <li>
-                <div class="label">用户角色：</div>
-                <div class="message">{{ userMessage.role|none }}</div>
-            </li>
-            <li>
-                <div class="label">创建人：</div>
-                <div class="message">{{ userMessage.cperson|none }}</div>
-            </li>
-            <li>
-                <div class="label">企业名称：</div>
-                <div class="message">{{ userMessage.company |none}}</div>
-            </li>
-            <li>
-                <div class="label">手机号码：</div>
-                <div class="message">{{ userMessage.phone |none}}</div>
-            </li>
-            <li>
-                <div class="label">邮箱：</div>
-                <div class="message">{{ userMessage.email |none}}</div>
-            </li>
-            <li>
-                <div class="label">创建时间：</div>
-                <div class="message">{{ userMessage.ctime|date }}</div>
-            </li>
-            <li>
-                <div class="label">状态：</div>
-                <div class="message">{{ userMessage.is_active==="1"?"使用中":"到期" }}</div>
-            </li>
-            <li>
-                <div class="label">备注：</div>
-                <div class="message">{{ userMessage.remark | none }}</div>
-            </li>
-        </ul>
+<div class="system-template-panel">
+    <div class="system-inner-template">
+        <div class="user-message">
+            <ModuleTitle :titles="['基本信息']" />
+            <ul class="basicmessage">
+                <li>
+                    <div class="label">用户名：</div>
+                    <div class="message">{{ userMessage.user_name |none }}</div>
+                </li>
+                <li>
+                    <div class="label">用户角色：</div>
+                    <div class="message">{{ userMessage.role|none }}</div>
+                </li>
+                <li>
+                    <div class="label">创建人：</div>
+                    <div class="message">{{ userMessage.cperson|none }}</div>
+                </li>
+                <li>
+                    <div class="label">企业名称：</div>
+                    <div class="message">{{ userMessage.company |none}}</div>
+                </li>
+                <li>
+                    <div class="label">手机号码：</div>
+                    <div class="message">{{ userMessage.phone |none}}</div>
+                </li>
+                <li>
+                    <div class="label">邮箱：</div>
+                    <div class="message">{{ userMessage.email |none}}</div>
+                </li>
+                <li>
+                    <div class="label">创建时间：</div>
+                    <div class="message">{{ userMessage.ctime|date }}</div>
+                </li>
+                <li>
+                    <div class="label">状态：</div>
+                    <div class="message">{{ userMessage.is_active==="1"?"使用中":"到期" }}</div>
+                </li>
+                <li>
+                    <div class="label">备注：</div>
+                    <div class="message">{{ userMessage.remark | none }}</div>
+                </li>
+            </ul>
 
-        <ModuleTitle :titles="['服务信息']" />
+            <ModuleTitle :titles="['服务信息']" />
 
-        <ul class="basicmessage">
-            <li>
-                <div class="label">网站总数：</div>
-                <div class="message">已使用{{ userMessage.used_domain_num|none }}个，剩余{{ userMessage.max_domain_num-userMessage.used_domain_num |none}}个可用，总共{{
-                    userMessage.max_domain_num |none}}个</div>
-            </li>
-            <li>
-                <div class="label">服务项：</div>
-                <div class="server" style="color:#999">
-                    <div>WEB应用防火墙：{{ userMessage.waf_enable==="1"?"开启":"关闭" }}</div>
-                    <div>CC防御：{{ userMessage.ads_enable==="1"?"开启":"关闭" }}</div>
-                    <div>网站替身：{{ userMessage.mirror_enable==="1"?"开启":"关闭" }}</div>
-                    <div>网站加速：{{ userMessage.cdn_enable==="1"?"开启":"关闭" }}</div>
-                </div>
-            </li>
-            <li>
-                <div class="label">到期时间：</div>
-                <div class="message">{{ userMessage.expiry_date|date }}</div>
-            </li>
-        </ul>
+            <ul class="basicmessage">
+                <li>
+                    <div class="label">网站总数：</div>
+                    <div class="message">已使用{{ userMessage.used_domain_num|none }}个，剩余{{ userMessage.max_domain_num-userMessage.used_domain_num
+                        |none}}个可用，总共{{ userMessage.max_domain_num |none}}个</div>
+                </li>
+                <li>
+                    <div class="label">服务项：</div>
+                    <div class="server" style="color:#999">
+                        <div>WEB应用防火墙：{{ userMessage.waf_enable==="1"?"开启":"关闭" }}</div>
+                        <div>CC防御：{{ userMessage.ads_enable==="1"?"开启":"关闭" }}</div>
+                        <div>网站替身：{{ userMessage.mirror_enable==="1"?"开启":"关闭" }}</div>
+                        <div>网站加速：{{ userMessage.cdn_enable==="1"?"开启":"关闭" }}</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="label">到期时间：</div>
+                    <div class="message">{{ userMessage.expiry_date|date }}</div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

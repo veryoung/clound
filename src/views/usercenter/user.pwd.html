@@ -1,32 +1,36 @@
-<div class="user-pwd">
-    <div class="usermessage">
-        <div class="iconfont">&#xe619;</div>
-        <h1 class="name">{{userMessage.user_name}} </h1>
-        <p class="level">{{userMessage.role}}</p>
-        <p class="company">{{userMessage.compay}}</p>
-    </div>
-    <div class="form">
-        <ModuleTitle :titles="['修改密码']" />
-        <el-form :model="form" :rules="rules" ref="form" label-width="100px">
-            <el-form-item label="用户名">
-                <span>{{userMessage.user_name}}</span>
-            </el-form-item>
-            <el-form-item label="原始密码" prop="opwd">
-                <el-input size="small" type="password" v-model="form.opwd" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="新密码" prop="npwd">
-                <el-input size="small" type="password" v-model="form.npwd" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="npwdAgain">
-                <el-input size="small" type="password" v-model="form.npwdAgain" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="">
-                <span>密码为8-15个字符,至少包含数字,大小写字母</span>
-            </el-form-item>
-            <el-form-item>
-                <el-button size="small" type="primary" @click="submitForm('form')">提交</el-button>
-                <el-button size="small" @click="resetForm('form')">重置</el-button>
-            </el-form-item>
-        </el-form>
+<div class="system-template-panel">
+    <div class="system-inner-template">
+        <div class="user-pwd">
+            <div class="usermessage">
+                <div class="iconfont">&#xe619;</div>
+                <h1 class="name">{{userMessage.user_name}} </h1>
+                <p class="level">{{userMessage.role}}</p>
+                <p class="company">{{userMessage.compay}}</p>
+            </div>
+            <div class="form">
+                <ModuleTitle :titles="['修改密码']" />
+                <el-form :model="form" :rules="rules" ref="form" label-width="100px">
+                    <el-form-item label="用户名">
+                        <span>{{userMessage.user_name}}</span>
+                    </el-form-item>
+                    <el-form-item label="原始密码" prop="opwd">
+                        <el-input size="small" type="password" v-model="form.opwd" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码" prop="npwd">
+                        <el-input size="small" type="password" v-model="form.npwd" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="确认密码" prop="npwdAgain">
+                        <el-input size="small" type="password" v-model="form.npwdAgain" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="">
+                        <span>密码为8-15个字符,至少包含数字,大小写字母</span>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button size="small" type="primary" @click="submitForm('form')">提交</el-button>
+                        <el-button size="small" @click="resetForm('form')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,57 +1,60 @@
-<div class="public-notice">
-    <div class="form-part">
-        <ModuleTitle :titles="titles" />
-        <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
-            <el-form-item label="关键字">
-                <el-input v-model="filter.key_word" placeholder="请输入关键字"></el-input>
-            </el-form-item>
-            <el-form-item label="发送时间">
-                <el-date-picker v-model="filter.send_time" :clearable="false" @onPick="dateChange" type="daterange" value-format="yyyyMMdd"
-                    range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item>
-                <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-                <el-button size="small" @click="reset">重置</el-button>
-            </el-form-item>
-        </el-form>
-        <div class="btn-group">
-            <div>
-                <div class="btn-first">
-                    <el-button type="primary" @click="write" size="small" v-permissions="'SystemManagement.NoticeManagement.Notice.Add'">
-                        <span class="iconfont">&#xe61a;</span>
-                        写公告
-                    </el-button>
-                    <el-button type="primary" @click="del()" size="small" v-permissions="'SystemManagement.NoticeManagement.Notice.Delete'">
-                        <span class="iconfont">&#xe601;</span>
-                        删除
-                    </el-button>
+<div class="system-template-panel">
+    <div class="system-inner-template">
+        <div class="public-notice">
+            <ModuleTitle :titles="titles" />
+            <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
+                <el-form-item label="关键字">
+                    <el-input v-model="filter.key_word" placeholder="请输入关键字"></el-input>
+                </el-form-item>
+                <el-form-item label="发送时间">
+                    <el-date-picker v-model="filter.send_time" :clearable="false" @onPick="dateChange" type="daterange" value-format="yyyyMMdd"
+                        range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                    <el-button size="small" @click="reset">重置</el-button>
+                </el-form-item>
+            </el-form>
+            <div class="btn-group">
+                <div>
+                    <div class="btn-first">
+                        <el-button type="primary" @click="write" size="small" v-permissions="'SystemManagement.NoticeManagement.Notice.Add'">
+                            <span class="iconfont">&#xe61a;</span>
+                            写公告
+                        </el-button>
+                        <el-button type="primary" @click="del()" size="small" v-permissions="'SystemManagement.NoticeManagement.Notice.Delete'">
+                            <span class="iconfont">&#xe601;</span>
+                            删除
+                        </el-button>
+                    </div>
+                </div>
+                <div class="btn-last">
+                    <SetCol moduleName="noticetable" />
                 </div>
             </div>
-            <div class="btn-last">
-                <SetCol moduleName="noticetable" />
-            </div>
+            <CloudTable moduleName="noticetable" :datas="PublicNoticeData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+                @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
+                <el-table-column fixed type="selection" width="55" slot="type" align="center">
+                </el-table-column>
+                <el-table-column label="操作" align="center">
+                    <template slot-scope="scope">
+                        <span>
+                            <span>
+                                <p style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                                    查看详情
+                                </p>
+                            </span>
+                            <span>
+                                <p v-permissions="'SystemManagement.Notice.Delete'" style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})"
+                                    class="ellipsis  margin5-0">
+                                    删除
+                                </p>
+                            </span>
+                        </span>
+                    </template>
+                </el-table-column>
+            </CloudTable>
         </div>
-        <CloudTable moduleName="noticetable" :datas="PublicNoticeData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
-            @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
-            <el-table-column fixed type="selection" width="55" slot="type" align="center">
-            </el-table-column>
-            <el-table-column label="操作" align="center">
-                <template slot-scope="scope">
-                    <span>
-                        <span>
-                            <p  style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
-                                查看详情
-                            </p>
-                        </span>
-                        <span>
-                            <p v-permissions="'SystemManagement.Notice.Delete'" style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
-                                删除
-                            </p>
-                        </span>
-                    </span>
-                </template>
-            </el-table-column>
-        </CloudTable>
     </div>
 </div>

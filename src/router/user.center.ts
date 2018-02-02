@@ -14,7 +14,8 @@ export const userCenterRouter: RouteConfig[] = [
         name: "个人信息",
         component: UserMessage,
         meta: {
-            icon: "icon-gerenxinxi"
+            icon: "icon-gerenxinxi",
+            permission: "Personal",
         }
     },
     {
@@ -22,7 +23,8 @@ export const userCenterRouter: RouteConfig[] = [
         name: "修改密码",
         component: UserPwd,
         meta: {
-            icon: "icon-xiugaimima"
+            icon: "icon-xiugaimima",
+            permission: "Personal",
         }
     },
 ];

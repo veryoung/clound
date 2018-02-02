@@ -1,3 +1,5 @@
+@import "./mixins.styl";
+
 .dialog-plane
     >.el-dialog
         border-radius 20px
@@ -11,12 +13,12 @@
             border-top-left-radius 20px;
             border-top-right-radius 20px;
 
-.system-operation-panel
+.system-template-panel
     common-panel(0,20px)
     flex-direction column
-    >.panel
+    >.system-inner-template
         position absolute
-        left 20px
-        right 20px
-        top 0px
+        left 30px
+        right 30px
+        top 20px
         bottom 0px
