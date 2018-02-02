@@ -10,12 +10,14 @@ import { mapGetters } from "vuex";
 import { Auxiliary } from "@utils/auxiliary";
 import { FormRuleType } from "@utils/form.validator";
 import { NoticeServer } from "@server/notice";
+import { OrganizationServer } from "@server/organization";
+import { UserServer } from "@server/user";
 
 
 const Aux = new Auxiliary<string>();
 require("./message.notice.operation.styl");
 @Component({
-    name: "messagenoiceoperation",
+    name: "MessageNoiceOperation",
     template: require("./message.notice.operation.html"),
     props: {
     },
@@ -62,7 +64,59 @@ export class MessageNoiceOperation extends Vue {
         ],
     };
 
+    public checkoutData: any = {};
+    loadNode(node: any, resolve: any) {
+        if (node.level === 0) {
+            let state: {
+                id: string;
+                tree_label: string;
+                nodes: any[]
+            }[] = [{
+                id: "",
+                tree_label: "全部组织机构",
+                nodes: []
+            }];
 
+            OrganizationServer.getTree().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        if (process.env.PLATFORM === "portal") {
+                            state = res.data;
+                        } else {
+                            state[0].nodes = res.data;
+                        }
+                        resolve(state);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+
+        if (node.level > 0) {
+            if (node.data.id === "") {
+                return resolve(node.data.nodes);
+            } else {
+                UserServer.getTreeUserlist({
+                    ori_id: node.data.id
+                }).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            for (let item of res.data) {
+                                item.is_leaf = true;
+                            }
+                            resolve(node.data.nodes.concat(res.data));
+                            break;
+                        default:
+                            break;
+                    }
+                });
+
+            }
+        }
+    }
 
     // init lifecircle hook
     created() {

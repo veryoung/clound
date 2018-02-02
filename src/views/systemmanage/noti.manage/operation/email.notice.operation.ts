@@ -199,29 +199,6 @@ export class EmailNoiceOperation extends Vue {
 
             }
         }
-        // let hasChild: any = "";
-        // if (node.data.name === "region1") {
-        //     hasChild = true;
-        // } else if (node.data.name === "region2") {
-        //     hasChild = false;
-        // } else {
-        //     hasChild = Math.random() > 0.5;
-        // }
-
-        // setTimeout(() => {
-        //     var data;
-        //     if (hasChild) {
-        //         data = [{
-        //             name: "zone" + this.count++
-        //         }, {
-        //             name: "zone" + this.count++
-        //         }];
-        //     } else {
-        //         data = [];
-        //     }
-
-        //     resolve(data);
-        // }, 500);
     }
     /***************tree */
     submitForm(formBasic: string) {
