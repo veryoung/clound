@@ -66,7 +66,7 @@ axios.interceptors.response.use((response): AxiosResponse<ResType> => {
         case "suc":
             break;
         case "error":
-            ElementUI.Message.error(res.message);
+            ElementUI.Notification.error(res.message);
             break;
         case "red":
             entryRouter.replace("/login");
