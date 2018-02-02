@@ -71,7 +71,17 @@ export class User extends Restful {
         });
     }
 
-    
+    public getTreeUserlist(opt: {
+        ori_id: string;
+    }) {
+        return this.get({
+            url: "/api/v20/account/ori/user/",
+            params: opt
+        });
+    }
+
+
+
     public getDefaultUser(uid: string) {
         return this.get({
             url: "/api/v20/account/user/personal/",

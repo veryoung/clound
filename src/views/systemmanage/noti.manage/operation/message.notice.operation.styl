@@ -1,21 +1,54 @@
 @import "../../../../resource/mixins.styl"
-
-.messagenotice-operation
+.public-notice-operation
     common-panel(0,20px)
-    >.plane
-        width 100%
-        display flex
-        flex 0 1 auto
-        flex-direction column
-        >.contentbox
-            width: 100%
+    flex-direction column
+    >.panel
+        position absolute
+        left 20px
+        right 20px
+        top 0px
+        bottom 0px
+        >.fn-panel
             display flex
-            >.left
+            >.receive
                 width 300px
-                float left 
-                height 100px
-            >.right
-                flex 1
+            >.public-notice-form
+                flex-grow 1
+                >.el-form-item
+                    >.el-form-item__content
+                        display flex
+                        justify-content flex-start
+                        align-items center
+                        >.quill-editor
+                            width 100%
+                            height 400px
+                            .ql-toolbar
+                                display flex
+                            .ql-container
+                                height: 350px    
+                >.notice-content
+                    height 420px
+                    margin-bottom 0px
+                >.btn-content
+                    display flex
+                >.choose-content
+                    >.el-form-item__content
+                        display flex
+                        flex-direction column
+                        >div
+                            align-self flex-start
+                        >.choose-box
+                            width 100%
+                            display flex
+                            flex-direction row
+                            flex-wrap wrap
+                            >.choosed 
+                                align-self flex-start
+                                width 200px
+                                border 1px solid #dcdfe6
+                                margin 10px 10px
+                                border-radius 5px
+                                color #606266  
 
 
 

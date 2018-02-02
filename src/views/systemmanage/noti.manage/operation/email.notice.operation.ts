@@ -1,4 +1,3 @@
-import { EmailDiploma } from "./dialogbox/email.diploma";
 import { RichTextEditor } from "@components/richtexteditor/editor";
 import { ModuleTitle } from "@components/title/module.title";
 import { EventBus, CONSTANT } from "@utils/event";
@@ -10,6 +9,8 @@ import { mapGetters } from "vuex";
 import { Auxiliary } from "@utils/auxiliary";
 import { FormRuleType } from "@utils/form.validator";
 import { NoticeServer } from "@server/notice";
+import { OrganizationServer } from "@server/organization";
+import { UserServer } from "@server/user";
 
 
 const Aux = new Auxiliary<string>();
@@ -26,7 +27,6 @@ require("./email.notice.operation.styl");
     components: {
         ModuleTitle,
         RichTextEditor,
-        EmailDiploma
     }
 })
 
@@ -35,21 +35,16 @@ export class EmailNoiceOperation extends Vue {
 
     // init computed
 
-
     // init data
     public form: EmailNoticeFormType = {
         content: "",
         object: "",
         receiver_ids: [],
     };
-    public num: number = 0;
-    public chosePerson: Array<string> = [];
 
     // 标题
     public titles: string[] = ["写邮件"];
 
-    // 选择用户
-    public dialogVisibleDiploma: boolean = false;
 
     // 表单验证
     public rules: FormRuleType = {
@@ -72,23 +67,140 @@ export class EmailNoiceOperation extends Vue {
     created() {
 
     }
-
     destroyed() {
-
     }
-
+    public checkoutData: any = {};
     // init methods
+    /***************tree */
 
-    getUser(val: Array<object>) {
-        let valArray: any = val;
-        for (let key in valArray) {
-            this.form.receiver_ids.push(valArray[key].uid);
-        }
-        this.num = valArray.length;
-        this.chosePerson = valArray;
-        this.closeDiploma();
+    handleCheckChange(data: any, checked: any, indeterminate: any) {
+        // console.log(data, checked, indeterminate);
+        // if (checked) {
+        //     if (data.is_leaf) {
+        //         this.checkoutData[data.id] = data;
+        //     } else {
+        //         UserServer.getUserList({
+        //             ori_id: data.id,
+        //             page: "1",
+        //             page_size: "999"
+        //         }).then((response: AxiosResponse<ResType>) => {
+        //             let res: ResType = response.data;
+        //             switch (res.status) {
+        //                 case "suc":
+        //                     for (let item of res.data.data) {
+        //                         this.checkoutData[item.uid] = item;
+        //                     }
+        //                     break;
+        //                 default:
+        //                     break;
+        //             }
+        //         });
+        //     }
+        // } else {
+        //     if (data.is_leaf) {
+        //         delete this.checkoutData[data.id];
+        //     } else {
+        //         UserServer.getUserList({
+        //             ori_id: data.id,
+        //             page: "1",
+        //             page_size: "999"
+        //         }).then((response: AxiosResponse<ResType>) => {
+        //             let res: ResType = response.data;
+        //             switch (res.status) {
+        //                 case "suc":
+        //                     for (let item of res.data.data) {
+        //                         delete this.checkoutData[item.uid];
+        //                     }
+        //                     break;
+        //                 default:
+        //                     break;
+        //             }
+        //         });
+        //     }
+        // }
+
+        // if (checked) {
+        //     let temp: any = this.$refs.mailList;
+        //     let sourceData: any[] = temp.getCheckedNodes();
+        //     for (let item of sourceData) {
+        //         this.checkoutData = {};
+        //         if (item.is_leaf) {
+        //             this.checkoutData[item.id] = item;
+        //             continue;
+        //         }
+        //         UserServer.getUserList({
+        //             ori_id: data.id,
+        //             page: "1",
+        //             page_size: "999"
+        //         }).then((response: AxiosResponse<ResType>) => {
+        //             let res: ResType = response.data;
+        //             switch (res.status) {
+        //                 case "suc":
+        //                     for (let item of res.data.data) {
+        //                         this.checkoutData[item.uid] = item;
+        //                     }
+        //                     break;
+        //                 default:
+        //                     break;
+        //             }
+        //         });
+        //     }
+        // }
+
     }
+    loadNode(node: any, resolve: any) {
+        if (node.level === 0) {
+            let state: {
+                id: string;
+                tree_label: string;
+                nodes: any[]
+            }[] = [{
+                id: "",
+                tree_label: "全部组织机构",
+                nodes: []
+            }];
 
+            OrganizationServer.getTree().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                        if (process.env.PLATFORM === "portal") {
+                            state = res.data;
+                        } else {
+                            state[0].nodes = res.data;
+                        }
+                        resolve(state);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+
+        if (node.level > 0) {
+            if (node.data.id === "") {
+                return resolve(node.data.nodes);
+            } else {
+                UserServer.getTreeUserlist({
+                    ori_id: node.data.id
+                }).then((response: AxiosResponse<ResType>) => {
+                    let res: ResType = response.data;
+                    switch (res.status) {
+                        case "suc":
+                            for (let item of res.data) {
+                                item.is_leaf = true;
+                            }
+                            resolve(node.data.nodes.concat(res.data));
+                            break;
+                        default:
+                            break;
+                    }
+                });
+
+            }
+        }
+    }
+    /***************tree */
     submitForm(formBasic: string) {
         let temp: any = this.$refs.noticeform;
         let flag: boolean = false;
@@ -118,9 +230,6 @@ export class EmailNoiceOperation extends Vue {
             });
         }
     }
-    select() {
-        this.dialogVisibleDiploma = true;
-    }
 
     back() {
         this.$router.go(-1);
@@ -130,10 +239,6 @@ export class EmailNoiceOperation extends Vue {
         this.form.content = val;
     }
 
-    // 关闭窗口
-    closeDiploma() {
-        this.dialogVisibleDiploma = false;
-    }
 }
 
 

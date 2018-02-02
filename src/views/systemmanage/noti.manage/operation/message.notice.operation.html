@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="messagenotice-operation">
         <EmailDiploma v-if="dialogVisibleDiploma" :dialogVisible="dialogVisibleDiploma" @close="closeDiploma" @userData="getUser"/>
     <div class="plane">
@@ -37,8 +38,44 @@
                             <el-button @click="back()">取消</el-button>
                         </el-form-item>
                     </el-form>
+=======
+<div class="public-notice-operation">
+    <div class="panel">
+        <ModuleTitle :titles="titles" />
+        <div class="fn-panel">
+            <div class="receive">
+                <el-form size="small" :rules="rules">
+                    <el-form-item class="choose-content" label="收件人">
+                    </el-form-item>
+                </el-form>
+                <div class="remote-tree">
+                    <el-tree
+                        :props="{
+                            children: 'nodes',
+                            label: 'tree_label',
+                            isLeaf:'is_leaf'
+                        }"
+                        :load="loadNode"
+                        node-key="id"
+                        ref="mailList"
+                        lazy
+                        show-checkbox>
+                    </el-tree>
+>>>>>>> development
                 </div>
             </div>
+            <el-form class="public-notice-form" size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px">
+                <el-form-item label="邮件标题" prop="object">
+                    <el-input v-model="form.object" placeholder="请填写邮件标题（1-40字符）"></el-input>
+                </el-form-item>
+                <el-form-item class="notice-content" label="邮件内容" prop="content">
+                    <RichTextEditor @content="content" />
+                </el-form-item>
+                <el-form-item class="btn-content">
+                    <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
+                    <el-button @click="back()">取消</el-button>
+                </el-form-item>
+            </el-form>
         </div>
     </div>
 </div>
