@@ -2,7 +2,7 @@ import Vue from "vue";
 import * as moment from "moment";
 import { Config } from "@store/table.type";
 import { CONSTANT, vm, EventBus } from "@utils/event";
-import { RegValidate, FromValidator,  } from "@utils/form.validator";
+import { RegValidate, FromValidator, } from "@utils/form.validator";
 import { Auxiliary } from "@utils/auxiliary";
 
 
@@ -19,6 +19,12 @@ export class BaseLibrary extends Vue {
     protected Auxiliary = Auxiliary;
 }
 
+
+export class DetailBaseClass extends BaseLibrary {
+    protected back() {
+        this.$router.go(-1);
+    }
+}
 
 export class DiplomaBaseClass extends BaseLibrary {
     protected close() {

@@ -8,14 +8,7 @@
                         <el-form-item class="choose-content" label="收件人" prop="receiver_ids">
                         </el-form-item>
                     </el-form>
-                    <div class="remote-tree">
-                        <el-tree :props="{
-                                        children: 'nodes',
-                                        label: 'tree_label',
-                                        isLeaf:'is_leaf'
-                                    }" :load="loadNode" node-key="id" ref="mailList" lazy show-checkbox @check-change="handleCheckChange">
-                        </el-tree>
-                    </div>
+                    <SpliceTree @getData="getData"/>
                 </div>
                 <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
                     <el-form-item class="notice-content" label="短信内容" prop="content">

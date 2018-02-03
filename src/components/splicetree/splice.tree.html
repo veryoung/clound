@@ -1,0 +1,15 @@
+<div class="remote-tree">
+    <el-tree :props="{
+            children: 'nodes',
+            label: 'tree_label',
+            isLeaf:'is_leaf'
+        }"
+        default-expand-all 
+        :load="loadNode" 
+        node-key="id" 
+        ref="mailList" 
+        lazy
+        show-checkbox 
+        @check-change="handleCheckChange">
+    </el-tree>
+</div>

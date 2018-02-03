@@ -6,16 +6,10 @@
                 <div class="receive">
                     <el-form size="small" :rules="rules">
                         <el-form-item class="choose-content" label="收件人" prop="receiver_ids">
+                            <div>已经选择人数{{num}}</div>
                         </el-form-item>
                     </el-form>
-                    <div class="remote-tree">
-                        <el-tree :props="{
-                                children: 'nodes',
-                                label: 'tree_label',
-                                isLeaf:'is_leaf'
-                            }" :load="loadNode" node-key="id" ref="mailList" lazy show-checkbox @check-change="handleCheckChange">
-                        </el-tree>
-                    </div>
+                    <SpliceTree @getData="getData"/>
                 </div>
                 <el-form size="small" :model="form" :rules="rules" ref="noticeform" label-width="100px" class="public-notice-form">
                     <el-form-item label="邮件标题" prop="object">

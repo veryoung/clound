@@ -11,6 +11,8 @@ import { FormRuleType } from "@utils/form.validator";
 import { NoticeServer } from "@server/notice";
 import { OrganizationServer } from "@server/organization";
 import { UserServer } from "@server/user";
+import { SpliceTree } from "@components/splicetree/splice.tree";
+
 
 
 const Aux = new Auxiliary<string>();
@@ -27,6 +29,7 @@ require("./email.notice.operation.styl");
     components: {
         ModuleTitle,
         RichTextEditor,
+        SpliceTree
     }
 })
 
@@ -58,7 +61,7 @@ export class EmailNoiceOperation extends Vue {
         ],
         receiver_ids: [
             { required: true, message: "请选择收件人", trigger: "blur" },
-            
+
         ],
     };
 
@@ -69,173 +72,22 @@ export class EmailNoiceOperation extends Vue {
     }
     destroyed() {
     }
+
+    public num: number = 0;
     public checkoutData: any = {};
-    // init methods
-    /***************tree */
-
-    handleCheckChange(data: any, checked: any, indeterminate: any) {
-        this.getData();
-        // console.log(data, checked, indeterminate);
-        // if (checked) {
-        //     if (data.is_leaf) {
-        //         this.checkoutData[data.id] = data;
-        //     } else {
-        //         UserServer.getUserList({
-        //             ori_id: data.id,
-        //             page: "1",
-        //             page_size: "999"
-        //         }).then((response: AxiosResponse<ResType>) => {
-        //             let res: ResType = response.data;
-        //             switch (res.status) {
-        //                 case "suc":
-        //                     for (let item of res.data.data) {
-        //                         this.checkoutData[item.uid] = item;
-        //                     }
-        //                     break;
-        //                 default:
-        //                     break;
-        //             }
-        //         });
-        //     }
-        // } else {
-        //     if (data.is_leaf) {
-        //         delete this.checkoutData[data.id];
-        //     } else {
-        //         UserServer.getUserList({
-        //             ori_id: data.id,
-        //             page: "1",
-        //             page_size: "999"
-        //         }).then((response: AxiosResponse<ResType>) => {
-        //             let res: ResType = response.data;
-        //             switch (res.status) {
-        //                 case "suc":
-        //                     for (let item of res.data.data) {
-        //                         delete this.checkoutData[item.uid];
-        //                     }
-        //                     break;
-        //                 default:
-        //                     break;
-        //             }
-        //         });
-        //     }
-        // }
-
-        // if (checked) {
-        //     let temp: any = this.$refs.mailList;
-        //     let sourceData: any[] = temp.getCheckedNodes();
-        //     for (let item of sourceData) {
-        //         this.checkoutData = {};
-        //         if (item.is_leaf) {
-        //             this.checkoutData[item.id] = item;
-        //             continue;
-        //         }
-        //         UserServer.getUserList({
-        //             ori_id: data.id,
-        //             page: "1",
-        //             page_size: "999"
-        //         }).then((response: AxiosResponse<ResType>) => {
-        //             let res: ResType = response.data;
-        //             switch (res.status) {
-        //                 case "suc":
-        //                     for (let item of res.data.data) {
-        //                         this.checkoutData[item.uid] = item;
-        //                     }
-        //                     break;
-        //                 default:
-        //                     break;
-        //             }
-        //         });
-        //     }
-        // }
+    getData(targetData: any) {
+        this.checkoutData = targetData;
+        this.updateNum();
     }
-
-    getData() {
-        let temp: any = this.$refs.mailList;
-        let sourceData: any[] = temp.getCheckedNodes();
-        this.form.receiver_ids = [];
-        this.checkoutData = {};
-        for (let item of sourceData) {
-            if (item.is_leaf) {
-                this.checkoutData[item.id] = item;
-                this.form.receiver_ids.push(item.id);
-                continue;
-            }
-            UserServer.getUserList({
-                ori_id: item.id,
-                page: "1",
-                page_size: "999"
-            }).then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                switch (res.status) {
-                    case "suc":
-                        for (let item of res.data.data) {
-                            this.checkoutData[item.uid] = item;
-                            this.form.receiver_ids.push(item.id);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
+    updateNum() {
+        this.num = Object.keys(this.checkoutData).length;
+        this.form.receiver_ids = (<any>Object).keys(this.checkoutData);
     }
-    loadNode(node: any, resolve: any) {
-        if (node.level === 0) {
-            let state: {
-                id: string;
-                tree_label: string;
-                nodes: any[]
-            }[] = [{
-                id: "",
-                tree_label: "全部组织机构",
-                nodes: []
-            }];
-
-            OrganizationServer.getTree().then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                switch (res.status) {
-                    case "suc":
-                        if (process.env.PLATFORM === "portal") {
-                            state = res.data;
-                        } else {
-                            state[0].nodes = res.data;
-                        }
-                        resolve(state);
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
-
-        if (node.level > 0) {
-            if (node.data.id === "") {
-                return resolve(node.data.nodes);
-            } else {
-                UserServer.getTreeUserlist({
-                    ori_id: node.data.id
-                }).then((response: AxiosResponse<ResType>) => {
-                    let res: ResType = response.data;
-                    switch (res.status) {
-                        case "suc":
-                            for (let item of res.data) {
-                                item.is_leaf = true;
-                            }
-                            resolve(node.data.nodes.concat(res.data));
-                            break;
-                        default:
-                            break;
-                    }
-                });
-
-            }
-        }
-    }
-    /***************tree */
     submitForm(formBasic: string) {
         let temp: any = this.$refs.noticeform;
         let flag: boolean = false;
-        console.log(this.form.receiver_ids);
+        console.log(this.checkoutData);
+
 
         if (this.form.receiver_ids.length === 0) {
             this.$notify({
@@ -288,5 +140,5 @@ export class EmailNoiceOperation extends Vue {
 export interface EmailNoticeFormType {
     content: string;
     object: string;
-    receiver_ids: Array<number>;
+    receiver_ids: number[];
 }
