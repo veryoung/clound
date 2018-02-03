@@ -11,6 +11,7 @@ import { FormRuleType } from "@utils/form.validator";
 import { NoticeServer } from "@server/notice";
 import { OrganizationServer } from "@server/organization";
 import { UserServer } from "@server/user";
+import { SpliceTree } from "@components/splicetree/splice.tree";
 
 
 const Aux = new Auxiliary<string>();
@@ -27,6 +28,7 @@ require("./message.notice.operation.styl");
     components: {
         ModuleTitle,
         RichTextEditor,
+        SpliceTree
     }
 })
 
