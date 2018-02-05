@@ -7,7 +7,6 @@ import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER, DefaultUserType } from "@store/user.center.type";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
-import { UserStatus } from "@utils/monitor";
 
 const Aux = new Auxiliary<string>();
 require("./user.message.styl");

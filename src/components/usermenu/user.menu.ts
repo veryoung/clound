@@ -62,7 +62,6 @@ export class UserMenu extends ListBaseClass {
         let that = this;
         new UserStatus();
         this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
-        this.user_name = this.personInfo[this.defaultUser.uid].user_name;
         EventBus.register(CONSTANT.DEFAULTUSER, function () {
             that.user_name = that.personInfo[that.defaultUser.uid].user_name;
         });
@@ -94,7 +93,7 @@ export class UserMenu extends ListBaseClass {
 
     // 返回一个未读数组
     // retrunNoRead(Array: Array<any>, rowid: string ) {
-        
+
     // }
 
     look(rowObj?: any) {
