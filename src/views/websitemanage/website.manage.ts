@@ -1,3 +1,4 @@
+import  ElementUI  from "element-ui";
 import { USER, DefaultUserType } from "@store/user.center.type";
 import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
@@ -129,7 +130,25 @@ export class WebsiteManagement extends ListBaseClass {
             } else if (type === "look") {
                 this.$router.push(`/WebsiteManagement/myWebsite/look/${row.id}`);
             } else if (type === "del") {
-                WebsiteManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+                ElementUI.MessageBox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
+                    MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                ElementUI.Notification({
+                                    title: "提示",
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }).catch(() => {
+        
+                });
             }
             return;
         }

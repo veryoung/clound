@@ -47,7 +47,7 @@ export class PublicNotice extends ListBaseClass {
         key_word: "",
         page: "1",
         page_size: "10",
-        send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+        send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
 
@@ -198,7 +198,7 @@ export interface SearchType {
     key_word: string;
     page: string;
     page_size: string;
-    send_time: Array<string>;
+    send_date: Array<string>;
 }
 
 export interface PublicNoticeColumnType {

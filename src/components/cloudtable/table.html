@@ -7,7 +7,12 @@
                 <template slot-scope="scope">
                     <span v-if="column.type==='date'" class="ellipsis" :title="scope.row[column.prop] | date |none">{{scope.row[column.prop] | date |none}}</span>
                     <span v-else-if="column.type==='dateTime'" class="ellipsis" :title="scope.row[column.prop] | datetime |none">{{scope.row[column.prop] | datetime |none}}</span>
-                    <span v-else-if="column.type==='htmlData'" class="ellipsis" v-html="scope.row[column.prop]">{{scope.row[column.prop]}}</span>
+                    <span v-else-if="column.type==='htmlData'" style="display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    height: 50px;" 
+                    :title="scope.row[column.prop]"
+                    class="ellipsis" v-html="scope.row[column.prop]">{{scope.row[column.prop]}}</span>
                     <span v-else-if="column.type==='website_server'">
                         <div slot="reference" class="name-wrapper">
                             <p class="ellipsis turn_left margin5-0" :title="scope.row[column.prop].waf_enable==='1'?'Web应用防火墙: 开启':'Web应用防火墙: 关闭'">
