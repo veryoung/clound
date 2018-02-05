@@ -443,13 +443,13 @@ export const systemTable: TableConfigType = {
                 show: true,
                 disable: true,
             },
-            {
-                label: "公告内容",
-                prop: "content",
-                show: true,
-                type: "htmlData",
-                disable: true,
-            },
+            // {
+            //     label: "公告内容",
+            //     prop: "content",
+            //     show: true,
+            //     type: "htmlData",
+            //     disable: true,
+            // },
             {
                 label: "发布人",
                 prop: "cperson",
