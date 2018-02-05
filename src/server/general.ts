@@ -1,4 +1,4 @@
-import { axios, Restful } from "@server/index";
+import axios, { Restful } from "@server/index";
 
 export class General extends Restful {
     // private callback: Function = () => { };

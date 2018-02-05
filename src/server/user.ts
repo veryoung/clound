@@ -1,4 +1,4 @@
-import { axios, Restful } from "@server/index";
+import axios, { Restful } from "@server/index";
 import { UserMessageType } from "@store/user.center.type";
 
 

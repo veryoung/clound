@@ -1,8 +1,8 @@
-import Axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import ElementUI from "element-ui";
 import { entryRouter } from "@router/index";
 
-export const axios = Axios.create();
+export default axios;
 
 
 export class Restful {

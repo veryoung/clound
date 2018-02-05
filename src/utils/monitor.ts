@@ -7,7 +7,7 @@ import { session } from "@utils/sessionstorage";
 import { Permissions } from "@directives/permissions";
 
 export class UserStatus {
-    constructor(next?: Function, path?: string) {
+    constructor(callback?: Function) {
         GeneralServer.oneself().then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             if (res.data && res.data.pcode) {
@@ -18,8 +18,8 @@ export class UserStatus {
                 case "suc":
                     Store.dispatch(USER.DEFAULTCONFIG, res.data);
                     Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
-                    if (next) {
-                        next(path);
+                    if (callback && typeof callback === "function") {
+                        callback();
                     }
                     break;
                 default:

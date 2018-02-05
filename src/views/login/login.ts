@@ -1,5 +1,5 @@
 import Component from "vue-class-component";
-import Vue from "vue";
+
 
 
 import { GeneralServer } from "@server/general";
@@ -9,6 +9,8 @@ import { USER } from "@store/user.center.type";
 import { session } from "@utils/sessionstorage";
 import { UserStatus } from "@utils/monitor";
 import { FooterComponent } from "@components/layout/footer/footer";
+import { BaseLibrary } from "@views/base/base.class";
+import { User } from "@server/user";
 
 
 
@@ -25,7 +27,7 @@ const form_frame = require("src/resource/images/login_line.png");
         FooterComponent
     }
 })
-export class Login extends Vue {
+export class Login extends BaseLibrary {
     // init data
     // public : string = "src/resource/images/logo.png";
     // public portal_logo:string = "";
@@ -45,7 +47,9 @@ export class Login extends Vue {
 
     // lifecircle hook
     created() {
-        new UserStatus(this.$router.push, "/home");
+        new UserStatus(() => {
+            this.$router.push("/home");
+        });
         this.changeCode();
     }
     // computed
@@ -74,7 +78,9 @@ export class Login extends Vue {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
-                    this.$router.push("/");
+                    new UserStatus(() => {
+                        this.$router.push("/");
+                    });
                     break;
                 case "error":
                     this.changeCode();
