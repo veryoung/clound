@@ -31,6 +31,7 @@ export const notifyRouter: RouteConfig[] = [
         meta: {
             icon: "icon-quan-",
             hidden: true,
+            permission: "SystemManagement.NoticeManagement.Notice.Add"
         },
         props: {
             operation: "add"
@@ -42,7 +43,8 @@ export const notifyRouter: RouteConfig[] = [
         name: "查看公告",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "SystemManagement.NoticeManagement.Notice.Check"
         },
         props: {
             operation: "look"
@@ -63,7 +65,8 @@ export const notifyRouter: RouteConfig[] = [
         name: "查看邮件",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "SystemManagement.NoticeManagement.MailNotification.Check"
         },
         props: {
             operation: "look"
@@ -76,6 +79,7 @@ export const notifyRouter: RouteConfig[] = [
         meta: {
             icon: "icon-quan-",
             hidden: true,
+            permission: "SystemManagement.NoticeManagement.MailNotification.Add"
         },
         props: {
             operation: "add"
@@ -97,6 +101,7 @@ export const notifyRouter: RouteConfig[] = [
         meta: {
             icon: "icon-quan-",
             hidden: true,
+            permission: "SystemManagement.NoticeManagement.SMSNotification.Add"
         },
         props: {
             operation: "add"
@@ -109,7 +114,7 @@ export const notifyRouter: RouteConfig[] = [
         meta: {
             icon: "icon-quan-",
             hidden: true,
-
+            permission: "SystemManagement.NoticeManagement.SMSNotification.Check"
         },
         props: {
             operation: "look"

@@ -13,6 +13,7 @@ export const WebsiteManageRouter: RouteConfig[] = [
         name: "我的网站",
         meta: {
             icon: "icon-yonghuguanli",
+            permission: "WebsiteManagement.MyWebsite"
         },
         component: WebsiteManagement,
     },
@@ -21,7 +22,8 @@ export const WebsiteManageRouter: RouteConfig[] = [
         name: "添加网站",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "WebsiteManagement.MyWebsite.Add"
         },
         props: {
             operation: "add"
@@ -33,7 +35,8 @@ export const WebsiteManageRouter: RouteConfig[] = [
         name: "编辑网站",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "WebsiteManagement.MyWebsite.Edit"
         },
         props: {
             operation: "editor"
@@ -57,7 +60,8 @@ export const WebsiteManageRouter: RouteConfig[] = [
         name: "查看",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "WebsiteManagement.MyWebsite.Check"
         },
         props: {
             operation: "look"
