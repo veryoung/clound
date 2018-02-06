@@ -1,18 +1,13 @@
-import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/public.notice.detail";
-import { Home } from "@views/home/home";
 import Vue from "vue";
 import Router from "vue-router";
 import { RouteConfig } from "vue-router";
-
 import { systemRouter } from "@router/system";
-
-
 import { HeaderComponent } from "@components/layout/header/header";
 import { SiderComponent } from "@components/layout/sider/sider";
 import { ViewContainer } from "@views/container/container";
 import { userCenterRouter } from "@router/user.center";
 import { Login } from "@views/login/login";
-import { Route } from "vue-router/types/router";
+import { Route, RawLocation } from "vue-router/types/router";
 import { session } from "@utils/sessionstorage";
 import { GeneralServer } from "@server/general";
 import { AxiosResponse } from "axios";
@@ -23,38 +18,25 @@ import { WebsiteManageRouter } from "@router/website.manage";
 import { WebsiteAnalysisRouter } from "@router/website.analysis";
 import { CountReportRouter } from "@router/count.report";
 import { PreviewReport } from "@views/reportmanage/preview.report/preview.report";
+import { Permissions } from "@directives/permissions";
+import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/public.notice.detail";
+import { Home } from "@views/home/home";
 
 
-Vue.use(Router);
-
-let tempRouter: RouteConfig[] = [
+export const entry: RouteConfig[] = [
     {
         path: "/",
         meta: {
             hidden: true,
-            permission: "*"
+            permission: ""
         },
         redirect: "/home"
-    },
-    {
-        path: "/noticelook/:id",
-        name: "查看公告",
-        components: {
-            header: HeaderComponent,
-            // sider: SiderComponent,
-            main: PublicNoticeDeatil
-        },
-        meta: {
-            icon: "icon-quan-",
-            hidden: true,
-            permission: "*"
-        },
     },
     {
         path: "/login",
         meta: {
             hidden: true,
-            permission: "*"
+            permission: ""
         },
         component: Login
     },
@@ -84,7 +66,7 @@ let tempRouter: RouteConfig[] = [
             }
         },
         meta: {
-            permission: "*",
+            permission: "",
             hidden: true
         }
     },
@@ -156,7 +138,7 @@ let tempRouter: RouteConfig[] = [
             main: ViewContainer
         },
         meta: {
-            permission: "*",
+            permission: "",
             hidden: true
         }
     },
@@ -219,11 +201,46 @@ let tempRouter: RouteConfig[] = [
             permission: "ReportManagement.Reporttemplate.Check"
         },
         component: PreviewReport
-    }
+    },
+    {
+        path: "/noticelook/:id",
+        name: "查看公告",
+        components: {
+            header: HeaderComponent,
+            main: PublicNoticeDeatil
+        },
+        meta: {
+            icon: "icon-quan-",
+            hidden: true,
+            permission: ""
+        },
+    },
 ];
 
-export const entry: RouteConfig[] = tempRouter;
+
 
 export const entryRouter = new Router({
     routes: entry
 });
+
+entryRouter.beforeEach((
+    to: Route,
+    from: Route,
+    next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
+    if (Permissions.judge(to.meta.permission)) {
+        next();
+        return;
+    } else {
+        for (let item of entry) {
+            if (Permissions.judge(item.meta.permission)) {
+                next(item.path);
+                break;
+            }
+        }
+    }
+    next();
+});
+
+
+
+Vue.use(Router);

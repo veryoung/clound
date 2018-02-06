@@ -225,7 +225,10 @@ export class PermissionsObj {
 
 
 
-
+    /**
+     * 
+     * @param 返回true表示有权限，返回false表示无权限
+     */
     public judge(value: string): boolean {
         let permissions: string[] = session.getItem("pcode");
         if (permissions === null) {
@@ -237,6 +240,8 @@ export class PermissionsObj {
         // } else {
         //     return false;
         // }
+        // let reg: RegExp = new RegExp(`^${value}.*$`);
+        // console.log(reg);
         for (let permission of permissions) {
             if (permission.indexOf(value) !== -1) {
                 return true;
