@@ -44,11 +44,11 @@
                                 justify-content: center;">
                             <span style="">
                                 <p style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
-                                    查看详情
+                                    查看
                                 </p>
                             </span>
                             <span style="margin: 0 10px">
-                                <p style="cursor:pointer" v-permissions="'SystemManagement.Notice.Delete'" @click="del({$index:scope.$index, row:scope.row})"
+                                <p style="cursor:pointer" v-permissions="'SystemManagement.NoticeManagement.Notice.Delete'" @click="del({$index:scope.$index, row:scope.row})"
                                     class="ellipsis  margin5-0">
                                     删除
                                 </p>

@@ -350,7 +350,7 @@ export const systemTable: TableConfigType = {
                 type: "send_type"
             },
             {
-                label: "发送人",
+                label: "发件人",
                 prop: "sender",
                 show: true,
             },
@@ -383,13 +383,13 @@ export const systemTable: TableConfigType = {
                 disable: true,
                 nonexit: true
             },
-            {
-                label: "短信内容",
-                prop: "content",
-                show: true,
-                disable: true,
+            // {
+            //     label: "短信内容",
+            //     prop: "content",
+            //     show: true,
+            //     disable: true,
 
-            },
+            // },
             {
                 label: "收件人",
                 prop: "receiver",

@@ -82,6 +82,22 @@ export class SpliceTree extends Vue {
                                 break;
                         }
                     });
+                } else if (this.kind === "website") {
+                    UserServer.getTreeWebsitelist({
+                        ori_id: node.data.id
+                    }).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                for (let item of res.data) {
+                                    item.is_leaf = true;
+                                }
+                                resolve(node.data.nodes.concat(res.data));
+                                break;
+                            default:
+                                break;
+                        }
+                    });
                 }
             }
             else {

@@ -139,7 +139,7 @@ export class ReportTemplate extends ListBaseClass {
             return;
         }
         if (type === "add") {
-            this.$router.push(`/WebsiteManagement/myWebsite/add`);
+            this.$router.push(`/ReportManagement/ReportTemplate/add`);
         }
     }
 

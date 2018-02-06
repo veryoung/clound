@@ -53,15 +53,16 @@
                 </el-table-column>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                        <span>
+                        <span style="    display: flex;
+                            flex-direction: row;
+                            justify-content: center;">
                             <span>
-                                <p v-permissions="'SystemManagement.SMSNotification.Check'" style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})"
-                                    class="ellipsis  margin5-0">
-                                    查看详情
+                                <p style="cursor:pointer" @click="look({$index:scope.$index, row:scope.row})" class="ellipsis  margin5-0">
+                                    查看
                                 </p>
                             </span>
-                            <span>
-                                <p v-permissions="'SystemManagement.SMSNotification.Delete'" style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})"
+                            <span style="margin: 0 10px">
+                                <p v-permissions="'SystemManagement.NoticeManagement.SMSNotification.Delete'" style="cursor:pointer" @click="del({$index:scope.$index, row:scope.row})"
                                     class="ellipsis  margin5-0">
                                     删除
                                 </p>
