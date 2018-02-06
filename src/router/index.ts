@@ -227,17 +227,17 @@ entryRouter.beforeEach((
     to: Route,
     from: Route,
     next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
-    if (Permissions.judge(to.meta.permission)) {
-        next();
-        return;
-    } else {
-        for (let item of entry) {
-            if (Permissions.judge(item.meta.permission)) {
-                next(item.path);
-                break;
-            }
-        }
-    }
+    // if (Permissions.judge(to.meta.permission)) {
+    //     next();
+    //     return;
+    // } else {
+    //     for (let item of entry) {
+    //         if (Permissions.judge(item.meta.permission)) {
+    //             next(item.path);
+    //             break;
+    //         }
+    //     }
+    // }
     next();
 });
 
