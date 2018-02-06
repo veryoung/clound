@@ -5,6 +5,7 @@ import { CONSTANT, vm, EventBus } from "@utils/event";
 import { RegValidate, FromValidator, } from "@utils/form.validator";
 import { Auxiliary } from "@utils/auxiliary";
 import axios from "@server/index";
+import { entryRouter } from "@router/index";
 
 
 
@@ -26,7 +27,7 @@ export class BaseLibrary extends Vue {
 
 export class DetailBaseClass extends BaseLibrary {
     protected back() {
-        this.$router.go(-1);
+        entryRouter.go(-1);
     }
 }
 

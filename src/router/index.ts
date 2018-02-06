@@ -21,6 +21,8 @@ import { PreviewReport } from "@views/reportmanage/preview.report/preview.report
 import { Permissions } from "@directives/permissions";
 import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/public.notice.detail";
 import { Home } from "@views/home/home";
+import { Forbidden } from "@views/error/403/403";
+import { NotFound } from "@views/error/404/404";
 
 
 export const entry: RouteConfig[] = [
@@ -213,6 +215,30 @@ export const entry: RouteConfig[] = [
             icon: "icon-quan-",
             hidden: true,
             permission: ""
+        },
+    },
+    {
+        path: "/403",
+        name: "403",
+        meta: {
+            hidden: true,
+            permission: ""
+        },
+        components: {
+            header: HeaderComponent,
+            main: Forbidden
+        },
+    },
+    {
+        path: "**",
+        name: "404",
+        meta: {
+            hidden: true,
+            permission: ""
+        },
+        components: {
+            header: HeaderComponent,
+            main: NotFound
         },
     },
 ];
