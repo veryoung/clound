@@ -383,13 +383,13 @@ export const systemTable: TableConfigType = {
                 disable: true,
                 nonexit: true
             },
-            {
-                label: "短信内容",
-                prop: "content",
-                show: true,
-                disable: true,
+            // {
+            //     label: "短信内容",
+            //     prop: "content",
+            //     show: true,
+            //     disable: true,
 
-            },
+            // },
             {
                 label: "收件人",
                 prop: "receiver",

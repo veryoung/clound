@@ -45,13 +45,13 @@
                         <span v-for="item in scope.row[column.prop]">{{item}}</span>
                     </span>
                     <span v-else-if="column.type==='notice_status'" class="ellipsis" :title="scope.row[column.prop]">
-                        <span :title="scope.row[column.prop].status?'成功':'失败'">
-                            {{scope.row[column.prop].status?"成功":"失败"}}
+                        <span :title="scope.row[column.prop]?'成功':'失败'">
+                            {{scope.row[column.prop]?"成功":"失败" }}
                         </span>
                     </span>
                     <span v-else-if="column.type==='send_type'" class="ellipsis" :title="scope.row[column.prop]">
-                        <span :title="scope.row[column.prop].send_type?'系统发送':'人工发送'">
-                            {{scope.row[column.prop].send_type === "auto"?"系统发送":"人工发送"}}
+                        <span :title="scope.row[column.prop] === 'auto'?'系统发送':'人工发送'">
+                            {{scope.row[column.prop] === "auto"?"系统发送":"人工发送" }}
                         </span>
                     </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
