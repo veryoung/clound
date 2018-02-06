@@ -80,6 +80,15 @@ export class User extends Restful {
         });
     }
 
+    public getTreeWebsitelist(opt: {
+        ori_id: string;
+    }) {
+        return this.get({
+            url: "/api/v20/account/ori/website/",
+            params: opt
+        });
+    }
+
 
 
     public getDefaultUser(uid: string) {

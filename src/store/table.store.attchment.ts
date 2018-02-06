@@ -350,7 +350,7 @@ export const systemTable: TableConfigType = {
                 type: "send_type"
             },
             {
-                label: "发送人",
+                label: "发件人",
                 prop: "sender",
                 show: true,
             },
