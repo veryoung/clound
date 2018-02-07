@@ -7,6 +7,7 @@ import { TableConfigStore } from "@store/table.store";
 import { MyWebsiteStore } from "@store/mywebsite.store";
 import { LogsAuditStore } from "@store/log.audit.store";
 import { NoticeStore } from "@store/notice.store";
+import { RouterStore } from "@store/router.store";
 
 
 
@@ -19,6 +20,7 @@ export const Store = new Vuex.Store({
         UserCenterStore: UserCenterStore,
         TableConfigStore: TableConfigStore,
         LogsAuditStore: LogsAuditStore,
-        NoticeStore: NoticeStore
+        NoticeStore: NoticeStore,
+        RouterStore: RouterStore
     }
 });

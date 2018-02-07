@@ -2,7 +2,6 @@ import { Module } from "vuex";
 import { UserCenterType, UserStoreType, UserMessageType, USER, RoleType, UserListType, DefaultUserType } from "./user.center.type";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
-import { session, vm } from "@utils/index";
 import { Store } from "@store/store";
 import { TABLECONFIG } from "@store/table.type";
 import { AxiosResponse } from "axios";

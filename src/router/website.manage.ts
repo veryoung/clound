@@ -13,6 +13,7 @@ export const WebsiteManageRouter: RouteConfig[] = [
         name: "我的网站",
         meta: {
             icon: "icon-yonghuguanli",
+            hidden: false,
             permission: "WebsiteManagement.MyWebsite"
         },
         component: WebsiteManagement,

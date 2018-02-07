@@ -17,7 +17,6 @@ import { SetCol } from "@components/setcol/setcol";
 import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController, DomainType } from "./my.report.attachement";
 import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
-import { session } from "@utils/sessionstorage";
 import { ListBaseClass } from "@views/base/base.class";
 import * as moment from "moment";
 

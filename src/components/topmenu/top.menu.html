@@ -6,10 +6,11 @@
         :key="$index" 
         :to=item.path 
         replace tag="li" 
-        v-hide="item.meta&&item.meta.hidden"
+        v-if="item.meta&&!item.meta.hidden"
         v-permissions="item.meta.permission"
         >
             <div>{{item.name}}</div>
         </router-link>
     </ul>
 </div>
+<!-- v-permissions="item.meta.permission" -->

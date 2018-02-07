@@ -5,6 +5,8 @@ import { Store } from "@store/store";
 import { USER } from "@store/user.center.type";
 import { session } from "@utils/sessionstorage";
 import { Permissions } from "@directives/permissions";
+import { ROUTEREVENT } from "@store/router.type";
+import { entryRouter } from "@router/index";
 
 export class UserStatus {
     constructor(callback?: Function) {
@@ -18,6 +20,8 @@ export class UserStatus {
                 case "suc":
                     Store.dispatch(USER.DEFAULTCONFIG, res.data);
                     Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
+                    Store.dispatch(ROUTEREVENT.FILTERROUTER);
+                    console.log(entryRouter);
                     if (callback && typeof callback === "function") {
                         callback();
                     }
