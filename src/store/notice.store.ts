@@ -168,7 +168,7 @@ export const NoticeStore: Module<NoticeType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETMSGDETAIL, { id: payload.id, message: res.data});
+                        commit(NOTICEEVENT.GETMSGDETAIL, { id: payload.id, message: res.data });
                         EventBus.doNotify(CONSTANT.GETMSGDETAIL);
                         break;
                     default:
@@ -201,9 +201,16 @@ export const NoticeStore: Module<NoticeType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETNOTICELIST, { page: payload.page, message: res.data.data });
-                        Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "noticetable", total: res.data.total });
-                        EventBus.doNotify(CONSTANT.GETNOTICELIST);
+                        console.log(payload.new);
+                        if (payload.new) {
+                            commit(NOTICEEVENT.GETNOTICELIST, { page: payload.page, message: res.data.data });
+                            Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "noticetable", total: res.data.total });
+                            EventBus.doNotify(CONSTANT.GETNOTICELIST);
+                        } else {
+                            commit(NOTICEEVENT.GETNOTICELIST, { page: payload.page, message: res.data.data });
+                            Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "noticetable", total: res.data.total });
+                            EventBus.doNotify(CONSTANT.GETNOTICELIST);
+                        }
                         break;
                     default:
                         break;

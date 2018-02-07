@@ -65,11 +65,12 @@ export class UserMenu extends ListBaseClass {
         EventBus.register(CONSTANT.DEFAULTUSER, function () {
             that.user_name = that.personInfo[that.defaultUser.uid].user_name;
         });
-
         // 获取公告
-        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST,  this.filter);
         let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
             that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
+            console.log(that.noticeTable);
+
             that.NotReaderArray = that.PublicNoticeData;
             that.NoticeNum = that.NotReaderArray.length;
         });

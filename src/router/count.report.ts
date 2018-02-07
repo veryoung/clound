@@ -37,6 +37,7 @@ export const CountReportRouter: RouteConfig[] = [
         name: "添加模板",
         meta: {
             icon: "icon-yonghuguanli",
+            hidden: true
         },
         component: ReportOperation,
     }

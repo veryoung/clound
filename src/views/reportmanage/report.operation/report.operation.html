@@ -1,17 +1,39 @@
 <div class="system-template-panel">
-    <div class="system-inner-template">
+    <div class="system-inner-template ">
         <ModuleTitle :titles="titles" />
-        <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px">
+        <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="report-operation-form">
             <el-form-item label="模板名称" prop="name">
                 <el-input v-model="form.name" placeholder="模板名称"></el-input>
             </el-form-item>
-            <el-form-item label="模板名称" prop="name">
-                <el-input v-model="form.name" placeholder="模板名称"></el-input>
+            <el-form-item label="统计周期" prop="cycle">
+                    <el-radio v-model="form.cycle" label="day">日报</el-radio>
+                    <el-radio v-model="form.cycle" label="week">周报</el-radio>
+                    <el-radio v-model="form.cycle" label="month">月报</el-radio>
+                    <el-radio v-model="form.cycle" label="custom">自定义</el-radio>
             </el-form-item>
-            <el-form-item label="统计范围" prop="name">
-                    <el-input v-model="form.name" placeholder="模板名称"></el-input>
-                </el-form-item>
-
+            <el-collapse accordion>
+                <el-collapse-item title="统计范围" name="1">
+                    <SpliceTree @getData="getData" />
+                </el-collapse-item>
+            </el-collapse>
+            <el-form-item label="选择指标" prop="name" class="report-form-checkbox">
+                <div>
+                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                </div>
+                <div>
+                    <el-checkbox checked disabled>概述</el-checkbox>
+                </div>
+                <div>防御详情</div>
+                <div style="margin: 10px 0;"></div>
+                <el-checkbox-group class="report-form-checkbox-common" v-model="defenItem" @change="handleOptionsChange">
+                    <el-checkbox v-for="item in defenseOption" :label="item.value" :key="item.value">{{item.label}}</el-checkbox>
+                </el-checkbox-group>
+                <div>攻击详情</div>
+                <div style="margin: 10px 0;"></div>
+                <el-checkbox-group class="report-form-checkbox-common"  v-model="attackItem" @change="handleOptionsChange">
+                    <el-checkbox v-for="item in attackOption" :label="item.value" :key="item.value">{{item.label}}</el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('formbasic','formserver')">确定</el-button>
                 <el-button @click="back()">取消</el-button>
