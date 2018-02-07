@@ -29,7 +29,7 @@ require("./user.menu.styl");
             "personInfo",
             "defaultUser",
             "tableConfig",
-            "noticeTable"
+            "publicnoticeTable"
         ])
     }
 })
@@ -38,7 +38,7 @@ export class UserMenu extends ListBaseClass {
     public Routers: Array<RouteConfig> = userCenterRouter;
     public user_name: string = "";
     public tableConfig: TableConfigType;
-    public noticeTable: PubilcTableType;
+    public publicnoticeTable: PubilcTableType;
 
     // init computed
     public personInfo: UserCenterType;
@@ -66,10 +66,10 @@ export class UserMenu extends ListBaseClass {
             that.user_name = that.personInfo[that.defaultUser.uid].user_name;
         });
         // 获取公告
-        this.$store.dispatch(NOTICEEVENT.GETNOTICELIST,  this.filter);
-        let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
-            that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
-            console.log(that.noticeTable);
+        this.$store.dispatch(NOTICEEVENT.GETPUBlICGETNOTICELIST,  this.filter);
+        let ListId = EventBus.register(NOTICEEVENT.GETPUBlICGETNOTICELIST, function (event: string, info: any) {
+            that.PublicNoticeData = (<any>Object).assign([], that.publicnoticeTable[that.tableConfig["publicnoticeTable"].page - 1]);
+            console.log(that.publicnoticeTable);
 
             that.NotReaderArray = that.PublicNoticeData;
             that.NoticeNum = that.NotReaderArray.length;

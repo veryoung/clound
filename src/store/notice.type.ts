@@ -5,6 +5,7 @@ export const NOTICEEVENT = {
     GETMSGDETAIL: "获取短信详情",
     GETNOTICELIST: "获取公告列表",
     GETNOTICEDETAIL: "获取公告详情",
+    GETPUBlICGETNOTICELIST: "获取公共公告详情",
 };
 
 export interface NoticeType {
@@ -21,6 +22,9 @@ export interface NoticeType {
         [extra: string]: MsgDetailType
     };
     noticeTable: {
+        [extra: string]: NoticeListType[]
+    };
+    publicnoticeTable: {
         [extra: string]: NoticeListType[]
     };
     noticeDetail: {

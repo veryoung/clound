@@ -467,6 +467,45 @@ export const systemTable: TableConfigType = {
         page: 1,
         total: 1
     },
+    "publicnoticeTable": {
+        columns: [
+            {
+                label: "id",
+                prop: "id",
+                show: false,
+                disable: true,
+                nonexit: true
+            },
+            {
+                label: "公告标题",
+                prop: "title",
+                show: true,
+                disable: true,
+            },
+            // {
+            //     label: "公告内容",
+            //     prop: "content",
+            //     show: true,
+            //     type: "htmlData",
+            //     disable: true,
+            // },
+            {
+                label: "发布人",
+                prop: "cperson",
+                show: true,
+            },
+            {
+                label: "发布时间",
+                prop: "ctime",
+                show: true,
+                type: "dateTime"
+            },
+        ],
+        pageSizes: [10, 20, 30, 40, 50],
+        page_size: 10,
+        page: 1,
+        total: 1
+    },
     // 我的报告列表
     "myreporttable": {
         columns: [
