@@ -10,6 +10,8 @@ import ReportTemplateSearchType, { filterData, ReportTemplateController, ReportT
 import * as moment from "moment";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { TableConfigType } from "@store/table.type";
+import { EventBus, CONSTANT } from "@utils/event";
+import { REPORTEVENT } from "@store/report.type";
 
 
 const Aux = new Auxiliary<string>();
@@ -24,6 +26,7 @@ require("./report.template.styl");
     computed: {
         ...mapGetters([
             "tableConfig",
+            "reportTableData",
         ])
     }
 })
@@ -31,12 +34,13 @@ require("./report.template.styl");
 export class ReportTemplate extends ListBaseClass {
     // props
     public tableConfig: TableConfigType;
+    public reportTableData: any;
 
     // data
     public titles: string[] = ["报告模板"];
 
     public filter: ReportTemplateSearchType = (<any>Object).assign({}, filterData);
-    public websitetableData: ReportTemplateColumnType[] = new Array<ReportTemplateColumnType>();
+    public tableData: ReportTemplateColumnType[] = new Array<ReportTemplateColumnType>();
 
     // 创建时间
     public createTime: any[] = new Array<string>();
@@ -71,12 +75,13 @@ export class ReportTemplate extends ListBaseClass {
         this.filter.create_time = [startDay, endDay];
 
 
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
-        // let that = this;
-        // let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
-        //     that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
-        // });
-        // Aux.insertId(ListId);
+        this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
+        let that = this;
+        let ListId = EventBus.register(CONSTANT.GETREPORTTEMPLATELIST, function (event: string, info: any) {
+            that.tableData = that.reportTableData[that.tableConfig.reporttemplatetable.page - 1];
+
+        });
+        Aux.insertId(ListId);
     }
 
     mounted() {
@@ -102,26 +107,27 @@ export class ReportTemplate extends ListBaseClass {
     }
     search() {
         console.log(this.filter);
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
     }
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
     }
 
     handleSizeChange(val: number) {
         this.tableConfig.mywebsitetable.page_size = val;
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
     }
     handleCurrentChange(val: number) {
         this.tableConfig.mywebsitetable.page = val;
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
     }
 
     sortChange(opt: any) {
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        
     }
+
 
     // 跳转方法同统一
     handle(type: "look" | "add" | "editor" | "settings" | "del", rowObj?: any) {

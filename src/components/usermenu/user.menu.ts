@@ -69,8 +69,6 @@ export class UserMenu extends ListBaseClass {
         this.$store.dispatch(NOTICEEVENT.GETPUBlICGETNOTICELIST,  this.filter);
         let ListId = EventBus.register(NOTICEEVENT.GETPUBlICGETNOTICELIST, function (event: string, info: any) {
             that.PublicNoticeData = (<any>Object).assign([], that.publicnoticeTable[that.tableConfig["publicnoticeTable"].page - 1]);
-            console.log(that.publicnoticeTable);
-
             that.NotReaderArray = that.PublicNoticeData;
             that.NoticeNum = that.NotReaderArray.length;
         });

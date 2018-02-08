@@ -106,7 +106,6 @@ export class LogsAudit extends ListBaseClass {
         let that = this;
         let ListId = EventBus.register(LOGADUITEVENT.GETLOGAUDITLIST, function (event: string, info: any) {
             let data = [];
-            console.log(that.logAuditTableData);
             data = (<any>Object).assign([], that.logAuditTableData[that.tableConfig["logautdittable"].page - 1]);
             that.logAuditTableColumnData = data[0].data;
         });

@@ -12,6 +12,7 @@ import { Auxiliary } from "@utils/auxiliary";
 import { FormType, TagType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
 import { DiplomaBaseClass } from "@views/base/base.class";
+import { ReportService } from "@server/report";
 
 
 const Aux = new Auxiliary<string>();
@@ -48,7 +49,7 @@ export class ReportOperation extends DiplomaBaseClass {
     public form: ReportOperationFormType = {
         name: "",
         cycle: "day",
-        cycleRange: [],
+        cycle_range: [],
         indicators: [],
     };
     public attackItem: Array<string> = [];
@@ -101,15 +102,15 @@ export class ReportOperation extends DiplomaBaseClass {
 
     // init methods
     getData(targetData: any) {
-        this.form.cycleRange = [];
-            for (let key in targetData) {
-                this.form.cycleRange.push(targetData[key].id);
-            }
+        this.form.cycle_range = [];
+        for (let key in targetData) {
+            this.form.cycle_range.push(targetData[key].id);
+        }
     }
 
     handleCheckAllChange(val: string) {
         let defenseOptions: Array<string> = [];
-        let attackOptions: Array<string>  = [];
+        let attackOptions: Array<string> = [];
         for (let key in this.defenseOption) {
             defenseOptions.push(this.defenseOption[key].value);
         }
@@ -125,19 +126,45 @@ export class ReportOperation extends DiplomaBaseClass {
         this.isIndeterminate = this.attackItem.length + this.defenItem.length > 0 && this.checkLength < this.attackItem.length + this.defenItem.length;
 
     }
-    
+
     submitForm() {
+        // 将选择的指标合在一起
         this.form.indicators = this.defenItem.concat(this.attackItem);
         console.log(this.form);
-        switch (this.operation) {
-            case "add":
 
-                break;
-            case "editor":
+        let temp: any = this.$refs.formbasic;
+        let flag: boolean = false;
+        temp.validate((valid: any) => {
+            flag = valid;
+        });
+        if (flag) {
+            switch (this.operation) {
+                case "add":
+                    ReportService.AddReport(this.form).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$notify({
+                                    title: "提示",
+                                    message: "添加模板成功",
+                                    type: "success"
+                                });
+                                this.$router.push("/ReportManagement/ReportTemplate");
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                    break;
+                case "editor":
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
+
+
+
     }
 
     back() {
@@ -148,7 +175,7 @@ export class ReportOperation extends DiplomaBaseClass {
 export interface ReportOperationFormType {
     name: string;
     cycle: string;
-    cycleRange: Array<string>;
+    cycle_range: Array<string>;
     indicators: Array<string>;
 }
 

@@ -105,7 +105,7 @@ export const notifyRouter: RouteConfig[] = [
     },
     {
         path: "messagenotice/look/:id",
-        name: "查看邮件",
+        name: "查看短信",
         meta: {
             icon: "icon-quan-",
             hidden: true,

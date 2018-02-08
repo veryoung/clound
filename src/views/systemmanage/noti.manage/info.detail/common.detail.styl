@@ -7,30 +7,22 @@
         display flex
         flex 0 1 auto
         flex-direction column
-        .detail-title
-            display flex
-            height: 70px;
-            border-bottom: 1px solid #ededed;
-            .title
-                height: 60px;
-                line-height: 80px;
-                font-size 35px
-                font-weight 700
-            .time
-                margin-left 20px
-                font-size: 14px
-                height: 60px;
-                line-height: 93px;
-            .date
-                margin-left 10px
-                font-size: 14px
-                height: 60px;
-                line-height: 93px;  
-        .detail-content
+        .common-detail
             display flex
             border-bottom: 1px solid #ededed;
-            .content
-                margin-left: 40px;
+        .detail-box
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+            .box-detail
+                text-align: left;
+                display: flex;
+                margin 10px 0
+                .label
+                    font-weight: 700;
+                .message
+                    color #acacac
+                    margin-left 10px    
         .detail-btn
             display flex
             margin-top 20px
