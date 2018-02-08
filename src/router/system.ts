@@ -63,7 +63,8 @@ export const systemRouter: RouteConfig[] = [
         name: "添加用户",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "SystemManagement.userManagement.Add"
         },
         props: {
             operation: "add"
@@ -75,7 +76,8 @@ export const systemRouter: RouteConfig[] = [
         name: "编辑用户",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "SystemManagement.userManagement.Edit"
         },
         props: {
             operation: "editor"
@@ -87,7 +89,8 @@ export const systemRouter: RouteConfig[] = [
         name: "查看用户",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "SystemManagement.userManagement.Detail"
         },
         props: {
             operation: "look"

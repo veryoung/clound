@@ -15,7 +15,7 @@ export const userCenterRouter: RouteConfig[] = [
         component: UserMessage,
         meta: {
             icon: "icon-gerenxinxi",
-            permission: "Personal",
+            permission: "Personal.Announcement.Check",
         }
     },
     {
@@ -24,7 +24,7 @@ export const userCenterRouter: RouteConfig[] = [
         component: UserPwd,
         meta: {
             icon: "icon-xiugaimima",
-            permission: "Personal",
+            permission: "Personal.Announcement.Modify",
         }
     },
 ];

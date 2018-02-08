@@ -11,6 +11,8 @@ import { UserStatus } from "@utils/monitor";
 import { FooterComponent } from "@components/layout/footer/footer";
 import { BaseLibrary } from "@views/base/base.class";
 import { User } from "@server/user";
+import { entry } from "@router/index";
+import { Permissions } from "@directives/permissions";
 
 
 
@@ -48,10 +50,11 @@ export class Login extends BaseLibrary {
     // lifecircle hook
     created() {
         new UserStatus(() => {
-            this.$router.push("/home");
+            this.$router.go(-1);
         });
         this.changeCode();
     }
+
     // computed
     get operation_logo() {
         return operation_logo;
@@ -73,6 +76,14 @@ export class Login extends BaseLibrary {
     }
 
     // init methods
+    // go() {
+    //     for (let item of entry) {
+    //         if (Permissions.judge(item.meta.permission)) {
+    //             this.$router.push(item.path);
+    //             break;
+    //         }
+    //     }
+    // }
     onSubmit() {
         GeneralServer.login(this.form).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;

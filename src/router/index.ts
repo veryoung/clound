@@ -8,12 +8,8 @@ import { ViewContainer } from "@views/container/container";
 import { userCenterRouter } from "@router/user.center";
 import { Login } from "@views/login/login";
 import { Route, RawLocation } from "vue-router/types/router";
-import { session } from "@utils/sessionstorage";
 import { GeneralServer } from "@server/general";
-import { AxiosResponse } from "axios";
 import { ResType } from "server";
-import { USER } from "@store/user.center.type";
-import { Store } from "@store/store";
 import { WebsiteManageRouter } from "@router/website.manage";
 import { WebsiteAnalysisRouter } from "@router/website.analysis";
 import { CountReportRouter } from "@router/count.report";
@@ -23,25 +19,17 @@ import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/
 import { Home } from "@views/home/home";
 import { Forbidden } from "@views/error/403/403";
 import { NotFound } from "@views/error/404/404";
+import { DynamicRoute } from "@utils/dynamic.route";
+import { get } from "http";
+
+const websiteRouterPermission = new DynamicRoute(WebsiteAnalysisRouter).getRoute();
+const websiteManagerPermission = new DynamicRoute(WebsiteManageRouter).getRoute();
+const CountReportRouterPermission = new DynamicRoute(CountReportRouter).getRoute();
+const systemRouterPermission = new DynamicRoute(systemRouter).getRoute();
+const userCenterRouterPermission = new DynamicRoute(userCenterRouter).getRoute();
 
 
-export const entry: RouteConfig[] = [
-    {
-        path: "/",
-        meta: {
-            hidden: true,
-            permission: ""
-        },
-        redirect: "/home"
-    },
-    {
-        path: "/login",
-        meta: {
-            hidden: true,
-            permission: ""
-        },
-        component: Login
-    },
+const levelOne: RouteConfig[] = [
     {
         path: "/home",
         name: "首页",
@@ -54,27 +42,30 @@ export const entry: RouteConfig[] = [
             permission: "Home"
         }
     },
-    {
-        path: "/OperationAnalysis",
-        name: "运营分析",
-        components: {
-            header: HeaderComponent,
-            sider: SiderComponent,
-            main: ViewContainer
-        },
-        props: {
-            sider: {
-                menus: systemRouter
-            }
-        },
-        meta: {
-            permission: "",
-            hidden: true
-        }
-    },
-    {
+    // {
+    //     path: "/OperationAnalysis",
+    //     name: "运营分析",
+    //     components: {
+    //         header: HeaderComponent,
+    //         sider: SiderComponent,
+    //         main: ViewContainer
+    //     },
+    //     props: {
+    //         sider: {
+    //             menus: systemRouter
+    //         }
+    //     },
+    //     meta: {
+    //         permission: "",
+    //         hidden: true
+    //     }
+    // },
+];
+if (websiteRouterPermission.length !== 0) {
+    levelOne.push({
         path: "/WebsiteAnalysis",
-        redirect: "/WebsiteAnalysis/WebsitePandect",
+        redirect: `/WebsiteAnalysis/${websiteRouterPermission[0].path}`,
+        // redirect: "/WebsiteAnalysis/WebsitePandect",
         name: "网站分析",
         components: {
             header: HeaderComponent,
@@ -83,18 +74,22 @@ export const entry: RouteConfig[] = [
         },
         props: {
             sider: {
-                menus: WebsiteAnalysisRouter
+                menus: websiteRouterPermission
             }
         },
         meta: {
             hidden: false,
             permission: "WebsiteAnalysis"
         },
-        children: WebsiteAnalysisRouter
-    },
-    {
+        children: websiteRouterPermission,
+
+    });
+}
+if (websiteManagerPermission.length !== 0) {
+    levelOne.push({
         path: "/WebsiteManagement",
-        redirect: "/WebsiteManagement/myWebsite",
+        redirect: `/WebsiteManagement/${websiteManagerPermission[0].path}`,
+        // redirect: "/WebsiteManagement/myWebsite",
         name: "网站管理",
         components: {
             header: HeaderComponent,
@@ -103,66 +98,91 @@ export const entry: RouteConfig[] = [
         },
         props: {
             sider: {
-                menus: WebsiteManageRouter
+                menus: websiteManagerPermission
             }
         },
         meta: {
             hidden: false,
             permission: "WebsiteManagement"
         },
-        children: WebsiteManageRouter
-    },
-    {
-        path: "/ReportManagement",
-        name: "统计报告",
-        redirect: "/ReportManagement/MyReport",
-        components: {
-            header: HeaderComponent,
-            sider: SiderComponent,
-            main: ViewContainer
+        children: websiteManagerPermission,
+    });
+}
+if (CountReportRouterPermission.length !== 0) {
+    levelOne.push(
+        {
+            path: "/ReportManagement",
+            name: "统计报告",
+            redirect: `/ReportManagement/${CountReportRouterPermission[0].path}`,
+            // redirect: "/ReportManagement/MyReport",
+            components: {
+                header: HeaderComponent,
+                sider: SiderComponent,
+                main: ViewContainer
+            },
+            props: {
+                sider: {
+                    menus: CountReportRouterPermission
+                }
+            },
+            meta: {
+                permission: "ReportManagement"
+            },
+            children: CountReportRouterPermission,
         },
-        props: {
-            sider: {
-                menus: CountReportRouter
+    );
+}
+
+if (systemRouterPermission.length !== 0) {
+    levelOne.push(
+        {
+            path: "/SystemManagement",
+            redirect: `/SystemManagement/${systemRouterPermission[0].path}`,
+            // redirect: "/SystemManagement/UserManagement",
+            name: "系统管理",
+            components: {
+                header: HeaderComponent,
+                sider: SiderComponent,
+                main: ViewContainer
+            },
+            props: {
+                sider: {
+                    menus: systemRouterPermission
+                }
+            },
+            children: systemRouterPermission,
+            meta: {
+                permission: "SystemManagement"
             }
         },
-        meta: {
-            permission: "ReportManagement"
+    );
+}
+if (userCenterRouterPermission.length !== 0) {
+    levelOne.push(
+        {
+            path: "/usercenter",
+            redirect: `/usercenter/${userCenterRouterPermission[0].path}`,
+            // redirect: "/usercenter/PersonalMessage",
+            name: "个人中心",
+            components: {
+                header: HeaderComponent,
+                sider: SiderComponent,
+                main: ViewContainer
+            },
+            meta: {
+                hidden: true,
+                permission: "Personal"
+            },
+            props: {
+                sider: {
+                    menus: userCenterRouterPermission
+                }
+            },
+            children: userCenterRouterPermission
         },
-        children: CountReportRouter
-    },
-    {
-        path: "/MochaITOM",
-        name: "运维管理",
-        components: {
-            header: HeaderComponent,
-            sider: SiderComponent,
-            main: ViewContainer
-        },
-        meta: {
-            permission: "",
-            hidden: true
-        }
-    },
-    {
-        path: "/SystemManagement",
-        redirect: "/SystemManagement/UserManagement",
-        name: "系统管理",
-        components: {
-            header: HeaderComponent,
-            sider: SiderComponent,
-            main: ViewContainer
-        },
-        props: {
-            sider: {
-                menus: systemRouter
-            }
-        },
-        children: systemRouter,
-        meta: {
-            permission: "SystemManagement"
-        }
-    },
+    );
+}
+levelOne.push(
     {
         path: "/SituationalAwareness",
         name: "态势感知",
@@ -175,25 +195,39 @@ export const entry: RouteConfig[] = [
             permission: "SituationalAwareness"
         }
     },
+);
+// [
+    // {
+    //     path: "/MochaITOM",
+    //     name: "运维管理",
+    //     components: {
+    //         header: HeaderComponent,
+    //         sider: SiderComponent,
+    //         main: ViewContainer
+    //     },
+    //     meta: {
+    //         permission: "",
+    //         hidden: true
+    //     }
+    // },
+// ];
+const levelOnePermission = new DynamicRoute(levelOne).getRoute();
+export const entry: RouteConfig[] = levelOnePermission.concat([
     {
-        path: "/usercenter",
-        redirect: "/usercenter/PersonalMessage",
-        name: "个人中心",
-        components: {
-            header: HeaderComponent,
-            sider: SiderComponent,
-            main: ViewContainer
-        },
+        path: "/",
+        redirect: `${levelOnePermission[0].path}`,
         meta: {
             hidden: true,
-            permission: "Personal"
+            permission: ""
         },
-        props: {
-            sider: {
-                menus: userCenterRouter
-            }
+    },
+    {
+        path: "/login",
+        meta: {
+            hidden: true,
+            permission: ""
         },
-        children: userCenterRouter,
+        component: Login
     },
     {
         path: "/report",
@@ -241,7 +275,7 @@ export const entry: RouteConfig[] = [
             main: NotFound
         },
     },
-];
+]);
 
 
 
@@ -253,18 +287,12 @@ entryRouter.beforeEach((
     to: Route,
     from: Route,
     next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
-    // if (Permissions.judge(to.meta.permission)) {
-    //     next();
-    //     return;
-    // } else {
-    //     for (let item of entry) {
-    //         if (Permissions.judge(item.meta.permission)) {
-    //             next(item.path);
-    //             break;
-    //         }
-    //     }
-    // }
-    next();
+        // console.log("222222");
+    if (Permissions.judge(to.meta.permission)) {
+        next();
+    } else {
+        next("/403");
+    }
 });
 
 

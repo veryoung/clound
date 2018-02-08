@@ -13,6 +13,7 @@ export const WebsiteAnalysisRouter: RouteConfig[] = [
         name: "网站总览",
         meta: {
             icon: "icon-yonghuguanli",
+            permission: "WebsiteAnalysis.WebOverview"
         },
         component: WebsitePandect
     },
@@ -41,7 +42,8 @@ export const WebsiteAnalysisRouter: RouteConfig[] = [
         name: "攻击详情",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "AttackLog.AttackDetails"
         },
         props: {
             operation: "look"
