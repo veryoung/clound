@@ -1,30 +1,32 @@
 <div class="notice-common-detail">
     <div class="panel">
         <ModuleTitle :titles="['邮件详情']" />
-        <ul>
-            <li>
-                <div class="label">标题:</div>
-                <div class="message">{{ EmailNoticeInfo.object |none }}</div>
-            </li>
-            <li>
+        <div class="detail-title common-detail">
+            <div class="message">{{ EmailNoticeInfo.object |none }}</div>
+        </div>
+        <div class="detail-box common-detail">
+            <div class="box-detail">
                 <div class="label">收件人:</div>
-                <div class="message">{{ EmailNoticeInfo.receiver|none }}</div>
-            </li>
-            <li>
+                <div class="message">{{ EmailNoticeInfo.receiver|none}}</div>
+            </div>
+            <div class="box-detail">
+                <div class="label">发送方式:</div>
+                <div class="message">{{EmailNoticeInfo.send_type |send_type | none}}</div>
+            </div>
+            <div class="box-detail">
                 <div class="label">发件人:</div>
                 <div class="message">{{ EmailNoticeInfo.sender |none}}</div>
-            </li>
-            <li>
+            </div>
+            <div class="box-detail">
                 <div class="label">发送状态:</div>
-                <div class="message">{{ EmailNoticeInfo.status |status | none}}</div>
-            </li>
-            <li>
-                <div class="label">邮件内容:</div>
-                <div class="message" v-html="EmailNoticeInfo.content"></div>
-            </li>
-            <li>
-                <el-button @click="back()">返回</el-button>
-            </li>
-        </ul>
+                <div class="message">{{EmailNoticeInfo.status |status | none}}</div>
+            </div>
+        </div>
+        <div class="detail-content common-detail">
+            <div class="content" v-html="EmailNoticeInfo.content"></div>
+        </div>
+        <div class="detail-btn">
+            <el-button @click="back()">返回</el-button>
+        </div>
     </div>
 </div>

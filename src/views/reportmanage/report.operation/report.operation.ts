@@ -78,19 +78,18 @@ export class ReportOperation extends DiplomaBaseClass {
     // 表单验证
     public rules: FormRuleType = {
         name: [
-            { required: true, message: "请填写网站名称", trigger: "blur" },
+            { required: true, message: "请填写模板名称", trigger: "blur" },
             { min: 2, max: 15, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
         ],
-        domain: [
-            { required: true, message: "请添加网站域名", trigger: "blur" },
-        ],
-
     };
 
 
 
     // init lifecircle hook
     created() {
+        this.titles = this.operation === "add" ? ["添加模板"] : ["编辑模板"];
+        let that = this;
+        let id = this.$route.params.id;
 
     }
 

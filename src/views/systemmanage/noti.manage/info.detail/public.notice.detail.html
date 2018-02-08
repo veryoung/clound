@@ -1,12 +1,12 @@
 <div class="notice-common-detail">
     <div class="panel">
         <ModuleTitle :titles="['公告详情']" />
-        <div class="detail-title">
+        <div class="public-title common-detail">
             <div class="title">{{ PublicNoticeInfo.title |none }}</div>
             <div class="time">发送时间:</div>
             <div class="date">{{ PublicNoticeInfo.ctime | datetime |none}}</div>
         </div>
-        <div class="detail-content">
+        <div class="detail-content common-detail">
             <div class="content" v-html="PublicNoticeInfo.content"></div>
         </div>
         <div class="detail-btn">

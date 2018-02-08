@@ -125,22 +125,20 @@ export class ReportTemplate extends ListBaseClass {
     }
 
     sortChange(opt: any) {
-        
+
     }
 
 
     // 跳转方法同统一
-    handle(type: "look" | "add" | "editor" | "settings" | "del", rowObj?: any) {
+    handle(type: "run" | "add" | "editor" | "del", rowObj?: any) {
         if (rowObj) {
             const { $index, row } = rowObj;
             if (type === "editor") {
-                this.$router.push(`/WebsiteManagement/myWebsite/editor/${row.id}`);
-            } else if (type === "settings") {
-                this.$router.push(`/WebsiteManagement/myWebsite/settings/${row.id}`);
-            } else if (type === "look") {
-                this.$router.push(`/ReportManagement/RreviewReport/${row.id}`);
+                this.$router.push(`/ReportManagement/ReportTemplate/editor/${row.id}`);
+            } else if (type === "run") {
+                this.$router.push(`/ReportManagement/ReportTemplate/${row.id}`);
             } else if (type === "del") {
-                ReportTemplateController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+                ReportTemplateController.handleDel(row, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
             }
             return;
         }

@@ -24,18 +24,18 @@ class Report extends Restful {
         indicators: Array<string>;
         name: string;
     }) {
-        return this.del({
+        return this.post({
             url: `/api/v20/report/`,
             params: opt
         });
     }
 
-    public DelReport(opt: {
-        id?: string;
-    }) {
+    public DelReport(id: string) {
         return this.del({
             url: `/api/v20/report/`,
-            params: opt
+            params: {
+                id: id
+            }
         });
     }
 
