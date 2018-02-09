@@ -143,22 +143,22 @@ export const PermissionsSet: string[] = [
     /************************网站分析************************/
     // # 分析
     // ## 网站总览
-    "WebsiteAnalysis.WebOverview.SecurityRating", // 安全评级
-    "WebsiteAnalysis.WebOverview.TrendOfAttack", // 攻击次数趋势
-    "WebsiteAnalysis.WebOverview.AttackTypeDistribution", // 攻击类型分布
-    "WebsiteAnalysis.WebOverview.AttackSourceRegionTOP10", // 攻击源地域TOP10
-    "WebsiteAnalysis.WebOverview.AttackIPTOP10", // 攻击IPTOP10
-    "WebsiteAnalysis.WebOverview.AccessTrafficTrend", // 访问流量趋势
-    "WebsiteAnalysis.WebOverview.AccessTimesTrend", // 访问次数趋势
-    "WebsiteAnalysis.WebOverview.AccessIPTrend", // IP访问次数趋势
-    "WebsiteAnalysis.WebOverview.regionalVisitsTOP10", // 地域访问次数TOP10
-    "WebsiteAnalysis.WebOverview.SiteTrafficTOP10", // 地域网站流量TOP10
+    "WebsiteAnalysis.WebsitePandect.level", // 安全评级
+    "WebsiteAnalysis.WebsitePandect.tendency_attack", // 攻击次数趋势
+    "WebsiteAnalysis.WebsitePandect.type_attack", // 攻击类型分布
+    "WebsiteAnalysis.WebsitePandect.sourceTop10_attack", // 攻击源地域TOP10
+    "WebsiteAnalysis.WebsitePandect.ipTop10_attack", // 攻击IPTOP10
+    "WebsiteAnalysis.WebsitePandect.tendency_reqwebsite", // 访问流量趋势
+    "WebsiteAnalysis.WebsitePandect.tendency_reqtime", // 访问次数趋势
+    "WebsiteAnalysis.WebsitePandect.tendency_iptime", // IP访问次数趋势
+    "WebsiteAnalysis.WebsitePandect.reqtimeTop10_source", // 地域访问次数TOP10
+    "WebsiteAnalysis.WebsitePandect.websiteTop10_source", // 地域网站流量TOP10
     /************************攻击日志************************/
     // # 攻击日志
-    "AttackLog.Check", // 查看
-    "AttackLog.ExportSelection", // 导出选中
-    "AttackLog.ExportAll", // 导出所有
-    "AttackLog.AttackDetails", // 攻击详情
+    "WebsiteAnalysis.AttackLog.Check", // 查看
+    "WebsiteAnalysis.AttackLog.ExportSelection", // 导出选中
+    "WebsiteAnalysis.AttackLog.ExportAll", // 导出所有
+    "WebsiteAnalysis.AttackLog.attck_detail", // 攻击详情
     /************************报告管理************************/
     // # 报告管理
     // ## 我的报告
