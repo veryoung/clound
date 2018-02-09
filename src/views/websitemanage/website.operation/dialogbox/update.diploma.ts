@@ -91,11 +91,7 @@ export class UpdateDiploma extends Vue {
                 this.Keytemp.submit();
                 break;
             case "error":
-                this.$notify({
-                    title: "提示",
-                    message: "导入证书失败",
-                    type: "error"
-                });
+
                 this.Crttemp.clearFiles();
                 break;
             default:
@@ -117,11 +113,7 @@ export class UpdateDiploma extends Vue {
                 this.$emit("close", false);
                 break;
             case "error":
-                this.$notify({
-                    title: "提示",
-                    message: "导入证书失败",
-                    type: "error"
-                });
+
                 let temp: any = this.$refs.Crtupload;
                 temp.clearFiles();
                 break;

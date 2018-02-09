@@ -110,11 +110,7 @@ export class MessageNoiceOperation extends Vue {
                         this.$router.push("/SystemManagement/ReportManagement/messagenotice");
                         break;
                     case "error":
-                        this.$notify({
-                            title: "提示",
-                            message: res.message || "短信填写失败",
-                            type: "error"
-                        });
+        
                         break;
                     default:
                         break;

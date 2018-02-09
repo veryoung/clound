@@ -134,11 +134,7 @@ export class PublicNotice extends ListBaseClass {
                     }
                 });
             }).catch(() => {
-                this.$notify({
-                    title: "提示",
-                    type: "info",
-                    message: "已取消删除"
-                });
+  
             });
         } else {
             if (this.ids.length === 0) {
@@ -169,11 +165,7 @@ export class PublicNotice extends ListBaseClass {
                         }
                     });
                 }).catch(() => {
-                    this.$notify({
-                        title: "提示",
-                        type: "info",
-                        message: "已取消删除"
-                    });
+
                 });
             }
         }

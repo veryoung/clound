@@ -113,11 +113,6 @@ export class EmailNoiceOperation extends Vue {
                         this.$router.push("/SystemManagement/ReportManagement/emaillnotice");
                         break;
                     case "error":
-                        this.$notify({
-                            title: "提示",
-                            message: res.message || "邮件填写失败",
-                            type: "error"
-                        });
                         break;
                     default:
                         break;

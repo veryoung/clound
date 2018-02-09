@@ -134,11 +134,7 @@ export class EmailsNotice extends ListBaseClass {
                     }
                 });
             }).catch(() => {
-                this.$notify({
-                    title: "提示",
-                    type: "info",
-                    message: "已取消删除"
-                });
+              
             });
         } else {
             console.log(this.ids);
@@ -170,11 +166,7 @@ export class EmailsNotice extends ListBaseClass {
                         }
                     });
                 }).catch(() => {
-                    this.$notify({
-                        title: "提示",
-                        type: "info",
-                        message: "已取消删除"
-                    });
+                  
                 });
             }
         }
