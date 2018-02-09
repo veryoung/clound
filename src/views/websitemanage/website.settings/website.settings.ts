@@ -331,13 +331,6 @@ export class WebsiteSettings extends DiplomaBaseClass {
                             message: text + "成功!"
                         });
                         break;
-                    case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message
-                        });
-                        break;
                 }
             });
         }).catch(() => {
@@ -381,13 +374,6 @@ export class WebsiteSettings extends DiplomaBaseClass {
                             title: "提示",
                             type: "success",
                             message: text + "成功!"
-                        });
-                        break;
-                    case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message
                         });
                         break;
                 }
@@ -435,13 +421,6 @@ export class WebsiteSettings extends DiplomaBaseClass {
                             message: text + "成功!"
                         });
                         break;
-                    case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message
-                        });
-                        break;
                 }
             });
         }).catch(() => {
@@ -486,13 +465,6 @@ export class WebsiteSettings extends DiplomaBaseClass {
                             title: "提示",
                             type: "success",
                             message: text + "成功!"
-                        });
-                        break;
-                    case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message
                         });
                         break;
                 }

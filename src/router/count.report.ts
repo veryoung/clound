@@ -40,6 +40,22 @@ export const CountReportRouter: RouteConfig[] = [
         name: "添加模板",
         meta: {
             icon: "icon-yonghuguanli",
+            hidden: true
+        },
+        props: {
+            operation: "add"
+        },
+        component: ReportOperation,
+    },
+    {
+        path: "ReportTemplate/editor/:id",
+        name: "编辑模板",
+        meta: {
+            icon: "icon-yonghuguanli",
+            hidden: true
+        },
+        props: {
+            operation: "editor"
         },
         component: ReportOperation,
     }

@@ -11,6 +11,7 @@ import { NOTICEEVENT } from "@store/notice.type";
 
 const Aux = new Auxiliary<string>();
 require("./common.detail.styl");
+require("./message.notice.detail.styl");
 @Component({
     name: "messagenoticedeatil",
     template: require("./message.notice.detail.html"),

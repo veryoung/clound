@@ -1,68 +1,68 @@
 <div class="report-template">
-        <div class="form-part">
-            <ModuleTitle :titles="titles" />
-            <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
-                <el-form-item label="模板名称">
-                    <el-input v-model="filter.name" placeholder="请输入报告名称"></el-input>
-                </el-form-item>
-                <el-form-item label="统计周期">
-                        <el-select v-model="filter.count_cycle" placeholder="状态" size="small">
-                            <el-option label="全部" value=""></el-option>
-                            <el-option label="日报"  value="0"></el-option>
-                            <el-option label="周报" value="1"></el-option>
-                            <el-option label="月报" value="2"></el-option>
-                            <el-option label="自定义" value="3"></el-option>
-                        </el-select>
-                    </el-form-item>
-                <el-form-item label="统计范围">
-                    <el-select v-model="filter.count_range" filterable remote clearable reserve-keyword placeholder="请输入关键词" :remote-method="remoteMethod"
-                        :loading="loading">
-                        <el-tooltip  v-for="item in options4" :key="item.value" class="item" effect="dark"  placement="bottom-end">
-                             <p  style="height:10px;"slot="content" class="tooltip-content">{{item.value}}</p>
-                            <el-option :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-tooltip>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="添加时间">
-                    <el-date-picker v-model="filter.create_time" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
-                        end-placeholder="结束日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="执行状态">
-                        <el-select v-model="filter.run_status" placeholder="请选择执行状态" size="small">
-                            <el-option label="全部" value=""></el-option>
-                            <el-option label="未执行" value="0"></el-option>
-                            <el-option label="执行中" value="1"></el-option>
-                        </el-select>
-                    </el-form-item>
-                <el-form-item>
-                    <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-                    <el-button size="small" @click="reset">重置</el-button>
-                </el-form-item>
-            </el-form>
-            <div class="btn-group">
-                <div>
-                    <div class="btn-first">
-                        <el-button  type="primary" @click="handle('add')" size="small">
-                            <span class="iconfont">&#xe61a;</span>
-                            添加
-                        </el-button>
-                    </div>
-                </div>
-                <div class="btn-last">
-                    <SetCol moduleName="reporttemplatetable" />
+    <div class="form-part">
+        <ModuleTitle :titles="titles" />
+        <el-form :inline="true" :model="filter" class="demo-form-inline" label-width="80px" size="small">
+            <el-form-item label="模板名称">
+                <el-input v-model="filter.name" placeholder="请输入报告名称"></el-input>
+            </el-form-item>
+            <el-form-item label="统计周期">
+                <el-select v-model="filter.count_cycle" placeholder="状态" size="small">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="日报" value="day"></el-option>
+                    <el-option label="周报" value="week"></el-option>
+                    <el-option label="月报" value="month"></el-option>
+                    <el-option label="自定义" value="custom"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="统计范围">
+                <el-select v-model="filter.count_range" filterable remote clearable reserve-keyword placeholder="请输入关键词" :remote-method="remoteMethod"
+                    :loading="loading">
+                    <el-tooltip v-for="item in options4" :key="item.value" class="item" effect="dark" placement="bottom-end">
+                        <p style="height:10px;" slot="content" class="tooltip-content">{{item.value}}</p>
+                        <el-option :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-tooltip>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="添加时间">
+                <el-date-picker v-model="filter.create_time" type="daterange" value-format="yyyyMMdd" range-separator="至" start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="执行状态">
+                <el-select v-model="filter.run_status" placeholder="请选择执行状态" size="small">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="未执行" value="0"></el-option>
+                    <el-option label="执行中" value="1"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item style="padding-left:0px;text-align:left;">
+                <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+                <el-button size="small" @click="reset">重置</el-button>
+            </el-form-item>
+        </el-form>
+        <div class="btn-group">
+            <div>
+                <div class="btn-first">
+                    <el-button type="primary" @click="handle('add')" size="small">
+                        <span class="iconfont">&#xe61a;</span>
+                        添加
+                    </el-button>
                 </div>
             </div>
-            <CloudTable moduleName="reporttemplatetable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
-                 @sortChange="sortChange">
-                <el-table-column label="操作" align="center" width="180px">
-                    <template slot-scope="scope">
-                        <i title="查看" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;查看</i>
-                        <i title="下载" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;下载</i>
-                        <i title="删除" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;删除</i>
-                    </template>
-                </el-table-column>
-            </CloudTable>
+            <div class="btn-last">
+                <SetCol moduleName="reporttemplatetable" />
+            </div>
         </div>
+        <CloudTable moduleName="reporttemplatetable" :datas="tableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+            @sortChange="sortChange">
+            <el-table-column label="操作" align="center" width="180px">
+                <template slot-scope="scope">
+                    <i title="生成报告" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('run',{$index:scope.$index, row:scope.row})">生成报告</i>
+                    <i title="编辑" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">编辑</i>
+                    <i title="删除" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">删除</i>
+                </template>
+            </el-table-column>
+        </CloudTable>
     </div>
+</div>

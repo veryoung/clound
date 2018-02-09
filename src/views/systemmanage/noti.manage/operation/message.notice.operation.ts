@@ -107,7 +107,7 @@ export class MessageNoiceOperation extends Vue {
                             message: "短信填写成功",
                             type: "success"
                         });
-                        this.$router.push("/SystemManagement/ReportManagement/emaillnotice");
+                        this.$router.push("/SystemManagement/ReportManagement/messagenotice");
                         break;
                     case "error":
                         this.$notify({

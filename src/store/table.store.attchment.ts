@@ -365,7 +365,7 @@ export const systemTable: TableConfigType = {
                 prop: "status",
                 show: true,
                 disable: true,
-                type: "notice_status",
+                type: "status",
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],
@@ -418,7 +418,7 @@ export const systemTable: TableConfigType = {
                 prop: "status",
                 label: "发送状态",
                 show: true,
-                type: "notice_status",
+                type: "status",
                 disable: true,
             },
         ],
@@ -429,6 +429,45 @@ export const systemTable: TableConfigType = {
     },
     // 最新公告通知列表
     "noticetable": {
+        columns: [
+            {
+                label: "id",
+                prop: "id",
+                show: false,
+                disable: true,
+                nonexit: true
+            },
+            {
+                label: "公告标题",
+                prop: "title",
+                show: true,
+                disable: true,
+            },
+            // {
+            //     label: "公告内容",
+            //     prop: "content",
+            //     show: true,
+            //     type: "htmlData",
+            //     disable: true,
+            // },
+            {
+                label: "发布人",
+                prop: "cperson",
+                show: true,
+            },
+            {
+                label: "发布时间",
+                prop: "ctime",
+                show: true,
+                type: "dateTime"
+            },
+        ],
+        pageSizes: [10, 20, 30, 40, 50],
+        page_size: 10,
+        page: 1,
+        total: 1
+    },
+    "publicnoticeTable": {
         columns: [
             {
                 label: "id",
@@ -525,23 +564,26 @@ export const systemTable: TableConfigType = {
             },
             {
                 label: "统计周期",
-                prop: "count_cycle",
+                prop: "cycle",
                 show: true,
+                type: "cycle",
             },
             {
                 label: "统计范围",
-                prop: "count_range",
+                prop: "domain_names",
                 show: true,
             },
             {
                 label: "添加时间",
                 prop: "create_time",
                 show: true,
+                type: "dateTime"
             },
             {
                 label: "执行状态",
-                prop: "run_status",
+                prop: "status",
                 show: true,
+                type: "status",
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],

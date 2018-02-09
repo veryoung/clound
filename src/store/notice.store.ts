@@ -69,6 +69,16 @@ export const NoticeStore: Module<NoticeType, any> = {
                     }
                 ]
             },
+            publicnoticeTable: {
+                "": [
+                    {
+                        c_person: "",
+                        c_time: "",
+                        content: "",
+                        title: "",
+                    }
+                ]
+            },
             noticeDetail: {
                 "": [{
                     content: "",
@@ -104,6 +114,12 @@ export const NoticeStore: Module<NoticeType, any> = {
                 state.noticeTable[Math.floor(payload.page) - 1] = [];
             }
             state.noticeTable[Math.floor(payload.page) - 1] = [].concat(payload.message);
+        },
+        [NOTICEEVENT.GETPUBlICGETNOTICELIST]: (state, payload) => {
+            if (!state.publicnoticeTable[Math.floor(payload.page) - 1]) {
+                state.publicnoticeTable[Math.floor(payload.page) - 1] = [];
+            }
+            state.publicnoticeTable[Math.floor(payload.page) - 1] = [].concat(payload.message);
         },
         [NOTICEEVENT.GETNOTICEDETAIL]: (state, payload) => {
             state.noticeDetail[payload.id] = payload.message;
@@ -168,7 +184,7 @@ export const NoticeStore: Module<NoticeType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETMSGDETAIL, { id: payload.id, message: res.data});
+                        commit(NOTICEEVENT.GETMSGDETAIL, { id: payload.id, message: res.data });
                         EventBus.doNotify(CONSTANT.GETMSGDETAIL);
                         break;
                     default:
@@ -201,9 +217,26 @@ export const NoticeStore: Module<NoticeType, any> = {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
-                        commit(NOTICEEVENT.GETNOTICELIST, { page: payload.page, message: res.data.data });
-                        Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "noticetable", total: res.data.total });
-                        EventBus.doNotify(CONSTANT.GETNOTICELIST);
+                            commit(NOTICEEVENT.GETNOTICELIST, { page: payload.page, message: res.data.data });
+                            Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "noticetable", total: res.data.total });
+                            EventBus.doNotify(CONSTANT.GETNOTICELIST);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        },
+        [NOTICEEVENT.GETPUBlICGETNOTICELIST]: ({ state, commit, rootState }, payload) => {
+            if ((Math.floor(payload.page) - 1) in state.msgTable) {
+                EventBus.doNotify(CONSTANT.GETPUBlICGETNOTICELIST);
+            }
+            NoticeServer.getNotice(payload).then().then((response: AxiosResponse<ResType>) => {
+                let res: ResType = response.data;
+                switch (res.status) {
+                    case "suc":
+                            commit(NOTICEEVENT.GETPUBlICGETNOTICELIST, { page: payload.page, message: res.data.data });
+                            Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "publicnoticeTable", total: res.data.total });
+                            EventBus.doNotify(CONSTANT.GETPUBlICGETNOTICELIST);
                         break;
                     default:
                         break;
@@ -229,6 +262,9 @@ export const NoticeStore: Module<NoticeType, any> = {
         },
         "noticeTable": (state) => {
             return state.noticeTable;
+        },
+        "publicnoticeTable": (state) => {
+            return state.publicnoticeTable;
         }
     }
 };

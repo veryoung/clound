@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios";
 import { ResType } from "server";
 import { MywebsiteServer } from "@server/mywebsite";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
+import { ReportService } from "@server/report";
 
 
 export default interface ReportTemplateSearchType {
@@ -12,7 +13,6 @@ export default interface ReportTemplateSearchType {
     run_status: string;
     create_time: Array<string>;
     count_range: string;
-    id: string;
 }
 
 export const filterData: ReportTemplateSearchType = {
@@ -21,22 +21,21 @@ export const filterData: ReportTemplateSearchType = {
     run_status: "",
     create_time: ["", ""],
     count_range: "",
-    id: ""
 };
 
 export interface ReportTemplateColumnType {
-    name: string;
-    count_cycle: string;
-    run_status: string;
-    create_time: Array<string>;
-    count_range: string;
+    create_time: string;
+    cycle: string;
+    domain_names: string;
     id: string;
+    name: string;
+    status: boolean;
 }
 
 export class ReportTemplateManager {
-    handleDel(row: ReportTemplateSearchType, opt: any) {
-        ElementUI.MessageBox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
-            MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
+    handleDel(row: ReportTemplateColumnType, opt: any) {
+        ElementUI.MessageBox.confirm("确认删除所选报告模板？？", "提示").then(() => {
+            ReportService.DelReport(row.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
