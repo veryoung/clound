@@ -10,8 +10,8 @@ import { UserStatus } from "@utils/monitor";
 import { FooterComponent } from "@components/layout/footer/footer";
 import { BaseLibrary } from "@views/base/base.class";
 import { User } from "@server/user";
-import { Permissions } from "@directives/permissions";
-import { ROUTEREVENT } from "@store/router.type";
+import { mapGetters } from "vuex";
+import { RouteConfig } from "vue-router";
 
 
 
@@ -26,12 +26,17 @@ const form_frame = require("src/resource/images/login_line.png");
     template: require("./login.html"),
     components: {
         FooterComponent
+    },
+    computed: {
+        ...mapGetters([
+            "newRouter"
+        ])
     }
 })
 export class Login extends BaseLibrary {
+    // init computed 
+    public newRouter: RouteConfig[];
     // init data
-    // public : string = "src/resource/images/logo.png";
-    // public portal_logo:string = "";
     public form: {
         username: string;
         pwd: string;
@@ -48,9 +53,6 @@ export class Login extends BaseLibrary {
 
     // lifecircle hook
     created() {
-        new UserStatus(() => {
-            this.$router.go(-1);
-        });
         this.changeCode();
     }
 
@@ -75,21 +77,13 @@ export class Login extends BaseLibrary {
     }
 
     // init methods
-    // go() {
-    //     for (let item of entry) {
-    //         if (Permissions.judge(item.meta.permission)) {
-    //             this.$router.push(item.path);
-    //             break;
-    //         }
-    //     }
-    // }
     onSubmit() {
         GeneralServer.login(this.form).then((response: AxiosResponse<ResType>) => {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
                     new UserStatus(() => {
-                        this.$router.push("/");
+                        this.$router.push(this.newRouter[0].path);
                     });
                     break;
                 case "error":

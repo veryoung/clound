@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import ElementUI from "element-ui";
 import { entryRouter } from "@router/index";
+import { session } from "@utils/index";
 
 export default axios;
 
@@ -69,7 +70,10 @@ axios.interceptors.response.use((response): AxiosResponse<ResType> => {
             ElementUI.Notification.error(res.message);
             break;
         case "red":
-            entryRouter.replace("/login");
+            if (window.location.hash.indexOf("/login") === -1) {
+                window.location.reload();
+            }
+            entryRouter.push("/login");
             break;
     }
     return response;

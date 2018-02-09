@@ -21,7 +21,6 @@ export class UserStatus {
                     Store.dispatch(USER.DEFAULTCONFIG, res.data);
                     Store.dispatch(USER.DEFAULTUSER, { uid: res.data.uid });
                     Store.dispatch(ROUTEREVENT.FILTERROUTER);
-                    console.log(entryRouter);
                     if (callback && typeof callback === "function") {
                         callback();
                     }

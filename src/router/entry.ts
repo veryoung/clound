@@ -97,11 +97,8 @@ export const asyncRouter: RouteConfig[] = [
         redirect: "/SystemManagement/UserManagement",
         name: "系统管理",
         components: {
-            // HeaderComponent
             header: HeaderComponent,
-            // SiderComponent
             sider: SiderComponent,
-            // ViewContainer
             main: ViewContainer
         },
         props: {

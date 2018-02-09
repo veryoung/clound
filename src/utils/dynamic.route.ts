@@ -1,6 +1,7 @@
 import { RouteConfig } from "vue-router/types/router";
 import { Permissions } from "@directives/permissions";
 import { session } from "@utils/sessionstorage";
+const _ = require("lodash");
 
 export class DynamicRoute {
     private targetRoute: RouteConfig[] = [];
@@ -30,7 +31,6 @@ export class DynamicRoute {
             } catch (error) {
                 console.warn(error);
             }
-
         }
     }
 

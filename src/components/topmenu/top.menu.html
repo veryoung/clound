@@ -2,9 +2,9 @@
     <ul class="nav-menu">
         <router-link 
         active-class="active" 
-        v-for="(item, $index) in entryRouter" 
+        v-for="(item, $index) in routerStore" 
         :key="$index" 
-        :to=item.path 
+        :to="item.path" 
         replace tag="li" 
         v-if="item.meta&&!item.meta.hidden"
         v-permissions="item.meta.permission"
@@ -13,4 +13,3 @@
         </router-link>
     </ul>
 </div>
-<!-- v-permissions="item.meta.permission" -->

@@ -5,6 +5,7 @@ import { ROUTEREVENT } from "@store/router.type";
 import { DynamicRoute } from "@utils/dynamic.route";
 import { EventBus, CONSTANT } from "@utils/event";
 import { entryRouter } from "@router/index";
+const _ = require("lodash");
 
 
 
@@ -22,16 +23,25 @@ export const RouterStore: Module<{ asyncRouter: RouteConfig[], newRouter: RouteC
         [ROUTEREVENT.FILTERROUTER]: (state: { asyncRouter: RouteConfig[], newRouter: RouteConfig[] }, payload) => {
             state.asyncRouter = payload.asyncRouter;
             state.newRouter = payload.newRouter;
+            EventBus.doNotify(CONSTANT.FILTERROUTER);
+            // , { route: payload.route }
         },
     },
     actions: {
-        [ROUTEREVENT.FILTERROUTER]: ({ state, commit, rootState }) => {
-            let temp: RouteConfig[] = Object.assign([], asyncRouter);
-            let newRouter: RouteConfig[] = Object.assign([], new DynamicRoute(temp).getRoute());
-            EventBus.doNotify(CONSTANT.FILTERROUTER);
+        [ROUTEREVENT.FILTERROUTER]: ({ state, commit, rootState }, payload) => {
+            if (state.newRouter.length > 0) {
+                EventBus.doNotify(CONSTANT.FILTERROUTER);
+                // , { type: "normal", route: payload }
+                return false;
+            }
+            let asyncRouter2: RouteConfig[] = _.cloneDeep(asyncRouter);
+            let newRouter: RouteConfig[] = new DynamicRoute(asyncRouter2).getRoute();
+            let filterRouter: RouteConfig[] = newRouter.concat(staticRouter);
+            entryRouter.addRoutes(newRouter);
             commit(ROUTEREVENT.FILTERROUTER, {
-                asyncRouter: Object.assign([], newRouter.concat(staticRouter)),
-                newRouter: newRouter
+                asyncRouter: filterRouter,
+                newRouter: newRouter,
+                // type: payload.type
             });
         },
     },

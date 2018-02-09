@@ -1,9 +1,7 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { RouteConfig } from "vue-router";
 import { mapGetters } from "vuex";
-import { UserStatus } from "@utils/monitor";
-import { EventBus, CONSTANT } from "@utils/event";
+import { BaseLibrary } from "@views/base/base.class";
 
 require("./top.menu.styl");
 @Component({
@@ -16,7 +14,7 @@ require("./top.menu.styl");
         ])
     }
 })
-export class TopMenu extends Vue {
+export class TopMenu extends BaseLibrary {
     // init computed
     public routerStore: RouteConfig[];
     public newRouter: RouteConfig[];
@@ -25,12 +23,8 @@ export class TopMenu extends Vue {
     // init lifecircle
     created() {
         let that = this;
-        new UserStatus();
-        EventBus.register(CONSTANT.FILTERROUTER, () => {
+        this.EventBus.register(this.CONSTANT.FILTERROUTER, () => {
             that.entryRouter = that.routerStore;
-            console.log(that.newRouter);
-            that.$router.addRoutes(that.newRouter);
         });
-
     }
 }

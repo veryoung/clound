@@ -10,12 +10,12 @@ import { ResType } from "@server/index";
 import { UserCenterType, USER, DefaultUserType } from "@store/user.center.type";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
-import { UserStatus } from "@utils/monitor";
 import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
 import { ListBaseClass } from "@views/base/base.class";
 import { TableConfigType } from "@store/table.type";
 import * as moment from "moment";
+import { session } from "@utils/index";
 
 
 
@@ -78,11 +78,9 @@ export class UserMenu extends ListBaseClass {
             let res: ResType = response.data;
             switch (res.status) {
                 case "suc":
-                    if (process.env.PLATFORM === "portal") {
-                        this.$router.replace("/portal");
-                    } else {
-                        this.$router.replace("/login");
-                    }
+                    this.$router.push("/login");
+                    session.removeItem("pcode");
+                    window.location.reload();
                     break;
                 default:
                     break;
