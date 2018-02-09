@@ -88,11 +88,7 @@ export class DenfenFrame extends Vue {
                     this.cancel();
                     break;
                 case "error":
-                    this.$notify({
-                        title: "提示",
-                        type: "error",
-                        message: res.message
-                    });
+      
                     break;
                 case "red":
                     break;

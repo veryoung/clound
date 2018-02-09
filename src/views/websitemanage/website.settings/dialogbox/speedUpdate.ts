@@ -66,20 +66,12 @@ export class SpeedUpdateFrame extends DiplomaBaseClass {
                         this.cancel();
                         break;
                     case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message
-                        });
+    
                         break;
                 }
             });
         }).catch(() => {
-            this.$notify({
-                title: "提示",
-                type: "info",
-                message: "已取消刷新"
-            });
+
         });
     }
 

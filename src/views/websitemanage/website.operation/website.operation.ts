@@ -378,11 +378,7 @@ export class WebsiteOperation extends Vue {
                                 this.$router.push("/WebsiteManagement/myWebsite");
                                 break;
                             case "error":
-                                this.$notify({
-                                    title: "提示",
-                                    message: res.message,
-                                    type: "error"
-                                });
+   
                                 break;
                             default:
                                 break;

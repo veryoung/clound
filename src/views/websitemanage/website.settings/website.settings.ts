@@ -155,18 +155,8 @@ export class WebsiteSettings extends DiplomaBaseClass {
                         });
                         break;
                     case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message || "更新失败"
-                        });
                         break;
                     case "red":
-                        this.$notify({
-                            title: "提示",
-                            type: "info",
-                            message: res.message
-                        });
                         break;
                 }
 
@@ -205,28 +195,15 @@ export class WebsiteSettings extends DiplomaBaseClass {
                         });
                         break;
                     case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message || "更新失败"
-                        });
+
                         break;
                     case "red":
-                        this.$notify({
-                            title: "提示",
-                            type: "info",
-                            message: res.message
-                        });
+ 
                         break;
                 }
 
             });
         }).catch(() => {
-            this.$notify({
-                title: "提示",
-                type: "info",
-                message: "已取消刷新"
-            });
         });
     }
     // 获取Mirror
@@ -257,20 +234,10 @@ export class WebsiteSettings extends DiplomaBaseClass {
                         });
                         break;
                     case "error":
-                        this.$notify({
-                            title: "提示",
-                            type: "error",
-                            message: res.message
-                        });
                         break;
                 }
             });
         }).catch(() => {
-            this.$notify({
-                title: "提示",
-                type: "info",
-                message: "已取消刷新"
-            });
         });
     }
 

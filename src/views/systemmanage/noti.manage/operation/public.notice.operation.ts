@@ -99,11 +99,7 @@ export class PublicNoiceOperation extends Vue {
                         this.$router.push("/SystemManagement/ReportManagement/notice");
                         break;
                     case "error":
-                        this.$notify({
-                            title: "提示",
-                            message: res.message || "公告填写失败",
-                            type: "error"
-                        });
+
                         break;
                     default:
                         break;
