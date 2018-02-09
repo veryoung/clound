@@ -1,5 +1,4 @@
 import Vue from "vue";
-import * as moment from "moment";
 
 
 export class OtherFilter {
@@ -14,6 +13,18 @@ export class OtherFilter {
                         return "人工发送";
                     default:
                         return "";
+                }
+            }
+        );
+        Vue.filter(
+            "status",
+            function (value: boolean) {
+                if (value === true) {
+                    return "成功";
+                } else if (value === false) {
+                    return "失败";
+                } else {
+                    return value;
                 }
             }
         );
