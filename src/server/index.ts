@@ -67,7 +67,11 @@ axios.interceptors.response.use((response): AxiosResponse<ResType> => {
         case "suc":
             break;
         case "error":
-            ElementUI.Notification.error(res.message);
+            ElementUI.Notification({
+                title: "提示",
+                message: res.message || "失败",
+                type: "error"
+            });
             break;
         case "red":
             if (window.location.hash.indexOf("/login") === -1) {
