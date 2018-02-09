@@ -8,7 +8,6 @@ export class InitFilters {
         new DateFilter();
         new NoneFilter();
         new DateTimeFilter();
-        new StatusFilter();  
         new OtherFilter();
     }
 }
