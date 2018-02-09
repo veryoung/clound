@@ -3,18 +3,6 @@ import { session } from "@utils/sessionstorage";
 import { PermissionConfig } from "@directives/p.config";
 import { Store } from "@store/store";
 
-/**
- * user_manage_all = "SystemManagement.userManagement.*"
-show_user_details = "SystemManagement.userManagement.Check"#显示用户详情
-add_user_info = "SystemManagement.userManagement.Add"#添加用户
-del_user_info = "SystemManagement.userManagement.Delete"#删除 用户
-update_user_info = "SystemManagement.userManagement.Edit"#编辑用户
-import_user_list = "SystemManagement.userManagement.Check"#导入用户信息列表
-export_select_user_list = "SystemManagement.userManagement.ExportSelection"#导出选中用户信息列表
-export_filter_user_list = "SystemManagement.userManagement.ExportAll"#导出当前过滤条件用户信息列表
-reset_pwd = "SystemManagement.userManagement.ResetPassword
- */
-
 export const PermissionsSet: string[] = [
     /************************* 系统管理 ****************************/
     // # 系统管理
@@ -121,7 +109,7 @@ export const PermissionsSet: string[] = [
     // 设置
     "WebsiteManagement.MyWebsite.Set",
     // 详情
-    "WebsiteManagement.MyWebsite.Details",
+    "WebsiteManagement.MyWebsite.Detail",
     // 编辑
     "WebsiteManagement.MyWebsite.Edit",
     // 删除

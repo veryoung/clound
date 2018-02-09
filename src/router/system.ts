@@ -90,7 +90,7 @@ export const systemRouter: RouteConfig[] = [
         meta: {
             icon: "icon-quan-",
             hidden: true,
-            permission: "SystemManagement.userManagement.Details"
+            permission: "SystemManagement.userManagement.Detail"
         },
         props: {
             operation: "look"
