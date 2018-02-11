@@ -14,6 +14,8 @@ import { ModuleTitle } from "@components/title/module.title";
 import { SetCol } from "@components/setcol/setcol";
 import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 
@@ -27,14 +29,14 @@ require("./attack.logs.styl");
     },
     computed: {
         ...mapGetters([
-            "tableData",
+            "logAuditAttackLogtableData",
             "tableConfig",
         ])
     }
 })
-export class AttackLogs extends Vue {
+export class AttackLogs extends ListBaseClass {
     // init computed
-    // public tableData: WebsiteTableType;
+    public logAuditAttackLogtableData: AttackLogType;
     public tableConfig: TableConfigType;
 
     // init data
@@ -55,7 +57,7 @@ export class AttackLogs extends Vue {
     // 选择当前时间
     public currentDateDay: string = "";
     public currentDate: Array<string> = [];
-    public websitetableData: any[] = new Array<string>();
+    public attacktableData: AttackLogTableType[] = new Array<AttackLogTableType>();
 
     // public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
     // watch
@@ -117,6 +119,13 @@ export class AttackLogs extends Vue {
         let enddatetime = moment(new Date()).format("HHmmss");
         this.currentDateDay = startDay;
         this.currentDate = [startdatetime, enddatetime];
+
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        let that = this;
+
+        let ListId = EventBus.register(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, function (event: string, info: any) {
+            that.attacktableData = (<any>Object).assign([], that.logAuditAttackLogtableData[that.tableConfig["attacklogtable"].page - 1]);
+        });
         // 
     }
 
@@ -155,15 +164,6 @@ export class AttackLogs extends Vue {
         // this.$emit("handleSelectionChange", options);
     }
 
-
-    mergeData(opt: any) {
-        const { page_size, page } = opt;
-        // return (<any>Object).assign({}, this.filter, {
-        //     page: page,
-        //     page_size: page_size,
-        // });
-    }
-
     // 跳转方法同统一
     handle() {
 
@@ -191,4 +191,31 @@ export interface SearchType {
     attack_type: string;
     safe_level?: string;
     results?: string;
+}
+export interface AttackLogTableType {
+    aim_IP: string;
+    aim_port: string;
+    attcked_url: string;
+    client: string;
+    id: string;
+    mate: string;
+    referer: string;
+    req_ID: string;
+    req_body: string;
+    req_header: string;
+    req_length: string;
+    res_code: string;
+    res_header: string;
+    resbody: string;
+    results: string;
+    source_IP: string;
+    source_port: string;
+    threat_level: string;
+    time: string;
+    trig_rule: string;
+    website_add: string;
+}
+
+export interface AttackLogType {
+    [extra: string]: AttackLogTableType[];
 }

@@ -165,42 +165,43 @@ export const systemTable: TableConfigType = {
 
             },
             {
-                prop: "organization",
+                prop: "org",
                 label: "所属企业",
                 show: true
 
             },
             {
-                prop: "organization",
+                prop: "level",
                 label: "安全评级",
                 show: true
             },
             {
-                prop: "organization",
+                prop: "web_attack",
                 label: "今日Web攻击",
                 show: true,
                 sortable: "custom",
+                width: "150px"
             },
             {
-                prop: "organization",
+                prop: "cc_attack",
                 label: "今日CC攻击",
                 show: true,
                 sortable: "custom",
-
+                width: "150px"
             },
             {
-                prop: "organization",
+                prop: "ads_flux",
+                label: "今日加速流量",
+                show: true,
+                sortable: "custom",
+                width: "150px"
+            },
+            {
+                prop: "ads_req",
                 label: "今日加速请求",
                 show: true,
                 sortable: "custom",
-
-            },
-            {
-                prop: "organization",
-                label: "今日加速请求",
-                show: true,
-                sortable: "custom",
-
+                width: "150px"
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],

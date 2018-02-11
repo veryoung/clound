@@ -4,6 +4,9 @@ import { LineComponent } from "@components/echarts/line/line";
 import { ModuleTitle } from "@components/title/module.title";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { mapGetters } from "vuex";
+import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
+import { EventBus, CONSTANT } from "@utils/event";
 
 require("./website.detail.styl");
 @Component({
@@ -15,16 +18,92 @@ require("./website.detail.styl");
         BarComponent,
     },
     template: require("./website.detail.html"),
+    computed: {
+        ...mapGetters([
+            "WebsitePandectDetailattackData",
+            "WebsitePandectDetailaccessData",
+        ])
+    }
 })
 
 export class WebsiteDetail extends Vue {
     // init computed
     // init data
-    public titles: string[] = ["安全评级"];
+    public WebsitePandectDetailattackData: AttackDetailType;
+    public WebsitePandectDetailaccessData: AccessDetailType;
+
+    // public DetailattackData: AttackDetailType[] = new Array<AttackDetailType>();
+
+    public DetailattackData: AttackType = {
+        level: "",
+        tendency_attack: {},
+        top_ip: [],
+        top_location: [],
+        top_type: [],
+        total_cc: "",
+        total_web: "",
+    };
+    public DetailaccessData: AccessType = {
+        tendency_ip: {},
+        tendency_req_flow: [],
+        tendency_req_num: [],
+        top_location: [],
+        total_hit_flow: "",
+        total_hit_num: "",
+    };
 
     public form: any = {
         datePicker: "今天",
     };
+
+
+    public attackfilterData: AttackSearchType = {
+        dt: "0",
+        level: "",
+        site: "",
+        tendency_attack: "1",
+        top_ip: "1",
+        top_location: "1",
+        top_type: "1",
+        total_cc: "1",
+        total_web: "1",
+    };
+    public attackfilter: AttackSearchType = (<any>Object).assign({}, this.attackfilterData);
+
+    public accessfilterData: AccessSearchType = {
+        dt: "0",
+        site: "",
+        tendency_ip: "1",
+        tendency_req_flow: "1",
+        tendency_req_num: "1",
+        total_hit_flow: "1",
+        total_hit_num: "1",
+    };
+    public accessfilter: AttackSearchType = (<any>Object).assign({}, this.accessfilterData);
+
+    // 攻击趋势
+    public tendency_attackOpt: any = {};
+    // cc攻击
+    public cc_attack: string = "";
+    // web攻击
+    public web_attack: string = "";
+
+
+    // IP访问个数趋势
+    public tendency_ipOpt: any = {};
+    // 访问流量趋势
+    public tendency_req_flowOpt: any = {};
+    // 访问次数趋势
+    public tendency_req_numOpt: any = {};
+
+    // 加速请求
+    public hit_flow: string = "";
+    // 加速流量
+    public hit_num: string = "";
+
+
+
+
 
     public attackTimeOpt: any = {};
     public attackTypeOpt: any = {};
@@ -457,7 +536,7 @@ export class WebsiteDetail extends Vue {
                 },
                 {
                     type: "bar",
-                    legendHoverLink: true,                    
+                    legendHoverLink: true,
                     barWidth: 25,
                     itemStyle: {
                         normal: {
@@ -642,9 +721,405 @@ export class WebsiteDetail extends Vue {
                 ],
             }]
         };
-    }
-    // 选择方法
-    exportChoose() {
+
+        this.attackfilter.site = this.$route.params.id;
+        this.accessfilter.site = this.$route.params.id;
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILATTACK, this.attackfilter);
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILACCESS, this.accessfilter);
+        let that = this;
+
+        let AttackId = EventBus.register(CONSTANT.GETPANDECTDETAILATTACK, function (event: string, info: any) {
+            that.DetailattackData = (<any>Object).assign([], that.WebsitePandectDetailattackData[that.$route.params.id]);
+
+            // 攻击次数趋势
+            that.tendency_attackOpt.series[0].data = that.DetailattackData.tendency_attack.axis_y.att_web;
+            that.tendency_attackOpt.series[1].data = that.DetailattackData.tendency_attack.axis_y.att_cc;
+            // web攻击
+            // cc攻击
+            that.cc_attack = that.DetailattackData.total_cc;
+            that.web_attack = that.DetailattackData.total_web;
+
+
+        });
+        let AccessId = EventBus.register(CONSTANT.GETPANDECTDETAILACCESS, function (event: string, info: any) {
+            that.DetailaccessData = (<any>Object).assign([], that.WebsitePandectDetailaccessData[that.$route.params.id]);
+            // 加速请求
+            that.hit_flow = that.DetailaccessData.total_hit_flow;
+            // 加速流量
+            that.hit_num = that.DetailaccessData.total_hit_num;
+            // Ip访问个数趋势
+            that.tendency_ipOpt.series[0].data = that.DetailaccessData.tendency_ip.axis_y.ip_num;
+
+            // 访问流量趋势
+            that.tendency_req_flowOpt.series[0].data = that.DetailaccessData.tendency_req_flow.axis_y.hit_flow;
+            that.tendency_req_flowOpt.series[1].data = that.DetailaccessData.tendency_req_flow.axis_y.req_flow;
+            // 访问次数趋势
+            that.tendency_req_numOpt.series[0].data = that.DetailaccessData.tendency_req_num.axis_y.hit_total;
+            that.tendency_req_numOpt.series[1].data = that.DetailaccessData.tendency_req_num.axis_y.req_total;
+
+        });
+        // 攻击次数趋势
+        that.tendency_attackOpt = {
+            legend: {
+                data: ["Web攻击", "CC攻击"],
+                right: "10%",
+            },
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    lineStyle: {
+                        color: "#ddd"
+                    }
+                },
+                backgroundColor: "rgba(255,255,255,1)",
+                padding: [5, 10],
+                textStyle: {
+                    color: "#7588E4",
+                },
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+            },
+            xAxis: [{
+                boundaryGap: false,
+                axisLine: {
+                    onZero: false
+                },
+                axisTick: {
+                    show: false
+                },
+                data: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00",
+                    "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",
+                    "19:00", "20:00", "21:00", "22:00", "23:00"]
+            }],
+            yAxis: {
+                splitNumber: 6,
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: "Web攻击",
+                    type: "line",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    lineStyle: {
+                        normal: {
+                            width: 2,
+                            shadowColor: "rgba(0,0,0,0.4)",
+                            shadowBlur: 8,
+                            shadowOffsetY: 8
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#BFE83B"
+                        }
+                    },
+                },
+                {
+                    name: "CC攻击",
+                    type: "line",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    lineStyle: {
+                        normal: {
+                            width: 2,
+                            shadowColor: "rgba(0,0,0,0.4)",
+                            shadowBlur: 8,
+                            shadowOffsetY: 8
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#FCBE83"
+                        }
+                    },
+                }
+            ]
+        };
+        // IP访问次数
+        that.tendency_ipOpt = {
+            legend: {
+                data: ["IP访问次数"],
+                right: "10%",
+            },
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    lineStyle: {
+                        color: "#ddd"
+                    }
+                },
+                backgroundColor: "rgba(255,255,255,1)",
+                padding: [5, 10],
+                textStyle: {
+                    color: "#7588E4",
+                },
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+            },
+            xAxis: [{
+                boundaryGap: false,
+                axisLine: {
+                    onZero: false
+                },
+                axisTick: {
+                    show: false
+                },
+                data: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00",
+                    "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",
+                    "19:00", "20:00", "21:00", "22:00", "23:00",
+                ]
+            }],
+            yAxis: {
+                splitNumber: 6,
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: "IP访问次数",
+                    type: "line",
+                    showSymbol: true,
+                    symbol: "circle",
+                    symbolSize: 10,
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            shadowColor: "rgba(0,0,0,0.4)",
+                            shadowBlur: 8,
+                            shadowOffsetY: 8
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#9adce9",
+                        }
+                    },
+                },
+            ]
+        };
+        // 访问流量趋势
+        that.tendency_req_flowOpt = {
+            legend: {
+                data: ["加速流量", "访问流量"],
+                right: "10%",
+            },
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    lineStyle: {
+                        color: "#ddd"
+                    }
+                },
+                backgroundColor: "rgba(255,255,255,1)",
+                padding: [5, 10],
+                textStyle: {
+                    color: "#7588E4",
+                },
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+            },
+            xAxis: [{
+                boundaryGap: false,
+                axisLine: {
+                    onZero: false
+                },
+                axisTick: {
+                    show: false
+                },
+                data: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00",
+                    "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",
+                    "19:00", "20:00", "21:00", "22:00", "23:00"]
+            }],
+            yAxis: {
+                splitNumber: 6,
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: "加速流量",
+                    type: "line",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    lineStyle: {
+                        normal: {
+                            width: 2,
+                            shadowColor: "rgba(0,0,0,0.4)",
+                            shadowBlur: 8,
+                            shadowOffsetY: 8
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#80D3E3"
+                        }
+                    },
+                },
+                {
+                    name: "访问流量",
+                    type: "line",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    lineStyle: {
+                        normal: {
+                            width: 2,
+                            shadowColor: "rgba(0,0,0,0.4)",
+                            shadowBlur: 8,
+                            shadowOffsetY: 8
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#76DEC6"
+                        }
+                    },
+                }
+            ]
+        };
+        // 访问次数趋势
+        that.tendency_req_numOpt = {
+            legend: {
+                data: ["加速次数", "访问次数"],
+                right: "10%",
+            },
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    lineStyle: {
+                        color: "#ddd"
+                    }
+                },
+                backgroundColor: "rgba(255,255,255,1)",
+                padding: [5, 10],
+                textStyle: {
+                    color: "#7588E4",
+                },
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+            },
+            xAxis: [{
+                boundaryGap: false,
+                axisLine: {
+                    onZero: false
+                },
+                axisTick: {
+                    show: false
+                },
+                data: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00",
+                    "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",
+                    "19:00", "20:00", "21:00", "22:00", "23:00"]
+            }],
+            yAxis: {
+                splitNumber: 6,
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: "加速次数",
+                    type: "line",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    lineStyle: {
+                        normal: {
+                            width: 2,
+                            shadowColor: "rgba(0,0,0,0.4)",
+                            shadowBlur: 8,
+                            shadowOffsetY: 8
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#80D3E3"
+                        }
+                    },
+                },
+                {
+                    name: "访问次数",
+                    type: "line",
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    lineStyle: {
+                        normal: {
+                            width: 2,
+                            shadowColor: "rgba(0,0,0,0.4)",
+                            shadowBlur: 8,
+                            shadowOffsetY: 8
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: "#76DEC6"
+                        }
+                    },
+                }
+            ]
+        };
 
     }
+
+}
+
+
+// 攻击类查询条件类型
+export interface AttackSearchType {
+    dt: string;
+    level: string;
+    site: string;
+    tendency_attack: string;
+    top_ip: string;
+    top_location: string;
+    top_type: string;
+    total_cc: string;
+    total_web: string;
+}
+
+// 防护类查询条件类型
+export interface AccessSearchType {
+    dt: string;
+    site: string;
+    tendency_ip: string;
+    tendency_req_flow: string;
+    tendency_req_num: string;
+    total_hit_flow: string;
+    total_hit_num: string;
+}
+
+
+// 攻击类数据类型
+export interface AttackDetailType {
+    [extra: string]: AttackType[];
+}
+
+interface AttackType {
+    level: string;
+    tendency_attack: any;
+    top_ip: Array<Object>;
+    top_location: Array<Object>;
+    top_type: Array<Object>;
+    total_cc: string;
+    total_web: string;
+}
+
+// 防护类数据类型
+export interface AccessDetailType {
+    [extra: string]: AccessType[];
+}
+
+interface AccessType {
+    tendency_ip: any;
+    tendency_req_flow: any;
+    tendency_req_num: any;
+    top_location: Array<Object>;
+    total_hit_flow: string;
+    total_hit_num: string;
 }
