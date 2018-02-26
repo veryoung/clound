@@ -132,18 +132,6 @@ export const asyncRouter: RouteConfig[] = [
         children: userCenterRouter
     },
     {
-        path: "/SituationalAwareness",
-        name: "态势感知",
-        components: {
-            header: HeaderComponent,
-            sider: SiderComponent,
-            main: ViewContainer
-        },
-        meta: {
-            permission: "SituationalAwareness"
-        }
-    },
-    {
         path: "**",
         name: "404",
         meta: {
