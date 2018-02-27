@@ -116,6 +116,9 @@ module.exports = function (env) {
             }, {
                 from: path.resolve(__dirname, '../users_template_portal.xls'),
                 to: './download/users_template_portal.xls'
+            }, {
+                from: path.resolve(__dirname, '../src/resource/images/favicon.png'),
+                to: './src/resource/images/favicon.png'
             }]),
             new webpack.optimize.UglifyJsPlugin({
                 sourceMap: false,

@@ -49,7 +49,8 @@ export const WebsiteManageRouter: RouteConfig[] = [
         name: "服务设置",
         meta: {
             icon: "icon-quan-",
-            hidden: true
+            hidden: true,
+            permission: "WebsiteManagement.MyWebsite.Set"
         },
         props: {
             operation: "editor"
@@ -62,7 +63,7 @@ export const WebsiteManageRouter: RouteConfig[] = [
         meta: {
             icon: "icon-quan-",
             hidden: true,
-            permission: "WebsiteManagement.MyWebsite.Check"
+            permission: "WebsiteManagement.MyWebsite.Detail"
         },
         props: {
             operation: "look"

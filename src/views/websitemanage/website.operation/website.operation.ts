@@ -378,7 +378,6 @@ export class WebsiteOperation extends Vue {
                                 this.$router.push("/WebsiteManagement/myWebsite");
                                 break;
                             case "error":
-   
                                 break;
                             default:
                                 break;
