@@ -12,7 +12,7 @@ export const CountReportRouter: RouteConfig[] = [
         name: "我的报告",
         meta: {
             icon: "icon-yonghuguanli",
-            permission: "ReportManagement.Myreport"
+            permission: "ReportManagement.MyReport"
         },
         component: MyReport
     },
@@ -22,7 +22,7 @@ export const CountReportRouter: RouteConfig[] = [
         meta: {
             icon: "icon-yonghuguanli",
             hidden: true,
-            permission: "ReportManagement.Myreport.Check"
+            permission: "ReportManagement.MyReport.Check"
         },
         component: ReportDetail
     },
@@ -31,7 +31,7 @@ export const CountReportRouter: RouteConfig[] = [
         name: "报告模板",
         meta: {
             icon: "icon-yonghuguanli",
-            permission: "ReportManagement.Reporttemplate"
+            permission: "ReportManagement.ReportTemplate"
         },
         component: ReportTemplate,
     },
@@ -40,7 +40,8 @@ export const CountReportRouter: RouteConfig[] = [
         name: "添加模板",
         meta: {
             icon: "icon-yonghuguanli",
-            hidden: true
+            hidden: true,
+            permission: "ReportManagement.ReportTemplate.Add"
         },
         props: {
             operation: "add"

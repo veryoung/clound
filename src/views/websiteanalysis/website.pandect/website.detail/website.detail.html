@@ -1,10 +1,10 @@
 <div class="website-detail">
     <div class="detail-content">
         <div class="choose-box">
-            <el-radio-group v-model="form.datePicker">
-                <el-radio-button label="今天"></el-radio-button>
-                <el-radio-button label="最近7天"></el-radio-button>
-                <el-radio-button label="最近30天"></el-radio-button>
+            <el-radio-group v-model="form.datePicker" @change="changeDay">
+                <el-radio-button label="0">今天</el-radio-button>
+                <el-radio-button label="7">最近7天</el-radio-button>
+                <el-radio-button label="30">最近30天</el-radio-button>
             </el-radio-group>
 
         </div>
@@ -20,51 +20,52 @@
                 </el-col>
                 <el-col class="top-right" :span="17">
                     <div class="top-right-box">
-                        <el-col :span="6">
-                            <div>
+                        <div class="right-box-common">
+                            <div class="right-box-title">
                                 web攻击
                             </div>
-                            <div>
-                                icon
+                            <div class="webdetail-iconfont">
+                                <div class="iconfont-box">
+                                    <span class="iconfont" style="font-size:110px; color: #B9E080">&#xe610;</span>
+                                </div>
                             </div>
                             <div>
-                                {{web_attack}}次
+                                {{web_attack | times}}次
                             </div>
-
-                        </el-col>
-                        <el-col :span="6">
-                            <div>
-                                web攻击
+                        </div>
+                        <div class="right-box-common right-box-border">
+                            <div class="right-box-title">
+                                CC攻击
+                            </div>
+                            <div class="webdetail-iconfont">
+                                <span class="iconfont "  style="font-size:110px; color: #FCAE64 ">&#xe60f;</span>
                             </div>
                             <div>
-                                icon
+                                {{cc_attack | times}}次
                             </div>
-                            <div>
-                                {{cc_attack}}次
-                            </div>
-                        </el-col>
-                        <el-col :span="6">
-                            <div>
+                        </div>
+                        <div class="right-box-common right-box-border">
+                            <div class="right-box-title">
                                 加速请求
                             </div>
-                            <div>
-                                icon
+                            <div class="webdetail-iconfont">
+                                <span class="iconfont "  style="font-size:110px; color: #69DBC1 ">&#xe60e;</span>
                             </div>
                             <div>
-                                {{hit_flow}}次
+                                {{hit_flow | times}}次
                             </div>
-                        </el-col>
-                        <el-col :span="6">
-                            <div>
+                        </div>
+                        <div class="right-box-common right-box-border">
+                            <div class="right-box-title">
                                 加速流量
                             </div>
-                            <div>
-                                icon
+                            <div class="webdetail-iconfont">
+                                <span class="iconfont "  style="font-size:110px; color: #3FBDD5">&#xe62d;</span>
                             </div>
                             <div>
-                                {{hit_num}}次
+                                {{hit_num | flow}}
                             </div>
-                        </el-col>
+                        </div>
                     </div>
                 </el-col>
             </el-row>
@@ -81,7 +82,7 @@
                 <div class="flex50-box">
                     <ModuleTitle :titles="['攻击类型分布']" />
                     <div style="height:400px;">
-                        <PieComponent :option="attackTypeOpt" />
+                        <PieComponent :option="type_attackOpt" />
                     </div>
                 </div>
             </div>
@@ -89,13 +90,13 @@
                 <div class="flex50-box mariginright30">
                     <ModuleTitle :titles="['攻击源地域分布TOP10']" />
                     <div style="height:400px;">
-                        <BarComponent :option="demoOpT" />
+                        <BarComponent :option="top_locationOpt" />
                     </div>
                 </div>
                 <div class="flex50-box">
                     <ModuleTitle :titles="['攻击IPTOP10']" />
                     <div style="height:400px;">
-                        <BarComponent :option="demoOpT2" />
+                        <BarComponent :option="top_ipOpt" />
                     </div>
                 </div>
             </div>
@@ -129,12 +130,12 @@
                 <div class="flex50-box">
                     <ModuleTitle :titles="['地域访问次数TOP10']" />
                     <div style="height:400px;">
-                        <BarComponent :option="attackResource10Opt" />
+                        <BarComponent :option="tendency_locationtopOpt" />
 
                     </div>
                 </div>
             </div>
-            <div class="speed-box">
+            <!-- <div class="speed-box">
                 <div class="flex50-box mariginright30">
                     <ModuleTitle :titles="['地域访问流量TOP10']" />
                     <div style="height:400px;">
@@ -143,7 +144,7 @@
                 </div>
                 <div class="flex50-box mariginright30">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

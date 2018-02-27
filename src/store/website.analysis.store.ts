@@ -130,7 +130,6 @@ export const WebsiteAnalysisStore: Module<WebsiteAnalysisType, any> = {
             });
         },
         [WEBSITEANALYSISEVENT.GETPANDECTDETAILATTACK]: ({ state, commit, rootState }, payload) => {
-            console.log(payload);
             WebsiteAnalysisServer.getAttackDetail(payload).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {

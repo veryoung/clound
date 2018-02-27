@@ -96,6 +96,7 @@ export class MyReport extends ListBaseClass {
         let that = this;
         let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
+            console.log(that.websitetableData);
         });
         Aux.insertId(ListId);
     }
