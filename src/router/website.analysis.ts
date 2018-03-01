@@ -40,12 +40,11 @@ export const WebsiteAnalysisRouter: RouteConfig[] = [
         component: WebsiteDetail,
     },
     {
-        path: "AttackLog/look/:id",
+        path: "AttackLog/look/:datetime/:rule_id/:site_id/:src_ip",
         name: "攻击详情",
         meta: {
             icon: "icon-quan-",
             hidden: true,
-            permission: "AttackLog.AttackDetails"
         },
         props: {
             operation: "look"

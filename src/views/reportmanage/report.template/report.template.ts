@@ -73,13 +73,11 @@ export class ReportTemplate extends ListBaseClass {
         let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
         let endDay = moment(new Date()).format("YYYYMMDD");
         this.filter.create_time = [startDay, endDay];
-
-
+        console.log(1);
         this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
         let that = this;
         let ListId = EventBus.register(CONSTANT.GETREPORTTEMPLATELIST, function (event: string, info: any) {
             that.tableData = that.reportTableData[that.tableConfig.reporttemplatetable.page - 1];
-
         });
         Aux.insertId(ListId);
     }

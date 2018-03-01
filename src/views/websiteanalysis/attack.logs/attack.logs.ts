@@ -16,6 +16,8 @@ import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
 import { ListBaseClass } from "@views/base/base.class";
+import { MYWEBSITEEVENT, WebsiteTableType } from "@store/mywebsite.type";
+import { WebsiteListColumnType } from "@views/websitemanage/website.manage.attachement";
 
 
 
@@ -27,10 +29,13 @@ require("./attack.logs.styl");
     components: {
         ModuleTitle, SetCol, CloudTable
     },
+
     computed: {
         ...mapGetters([
             "logAuditAttackLogtableData",
             "tableConfig",
+            "tableData",
+
         ])
     }
 })
@@ -38,28 +43,41 @@ export class AttackLogs extends ListBaseClass {
     // init computed
     public logAuditAttackLogtableData: AttackLogType;
     public tableConfig: TableConfigType;
+    public tableData: WebsiteTableType;
+
 
     // init data
     public titles: string[] = ["攻击日志"];
     public filterData: SearchType = {
-        start_time: "",
-        end_time: "",
-        name: "",
-        domain: "",
-        attackedUrl: "",
-        attactIP: "",
-        attactIPadd: "",
         attack_type: "",
+        attacked_url: "",
+        attact_ip: "",
+        attact_ip_add: "",
+        cdate: moment(new Date()).format("YYYYMMDD"),
+        etime: moment(new Date()).format("HHmmss"),
+        id: "",
+        name: "",
+        results: "",
         safe_level: "",
-        results: "" ,
+        stime: moment(new Date(new Date().getTime() - 1 * 60 * 60 * 1000)).format("HHmmss"),
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
+    // 网站域名
+    public websitefilter: SearchType = (<any>Object).assign({}, websitefilterData);
+    public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
+    public domainData: any = [];
+    public domainDataArray: any = [];
+    public domainObj: any = {};
+
+
     // 选择当前时间
     public currentDateDay: string = "";
     public currentDate: Array<string> = [];
     public attacktableData: AttackLogTableType[] = new Array<AttackLogTableType>();
 
-    // public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
+    // 选中项
+    public log_ids: any = [];
+
     // watch
     public unwatch: Function = () => { };
 
@@ -93,84 +111,144 @@ export class AttackLogs extends ListBaseClass {
     public value1: string = "";
     public value2: string = "";
     public options: Array<DomainType> = [{
-        value: "选项1",
-        label: "黄金糕"
+        value: "跨站脚本攻击",
+        label: "跨站脚本"
     }, {
-        value: "选项2",
-        label: "双皮奶"
+        value: "注入攻击",
+        label: "注入攻击"
     }, {
-        value: "选项3",
-        label: "蚵仔煎"
+        value: "文件包含攻击",
+        label: "文件包含"
     }, {
-        value: "选项4",
-        label: "龙须面"
+        value: "信息泄露攻击",
+        label: "信息泄露"
     }, {
-        value: "选项5",
-        label: "北京烤鸭"
-    }];
+        value: "HTTP协议攻击",
+        label: "HTTP协议"
+    }, {
+        value: "CC攻击",
+        label: "CC攻击"
+    }, {
+        value: "恶意爬虫攻击",
+        label: "恶意爬虫"
+    }, {
+        value: "恶意扫描攻击",
+        label: "恶意扫描"
+    }, {
+        value: "应用漏洞攻击",
+        label: "应用漏洞"
+    }, {
+        value: "Webshell攻击",
+        label: "Webshell"
+    }
+    ];
     public value: string = "";
 
     // public tableDefault: = 
     // lifecircle hook 
     created() {
         // 初始化时间
-        let startDay = moment(new Date()).format("YYYYMMDD");
-        let startdatetime = moment(new Date(new Date().getTime() - 1 * 60 * 60 * 1000)).format("HHmmss");
-        let enddatetime = moment(new Date()).format("HHmmss");
-        this.currentDateDay = startDay;
-        this.currentDate = [startdatetime, enddatetime];
+        this.currentDate = [this.filter.stime, this.filter.etime];
 
-        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.websitefilter));
+
         let that = this;
 
         let ListId = EventBus.register(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, function (event: string, info: any) {
             that.attacktableData = (<any>Object).assign([], that.logAuditAttackLogtableData[that.tableConfig["attacklogtable"].page - 1]);
         });
-        // 
+
+        let WebsiteId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
+            that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
+            // 提取必须项 形成数组
+            for (let key in that.websitetableData) {
+                let Obj = {
+                    name: "",
+                    value: ""
+                };
+                Obj.name = that.websitetableData[key].domain;
+                Obj.value = that.websitetableData[key].id;
+                that.domainDataArray.push(Obj);
+            }
+            that.filter.id = that.domainDataArray[0].value;
+            that.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, that.mergeData(that.tableConfig["noticetable"], that.filter));
+
+        });
+
+        Aux.insertId(ListId);
+        Aux.insertId(WebsiteId);
     }
 
     destroyed() {
-        // Aux.getIds().map((id, $idnex) => {
-        //     EventBus.unRegister(id);
-        // });
-        // this.unwatch();
+        Aux.getIds().map((id, $idnex) => {
+            EventBus.unRegister(id);
+        });
+        this.unwatch();
     }
 
     // init method
     search() {
-        // 拼接 开始时间和结束时间
-        this.filter.start_time = this.currentDateDay + this.currentDate[0];
-        this.filter.end_time = this.currentDateDay + this.currentDate[1];
-        console.log(this.filter);
-        // if (this.filter.ctime === null) {
-        //     this.filter.ctime = "";
-        // }
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.filter.stime = this.currentDate[0];
+        this.filter.etime = this.currentDate[1];
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
+    }
+
+    handle(opt: any) {
+        let id = opt.row.rule_id;
+        let data = opt.row;
+        // AttackLog/look/:datetime/:rule_id/:site_id/:src_ip/:uri
+        this.$router.push(`/WebsiteAnalysis/AttackLog/look/${data.dt}/${data.rule_id}/${data.site_id}/${data.src_ip}?uri=${data.uri}`);
     }
 
     reset() {
-        // this.filter = (<any>Object).assign({}, filterData);
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.filter = (<any>Object).assign({}, this.filterData);
+        this.filter.id = this.domainDataArray[0].value;
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
     }
 
     handleSizeChange(val: number) {
-        // this.tableConfig.mywebsitetable.page_size = val;
+        this.tableConfig.noticetable.page_size = val;
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
     }
     handleCurrentChange(val: number) {
-        // this.tableConfig.mywebsitetable.page = val;
+        this.tableConfig.noticetable.page = val;
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
     }
 
-    handleSelectionChange(options: any) {
-        // this.$emit("handleSelectionChange", options);
+    handleSelectionChange(options: any[]) {
+        this.log_ids = [];
+        options.map((item: any, $index: number) => {
+            this.log_ids.push(item.log_id);
+        });
     }
 
-    // 跳转方法同统一
-    handle() {
-
-    }
 
     sortChange(opt: any) {
 
+    }
+
+    // 导出
+    exportChoose(type: string) {
+        let data: SearchType = this.filter;
+        if (this.log_ids.length === 0) {
+            this.$notify({
+                title: "提示",
+                message: "请选择导出项",
+                type: "warning"
+            });
+        } else {
+            let str = "";
+            for (let key in this.log_ids) {
+                str += "," + this.log_ids[key];
+            }
+            str = str.substr(1);
+            console.log(`/api/v20/dashboard/export_attack/?log_ids=${str}${this.objToUrl(this.filter)}`);
+            this.exportFile(`/api/v20/dashboard/export_attack/?log_ids=${str}${this.objToUrl(this.filter)}`);
+        }
+    }
+    exportAll() {
+        let data = this.filter;
+        this.exportFile(`/api/v20/dashboard/export_attack/?${this.objToUrl(this.filter)}`);
     }
 
 
@@ -181,16 +259,17 @@ export interface DomainType {
     label: string;
 }
 export interface SearchType {
-    end_time: string;
-    start_time: string;
-    name: string;
-    domain: string;
-    attackedUrl: string;
-    attactIP: string;
-    attactIPadd: string;
     attack_type: string;
-    safe_level?: string;
-    results?: string;
+    attacked_url: string;
+    attact_ip: string;
+    attact_ip_add: string;
+    cdate: string;
+    etime: string;
+    id: string;
+    name: string;
+    results: string;
+    safe_level: string;
+    stime: string;
 }
 export interface AttackLogTableType {
     aim_IP: string;
@@ -218,4 +297,35 @@ export interface AttackLogTableType {
 
 export interface AttackLogType {
     [extra: string]: AttackLogTableType[];
+}
+
+
+export const websitefilterData: WebsiteSearchType = {
+    cperson: "",
+    domain: "",
+    name: "",
+    open_waf: "",
+    organization: "",
+    port: "",
+    protocol: "",
+    source_info: "",
+    source_type: "",
+    state: "",
+    ctime: "",
+    sort_ctime: "",
+};
+
+export default interface WebsiteSearchType {
+    cperson: string;
+    domain?: string;
+    name: string;
+    open_waf: string;
+    organization: string;
+    port: number | string;
+    protocol: string;
+    source_info?: string;
+    source_type?: string;
+    state?: string;
+    ctime?: string;
+    sort_ctime?: string;
 }

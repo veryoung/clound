@@ -62,7 +62,7 @@ export class UserMenu extends ListBaseClass {
         let that = this;
         this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
         EventBus.register(CONSTANT.DEFAULTUSER, function () {
-            that.user_name = that.personInfo[that.defaultUser.uid].user_name;
+            if (that.personInfo[that.defaultUser.uid]) that.user_name = that.personInfo[that.defaultUser.uid].user_name;
         });
         // 获取公告
         this.$store.dispatch(NOTICEEVENT.GETPUBlICGETNOTICELIST,  this.filter);
