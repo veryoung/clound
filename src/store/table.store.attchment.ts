@@ -212,58 +212,56 @@ export const systemTable: TableConfigType = {
     // 攻击日志列表
     "attacklogtable": {
         columns: [{
-            prop: "ctime",
+            prop: "dt",
             label: "时间",
             show: true,
+            type: "dateTime",
         },
         {
-            prop: "name",
+            prop: "site",
             label: "网站名称",
-            show: true
-
+            show: true,
+            disable: true,
         },
         {
-            prop: "domain",
+            prop: "domain_port",
             label: "网站域名",
-            show: true
+            show: true,
+            disable: true,
 
         },
         {
-            prop: "attackedUrl",
+            prop: "uri",
             label: "被攻击URL",
-            show: true
-
+            show: true,
+            width: "300px",
         },
         {
-            prop: "attactIP",
+            prop: "src_ip",
             label: "攻击IP",
-            show: true
+            show: true,
+            disable: true,
         },
         {
-            prop: "attactIPadd",
+            prop: "src_location",
             label: "攻击IP归属地",
             show: true,
-            sortable: "custom",
         },
         {
-            prop: "attack_type",
+            prop: "btype",
             label: "攻击类型",
             show: true,
-            sortable: "custom",
-
         },
         {
-            prop: "safe_level",
+            prop: "level",
             label: "安全级别",
             show: true,
-            sortable: "custom",
-
+            disable: true,
         },
         {
-            prop: "results",
+            prop: "action",
             label: "处理结果",
             show: true,
-            sortable: "custom",
         },
         ],
         pageSizes: [10, 20, 30, 40, 50],

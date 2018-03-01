@@ -1,6 +1,9 @@
 import { ModuleTitle } from "@components/title/module.title";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { WebsiteAnalysisServer } from "@server/website.analysis";
+import { AxiosResponse } from "axios";
+import { ResType } from "server";
 require("./logs.detail.styl");
 
 @Component({
@@ -16,95 +19,103 @@ export class LogsDetail extends Vue {
     // props
 
     // propss
-    public currentWebsite: string = "当前网站:" + 11;
+    public currentWebsite: string = "攻击详情";
     public titles: Array<string> = [this.currentWebsite];
     public ColumnArray: Array<ColumnArrayType> = [
         {
             label: "时间",
-            props: "time",
+            props: "datetime",
         },
         {
             label: "目的IP",
-            props: "aimIP",
+            props: "dst_ip",
         },
         {
             label: "目的端口",
-            props: "aimPort",
+            props: "dst_port",
         },
         {
             label: "网站地址",
-            props: "websiteAdd",
+            props: "host",
         },
         {
-            label: "被攻击URL",
-            props: "attckedUrl",
+            label: "被攻击URI",
+            props: "uri",
         },
         {
             label: "源IP",
-            props: "sourceIP",
+            props: "src_ip",
         },
         {
             label: "源端口",
-            props: "sourcePort",
+            props: "src_port",
         },
         {
             label: "请求头",
-            props: "reqHeader",
+            props: "request_header",
         },
         {
             label: "请求体",
-            props: "reqBody",
+            props: "request_body",
         },
         {
             label: "响应头",
-            props: "resHeader",
+            props: "response_header",
         },
         {
             label: "响应体",
-            props: "resBody",
+            props: "response_body",
         },
         {
             label: "客户端",
-            props: "client",
+            props: "user_agent",
         },
         {
             label: "Referer",
             props: "referer",
         },
         {
-            label: "触发规则",
-            props: "trigRule",
-        },
-        {
             label: "处理结果",
-            props: "results",
+            props: "action",
         },
         {
             label: "威胁等级",
-            props: "threatLevel",
+            props: "severity",
         },
         {
             label: "匹配",
-            props: "mate",
+            props: "rule_math",
         },
         {
             label: "响应码",
-            props: "resCode",
+            props: "response_code",
         },
         {
             label: "请求标识",
-            props: "reqID",
+            props: "unique_id",
         },
         {
             label: "请求长度",
-            props: "reqLength",
+            props: "content_length",
         },
     ];
     public filter: ColumnType = (<any>Object).assign({}, filterData);
     // lifehook
     created() {
-        console.log(this.filter);
+        let routerParams: any = this.$route.params;
+        let uri = this.$route.query.uri;
+        routerParams.uri = uri;
+        console.log(this.$route.query);
+        console.log(typeof routerParams);
+        WebsiteAnalysisServer.getAttackLogDetail(routerParams).then((response: AxiosResponse<ResType>) => {
+            let res: ResType = response.data;
+            if (res.status === "suc") {
+                this.filter = res.data;
+            }
+        });
     }
+
+
 
     // method
     back() {
@@ -118,47 +129,61 @@ export interface ColumnArrayType {
 }
 
 export default interface ColumnType {
-    aimIP: string;
-    aimPort: string;
-    attckedUrl: string;
-    client: string;
-    mate: string;
+    action: string;
+    asg_id: string;
+    content_length: string;
+    datetime: string;
+    dst_ip: string;
+    dst_port: string;
+    host: string;
+    id: string;
+    in_db_time: string;
+    ip_location: string;
+    member_id: string;
+    policy_id: string;
     referer: string;
-    reqBody: string;
-    reqHeader: string;
-    reqID: string;
-    reqLength: string;
-    resBody: string;
-    resCode: string;
-    resHeader: string;
-    results: string;
-    sourceIP: string;
-    sourcePort: string;
-    threatLevel: string;
-    time: string;
-    trigRule: string;
-    websiteAdd: string;
+    request_body: string;
+    request_header: string;
+    response_body: string;
+    response_code: string;
+    response_header: string;
+    rule_id: string;
+    rule_match: string;
+    severity: string;
+    site_id: string;
+    src_ip: string;
+    src_port: string;
+    unique_id: string;
+    uri: string;
+    user_agent: string;
 }
 
 export const filterData: ColumnType = {
-    aimIP: "",
-    aimPort: "",
-    attckedUrl: "",
-    client: " ",
-    mate: " ",
-    referer: " ",
-    reqBody: " ",
-    reqHeader: " ",
-    reqID: " ",
-    reqLength: " ",
-    resBody: " ",
-    resCode: " ",
-    resHeader: " ",
-    results: " ",
-    sourceIP: " ",
-    sourcePort: " ",
-    threatLevel: " ",
-    time: "",
-    trigRule: " ",
-    websiteAdd: " ",
+    action: "",
+    asg_id: "",
+    content_length: "",
+    datetime: "",
+    dst_ip: "",
+    dst_port: "",
+    host: "",
+    id: "",
+    in_db_time: "",
+    ip_location: "",
+    member_id: "",
+    policy_id: "",
+    referer: "",
+    request_body: "",
+    request_header: "",
+    response_body: "",
+    response_code: "",
+    response_header: "",
+    rule_id: "",
+    rule_match: "",
+    severity: "",
+    site_id: "",
+    src_ip: "",
+    src_port: "",
+    unique_id: "",
+    uri: "",
+    user_agent: "",
 };

@@ -48,11 +48,6 @@ class WebsiteAnalysis extends Restful {
             params: opt
         });
     }
-
-
-
-
-
     public getAttackLog(opt: {
         attack_type?: string;
         attacked_url?: string;
@@ -67,6 +62,18 @@ class WebsiteAnalysis extends Restful {
     }) {
         return this.get({
             url: `/api/v20/dashboard/attack_log/`,
+            params: opt
+        });
+    }
+
+    public getAttackLogDetail(opt: {
+        datetime?: string;
+        rule_id?: string;
+        site_id?: string;
+        uri?: string;
+    }) {
+        return this.get({
+            url: `/api/v20/dashboard/attack_detail/`,
             params: opt
         });
     }

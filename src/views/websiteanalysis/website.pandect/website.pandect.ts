@@ -93,7 +93,6 @@ export class WebsitePandect extends ListBaseClass {
 
 
     handle(opt: any) {
-        console.log(opt);
         let id = opt.row.id;
         this.$router.push(`/WebsiteAnalysis/WebsitePandect/look/${id}`);
     }
