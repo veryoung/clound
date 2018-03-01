@@ -1,5 +1,6 @@
 const echarts = require("echarts");
 import Vue from "vue";
+import { vm } from "@utils/event";
 
 
 export class ChartComponent extends Vue {
@@ -20,6 +21,13 @@ export class ChartComponent extends Vue {
         let result: any = (<any>Object).assign({}, this.defaultOption, this.option);
         // 使用刚指定的配置项和数据显示图表。
         this.chart.setOption(result);
+        vm.$watch(() => {
+            return this.option;
+        }, (o: any, n: any) => {
+            this.chart.setOption(this.option);
+        }, {
+                deep: true
+            });
     }
 }
 

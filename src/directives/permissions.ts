@@ -151,22 +151,22 @@ export const PermissionsSet: string[] = [
     // # 报告管理
     // ## 我的报告
     // 查看
-    "ReportManagement.Myreport.Check",
+    "ReportManagement.MyReport.Check",
     // 下载
-    "ReportManagement.Myreport.Download",
+    "ReportManagement.MyReport.Download",
     // 删除
-    "ReportManagement.Myreport.Delete",
+    "ReportManagement.MyReport.Delete",
     // ## 报告模板
     // 查看
-    "ReportManagement.Reporttemplate.Check",
+    "ReportManagement.ReportTemplate.Check",
     // 添加
-    "ReportManagement.Reporttemplate.Add",
+    "ReportManagement.ReportTemplate.Add",
     // 编辑
-    "ReportManagement.Reporttemplate.Edit",
+    "ReportManagement.ReportTemplate.Edit",
     // 删除
-    "ReportManagement.Reporttemplate.Delete",
+    "ReportManagement.ReportTemplate.Delete",
     // 生成报告
-    "ReportManagement.Reporttemplate.GenerationReport",
+    "ReportManagement.ReportTemplate.GenerationReport",
     /************************运维管理************************/
     // # 运维管理
     // ## 我的节点

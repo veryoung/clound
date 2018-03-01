@@ -6,6 +6,7 @@ import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { NOTICEEVENT } from "@store/notice.type";
 import { LOGADUITEVENT } from "@store/log.aduit.type";
 import { ROUTEREVENT } from "@store/router.type";
+import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
 
 export const vm = new Vue({});
 
@@ -18,7 +19,7 @@ interface ListenerType {
     fn: Function;
 }
 
-export const CONSTANT = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION, MYWEBSITEEVENT, NOTICEEVENT, LOGADUITEVENT, ROUTEREVENT);
+export const CONSTANT = (<any>Object).assign({}, USER, TABLECONFIG, ORGANIZATION, MYWEBSITEEVENT, NOTICEEVENT, LOGADUITEVENT, ROUTEREVENT, WEBSITEANALYSISEVENT);
 /**
  *Author wjt
  *Date 2017-12-26

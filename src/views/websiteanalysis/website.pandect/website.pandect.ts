@@ -14,6 +14,8 @@ import { ModuleTitle } from "@components/title/module.title";
 import { SetCol } from "@components/setcol/setcol";
 import { EventBus, CONSTANT, vm } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 
@@ -28,24 +30,35 @@ require("./website.pandect.styl");
     computed: {
         ...mapGetters([
             "tableConfig",
+            "WebsitePandecttableData"
         ])
     }
 })
-export class WebsitePandect extends Vue {
+export class WebsitePandect extends ListBaseClass {
     // init computed
-    public tableData: WebsiteTableType;
+    public WebsitePandecttableData: WebsitePandectType;
     public tableConfig: TableConfigType;
 
     // init data
     public titles: string[] = ["网站分析"];
-    public filter: any = (<any>Object).assign({}, []);
-    public websitetableData: any[] = new Array<string>();
+    public filterData: SearchType = {
+        domain: "",
+        level: "0",
+        name: "",
+    };
+    public filter: SearchType = (<any>Object).assign({}, this.filterData);
+    public WebsitePandectData: WebsitePandectTableType[] = new Array<WebsitePandectTableType>();
     // watch
     public unwatch: Function = () => { };
 
-    // public tableDefault: = 
     // lifecircle hook 
     created() {
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, this.mergeData(this.tableConfig["websitepandecttable"], this.filter));
+        let that = this;
+
+        let ListId = EventBus.register(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, function (event: string, info: any) {
+            that.WebsitePandectData = (<any>Object).assign([], that.WebsitePandecttableData[that.tableConfig["websitepandecttable"].page - 1]);
+        });
       
     }
 
@@ -58,38 +71,31 @@ export class WebsitePandect extends Vue {
 
     // init method
     search() {
-        // if (this.filter.ctime === null) {
-        //     this.filter.ctime = "";
-        // }
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, this.mergeData(this.tableConfig["websitepandecttable"], this.filter));
     }
 
     reset() {
-        // this.filter = (<any>Object).assign({}, filterData);
-        // this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"]));
+        this.filter = (<any>Object).assign({}, this.filterData);
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, this.mergeData(this.tableConfig["websitepandecttable"], this.filter));
     }
 
     handleSizeChange(val: number) {
-        // this.tableConfig.mywebsitetable.page_size = val;
+        this.tableConfig.websitepandecttable.page_size = val;
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, this.mergeData(this.tableConfig["websitepandecttable"], this.filter));
     }
     handleCurrentChange(val: number) {
-        // this.tableConfig.mywebsitetable.page = val;
+        this.tableConfig.websitepandecttable.page = val;
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, this.mergeData(this.tableConfig["websitepandecttable"], this.filter));
     }
     handleSelectionChange() {
         
     }
 
-    mergeData(opt: any) {
-        const { page_size, page } = opt;
-        // return (<any>Object).assign({}, this.filter, {
-        //     page: page,
-        //     page_size: page_size,
-        // });
-    }
 
-    // 跳转方法同统一
-    handle() {
-
+    handle(opt: any) {
+        console.log(opt);
+        let id = opt.row.id;
+        this.$router.push(`/WebsiteAnalysis/WebsitePandect/look/${id}`);
     }
 
     sortChange(opt: any) {
@@ -97,4 +103,25 @@ export class WebsitePandect extends Vue {
     }
 
 
+}
+
+
+export interface SearchType {
+    domain: string	;
+    level: number | string;
+    name: string;
+}
+interface WebsitePandectTableType {
+    ads_flux: string;
+    ads_req: string;
+    cc_attack: string;
+    domain: string;
+    id: string;
+    level: number;
+    name: string;
+    web_attack: number;
+}
+
+export interface WebsitePandectType {
+    [extra: string]: WebsitePandectTableType[];
 }
