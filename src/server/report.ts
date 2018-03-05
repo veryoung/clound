@@ -9,7 +9,7 @@ class Report extends Restful {
         report_id: string;
     }) {
         return this.get({
-            url: `/middleware/report`,
+            url: `/middleware/create`,
             params: opt
         });
     }
@@ -21,7 +21,8 @@ class Report extends Restful {
         report_tmp_id?: string;
     }) {
         return this.get({
-            url: `/api/v20/report/data/detail/`,
+            url: `/middleware/create`,
+            // url: `/api/v20/report/data/detail/`,
             params: Object.assign({
                 // 攻击次数趋势			
                 tendency_attack: "1",
