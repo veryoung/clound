@@ -12,6 +12,9 @@ import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { TableConfigType } from "@store/table.type";
 import { EventBus, CONSTANT } from "@utils/event";
 import { REPORTEVENT } from "@store/report.type";
+import { ReportService } from "@server/report";
+import { AxiosResponse } from "axios";
+import { ResType } from "server";
 
 
 const Aux = new Auxiliary<string>();
@@ -73,7 +76,6 @@ export class ReportTemplate extends ListBaseClass {
         let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
         let endDay = moment(new Date()).format("YYYYMMDD");
         this.filter.create_time = [startDay, endDay];
-        console.log(1);
         this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
         let that = this;
         let ListId = EventBus.register(CONSTANT.GETREPORTTEMPLATELIST, function (event: string, info: any) {
@@ -134,7 +136,21 @@ export class ReportTemplate extends ListBaseClass {
             if (type === "editor") {
                 this.$router.push(`/ReportManagement/ReportTemplate/editor/${row.id}`);
             } else if (type === "run") {
-                this.$router.push(`/ReportManagement/ReportTemplate/${row.id}`);
+                ReportService.createReport({ report_tmp_id: `${row.id}` })
+                    .then(() => (response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$notify({
+                                    title: "提示",
+                                    message: "生成成功",
+                                    type: "success"
+                                });
+                                break;
+                            default:
+                                break;
+                        }
+                    });
             } else if (type === "del") {
                 ReportTemplateController.handleDel(row, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
             }

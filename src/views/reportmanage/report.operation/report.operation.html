@@ -13,7 +13,7 @@
             </el-form-item>
             <el-collapse accordion>
                 <el-collapse-item title="统计范围" name="1">
-                    <SpliceTree @getData="getData" />
+                    <SpliceTree @getData="getData" kind="website" :arr="form.cycle_range"/>
                 </el-collapse-item>
             </el-collapse>
             <el-form-item label="选择指标"  class="report-form-checkbox">

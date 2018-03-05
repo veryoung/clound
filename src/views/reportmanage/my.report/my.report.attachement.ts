@@ -105,43 +105,9 @@ interface PortType {
     http_port: Array<number>;
     https_port: Array<number>;
 }
-export interface WebMessageType {
-    // 别名	string	@mock=bcf30118.waf
-    cname: string;
-    // 创建人	string	
-    cperson: string;
-    // 接入时间	string	@mock=17-12-19 15:48:51
-    ctime: string;
-    // 防御状态	
-    open_waf: string;
-    // 域名	string	@mock=test.test.com	
-    domain: string;
-    // industry
-    industry: string;
-    // 网站名称	string	@mock=test_name		
-    port: PortType;
-    // remark	备注	string	
-    remark: string;
-    service: ServerType;
-    // 回源地址	array<string>	@mock=www.baidu.com
-    source_info: string[];
-    // 回源类型	string	@mock=CNAME
-    source_type: string;
-    // 接入状态
-    state: string;
-    id?: string;
-    name: string;
 
-}
 
-export interface DomainType {
-    used_domain_num: string;
-    max_domain_num: string;
-}
-export interface WebMessagePageType {
-    [extra: string]: WebMessageType;
-}
-export class WebsiteManager {
+export class MyReportManager {
     handleDel(row: WebsiteListColumnType, opt: any) {
         ElementUI.MessageBox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
             MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
@@ -165,4 +131,4 @@ export class WebsiteManager {
     }
 }
 
-export const WebsiteManagerController = new WebsiteManager();
+export const MyReportManagerController = new MyReportManager();

@@ -2,9 +2,7 @@ import { USER, DefaultUserType } from "@store/user.center.type";
 import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
-import { MywebsiteServer } from "@server/mywebsite";
 import { TableConfigType } from "@store/table.type";
-import { MYWEBSITEEVENT, MyWebsiteType, WebsiteTableType } from "@store/mywebsite.type";
 import { CloudTable } from "@components/cloudtable/table";
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
@@ -14,11 +12,13 @@ import { mapGetters } from "vuex";
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { SetCol } from "@components/setcol/setcol";
-import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController, DomainType } from "./my.report.attachement";
-import { EventBus, CONSTANT, vm } from "@utils/event";
+import SearchType, { filterData, MyReportManagerController } from "./my.report.attachement";
+import { EventBus } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { ListBaseClass } from "@views/base/base.class";
 import * as moment from "moment";
+import { REPORTEVENT } from "@store/report.type";
+import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 
 
 const Aux = new Auxiliary<string>();
@@ -31,26 +31,36 @@ require("./my.report.styl");
     },
     computed: {
         ...mapGetters([
-            "tableData",
+            "reportList",
             "tableConfig",
-            "personInfo",
-            "defaultUser"
         ])
     }
 })
 export class MyReport extends ListBaseClass {
     // init computed
-    public tableData: WebsiteTableType;
+    public reportList: {
+        count_cycle: string;
+        count_obj: any;
+        count_time: string[];
+        name: string;
+        pro_time: string[];
+        id: string;
+    }[];
     public tableConfig: TableConfigType;
-    public personInfo: UserCenterType;
-    public defaultUser: DefaultUserType;
 
 
 
     // init data
     public titles: string[] = ["我的报告"];
     public filter: SearchType = (<any>Object).assign({}, filterData);
-    public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
+    public reporttable: {
+        count_cycle: string;
+        count_obj: any;
+        count_time: string[];
+        name: string;
+        pro_time: string[];
+        rid: string;
+    }[] = [];
 
 
     // 统计时间
@@ -59,26 +69,9 @@ export class MyReport extends ListBaseClass {
     public currentDay: any[] = new Array<string>();
     // 统计范围
     public options4: any = [];
-    public value9: any =  [];
-    public list: any =  [];
+    public value9: any = [];
+    public list: any = [];
     public loading: boolean = false;
-    public states: any = ["Alabama", "Alaska", "Arizona",
-        "Arkansas", "California", "Colorado",
-        "Connecticut", "Delaware", "Florida",
-        "Georgia", "Hawaii", "Idaho", "Illinois",
-        "Indiana", "Iowa", "Kansas", "Kentucky",
-        "Louisiana", "Maine", "Maryland",
-        "Massachusetts", "Michigan", "Minnesota",
-        "Mississippi", "Missouri", "Montana",
-        "Nebraska", "Nevada", "New Hampshire",
-        "New Jersey", "New Mexico", "New York",
-        "North Carolina", "North Dakota", "Ohio",
-        "Oklahoma", "Oregon", "Pennsylvania",
-        "Rhode Island", "South Carolina",
-        "South Dakota", "Tennessee", "Texas",
-        "Utah", "Vermont", "Virginia",
-        "Washington", "West Virginia", "Wisconsin",
-        "Wyoming"];
     // 导出
     public ids: string[] = [];
 
@@ -92,19 +85,18 @@ export class MyReport extends ListBaseClass {
 
 
 
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter));
         let that = this;
-        let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
-            that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
-            console.log(that.websitetableData);
+        let ListId = EventBus.register(this.CONSTANT.GETREPORTLIST, function (event: string, info: any) {
+            that.reporttable = (<any>Object).assign([], that.reportList[that.tableConfig["myreporttable"].page - 1]);
         });
         Aux.insertId(ListId);
     }
 
     mounted() {
-        this.list = this.states.map( (item: any ) => {
-          return { value: item, label: item };
-        });
+        // this.list = this.states.map((item: any) => {
+        //     return { value: item, label: item };
+        // });
     }
 
     destroyed() {
@@ -118,40 +110,40 @@ export class MyReport extends ListBaseClass {
     // 统计范围查询请求
     remoteMethod(query: any) {
         if (query !== "") {
-          this.loading = true;
-          setTimeout(() => {
-            this.loading = false;
-            this.options4 = this.list.filter((item: any ) => {
-              return item.label.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
-            });
-          }, 200);
+            this.loading = true;
+            setTimeout(() => {
+                this.loading = false;
+                this.options4 = this.list.filter((item: any) => {
+                    return item.label.toLowerCase()
+                        .indexOf(query.toLowerCase()) > -1;
+                });
+            }, 200);
         } else {
-          this.options4 = [];
+            this.options4 = [];
         }
     }
 
     search() {
         console.log(this.filter);
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     handleSizeChange(val: number) {
         this.tableConfig.mywebsitetable.page_size = val;
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
     handleCurrentChange(val: number) {
         this.tableConfig.mywebsitetable.page = val;
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     sortChange(opt: any) {
-        this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+        this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     // 跳转方法同统一
@@ -165,7 +157,7 @@ export class MyReport extends ListBaseClass {
             } else if (type === "look") {
                 this.$router.push(`/ReportManagement/RreviewReport/${row.id}`);
             } else if (type === "del") {
-                WebsiteManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
+                MyReportManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
             }
             return;
         }
@@ -179,15 +171,22 @@ export class MyReport extends ListBaseClass {
     }
 
     del() {
-        
+
     }
 
 
 
     handleSelectionChange(options: any[]) {
         this.ids = [];
-        options.map((item: WebsiteListColumnType, $index: number) => {
-            this.ids.push(item.id);
+        options.map((item: {
+            count_cycle: string;
+            count_obj: any;
+            count_time: string[];
+            name: string;
+            pro_time: string[];
+            rid: string;
+        }, $index: number) => {
+            this.ids.push(item.rid);
         });
     }
     // 时间选择

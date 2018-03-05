@@ -4,6 +4,7 @@ import { BarComponent } from "@components/echarts/bar/bar";
 import { PieComponent } from "@components/echarts/pie/pie";
 import { LineComponent } from "@components/echarts/line/line";
 import * as config from "./preview.report.attachment";
+import { ReportService } from "@server/report";
 
 
 
@@ -29,5 +30,9 @@ export class PreviewReport extends Vue {
 
     get pieConfig() {
         return config.pieConfig;
+    }
+
+    created() {
+        // ReportService.createReport({ report_id: this.$route.params.id });
     }
 }

@@ -3,7 +3,6 @@ import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import { FormRuleType } from "@utils/form.validator";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 
@@ -29,6 +28,7 @@ require("./report.operation.styl");
     },
     computed: {
         ...mapGetters([
+            "reportTemplateDetail"
         ])
     },
     components: {
@@ -42,7 +42,14 @@ export class ReportOperation extends DiplomaBaseClass {
     public operation: "add" | "editor";
 
     // init computed
-
+    public reportTemplateDetail: {
+        [extra: string]: {
+            cycle: string;
+            cycle_range: string[];
+            indicators: string[];
+            name: string;
+        }
+    };
 
     // init data
     public titles = ["添加模板"];
@@ -87,10 +94,37 @@ export class ReportOperation extends DiplomaBaseClass {
 
     // init lifecircle hook
     created() {
-        this.titles = this.operation === "add" ? ["添加模板"] : ["编辑模板"];
-        let that = this;
+        if (this.operation === "add") {
+            this.titles = this.operation === "add" ? ["添加模板"] : ["编辑模板"];
+            return;
+        }
         let id = this.$route.params.id;
+        this.$store.dispatch(this.CONSTANT.GETREPORDETAIL, { id: id });
+        let that = this;
+        this.EventBus.register(this.CONSTANT.GETREPORDETAIL, function () {
+            let temp = that.reportTemplateDetail[id];
+            let tempDefenItem: string[] = [];
+            let tempAttackItem: string[] = [];
+            that.form.name = temp.name;
+            for (let key in temp.indicators) {
+                for (let item of that.defenseOption) {
+                    if (temp.indicators[key] === item.value) {
+                        tempDefenItem.push(temp.indicators[key]);
+                    }
+                }
+                for (let item of that.attackOption) {
+                    if (temp.indicators[key] === item.value) {
+                        tempAttackItem.push(temp.indicators[key]);
+                    }
+                }
+            }
+            that.defenItem = tempDefenItem;
+            that.attackItem = tempAttackItem;
+            that.form.indicators = temp.indicators;
+            that.form.cycle_range = temp.cycle_range;
+            that.form.cycle = temp.cycle;
 
+        });
     }
 
     destroyed() {
@@ -98,6 +132,7 @@ export class ReportOperation extends DiplomaBaseClass {
             this.EventBus.unRegister(id);
         });
     }
+
 
     // init methods
     getData(targetData: any) {
@@ -107,7 +142,7 @@ export class ReportOperation extends DiplomaBaseClass {
         }
     }
 
-    handleCheckAllChange(val: string) {
+    handleCheckAllChange(val: boolean) {
         let defenseOptions: Array<string> = [];
         let attackOptions: Array<string> = [];
         for (let key in this.defenseOption) {
@@ -120,16 +155,16 @@ export class ReportOperation extends DiplomaBaseClass {
         this.attackItem = val ? attackOptions : [];
         this.isIndeterminate = false;
     }
+
+
     handleOptionsChange(val: string) {
         this.checkAll = this.checkLength === this.attackItem.length + this.defenItem.length;
         this.isIndeterminate = this.attackItem.length + this.defenItem.length > 0 && this.checkLength < this.attackItem.length + this.defenItem.length;
-
     }
 
     submitForm() {
         // 将选择的指标合在一起
         this.form.indicators = this.defenItem.concat(this.attackItem);
-        console.log(this.form);
 
         let temp: any = this.$refs.formbasic;
         let flag: boolean = false;
@@ -148,7 +183,7 @@ export class ReportOperation extends DiplomaBaseClass {
                                     message: "添加模板成功",
                                     type: "success"
                                 });
-                                this.$router.push("/ReportManagement/ReportTemplate");
+                                this.$router.go(-1);
                                 break;
                             default:
                                 break;
@@ -156,7 +191,21 @@ export class ReportOperation extends DiplomaBaseClass {
                     });
                     break;
                 case "editor":
-
+                    ReportService.EditReport(Object.assign(this.form, { id: this.$route.params.id })).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$notify({
+                                    title: "提示",
+                                    message: "编辑模板成功",
+                                    type: "success"
+                                });
+                                this.$router.go(-1);
+                                break;
+                            default:
+                                break;
+                        }
+                    });
                 default:
                     break;
             }

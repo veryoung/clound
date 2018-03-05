@@ -526,8 +526,8 @@ export const systemTable: TableConfigType = {
                 show: true,
             },
             {
-                label: "统计对象",
-                prop: "count_obj",
+                label: "统计范围",
+                prop: "count_range",
                 show: true,
             },
             {

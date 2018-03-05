@@ -62,7 +62,7 @@
                 <SetCol moduleName="myreporttable" />
             </div>
         </div>
-        <CloudTable moduleName="myreporttable" :datas="websitetableData" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
+        <CloudTable moduleName="myreporttable" :datas="reporttable" @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"
             @handleSelectionChange="handleSelectionChange" @sortChange="sortChange">
             <el-table-column fixed type="selection" width="55" slot="type" align="center">
             </el-table-column>

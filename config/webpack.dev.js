@@ -14,6 +14,11 @@ module.exports = function (env) {
                 target: "http://10.10.200.232:8080",
                 changeOrigin: true,
                 secure: false,
+            }, {
+                context: ["/middleware"],
+                target: "http://127.0.0.1:3000",
+                changeOrigin: true,
+                secure: false,
             }],
             port: process.env.PLATFORM === 'portal' ? 7000 : 8000
             // hot: true

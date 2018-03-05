@@ -54,6 +54,9 @@ export class Login extends BaseLibrary {
     // lifecircle hook
     created() {
         this.changeCode();
+        new UserStatus(() => {
+            this.$router.go(-1);
+        });
     }
 
     // computed
