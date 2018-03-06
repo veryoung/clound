@@ -155,26 +155,29 @@ export const systemTable: TableConfigType = {
             {
                 prop: "name",
                 label: "网站名称",
-                show: true
+                show: true,
+                disable: true,
 
             },
             {
                 prop: "domain",
                 label: "网站域名",
-                show: true
+                show: true,
+                disable: true,
+
 
             },
             {
                 prop: "org",
                 label: "所属企业",
                 show: true
-
             },
             {
                 prop: "level",
                 label: "安全评级",
                 show: true,
-                type: "safelevel"
+                type: "safelevel",
+                disable: true,
             },
             {
                 prop: "web_attack",
