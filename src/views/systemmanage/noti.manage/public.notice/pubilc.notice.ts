@@ -49,7 +49,16 @@ export class PublicNotice extends ListBaseClass {
         page_size: "10",
         send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
     };
+
+    public delfilterData: DelSearchType = {
+        key_word: "",
+        new: true,
+        page: "1",
+        page_size: "9999",
+        send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+    };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
+    public delfilter: SearchType = (<any>Object).assign({}, this.filterData);
 
     public PublicNoticeData: PublicNoticeColumnType[] = new Array<PublicNoticeColumnType>();
     // watch
@@ -57,6 +66,8 @@ export class PublicNotice extends ListBaseClass {
     // lifecircle hook 
     created() {
         this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        this.$store.dispatch(NOTICEEVENT.GETPUBlICGETNOTICELIST,  this.filter);
+
         let that = this;
 
         let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
@@ -127,7 +138,8 @@ export class PublicNotice extends ListBaseClass {
                                 message: "删除成功",
                                 type: "success"
                             });
-                            this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+                            this.search();
+                            this.$store.dispatch(NOTICEEVENT.GETPUBlICGETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.delfilterData));
                             break;
                         default:
                             break;
@@ -158,7 +170,7 @@ export class PublicNotice extends ListBaseClass {
                                     message: "删除成功",
                                     type: "success"
                                 });
-                                this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.filter));
+                                this.$store.dispatch(NOTICEEVENT.GETNOTICELIST, this.mergeData(this.tableConfig["noticetable"], this.delfilter));
                                 break;
                             default:
                                 break;
@@ -192,6 +204,15 @@ export interface SearchType {
     page_size: string;
     send_date: Array<string>;
 }
+
+export interface DelSearchType {
+    key_word: string;
+    new: boolean;
+    page: string;
+    page_size: string;
+    send_time: Array<string>;
+}
+
 
 export interface PublicNoticeColumnType {
     c_person: string;

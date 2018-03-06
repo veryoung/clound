@@ -45,7 +45,6 @@ export class EmailNoticeDeatil extends Vue {
         this.$store.dispatch(NOTICEEVENT.GETEMAILDETAIL, { id: id });
         let eventId = EventBus.register(CONSTANT.GETEMAILDETAIL, function (event: string, info: any) {
             that.EmailNoticeInfo = that.emailDetail[id];
-            console.log(that.EmailNoticeInfo);
         });
         Aux.insertId(eventId);
     }
