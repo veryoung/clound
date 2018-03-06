@@ -137,7 +137,8 @@ export class ReportTemplate extends ListBaseClass {
                 this.$router.push(`/ReportManagement/ReportTemplate/editor/${row.id}`);
             } else if (type === "run") {
                 ReportService.createReport({ report_tmp_id: `${row.id}` })
-                    .then(() => (response: AxiosResponse<ResType>) => {
+                    .then((response: AxiosResponse<ResType>) => {
+                        console.log(response);
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
