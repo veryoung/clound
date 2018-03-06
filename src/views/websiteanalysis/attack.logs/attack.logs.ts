@@ -110,7 +110,12 @@ export class AttackLogs extends ListBaseClass {
     };
     public value1: string = "";
     public value2: string = "";
-    public options: Array<DomainType> = [{
+    public options: Array<DomainType> = [
+        {
+            value: "",
+            label: "全部"
+        },
+        {
         value: "跨站脚本攻击",
         label: "跨站脚本"
     }, {
