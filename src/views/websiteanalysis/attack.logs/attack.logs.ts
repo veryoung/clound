@@ -211,6 +211,7 @@ export class AttackLogs extends ListBaseClass {
     reset() {
         this.filter = (<any>Object).assign({}, this.filterData);
         this.filter.id = this.domainDataArray[0].value;
+        this.currentDate = [this.filter.stime, this.filter.etime];
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["attacklogtable"], this.filter));
     }
 
