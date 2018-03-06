@@ -116,36 +116,36 @@ export class AttackLogs extends ListBaseClass {
             label: "全部"
         },
         {
-        value: "跨站脚本攻击",
-        label: "跨站脚本"
-    }, {
-        value: "注入攻击",
-        label: "注入攻击"
-    }, {
-        value: "文件包含攻击",
-        label: "文件包含"
-    }, {
-        value: "信息泄露攻击",
-        label: "信息泄露"
-    }, {
-        value: "HTTP协议攻击",
-        label: "HTTP协议"
-    }, {
-        value: "CC攻击",
-        label: "CC攻击"
-    }, {
-        value: "恶意爬虫攻击",
-        label: "恶意爬虫"
-    }, {
-        value: "恶意扫描攻击",
-        label: "恶意扫描"
-    }, {
-        value: "应用漏洞攻击",
-        label: "应用漏洞"
-    }, {
-        value: "Webshell攻击",
-        label: "Webshell"
-    }
+            value: "跨站脚本攻击",
+            label: "跨站脚本"
+        }, {
+            value: "注入攻击",
+            label: "注入攻击"
+        }, {
+            value: "文件包含攻击",
+            label: "文件包含"
+        }, {
+            value: "信息泄露攻击",
+            label: "信息泄露"
+        }, {
+            value: "HTTP协议攻击",
+            label: "HTTP协议"
+        }, {
+            value: "CC攻击",
+            label: "CC攻击"
+        }, {
+            value: "恶意爬虫攻击",
+            label: "恶意爬虫"
+        }, {
+            value: "恶意扫描攻击",
+            label: "恶意扫描"
+        }, {
+            value: "应用漏洞攻击",
+            label: "应用漏洞"
+        }, {
+            value: "Webshell攻击",
+            label: "Webshell"
+        }
     ];
     public value: string = "";
 
@@ -154,7 +154,7 @@ export class AttackLogs extends ListBaseClass {
     created() {
         // 初始化时间
         this.currentDate = [this.filter.stime, this.filter.etime];
-
+        console.log(this.websitefilter);
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.websitefilter));
 
         let that = this;
@@ -165,6 +165,7 @@ export class AttackLogs extends ListBaseClass {
 
         let WebsiteId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
+            that.domainDataArray = [];
             // 提取必须项 形成数组
             for (let key in that.websitetableData) {
                 let Obj = {
@@ -175,6 +176,7 @@ export class AttackLogs extends ListBaseClass {
                 Obj.value = that.websitetableData[key].id;
                 that.domainDataArray.push(Obj);
             }
+            that.domainDataArray.unshift({ name: "全部", value: "" });
             that.filter.id = that.domainDataArray[0].value;
             that.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, that.mergeData(that.tableConfig["noticetable"], that.filter));
 
@@ -306,6 +308,7 @@ export interface AttackLogType {
 
 
 export const websitefilterData: WebsiteSearchType = {
+    all: "1",
     cperson: "",
     domain: "",
     name: "",
@@ -333,4 +336,5 @@ export default interface WebsiteSearchType {
     state?: string;
     ctime?: string;
     sort_ctime?: string;
+    all: string,
 }
