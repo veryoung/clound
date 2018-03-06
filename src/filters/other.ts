@@ -43,14 +43,6 @@ export class OtherFilter {
         Vue.filter(
             "flow",
             function (limit: number) {
-                // console.log(value);
-                // if (value === 0) return "0 B";
-                // let k = 1024, // or 1024  
-                //     sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
-                //     i = Math.floor(Math.log(value) / Math.log(k));
-
-                // console.log((value / Math.pow(k, i)).toPrecision(3) + " " + sizes[i]);    
-                // return (value / Math.pow(k, i)).toPrecision(3) + " " + sizes[i];
                 let size = "";
                 if (limit < 0.1 * 1024) { // 如果小于0.1KB转化成B  
                     size = limit.toFixed(2) + "B";
@@ -69,6 +61,25 @@ export class OtherFilter {
                     return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
                 }
                 return sizestr;
+            }
+        );
+        Vue.filter(
+            "safelevel",
+            function (value: string) {
+                if (value === "4") {
+                    return "安全";
+                }
+                else if (value === "3") {
+                    return "低";
+                }
+                else if (value === "2") {
+                    return "中";
+                }
+                else if (value === "1") {
+                    return "高";
+                } else {
+                    return "----";
+                }
             }
         );
     }

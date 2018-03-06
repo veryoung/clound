@@ -173,7 +173,8 @@ export const systemTable: TableConfigType = {
             {
                 prop: "level",
                 label: "安全评级",
-                show: true
+                show: true,
+                type: "safelevel"
             },
             {
                 prop: "web_attack",

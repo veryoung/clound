@@ -52,6 +52,9 @@
                     <span v-else-if="column.type==='send_type'" class="ellipsis" :title="scope.row[column.prop]?'系统发送':'人工发送'">
                         {{scope.row[column.prop] | send_type | none}}
                     </span>
+                    <span v-else-if="column.type==='safelevel'" class="ellipsis" :title="scope.row[column.prop] === '4' ? '安全': scope.row[column.prop] === '3' ? '低':scope.row[column.prop] === '2' ? '中' :scope.row[column.prop] === '1' ? '高': '----'">
+                        {{scope.row[column.prop] | safelevel | none}}
+                    </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>
             </el-table-column>
