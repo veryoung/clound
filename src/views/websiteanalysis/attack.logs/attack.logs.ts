@@ -161,6 +161,7 @@ export class AttackLogs extends ListBaseClass {
 
         let ListId = EventBus.register(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, function (event: string, info: any) {
             that.attacktableData = (<any>Object).assign([], that.logAuditAttackLogtableData[that.tableConfig["attacklogtable"].page - 1]);
+            console.log(that.attacktableData);
         });
 
         let WebsiteId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
@@ -178,7 +179,7 @@ export class AttackLogs extends ListBaseClass {
             }
             that.domainDataArray.unshift({ name: "全部", value: "" });
             that.filter.id = that.domainDataArray[0].value;
-            that.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, that.mergeData(that.tableConfig["noticetable"], that.filter));
+            that.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, that.mergeData(that.tableConfig["attacklogtable"], that.filter));
 
         });
 
@@ -197,7 +198,7 @@ export class AttackLogs extends ListBaseClass {
     search() {
         this.filter.stime = this.currentDate[0];
         this.filter.etime = this.currentDate[1];
-        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["attacklogtable"], this.filter));
     }
 
     handle(opt: any) {
@@ -210,16 +211,16 @@ export class AttackLogs extends ListBaseClass {
     reset() {
         this.filter = (<any>Object).assign({}, this.filterData);
         this.filter.id = this.domainDataArray[0].value;
-        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["attacklogtable"], this.filter));
     }
 
     handleSizeChange(val: number) {
         this.tableConfig.noticetable.page_size = val;
-        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["attacklogtable"], this.filter));
     }
     handleCurrentChange(val: number) {
         this.tableConfig.noticetable.page = val;
-        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["noticetable"], this.filter));
+        this.$store.dispatch(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, this.mergeData(this.tableConfig["attacklogtable"], this.filter));
     }
 
     handleSelectionChange(options: any[]) {
@@ -336,5 +337,5 @@ export default interface WebsiteSearchType {
     state?: string;
     ctime?: string;
     sort_ctime?: string;
-    all: string,
+    all: string;
 }

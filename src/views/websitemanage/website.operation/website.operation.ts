@@ -47,8 +47,6 @@ export class WebsiteOperation extends Vue {
     // init computed
     public websiteEdit: WebEditType;
 
-
-
     // init data
     public form: FormType = {
         cid: "",
@@ -71,7 +69,7 @@ export class WebsiteOperation extends Vue {
     public diplomaText: string = "上传证书";
 
     // 是否是编辑状态
-    public isEdit: boolean = false;    
+    public isEdit: boolean = false;
 
     // 协议类型复选框
     public httpTpye: boolean = true;
@@ -89,13 +87,28 @@ export class WebsiteOperation extends Vue {
     // 上传证书
     public dialogVisibleDiploma: boolean = false;
     // 表单验证
+    public Domainpass: any = (rule: string, value: string, callback: Function) => {
+        if (value === "") {
+            callback(new Error("请输入网站域名"));
+          } else {
+            let pattern = /[-_\.\w]+\.(?:com.cn|ne.cn|com.cn|net.cn|org.cn|gov.cn|net|org|com|cn|cc|me|tel|mobi|asia|biz|info|name|tv|hk)$/;
+            let reg = pattern.test(value);
+            if (!reg) {
+                callback(new Error("请输入正确的网站域名"));
+            } else {
+                callback();
+            }
+        }
+
+
+    }
     public rules: FormRuleType = {
         name: [
             { required: true, message: "请填写网站名称", trigger: "blur" },
             { min: 2, max: 15, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
         ],
         domain: [
-            { required: true, message: "请添加网站域名", trigger: "blur" },
+            { validator: this.Domainpass, trigger: "blur", required: true, },
         ],
 
     };
@@ -320,9 +333,6 @@ export class WebsiteOperation extends Vue {
             flag = valid;
         });
 
-
-        console.log(this.form.cid);
-        console.log(this.form.https_port);
         if (flag) {
             if (!this.httpsTpye) {
                 this.form.cid = "";
