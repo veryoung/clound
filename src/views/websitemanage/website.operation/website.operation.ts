@@ -47,6 +47,8 @@ export class WebsiteOperation extends Vue {
     // init computed
     public websiteEdit: WebEditType;
 
+
+
     // init data
     public form: FormType = {
         cid: "",
@@ -68,7 +70,8 @@ export class WebsiteOperation extends Vue {
     // 上传证书的文字提示
     public diplomaText: string = "上传证书";
 
-
+    // 是否是编辑状态
+    public isEdit: boolean = false;    
 
     // 协议类型复选框
     public httpTpye: boolean = true;
@@ -102,6 +105,7 @@ export class WebsiteOperation extends Vue {
     // init lifecircle hook
     created() {
         this.titles = this.operation === "add" ? ["添加网站"] : ["编辑网站"];
+        this.isEdit = this.operation === "add" ? false : true;
         let that = this;
         let id = this.$route.params.id;
         if (id) {

@@ -4,17 +4,17 @@
         <ModuleTitle :titles="titles" />
         <el-form size="small" :model="form" :rules="rules" ref="formbasic" label-width="100px" class="website-form">
             <el-form-item label="网站名称" prop="name">
-                <el-input v-model="form.name" placeholder="请输入网站名称"></el-input>
+                <el-input v-model="form.name" placeholder="请输入网站名称" :disabled="isEdit"></el-input>
             </el-form-item>
             <el-form-item label="网站域名" class="websiteName" prop="domain">
-                <el-input v-model="form.domain" placeholder="请输入网站域名"></el-input>
+                <el-input v-model="form.domain" placeholder="请输入网站域名" :disabled="isEdit"></el-input>
                 <div class="websiteNameText">
                     注：如果域名相同，则会同步更新https证书、回源方式、防御状态
                 </div>
             </el-form-item>
             <el-form-item label="所属行业" class="webstieIndustry">
                 <div>
-                    <el-radio-group v-model="form.industry" size="medium">
+                    <el-radio-group v-model="form.industry" size="medium" :disabled="isEdit">
                         <el-radio-button label="金融" name="金融"></el-radio-button>
                         <el-radio-button label="能源"></el-radio-button>
                         <el-radio-button label="电力"></el-radio-button>
