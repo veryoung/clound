@@ -55,6 +55,12 @@
                     <span v-else-if="column.type==='safelevel'" class="ellipsis" :title="scope.row[column.prop] === '4' ? '安全': scope.row[column.prop] === '3' ? '低':scope.row[column.prop] === '2' ? '中' :scope.row[column.prop] === '1' ? '高': '----'">
                         {{scope.row[column.prop] | safelevel | none}}
                     </span>
+                    <span v-else-if="column.type==='times'" class="ellipsis" :title="scope.row[column.prop] +'次'">
+                        {{scope.row[column.prop] + "次"}}
+                    </span>
+                    <span v-else-if="column.type==='flow'" class="ellipsis" :title="scope.row[column.prop] |  flow | none">
+                        {{scope.row[column.prop] |  flow | none}}
+                    </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>
             </el-table-column>

@@ -181,28 +181,34 @@ export const systemTable: TableConfigType = {
                 label: "今日Web攻击",
                 show: true,
                 sortable: "custom",
-                width: "150px"
+                width: "150px",
+                type: "times"
             },
             {
                 prop: "cc_attack",
                 label: "今日CC攻击",
                 show: true,
                 sortable: "custom",
-                width: "150px"
+                width: "150px",
+                type: "times"
+
             },
             {
                 prop: "ads_flux",
                 label: "今日加速流量",
                 show: true,
                 sortable: "custom",
-                width: "150px"
+                width: "150px",
+                type: "flow"
             },
             {
                 prop: "ads_req",
                 label: "今日加速请求",
                 show: true,
                 sortable: "custom",
-                width: "150px"
+                width: "150px",
+                type: "times"
+
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],
