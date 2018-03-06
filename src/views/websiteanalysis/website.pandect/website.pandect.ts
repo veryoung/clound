@@ -40,7 +40,7 @@ export class WebsitePandect extends ListBaseClass {
     public tableConfig: TableConfigType;
 
     // init data
-    public titles: string[] = ["网站分析"];
+    public titles: string[] = ["网站总览"];
     public filterData: SearchType = {
         domain: "",
         level: "0",
