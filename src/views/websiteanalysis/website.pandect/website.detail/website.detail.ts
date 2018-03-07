@@ -825,7 +825,7 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
                 extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                 formatter: function (datas: any) {
