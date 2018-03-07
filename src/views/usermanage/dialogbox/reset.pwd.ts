@@ -71,11 +71,6 @@ export class ResetPwd extends Vue {
                     }
                 });
             } else {
-                this.$notify({
-                    title: "提示",
-                    message: "表单验证不成功",
-                    type: "error"
-                });
                 return false;
             }
         });
