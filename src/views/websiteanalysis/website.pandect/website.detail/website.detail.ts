@@ -565,7 +565,7 @@ export class WebsiteDetail extends Vue {
                     silent: true,
                     barGap: "-100%", // Make series be overlap
                     type: "bar",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
                 },
                 {
                     type: "bar",
@@ -593,42 +593,42 @@ export class WebsiteDetail extends Vue {
                     },
                     data: [{
                         name: "Top1",
-                        value: 0
+                        value: 10
                     }, {
                         name: "Top2",
-                        value: 0
+                        value: 9
                     },
                     {
                         name: "Top3",
-                        value: 0
+                        value: 8
                     },
                     {
                         name: "Top4",
-                        value: 0
+                        value: 7
                     },
                     {
                         name: "Top5",
-                        value: 0
+                        value: 6
                     },
                     {
                         name: "Top6",
-                        value: 0
+                        value: 5
                     },
                     {
                         name: "Top7",
-                        value: 0
+                        value: 4
                     },
                     {
                         name: "Top8",
-                        value: 0
+                        value: 3
                     },
                     {
                         name: "Top9",
-                        value: 0
+                        value: 2
                     },
                     {
                         name: "Top10",
-                        value: 0
+                        value: 1
                     },
                     ]
 
