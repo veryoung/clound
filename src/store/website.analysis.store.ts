@@ -121,7 +121,7 @@ export const WebsiteAnalysisStore: Module<WebsiteAnalysisType, any> = {
                 console.log(res);
                 switch (res.status) {
                     case "suc":
-                        commit(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, { page: payload.page, message: res.data });
+                        commit(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, { page: payload.page, message: res.data.data });
                         Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "attacklogtable", total: res.data.total });
                         EventBus.doNotify(CONSTANT.GETATTACKLOGDATA);
                         break;

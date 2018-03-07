@@ -310,9 +310,10 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: " {b0}<br /><span style='color:#BFE83B;'>{a0}: {c0}次</span><br /><span style='color:#FCBE83;'>{a1}: {c1}次</span>"
             },
             xAxis: [{
                 boundaryGap: false,
@@ -756,9 +757,11 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: " {b0}<br /><span style='color:#9adce9;'>{a0}: {c0}次</span><br />"
+
             },
             xAxis: [{
                 boundaryGap: false,
@@ -824,7 +827,18 @@ export class WebsiteDetail extends Vue {
                 textStyle: {
                     color: "#7588E4",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: function (datas: any) {
+                    let times = that.flow(datas[0].value);    
+                    let speed = that.flow(datas[1].value);    
+                    
+                    let res = datas[0].name + "<br/>" + 
+                    "<span style='color:#80D3E3;'>" + datas[0].seriesName + ":  " + times + "</span>" + "<br/>" +
+                    "<span style='color:#76DEC6;'>" + datas[1].seriesName + ":  " + speed + "</span>"
+                    ;
+                    return res;
+                }
+
             },
             xAxis: [{
                 boundaryGap: false,
@@ -902,9 +916,11 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: " {b0}<br /><span style='color:#80D3E3;'>{a0}: {c0}次</span><br /><span style='color:#76DEC6;'>{a1}: {c1}次</span>"
+
             },
             xAxis: [{
                 boundaryGap: false,
@@ -1127,6 +1143,28 @@ export class WebsiteDetail extends Vue {
         this.accessfilter.dt = val;
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILATTACK, this.attackfilter);
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILACCESS, this.accessfilter);
+    }
+
+
+    flow (limit: number) {
+        let size = "";
+        if (limit < 0.1 * 1024) { // 如果小于0.1KB转化成B  
+            size = limit.toFixed(2) + "B";
+        } else if (limit < 0.1 * 1024 * 1024) {// 如果小于0.1MB转化成KB  
+            size = (limit / 1024).toFixed(2) + "KB";
+        } else if (limit < 0.1 * 1024 * 1024 * 1024) { // 如果小于0.1GB转化成MB  
+            size = (limit / (1024 * 1024)).toFixed(2) + "MB";
+        } else { // 其他转化成GB  
+            size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB";
+        }
+
+        let sizestr = size + "";
+        let len = sizestr.indexOf("\.");
+        let dec = sizestr.substr(len + 1, 2);
+        if (dec === "00") {// 当小数点后为00时 去掉小数部分  
+            return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
+        }
+        return sizestr;
     }
 
 
