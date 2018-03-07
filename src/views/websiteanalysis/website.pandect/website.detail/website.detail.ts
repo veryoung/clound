@@ -245,11 +245,11 @@ export class WebsiteDetail extends Vue {
                                 case "0":
                                     return "安全";
                                 case "40":
-                                    return "中";
+                                    return "低";
                                 case "60":
-                                    return "高";
+                                    return "中";
                                 case "100":
-                                    return "很高";
+                                    return "高";
                                 default:
                                     return "";
                             }
