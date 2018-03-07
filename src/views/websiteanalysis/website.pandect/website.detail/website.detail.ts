@@ -7,6 +7,8 @@ import Component from "vue-class-component";
 import { mapGetters } from "vuex";
 import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
 import { EventBus, CONSTANT } from "@utils/event";
+import * as moment from "moment";
+
 
 require("./website.detail.styl");
 @Component({
@@ -100,6 +102,11 @@ export class WebsiteDetail extends Vue {
     //  地域访问次数TOP10
     public tendency_locationtopOpt: any = {};
 
+    // 24小时数据
+    public HoursArray: Array<string> = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00",
+        "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",
+        "19:00", "20:00", "21:00", "22:00", "23:00"];
+
 
 
 
@@ -122,6 +129,8 @@ export class WebsiteDetail extends Vue {
         let AttackId = EventBus.register(CONSTANT.GETPANDECTDETAILATTACK, function (event: string, info: any) {
             that.DetailattackData = (<any>Object).assign([], that.WebsitePandectDetailattackData[that.$route.params.id]);
             let data = that.DetailattackData;
+            console.log(data);
+
             // 安全评级
             if (data.level > -1 || data.level) {
                 let level = data.level;
@@ -129,13 +138,21 @@ export class WebsiteDetail extends Vue {
                 level === 0 ? num = "12.5" : level === 1 ? num = "37.5" : level === 2 ? num = "62.5" : level === 3 ? num = "87.5" : "暂无";
                 that.safeLevelOpt.series[0].data = [num];
             }
-
             // web攻击
-            if (data.total_web) that.web_attack = data.total_web;
+            that.web_attack = data.total_web;
             // cc攻击
-            if (data.total_cc) that.cc_attack = data.total_cc;
+            that.cc_attack = data.total_cc;
             // 攻击次数趋势
             if (data.tendency_attack) {
+                let xArray = [];
+                if (data.tendency_attack.axis_x.length !== 24) {
+                    for (let key in data.tendency_attack.axis_x) {
+                        xArray.push(that.date(data.tendency_attack.axis_x[key]));
+                    }
+                    that.tendency_attackOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_attackOpt.xAxis[0].data = that.HoursArray;
+                }
                 that.tendency_attackOpt.series[0].data = data.tendency_attack.axis_y.att_web;
                 that.tendency_attackOpt.series[1].data = data.tendency_attack.axis_y.att_cc;
             }
@@ -155,18 +172,47 @@ export class WebsiteDetail extends Vue {
             let data = that.DetailaccessData;
 
             // 加速请求
-            if (data.total_hit_flow) that.hit_flow = data.total_hit_flow;
+            that.hit_flow = data.total_hit_flow;
             // 加速流量
-            if (data.total_hit_num) that.hit_num = data.total_hit_num;
+            that.hit_num = data.total_hit_num;
             // Ip访问个数趋势
-            if (data.tendency_ip) that.tendency_ipOpt.series[0].data = data.tendency_ip.axis_y.ip_num;
+            if (data.tendency_ip) {
+                let xArray = [];
+                if (data.tendency_ip.axis_x.length !== 24) {
+                    for (let key in data.tendency_ip.axis_x) {
+                        xArray.push(that.date(data.tendency_ip.axis_x[key]));
+                    }
+                    that.tendency_ipOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_ipOpt.xAxis[0].data = that.HoursArray;
+                }
+                that.tendency_ipOpt.series[0].data = data.tendency_ip.axis_y.ip_num;
+            }
             // 访问流量趋势
             if (data.tendency_req_flow) {
+                let xArray = [];
+                if (data.tendency_req_flow.axis_x.length !== 24) {
+                    for (let key in data.tendency_req_flow.axis_x) {
+                        xArray.push(that.date(data.tendency_req_flow.axis_x[key]));
+                    }
+                    that.tendency_req_flowOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_req_flowOpt.xAxis[0].data = that.HoursArray;
+                }
                 that.tendency_req_flowOpt.series[0].data = data.tendency_req_flow.axis_y.hit_flow;
                 that.tendency_req_flowOpt.series[1].data = data.tendency_req_flow.axis_y.req_flow;
             }
             // 访问次数趋势
             if (data.tendency_req_num) {
+                let xArray = [];
+                if (data.tendency_req_num.axis_x.length !== 24) {
+                    for (let key in data.tendency_req_num.axis_x) {
+                        xArray.push(that.date(data.tendency_req_num.axis_x[key]));
+                    }
+                    that.tendency_req_numOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_req_numOpt.xAxis[0].data = that.HoursArray;
+                }
                 that.tendency_req_numOpt.series[0].data = data.tendency_req_num.axis_y.hit_total;
                 that.tendency_req_numOpt.series[1].data = data.tendency_req_num.axis_y.req_total;
             }
@@ -340,7 +386,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "Web攻击",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -358,7 +404,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "CC攻击",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -792,7 +838,7 @@ export class WebsiteDetail extends Vue {
                     showSymbol: true,
                     symbol: "circle",
                     symbolSize: 10,
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 3,
@@ -829,13 +875,13 @@ export class WebsiteDetail extends Vue {
                 },
                 extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                 formatter: function (datas: any) {
-                    let times = that.flow(datas[0].value);    
-                    let speed = that.flow(datas[1].value);    
-                    
-                    let res = datas[0].name + "<br/>" + 
-                    "<span style='color:#80D3E3;'>" + datas[0].seriesName + ":  " + times + "</span>" + "<br/>" +
-                    "<span style='color:#76DEC6;'>" + datas[1].seriesName + ":  " + speed + "</span>"
-                    ;
+                    let times = that.flow(datas[0].value);
+                    let speed = that.flow(datas[1].value);
+
+                    let res = datas[0].name + "<br/>" +
+                        "<span style='color:#80D3E3;'>" + datas[0].seriesName + ":  " + times + "</span>" + "<br/>" +
+                        "<span style='color:#76DEC6;'>" + datas[1].seriesName + ":  " + speed + "</span>"
+                        ;
                     return res;
                 }
 
@@ -865,7 +911,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "加速流量",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -883,7 +929,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "访问流量",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -947,7 +993,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "加速次数",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -965,7 +1011,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "访问次数",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -1145,8 +1191,13 @@ export class WebsiteDetail extends Vue {
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILACCESS, this.accessfilter);
     }
 
+    date(value: string) {
+        if (value === "") return value;
+        return moment(value).format("YYYY-MM-DD");
+    }
 
-    flow (limit: number) {
+
+    flow(limit: number) {
         let size = "";
         if (limit < 0.1 * 1024) { // 如果小于0.1KB转化成B  
             size = limit.toFixed(2) + "B";

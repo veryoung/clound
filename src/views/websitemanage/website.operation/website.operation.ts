@@ -332,7 +332,7 @@ export class WebsiteOperation extends Vue {
         temp.validate((valid: any) => {
             flag = valid;
         });
-
+        console.log(this.form);
         if (flag) {
             if (!this.httpsTpye) {
                 this.form.cid = "";
