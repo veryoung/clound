@@ -106,6 +106,7 @@ export class ReportOperation extends DiplomaBaseClass {
             let temp = that.reportTemplateDetail[id];
             let tempDefenItem: string[] = [];
             let tempAttackItem: string[] = [];
+            console.log(temp);
             that.form.name = temp.name;
             for (let key in temp.indicators) {
                 for (let item of that.defenseOption) {

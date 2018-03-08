@@ -332,6 +332,7 @@ export class WebsiteOperation extends Vue {
         });
         console.log(this.form);
         if (flag) {
+            
             if (!this.httpsTpye) {
                 this.form.cid = "";
             } else {
@@ -343,7 +344,7 @@ export class WebsiteOperation extends Vue {
                     });
                     return;
                 }
-                if (this.form.cid === "") {
+                if (this.form.cid === ""  && this.form.https_port.length === 0) {
                     this.$notify({
                         title: "提示",
                         message: "请上传证书",
