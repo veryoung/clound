@@ -5,6 +5,16 @@ class Report extends Restful {
         super();
     }
 
+
+    delMyReport(id: string) {
+        return this.del({
+            url: "/api/v20/report/data/",
+            params: {
+                id: id
+            }
+        });
+    }
+
     public reportData(opt: {
         report_id: string;
     }) {

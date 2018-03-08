@@ -139,6 +139,7 @@ export class WebsiteManagement extends ListBaseClass {
                                     message: "删除成功",
                                     type: "success"
                                 });
+                                this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
                                 this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
                                 break;
                             default:

@@ -118,9 +118,10 @@ export const WebsiteAnalysisStore: Module<WebsiteAnalysisType, any> = {
             }
             WebsiteAnalysisServer.getAttackLog(payload).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
+                console.log(res);
                 switch (res.status) {
                     case "suc":
-                        commit(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, { page: payload.page, message: res.data });
+                        commit(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, { page: payload.page, message: res.data.data });
                         Store.dispatch(TABLECONFIG.TOTAL, { moduleName: "attacklogtable", total: res.data.total });
                         EventBus.doNotify(CONSTANT.GETATTACKLOGDATA);
                         break;

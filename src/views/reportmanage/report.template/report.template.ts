@@ -112,6 +112,9 @@ export class ReportTemplate extends ListBaseClass {
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
+        let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
+        let endDay = moment(new Date()).format("YYYYMMDD");
+        this.filter.create_time = [startDay, endDay];
         this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
     }
 

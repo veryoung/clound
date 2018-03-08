@@ -223,13 +223,6 @@ export class PermissionsObj {
             return false;
         }
 
-        // if (permissions.indexOf(value) !== -1) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
-        // let reg: RegExp = new RegExp(`^${value}.*$`);
-        // console.log(reg);
         for (let permission of permissions) {
             if (permission.indexOf(value) !== -1) {
                 return true;

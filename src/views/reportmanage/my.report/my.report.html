@@ -48,10 +48,10 @@
         <div class="btn-group">
             <div>
                 <div class="btn-first">
-                    <el-button type="primary" @click="download()" size="small">
+                    <!-- <el-button type="primary" @click="download()" size="small">
                         <span class="iconfont">&#xe61a;</span>
                         批量下载
-                    </el-button>
+                    </el-button> -->
                     <el-button type="primary" @click="del()" size="small">
                         <span class="iconfont">&#xe61b;</span>
                         删除报告
@@ -70,7 +70,7 @@
                 <template slot-scope="scope">
                     <i title="查看" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;查看</i>
                     <i title="下载" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('download',{$index:scope.$index, row:scope.row})">&#xe604;下载</i>
-                    <i title="删除" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;删除</i>
+                    <i title="删除" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('del',{$index:scope.$index, row:scope.row})">删除</i>
                 </template>
             </el-table-column>
         </CloudTable>

@@ -28,7 +28,7 @@ export const WebsiteAnalysisRouter: RouteConfig[] = [
         component: AttackLogs
     },
     {
-        path: "WebsitePandect/look/:id",
+        path: "WebsitePandect/look/:id/:name/:domain",
         name: "网站详情",
         meta: {
             icon: "icon-quan-",

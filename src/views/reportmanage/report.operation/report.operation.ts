@@ -94,10 +94,11 @@ export class ReportOperation extends DiplomaBaseClass {
 
     // init lifecircle hook
     created() {
+        console.log(this.operation);
         if (this.operation === "add") {
             this.titles = this.operation === "add" ? ["添加模板"] : ["编辑模板"];
-            return;
         }
+        console.log(this.titles);
         let id = this.$route.params.id;
         this.$store.dispatch(this.CONSTANT.GETREPORDETAIL, { id: id });
         let that = this;
@@ -105,6 +106,7 @@ export class ReportOperation extends DiplomaBaseClass {
             let temp = that.reportTemplateDetail[id];
             let tempDefenItem: string[] = [];
             let tempAttackItem: string[] = [];
+            console.log(temp);
             that.form.name = temp.name;
             for (let key in temp.indicators) {
                 for (let item of that.defenseOption) {

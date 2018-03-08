@@ -7,6 +7,8 @@ import Component from "vue-class-component";
 import { mapGetters } from "vuex";
 import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
 import { EventBus, CONSTANT } from "@utils/event";
+import * as moment from "moment";
+
 
 require("./website.detail.styl");
 @Component({
@@ -74,6 +76,9 @@ export class WebsiteDetail extends Vue {
         total_hit_num: "1",
     };
     public accessfilter: AttackSearchType = (<any>Object).assign({}, this.accessfilterData);
+    // 标题头
+    public titles: string = "暂无";
+
     // cc攻击
     public cc_attack: string = "暂无";
     // web攻击
@@ -100,6 +105,11 @@ export class WebsiteDetail extends Vue {
     //  地域访问次数TOP10
     public tendency_locationtopOpt: any = {};
 
+    // 24小时数据
+    public HoursArray: Array<string> = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00",
+        "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",
+        "19:00", "20:00", "21:00", "22:00", "23:00"];
+
 
 
 
@@ -112,448 +122,11 @@ export class WebsiteDetail extends Vue {
     public demoOpT2: any = {};
     // lifecircle hook 
     created() {
-        this.attackTimeOpt = {
-            legend: {
-                data: ["Web攻击", "CC攻击"],
-                right: "10%",
-            },
-            xAxis: [{
-                axisPointer: {
-                    label: {
-                        formatter: function (params: any) {
-                            return "降水量  " + params.value
-                                + (params.seriesData.length ? "：" + params.seriesData[0].data : "");
-                        }
-                    }
-                },
-                boundaryGap: false,
-                axisLine: {
-                    onZero: false
-                },
-                axisTick: {
-                    show: false
-                },
-                data: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"]
-            }],
-            yAxis: {
-                splitNumber: 6,
-                axisLabel: {
-                    formatter: "{value} %"
-                },
-                axisLine: {
-                    show: false
-                },
-                axisTick: {
-                    show: false
-                }
-            },
-            series: [
-                {
-                    name: "Web攻击",
-                    type: "line",
-                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7]
-                },
-                {
-                    name: "CC攻击",
-                    type: "line",
-                    data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4]
-                }
-            ]
-        };
-        this.attackResource10Opt = {
-            color: ["#3398DB"],
-            "tooltip": {
-                "trigger": "axis",
-                "axisPointer": { // 坐标轴指示器，坐标轴触发有效
-                    "type": "shadow" // 默认为直线，可选为："line" | "shadow"
-                }
-            },
-            legend: {
-                show: false,
-                height: 0,
-                data: ["2011年"]
-            },
-            grid: {
-                left: "3%",
-                right: "0%",
-                bottom: "0%",
-                containLabel: true
-            },
-            "xAxis": [{
-                "type": "value",
-                "axisLine": {
-                    "show": false
-                },
-                "axisTick": {
-                    "show": false
-                },
-                "axisLabel": {
-                    "show": false
-                },
-                "splitLine": {
-                    "show": false
-                }
-            }],
-            yAxis: {
-                type: "category",
-                data: ["Top1", "Top2", "Top3", "Top4", "Top5", "Top6", "Top7", "Top8", "Top9", "Top10"],
-                axisLine: {
-                    show: false
-                },
-                axisTick: {
-                    show: false,
-                    alignWithLabel: true
-                },
-            },
-            series: [
-                {
-                    name: "2012年",
-                    itemStyle: {
-                        normal: {
-                            color: "#ddd"
-                        }
-                    },
-                    barGap: "-100%", // Make series be overlap
-                    type: "bar",
-                    legendHoverLink: false,
-                    data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230],
-                    label: {
-                        show: false,
-                    }
-                },
-                {
-                    name: "2011年",
-                    type: "bar",
-                    label: {
-                        "normal": {
-                            "show": true,
-                            "position": [5, 5],
-                            "formatter": function (params: any) {
-                                return params.data.name + ":                        " + params.data.value;
-                            },
-                            "textStyle": {
-                                "color": "black"
-                            }
-                        }
-
-                    },
-                    data: [{
-                        name: "北京",
-                        value: 18203
-                    }, {
-                        name: "上海",
-                        value: 23489
-                    },
-                    {
-                        name: "深圳",
-                        value: 29034
-                    },
-                    {
-                        name: "广州",
-                        value: 104970
-                    },
-                    {
-                        name: "杭州",
-                        value: 131744
-                    },
-                    {
-                        name: "成都",
-                        value: 123123
-                    },
-                    {
-                        name: "南京",
-                        value: 185432
-                    },
-                    {
-                        name: "天津",
-                        value: 177524
-                    },
-                    {
-                        name: "南昌",
-                        value: 154323
-                    },
-                    {
-                        name: "合肥",
-                        value: 630230
-                    },
-                    ]
-
-                },
-            ]
-        };
-        this.demoOpT = {
-            title: {
-                show: false,
-            },
-            tooltip: {
-                show: true,
-                formatter: function (params: any) {
-                    return "<div >" + params.data.name + "</div>" + "<div >" + params.data.value + "</div>";
-                },
-            },
-            legend: {
-                show: true,
-                borderColor: "#f33",
-            },
-            calculable: true,
-            grid: {
-                left: "10%",
-                top: "3%",
-                bottom: "3%",
-                right: "0"
-            },
-            yAxis: [{
-                "type": "category",
-                offset: 0,
-                nameLocation: "start",
-                nameGap: 33,
-                "axisLabel": {
-                    "interval": 0,
-                    inside: false,
-                    margin: 8,
-                },
-                axisTick: {
-                    alignWithLabel: true,
-                    interval: 0,
-                    show: false,
-                },
-                axisLine: {
-                    show: false,
-                },
-                data: ["Top10", "Top9", "Top8", "Top7", "Top6", "Top5", "Top4", "Top3", "Top2", "Top1"],
-                splitLine: {
-                    show: false
-                },
-            }],
-            xAxis: [{
-                // type: "value",
-                name: "",
-                // max: 53500
-                splitLine: {
-                    show: false
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: "#00ccfe",
-                    },
-                    show: false,
-                },
-                axisTick: {
-                    show: false,
-                },
-                axisLabel: {
-                    show: false,
-                    formatter: function (param: any) {
-                        return param + "%";
-                    },
-                    textStyle: {
-                        color: "#00ccfe",
-                    }
-                }
-            }],
-            series: [
-                {
-                    itemStyle: {
-                        normal: {
-                            color: "#f4f5f7"
-                        }
-                    },
-                    barWidth: 25,
-                    silent: true,
-                    barGap: "-100%", // Make series be overlap
-                    type: "bar",
-                    data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230]
-                },
-                {
-                    type: "bar",
-                    legendHoverLink: true,
-                    barWidth: 25,
-                    itemStyle: {
-                        normal: {
-                            color: "#e8e8e8"
-                        },
-                        shadowBlur: {
-                            shadowColor: "#e8e8e8"
-                        }
-                    },
-                    label: {
-                        "normal": {
-                            "show": true,
-                            "position": [5, 5],
-                            "formatter": function (params: any) {
-                                return params.data.name + ":  " + params.data.value;
-                            },
-                            "textStyle": {
-                                "color": "#737373"
-                            }
-                        }
-                    },
-                    data: [{
-                        name: "北京000",
-                        value: 18203
-                    }, {
-                        name: "上海",
-                        value: 23489
-                    },
-                    {
-                        name: "深圳",
-                        value: 29034
-                    },
-                    {
-                        name: "广州",
-                        value: 104970
-                    },
-                    {
-                        name: "杭州",
-                        value: 131744
-                    },
-                    {
-                        name: "成都",
-                        value: 123123
-                    },
-                    {
-                        name: "南京",
-                        value: 185432
-                    },
-                    {
-                        name: "天津",
-                        value: 177524
-                    },
-                    {
-                        name: "南昌",
-                        value: 154323
-                    },
-                    {
-                        name: "合肥",
-                        value: 630230
-                    },
-                    ]
-
-                },
-            ]
-        };
-        this.demoOpT2 = {
-            tooltip: {
-                show: true,
-                formatter: function (params: any) {
-
-                    return "<div >" + params.data.name + "</div>" + "<div >" + params.data.value + "</div>";
-                },
-            },
-            grid: {
-                left: "10%",
-                top: "3%",
-                bottom: "3%",
-                right: "10%"
-            },
-            color: ["#3398DB"],
-            xAxis: [{
-                max: 630230,
-                type: "value",
-                axisTick: {
-                    show: false,
-                },
-                axisLine: {
-                    show: false,
-                },
-                axisLabel: {
-                    show: false,
-                    textStyle: {
-                        color: "#00ccfe",
-                    }
-                },
-                splitLine: {
-                    show: false
-                }
-            }],
-            yAxis: [{
-                type: "category",
-                data: ["Top1", "Top2", "Top3", "Top4", "Top5", "Top6", "Top7", "Top8", "Top9", "Top10"],
-                nameTextStyle: {
-                    color: "#b7ce9e",
-                    fontSize: "18px"
-                },
-                axisTick: {
-                    show: false,
-                },
-                axisLine: {
-                    show: false,
-                }
-            }],
-            series: [{
-                name: " ",
-                type: "bar",
-                barWidth: 20,
-                silent: true,
-                itemStyle: {
-                    normal: {
-                        color: "#f2f2f2"
-                    }
-                },
-                barGap: "-100%",
-                barCategoryGap: "50%",
-                data: [630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230, 630230],
-            }, {
-                type: "bar",
-                barWidth: 20,
-                label: {
-                    normal: {
-                        show: true,
-                        position: "right",
-                        formatter: function (params: any) {
-
-                            return params.data.name + ": " + params.data.value;
-                        },
-                        textStyle: {
-                            color: "black"
-                        }
-                    }
-                },
-                data: [{
-                    name: "北京",
-                    value: 18203
-                }, {
-                    name: "上海",
-                    value: 23489
-                },
-                {
-                    name: "深圳",
-                    value: 29034
-                },
-                {
-                    name: "广州",
-                    value: 104970
-                },
-                {
-                    name: "杭州",
-                    value: 131744
-                },
-                {
-                    name: "成都",
-                    value: 123123
-                },
-                {
-                    name: "南京",
-                    value: 185432
-                },
-                {
-                    name: "天津",
-                    value: 177524
-                },
-                {
-                    name: "南昌",
-                    value: 154323
-                },
-                {
-                    name: "合肥",
-                    value: 630230
-                },
-                ],
-            }]
-        };
 
         this.attackfilter.site = this.$route.params.id;
         this.accessfilter.site = this.$route.params.id;
+        console.log(this.$route.params);
+        this.titles = this.$route.params.name + "(" + this.$route.params.domain + ")";
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILATTACK, this.attackfilter);
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILACCESS, this.accessfilter);
         let that = this;
@@ -561,6 +134,8 @@ export class WebsiteDetail extends Vue {
         let AttackId = EventBus.register(CONSTANT.GETPANDECTDETAILATTACK, function (event: string, info: any) {
             that.DetailattackData = (<any>Object).assign([], that.WebsitePandectDetailattackData[that.$route.params.id]);
             let data = that.DetailattackData;
+            console.log(data);
+
             // 安全评级
             if (data.level > -1 || data.level) {
                 let level = data.level;
@@ -568,13 +143,21 @@ export class WebsiteDetail extends Vue {
                 level === 0 ? num = "12.5" : level === 1 ? num = "37.5" : level === 2 ? num = "62.5" : level === 3 ? num = "87.5" : "暂无";
                 that.safeLevelOpt.series[0].data = [num];
             }
-
             // web攻击
-            if (data.total_web) that.web_attack = data.total_web;
+            that.web_attack = data.total_web;
             // cc攻击
-            if (data.total_cc) that.cc_attack = data.total_cc;
+            that.cc_attack = data.total_cc;
             // 攻击次数趋势
             if (data.tendency_attack) {
+                let xArray = [];
+                if (data.tendency_attack.axis_x.length !== 24) {
+                    for (let key in data.tendency_attack.axis_x) {
+                        xArray.push(that.date(data.tendency_attack.axis_x[key]));
+                    }
+                    that.tendency_attackOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_attackOpt.xAxis[0].data = that.HoursArray;
+                }
                 that.tendency_attackOpt.series[0].data = data.tendency_attack.axis_y.att_web;
                 that.tendency_attackOpt.series[1].data = data.tendency_attack.axis_y.att_cc;
             }
@@ -594,18 +177,47 @@ export class WebsiteDetail extends Vue {
             let data = that.DetailaccessData;
 
             // 加速请求
-            if (data.total_hit_flow) that.hit_flow = data.total_hit_flow;
+            that.hit_flow = data.total_hit_flow;
             // 加速流量
-            if (data.total_hit_num) that.hit_num = data.total_hit_num;
+            that.hit_num = data.total_hit_num;
             // Ip访问个数趋势
-            if (data.tendency_ip) that.tendency_ipOpt.series[0].data = data.tendency_ip.axis_y.ip_num;
+            if (data.tendency_ip) {
+                let xArray = [];
+                if (data.tendency_ip.axis_x.length !== 24) {
+                    for (let key in data.tendency_ip.axis_x) {
+                        xArray.push(that.date(data.tendency_ip.axis_x[key]));
+                    }
+                    that.tendency_ipOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_ipOpt.xAxis[0].data = that.HoursArray;
+                }
+                that.tendency_ipOpt.series[0].data = data.tendency_ip.axis_y.ip_num;
+            }
             // 访问流量趋势
             if (data.tendency_req_flow) {
+                let xArray = [];
+                if (data.tendency_req_flow.axis_x.length !== 24) {
+                    for (let key in data.tendency_req_flow.axis_x) {
+                        xArray.push(that.date(data.tendency_req_flow.axis_x[key]));
+                    }
+                    that.tendency_req_flowOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_req_flowOpt.xAxis[0].data = that.HoursArray;
+                }
                 that.tendency_req_flowOpt.series[0].data = data.tendency_req_flow.axis_y.hit_flow;
                 that.tendency_req_flowOpt.series[1].data = data.tendency_req_flow.axis_y.req_flow;
             }
             // 访问次数趋势
             if (data.tendency_req_num) {
+                let xArray = [];
+                if (data.tendency_req_num.axis_x.length !== 24) {
+                    for (let key in data.tendency_req_num.axis_x) {
+                        xArray.push(that.date(data.tendency_req_num.axis_x[key]));
+                    }
+                    that.tendency_req_numOpt.xAxis[0].data = xArray;
+                } else {
+                    that.tendency_req_numOpt.xAxis[0].data = that.HoursArray;
+                }
                 that.tendency_req_numOpt.series[0].data = data.tendency_req_num.axis_y.hit_total;
                 that.tendency_req_numOpt.series[1].data = data.tendency_req_num.axis_y.req_total;
             }
@@ -684,11 +296,11 @@ export class WebsiteDetail extends Vue {
                                 case "0":
                                     return "安全";
                                 case "40":
-                                    return "中";
+                                    return "低";
                                 case "60":
-                                    return "高";
+                                    return "中";
                                 case "100":
-                                    return "很高";
+                                    return "高";
                                 default:
                                     return "";
                             }
@@ -749,9 +361,10 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: " {b0}<br /><span style='color:#BFE83B;'>{a0}: {c0}次</span><br /><span style='color:#FCBE83;'>{a1}: {c1}次</span>"
             },
             xAxis: [{
                 boundaryGap: false,
@@ -778,7 +391,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "Web攻击",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -796,7 +409,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "CC攻击",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -957,7 +570,7 @@ export class WebsiteDetail extends Vue {
                     silent: true,
                     barGap: "-100%", // Make series be overlap
                     type: "bar",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
                 },
                 {
                     type: "bar",
@@ -985,42 +598,42 @@ export class WebsiteDetail extends Vue {
                     },
                     data: [{
                         name: "Top1",
-                        value: 0
+                        value: 10
                     }, {
                         name: "Top2",
-                        value: 0
+                        value: 9
                     },
                     {
                         name: "Top3",
-                        value: 0
+                        value: 8
                     },
                     {
                         name: "Top4",
-                        value: 0
+                        value: 7
                     },
                     {
                         name: "Top5",
-                        value: 0
+                        value: 6
                     },
                     {
                         name: "Top6",
-                        value: 0
+                        value: 5
                     },
                     {
                         name: "Top7",
-                        value: 0
+                        value: 4
                     },
                     {
                         name: "Top8",
-                        value: 0
+                        value: 3
                     },
                     {
                         name: "Top9",
-                        value: 0
+                        value: 2
                     },
                     {
                         name: "Top10",
-                        value: 0
+                        value: 1
                     },
                     ]
 
@@ -1195,9 +808,11 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: " {b0}<br /><span style='color:#9adce9;'>{a0}: {c0}次</span><br />"
+
             },
             xAxis: [{
                 boundaryGap: false,
@@ -1228,7 +843,7 @@ export class WebsiteDetail extends Vue {
                     showSymbol: true,
                     symbol: "circle",
                     symbolSize: 10,
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 3,
@@ -1261,9 +876,20 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: function (datas: any) {
+                    let times = that.flow(datas[0].value);
+                    let speed = that.flow(datas[1].value);
+
+                    let res = datas[0].name + "<br/>" +
+                        "<span style='color:#80D3E3;'>" + datas[0].seriesName + ":  " + times + "</span>" + "<br/>" +
+                        "<span style='color:#76DEC6;'>" + datas[1].seriesName + ":  " + speed + "</span>"
+                        ;
+                    return res;
+                }
+
             },
             xAxis: [{
                 boundaryGap: false,
@@ -1290,7 +916,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "加速流量",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -1308,7 +934,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "访问流量",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -1341,9 +967,11 @@ export class WebsiteDetail extends Vue {
                 backgroundColor: "rgba(255,255,255,1)",
                 padding: [5, 10],
                 textStyle: {
-                    color: "#7588E4",
+                    color: "#000000",
                 },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)"
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                formatter: " {b0}<br /><span style='color:#80D3E3;'>{a0}: {c0}次</span><br /><span style='color:#76DEC6;'>{a1}: {c1}次</span>"
+
             },
             xAxis: [{
                 boundaryGap: false,
@@ -1370,7 +998,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "加速次数",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -1388,7 +1016,7 @@ export class WebsiteDetail extends Vue {
                 {
                     name: "访问次数",
                     type: "line",
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, , 0, 0, 0, 0, 0],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     lineStyle: {
                         normal: {
                             width: 2,
@@ -1566,6 +1194,33 @@ export class WebsiteDetail extends Vue {
         this.accessfilter.dt = val;
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILATTACK, this.attackfilter);
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILACCESS, this.accessfilter);
+    }
+
+    date(value: string) {
+        if (value === "") return value;
+        return moment(value).format("YYYY-MM-DD");
+    }
+
+
+    flow(limit: number) {
+        let size = "";
+        if (limit < 0.1 * 1024) { // 如果小于0.1KB转化成B  
+            size = limit.toFixed(2) + "B";
+        } else if (limit < 0.1 * 1024 * 1024) {// 如果小于0.1MB转化成KB  
+            size = (limit / 1024).toFixed(2) + "KB";
+        } else if (limit < 0.1 * 1024 * 1024 * 1024) { // 如果小于0.1GB转化成MB  
+            size = (limit / (1024 * 1024)).toFixed(2) + "MB";
+        } else { // 其他转化成GB  
+            size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB";
+        }
+
+        let sizestr = size + "";
+        let len = sizestr.indexOf("\.");
+        let dec = sizestr.substr(len + 1, 2);
+        if (dec === "00") {// 当小数点后为00时 去掉小数部分  
+            return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
+        }
+        return sizestr;
     }
 
 

@@ -82,6 +82,7 @@ interface WebEditMessageType {
     source_type: string;
     // 接入状态
     state: string;
+    has_key: string;
 }
 interface WebMessageType {
     // 别名	string	@mock=bcf30118.waf

@@ -1,9 +1,9 @@
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
-import { MywebsiteServer } from "@server/mywebsite";
 import ElementUI from "element-ui";
 import { Store } from "@store/store";
+import { ReportService } from "@server/report";
 
 // 变量名	含义	类型	备注
 // cperson	创建人	string	
@@ -109,8 +109,8 @@ interface PortType {
 
 export class MyReportManager {
     handleDel(row: WebsiteListColumnType, opt: any) {
-        ElementUI.MessageBox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
-            MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
+        ElementUI.MessageBox.confirm("是否确认删除？", "提示").then(() => {
+            ReportService.delMyReport(row.id).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 switch (res.status) {
                     case "suc":
@@ -119,7 +119,6 @@ export class MyReportManager {
                             message: "删除成功",
                             type: "success"
                         });
-                        Store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, opt);
                         break;
                     default:
                         break;

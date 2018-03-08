@@ -54,6 +54,7 @@ export const MyWebsiteStore: Module<MyWebsiteType, any> = {
                     source_type: "",
                     // 接入状态
                     state: "",
+                    has_key: "",
                 }
             },
             websiteMessage: {

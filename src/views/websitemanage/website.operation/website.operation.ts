@@ -47,8 +47,6 @@ export class WebsiteOperation extends Vue {
     // init computed
     public websiteEdit: WebEditType;
 
-
-
     // init data
     public form: FormType = {
         cid: "",
@@ -62,6 +60,7 @@ export class WebsiteOperation extends Vue {
         source_type: "A",
         remark: "",
         id: "",
+        has_key: "",
     };
 
     // 标题
@@ -71,7 +70,7 @@ export class WebsiteOperation extends Vue {
     public diplomaText: string = "上传证书";
 
     // 是否是编辑状态
-    public isEdit: boolean = false;    
+    public isEdit: boolean = false;
 
     // 协议类型复选框
     public httpTpye: boolean = true;
@@ -89,13 +88,28 @@ export class WebsiteOperation extends Vue {
     // 上传证书
     public dialogVisibleDiploma: boolean = false;
     // 表单验证
+    public Domainpass: any = (rule: string, value: string, callback: Function) => {
+        if (value === "") {
+            callback(new Error("请输入网站域名"));
+        } else {
+            let pattern = /[-_\.\w]+\.(?:com.cn|ne.cn|com.cn|net.cn|org.cn|gov.cn|net|org|com|cn|cc|me|tel|mobi|asia|biz|info|name|tv|hk)$/;
+            let reg = pattern.test(value);
+            if (!reg) {
+                callback(new Error("请输入正确的网站域名"));
+            } else {
+                callback();
+            }
+        }
+
+
+    }
     public rules: FormRuleType = {
         name: [
             { required: true, message: "请填写网站名称", trigger: "blur" },
             { min: 2, max: 15, message: "不符合字符规范，字符长度2-15字符", trigger: "blur" }
         ],
         domain: [
-            { required: true, message: "请添加网站域名", trigger: "blur" },
+            { validator: this.Domainpass, trigger: "blur", required: true, },
         ],
 
     };
@@ -114,13 +128,16 @@ export class WebsiteOperation extends Vue {
         let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
             that.form.name = that.websiteEdit[id].name;
             that.form.domain = that.websiteEdit[id].domain;
-            that.form.http_port = that.websiteEdit[id].port.http_port;
-            that.form.https_port = that.websiteEdit[id].port.https_port;
+            let http_porttemp: any = that.websiteEdit[id].port.http_port;
+            that.form.http_port = http_porttemp;
+            let https_porttemp: any = that.websiteEdit[id].port.https_port;
+            that.form.https_port = https_porttemp;
             that.form.industry = that.websiteEdit[id].industry;
             that.form.source_info = that.websiteEdit[id].source_info;
             that.form.remark = that.websiteEdit[id].remark;
             that.form.source_type = that.websiteEdit[id].source_type;
             that.form.open_waf = that.websiteEdit[id].open_waf;
+            that.form.has_key = that.websiteEdit[id].has_key;
             // 判断回源类型所属框
             if (that.form.source_type === "回源IP") {
                 that.sourceIP = 0;
@@ -141,7 +158,6 @@ export class WebsiteOperation extends Vue {
                 that.httpTpye = false;
             }
             // 判断回源
-            console.log(that.websiteEdit[id]);
             if (that.form.open_waf === "回源") {
                 that.form.open_waf = "0";
             } else {
@@ -186,9 +202,6 @@ export class WebsiteOperation extends Vue {
 
 
     getsourceIPTags(tagVal: string, type: string, done: Function) {
-        console.log(tagVal);
-
-
         if (type === "del") {
             let index = this.sourceIPData.indexOf(tagVal);
             this.sourceIPData.splice(index, 1);
@@ -319,10 +332,6 @@ export class WebsiteOperation extends Vue {
         temp.validate((valid: any) => {
             flag = valid;
         });
-
-
-        console.log(this.form.cid);
-        console.log(this.form.https_port);
         if (flag) {
             if (!this.httpsTpye) {
                 this.form.cid = "";
@@ -333,9 +342,10 @@ export class WebsiteOperation extends Vue {
                         message: "请输入https端口",
                         type: "warning"
                     });
+                   
                     return;
                 }
-                if (this.form.cid === "") {
+                if ( this.form.cid === "" && this.form.https_port.length === 0) {
                     this.$notify({
                         title: "提示",
                         message: "请上传证书",
@@ -421,7 +431,6 @@ export class WebsiteOperation extends Vue {
 
     // 协议类型复选框
     changeSoure(val: any) {
-        console.log(val);
         if (val === 0) {
             this.form.source_type = "A";
         } else {

@@ -42,7 +42,7 @@ export class OtherFilter {
         );
         Vue.filter(
             "flow",
-            function (limit: number) {
+            function (limit: number ) {
                 let size = "";
                 if (limit < 0.1 * 1024) { // 如果小于0.1KB转化成B  
                     size = limit.toFixed(2) + "B";
@@ -60,6 +60,8 @@ export class OtherFilter {
                 if (dec === "00") {// 当小数点后为00时 去掉小数部分  
                     return sizestr.substring(0, len) + sizestr.substr(len + 3, 2);
                 }
+                let temp: any = limit;
+                if (temp === "暂无") sizestr = "暂无加速流量";
                 return sizestr;
             }
         );
