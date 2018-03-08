@@ -8,8 +8,8 @@
 export interface FormType {
     cid: string;
     domain: string;
-    http_port: Array < number > | undefined ;
-    https_port: Array < number > | undefined ;
+    http_port: Array < number > ;
+    https_port: Array < number > ;
     industry: string;
     name: string;
     open_waf: string;

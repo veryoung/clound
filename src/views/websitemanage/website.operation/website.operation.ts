@@ -91,7 +91,7 @@ export class WebsiteOperation extends Vue {
     public Domainpass: any = (rule: string, value: string, callback: Function) => {
         if (value === "") {
             callback(new Error("请输入网站域名"));
-          } else {
+        } else {
             let pattern = /[-_\.\w]+\.(?:com.cn|ne.cn|com.cn|net.cn|org.cn|gov.cn|net|org|com|cn|cc|me|tel|mobi|asia|biz|info|name|tv|hk)$/;
             let reg = pattern.test(value);
             if (!reg) {
@@ -128,8 +128,10 @@ export class WebsiteOperation extends Vue {
         let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
             that.form.name = that.websiteEdit[id].name;
             that.form.domain = that.websiteEdit[id].domain;
-            that.form.http_port = that.websiteEdit[id].port.http_port;
-            that.form.https_port = that.websiteEdit[id].port.https_port;
+            let http_porttemp: any = that.websiteEdit[id].port.http_port;
+            that.form.http_port = http_porttemp;
+            let https_porttemp: any = that.websiteEdit[id].port.https_port;
+            that.form.https_port = https_porttemp;
             that.form.industry = that.websiteEdit[id].industry;
             that.form.source_info = that.websiteEdit[id].source_info;
             that.form.remark = that.websiteEdit[id].remark;
@@ -330,9 +332,7 @@ export class WebsiteOperation extends Vue {
         temp.validate((valid: any) => {
             flag = valid;
         });
-        console.log(this.form);
         if (flag) {
-            
             if (!this.httpsTpye) {
                 this.form.cid = "";
             } else {
@@ -342,9 +342,10 @@ export class WebsiteOperation extends Vue {
                         message: "请输入https端口",
                         type: "warning"
                     });
+                   
                     return;
                 }
-                if (this.form.cid === ""  && this.form.https_port.length === 0) {
+                if ( this.form.cid === "" && this.form.https_port.length === 0) {
                     this.$notify({
                         title: "提示",
                         message: "请上传证书",

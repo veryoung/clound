@@ -43,7 +43,7 @@
                         <span v-for="item in scope.row[column.prop]">{{item}}</span>
                     </span>
                     <span v-else-if="column.type==='status'" class="ellipsis" :title="scope.row[column.prop]">
-                        {{scope.row[column.prop]?"成功":"失败"}}
+                        {{scope.row[column.prop]?"执行中":"未执行"}}
                     </span>
                     <span v-else-if="column.type==='cycle'" class="ellipsis" :title="scope.row[column.prop]">
                         {{ scope.row[column.prop] === "day" ?"日报": scope.row[column.prop] === "week" ?"周报":scope.row[column.prop] === "month"?"月报":scope.row[column.prop]
