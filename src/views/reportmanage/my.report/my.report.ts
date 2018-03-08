@@ -124,12 +124,15 @@ export class MyReport extends ListBaseClass {
     }
 
     search() {
-        console.log(this.filter);
         this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
+        let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
+        let endDay = moment(new Date()).format("YYYYMMDD");
+        this.filter.count_time = [startDay, endDay];
+        this.filter.pro_time = [startDay, endDay];
         this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
     }
 
