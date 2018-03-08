@@ -5,6 +5,7 @@ import { ResType } from "server";
 import { MywebsiteServer } from "@server/mywebsite";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { ReportService } from "@server/report";
+import { REPORTEVENT } from "@store/report.type";
 
 
 export default interface ReportTemplateSearchType {
@@ -44,7 +45,7 @@ export class ReportTemplateManager {
                             message: "删除成功",
                             type: "success"
                         });
-                        Store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, opt);
+                        Store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, opt);
                         break;
                     default:
                         break;
