@@ -76,6 +76,9 @@ export class WebsiteDetail extends Vue {
         total_hit_num: "1",
     };
     public accessfilter: AttackSearchType = (<any>Object).assign({}, this.accessfilterData);
+    // 标题头
+    public titles: string = "暂无";
+
     // cc攻击
     public cc_attack: string = "暂无";
     // web攻击
@@ -122,6 +125,8 @@ export class WebsiteDetail extends Vue {
 
         this.attackfilter.site = this.$route.params.id;
         this.accessfilter.site = this.$route.params.id;
+        console.log(this.$route.params);
+        this.titles = this.$route.params.name + "(" + this.$route.params.domain + ")";
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILATTACK, this.attackfilter);
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILACCESS, this.accessfilter);
         let that = this;

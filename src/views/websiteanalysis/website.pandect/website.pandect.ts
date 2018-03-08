@@ -43,7 +43,7 @@ export class WebsitePandect extends ListBaseClass {
     public titles: string[] = ["网站总览"];
     public filterData: SearchType = {
         domain: "",
-        level: "0",
+        level: "",
         name: "",
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
@@ -94,7 +94,9 @@ export class WebsitePandect extends ListBaseClass {
 
     handle(opt: any) {
         let id = opt.row.id;
-        this.$router.push(`/WebsiteAnalysis/WebsitePandect/look/${id}`);
+        let name = opt.row.name;
+        let domain = opt.row.domain;
+        this.$router.push(`/WebsiteAnalysis/WebsitePandect/look/${id}/${name}/${domain}`);
     }
 
     sortChange(opt: any) {

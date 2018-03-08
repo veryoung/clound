@@ -60,6 +60,7 @@ export class WebsiteOperation extends Vue {
         source_type: "A",
         remark: "",
         id: "",
+        has_key: "",
     };
 
     // 标题
@@ -134,6 +135,7 @@ export class WebsiteOperation extends Vue {
             that.form.remark = that.websiteEdit[id].remark;
             that.form.source_type = that.websiteEdit[id].source_type;
             that.form.open_waf = that.websiteEdit[id].open_waf;
+            that.form.has_key = that.websiteEdit[id].has_key;
             // 判断回源类型所属框
             if (that.form.source_type === "回源IP") {
                 that.sourceIP = 0;
@@ -154,7 +156,6 @@ export class WebsiteOperation extends Vue {
                 that.httpTpye = false;
             }
             // 判断回源
-            console.log(that.websiteEdit[id]);
             if (that.form.open_waf === "回源") {
                 that.form.open_waf = "0";
             } else {
@@ -199,9 +200,6 @@ export class WebsiteOperation extends Vue {
 
 
     getsourceIPTags(tagVal: string, type: string, done: Function) {
-        console.log(tagVal);
-
-
         if (type === "del") {
             let index = this.sourceIPData.indexOf(tagVal);
             this.sourceIPData.splice(index, 1);
@@ -431,7 +429,6 @@ export class WebsiteOperation extends Vue {
 
     // 协议类型复选框
     changeSoure(val: any) {
-        console.log(val);
         if (val === 0) {
             this.form.source_type = "A";
         } else {

@@ -1,6 +1,10 @@
 <div class="website-detail">
     <div class="detail-content">
+        <div class="title-box">
+            当前网站:&nbsp;&nbsp;{{titles}}
+        </div>
         <div class="choose-box">
+
             <el-radio-group v-model="form.datePicker" @change="changeDay">
                 <el-radio-button label="0">今天</el-radio-button>
                 <el-radio-button label="7">最近7天</el-radio-button>
@@ -38,7 +42,7 @@
                                 CC攻击
                             </div>
                             <div class="webdetail-iconfont">
-                                <span class="iconfont "  style="font-size:110px; color: #FCAE64 ">&#xe60f;</span>
+                                <span class="iconfont " style="font-size:110px; color: #FCAE64 ">&#xe60f;</span>
                             </div>
                             <div>
                                 {{cc_attack | times}}次
@@ -49,7 +53,7 @@
                                 加速请求
                             </div>
                             <div class="webdetail-iconfont">
-                                <span class="iconfont "  style="font-size:110px; color: #69DBC1 ">&#xe60e;</span>
+                                <span class="iconfont " style="font-size:110px; color: #69DBC1 ">&#xe60e;</span>
                             </div>
                             <div>
                                 {{hit_num | times}}次
@@ -60,7 +64,7 @@
                                 加速流量
                             </div>
                             <div class="webdetail-iconfont">
-                                <span class="iconfont "  style="font-size:110px; color: #3FBDD5">&#xe62d;</span>
+                                <span class="iconfont " style="font-size:110px; color: #3FBDD5">&#xe62d;</span>
                             </div>
                             <div>
                                 {{hit_flow | flow}}

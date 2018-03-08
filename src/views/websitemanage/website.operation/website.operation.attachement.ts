@@ -17,6 +17,7 @@ export interface FormType {
     source_type: string;
     remark: string;
     id: string;
+    has_key: string;
 }
 
 
