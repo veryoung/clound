@@ -12,7 +12,6 @@ import { ResType } from "server";
 import { WebsiteManageRouter } from "@router/website.manage";
 import { WebsiteAnalysisRouter } from "@router/website.analysis";
 import { CountReportRouter } from "@router/count.report";
-import { PreviewReport } from "@views/reportmanage/preview.report/preview.report";
 import { PublicNoticeDeatil } from "@views/systemmanage/noti.manage/info.detail/public.notice.detail";
 import { Home } from "@views/home/home";
 import { Forbidden } from "@views/error/403/403";
@@ -193,15 +192,6 @@ export const staticRouter: RouteConfig[] = [
             permission: "*"
         },
         component: Login
-    },
-    {
-        path: "/report",
-        name: "统计报告",
-        meta: {
-            hidden: true,
-            permission: "ReportManagement.Reporttemplate.Check"
-        },
-        component: PreviewReport
     },
     {
         path: "/noticelook/:id",

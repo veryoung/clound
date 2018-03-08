@@ -15,7 +15,7 @@ module.exports = function (env) {
                 changeOrigin: true,
                 secure: false,
             }, {
-                context: ["/middleware"],
+                context: ["/middleware","/templates"],
                 target: "http://127.0.0.1:3000",
                 changeOrigin: true,
                 secure: false,

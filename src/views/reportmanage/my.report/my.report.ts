@@ -147,15 +147,13 @@ export class MyReport extends ListBaseClass {
     }
 
     // 跳转方法同统一
-    handle(type: "look" | "add" | "editor" | "settings" | "del", rowObj?: any) {
+    handle(type: "look" | "add" | "download" | "del", rowObj?: any) {
         if (rowObj) {
             const { $index, row } = rowObj;
-            if (type === "editor") {
-                this.$router.push(`/WebsiteManagement/myWebsite/editor/${row.id}`);
-            } else if (type === "settings") {
-                this.$router.push(`/WebsiteManagement/myWebsite/settings/${row.id}`);
+            if (type === "download") {
+                this.exportFile(`/middleware/report/download/${row.id}/${row.name}`);
             } else if (type === "look") {
-                this.$router.push(`/ReportManagement/RreviewReport/${row.id}`);
+                this.$router.push(`/ReportManagement/RreviewReport/${row.id}/${row.name}`);
             } else if (type === "del") {
                 MyReportManagerController.handleDel(row, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
             }

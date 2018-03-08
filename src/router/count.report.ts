@@ -17,7 +17,7 @@ export const CountReportRouter: RouteConfig[] = [
         component: MyReport
     },
     {
-        path: "RreviewReport/:id",
+        path: "RreviewReport/:id/:name",
         name: "报告详情",
         meta: {
             icon: "icon-yonghuguanli",

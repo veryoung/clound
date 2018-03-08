@@ -69,7 +69,7 @@
             <el-table-column label="操作" align="center" width="180px">
                 <template slot-scope="scope">
                     <i title="查看" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('look',{$index:scope.$index, row:scope.row})">&#xe602;查看</i>
-                    <i title="下载" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('editor',{$index:scope.$index, row:scope.row})">&#xe604;下载</i>
+                    <i title="下载" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('download',{$index:scope.$index, row:scope.row})">&#xe604;下载</i>
                     <i title="删除" style="cursor:pointer;font-size: 14px" class="iconfont" @click="handle('changepwd',{$index:scope.$index, row:scope.row})">&#xe603;删除</i>
                 </template>
             </el-table-column>
