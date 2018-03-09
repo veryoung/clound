@@ -137,11 +137,11 @@ export class MyReport extends ListBaseClass {
     }
 
     handleSizeChange(val: number) {
-        this.tableConfig.mywebsitetable.page_size = val;
+        this.tableConfig.myreporttable.page_size = val;
         this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter));
     }
     handleCurrentChange(val: number) {
-        this.tableConfig.mywebsitetable.page = val;
+        this.tableConfig.myreporttable.page = val;
         this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter));
     }
 
