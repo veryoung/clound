@@ -63,7 +63,8 @@ module.exports = function (env) {
                                 options: {
                                     outputStyle: 'expanded',
                                     sourceMap: true,
-                                    sourceMapContents: true
+                                    sourceMapContents: true,
+                                    paths:'src/resource/'
                                 }
                             }
                         ],

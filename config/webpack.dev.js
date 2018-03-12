@@ -38,7 +38,7 @@ module.exports = function (env) {
                             }
                         },
                         {
-                            loader: 'stylus-loader',
+                            loader: 'stylus-loader?paths=src/resource/',
                         }
                     ]
                 },

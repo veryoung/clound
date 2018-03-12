@@ -9,7 +9,7 @@ module.exports = function (env) {
     return {
         entry: './src/main.ts',
         resolve: {
-            extensions: ['.ts', '.js', '.vue', '.scss', '.json'],
+            extensions: ['.ts', '.js', '.styl', '.css', '.json'],
             alias: {
                 'src': path.resolve(__dirname, '../src'),
                 'vue$': 'vue/dist/vue.esm.js',

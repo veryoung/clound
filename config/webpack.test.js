@@ -57,7 +57,8 @@ module.exports = function (env) {
                                 options: {
                                     outputStyle: 'expanded',
                                     sourceMap: true,
-                                    sourceMapContents: true
+                                    sourceMapContents: true,
+                                    paths: 'src/resource/'
                                 }
                             }
                         ],
@@ -112,7 +113,7 @@ module.exports = function (env) {
                 to: './download/users_template_portal.xls'
             }, {
                 from: path.resolve(__dirname, '../src/resource/images/favicon.png'),
-                to: './src/resource/images/favicon.png'                
+                to: './src/resource/images/favicon.png'
             }]),
             new webpack.optimize.UglifyJsPlugin({
                 sourceMap: true,
