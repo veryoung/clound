@@ -12,6 +12,7 @@ import { FormType, TagType } from "@views/websitemanage/website.operation/websit
 import { CustomTags } from "@components/customtags/custom.tags";
 import { DiplomaBaseClass } from "@views/base/base.class";
 import { ReportService } from "@server/report";
+import { REPORTEVENT } from "@store/report.type";
 
 
 const Aux = new Auxiliary<string>();
@@ -94,20 +95,20 @@ export class ReportOperation extends DiplomaBaseClass {
 
     // init lifecircle hook
     created() {
-        console.log(this.operation);
-        if (this.operation === "add") {
-            this.titles = this.operation === "add" ? ["添加模板"] : ["编辑模板"];
-        }
-        console.log(this.titles);
         let id = this.$route.params.id;
-        this.$store.dispatch(this.CONSTANT.GETREPORDETAIL, { id: id });
+        if (this.operation === "add") {
+            this.titles = ["添加模板"];
+        } else {
+            this.titles = ["编辑模板"];
+            this.$store.dispatch(REPORTEVENT.GETREPORDETAIL, { id: id });
+        }
         let that = this;
         this.EventBus.register(this.CONSTANT.GETREPORDETAIL, function () {
             let temp = that.reportTemplateDetail[id];
             let tempDefenItem: string[] = [];
             let tempAttackItem: string[] = [];
             console.log(temp);
-            that.form.name = temp.name;
+            if (temp) that.form.name = temp.name;
             for (let key in temp.indicators) {
                 for (let item of that.defenseOption) {
                     if (temp.indicators[key] === item.value) {
@@ -125,7 +126,6 @@ export class ReportOperation extends DiplomaBaseClass {
             that.form.indicators = temp.indicators;
             that.form.cycle_range = temp.cycle_range;
             that.form.cycle = temp.cycle;
-
         });
     }
 
