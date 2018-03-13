@@ -45,29 +45,4 @@ export const filterData: SearchType = {
     sort_expiry_date: ""
 };
 
-export class UserManager {
-    handleDel(row: UserListColumnType, opt: any) {
-        ElementUI.MessageBox.confirm("确定要删除嘛？", "提示").then(() => {
-            UserServer.delUser(row.uid).then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                switch (res.status) {
-                    case "suc":
-                        ElementUI.Notification({
-                            title: "提示",
-                            message: "删除成功",
-                            type: "success"
-                        });
-                        Store.dispatch(USER.GETUSERLIST, opt);
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }).catch(() => {
-
-        });
-    }
-}
-
-export const UserManagerController = new UserManager();
 

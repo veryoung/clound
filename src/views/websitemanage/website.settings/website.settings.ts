@@ -8,7 +8,6 @@ import { MirrorFrame } from "./dialogbox/mirror.frame";
 import { DenfenFrame } from "./dialogbox/defen.frame";
 import { ListFrame } from "./dialogbox/list.frame";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
@@ -444,7 +443,4 @@ export class WebsiteSettings extends DiplomaBaseClass {
             });
         });
     }
-
-
-
 }

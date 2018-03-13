@@ -10,7 +10,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { Auxiliary } from "@utils/auxiliary";
 import { FormType, TagType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
-import { DiplomaBaseClass } from "@views/base/base.class";
+import { DetailBaseClass } from "@views/base/base.class";
 import { ReportService } from "@server/report";
 import { REPORTEVENT } from "@store/report.type";
 
@@ -38,7 +38,7 @@ require("./report.operation.styl");
     }
 })
 
-export class ReportOperation extends DiplomaBaseClass {
+export class ReportOperation extends DetailBaseClass {
     // init props
     public operation: "add" | "editor";
 
@@ -218,6 +218,7 @@ export class ReportOperation extends DiplomaBaseClass {
     }
 
     back() {
+        this.back();
         this.$router.go(-1);
     }
 }

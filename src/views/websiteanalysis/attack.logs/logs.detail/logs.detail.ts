@@ -1,10 +1,9 @@
 import { ModuleTitle } from "@components/title/module.title";
-import Vue from "vue";
 import Component from "vue-class-component";
 import { WebsiteAnalysisServer } from "@server/website.analysis";
 import { AxiosResponse } from "axios";
 import { ResType } from "server";
-import { ListBaseClass } from "@views/base/base.class";
+import { DetailBaseClass } from "@views/base/base.class";
 require("./logs.detail.styl");
 
 @Component({
@@ -16,10 +15,8 @@ require("./logs.detail.styl");
 })
 
 
-export class LogsDetail extends ListBaseClass {
-    // props
-
-    // propss
+export class LogsDetail extends DetailBaseClass {
+    // init data
     public currentWebsite: string = "攻击详情";
     public titles: Array<string> = [this.currentWebsite];
     public ColumnArray: Array<ColumnArrayType> = [
@@ -120,7 +117,7 @@ export class LogsDetail extends ListBaseClass {
 
     // method
     back() {
-        this.$router.go(-1);
+        this.back();
     }
 }
 

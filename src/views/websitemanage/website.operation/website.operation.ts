@@ -1,24 +1,17 @@
 import { WebEditType } from "@store/mywebsite.type";
-import { EventBus, CONSTANT } from "@utils/event";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import { UpdateDiploma } from "./dialogbox/update.diploma";
-import { FormRuleType, RegValidate } from "@utils/form.validator";
+import { FormRuleType } from "@utils/form.validator";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { MywebsiteServer } from "@server/mywebsite";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
-import { Auxiliary } from "@utils/auxiliary";
-import { FormType, TagType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
-import { ListBaseClass } from "@views/base/base.class";
+import { BaseLibrary } from "@views/base/base.class";
 
 
-const Aux = new Auxiliary<string>();
 require("./website.operation.styl");
 @Component({
     name: "websiteoperation",
@@ -41,7 +34,7 @@ require("./website.operation.styl");
     }
 })
 
-export class WebsiteOperation extends ListBaseClass {
+export class WebsiteOperation extends BaseLibrary {
     // init props
     public operation: "add" | "editor";
 
@@ -49,7 +42,21 @@ export class WebsiteOperation extends ListBaseClass {
     public websiteEdit: WebEditType;
 
     // init data
-    public form: FormType = {
+    public Aux = new this.Auxiliary<string>();
+    public form: {
+        cid: string;
+        domain: string;
+        http_port: number[];
+        https_port: number[];
+        industry: string;
+        name: string;
+        open_waf: string;
+        source_info: number[];
+        source_type: string;
+        remark: string;
+        id: string;
+        has_key: string;
+    } = {
         cid: "",
         domain: "",
         http_port: [80],
@@ -126,7 +133,7 @@ export class WebsiteOperation extends ListBaseClass {
         if (id) {
             this.$store.dispatch(MYWEBSITEEVENT.GETWEBEDIT, { website_id: id, operation: this.operation });
         }
-        let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETWEBEDIT, function (event: string, info: any) {
             that.form.name = that.websiteEdit[id].name;
             that.form.domain = that.websiteEdit[id].domain;
             let http_porttemp: any = that.websiteEdit[id].port.http_port;
@@ -166,12 +173,12 @@ export class WebsiteOperation extends ListBaseClass {
             }
 
         });
-        Aux.insertId(eventId);
+        this.Aux.insertId(eventId);
     }
 
     destroyed() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $index) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -208,7 +215,7 @@ export class WebsiteOperation extends ListBaseClass {
             this.sourceIPData.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.ip(tagVal)) {
+            if (this.RegValidate.ip(tagVal)) {
                 done(true);
                 this.sourceIPData.push(tagVal);
                 return;
@@ -228,7 +235,7 @@ export class WebsiteOperation extends ListBaseClass {
             this.sourceDomainData.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.domain(tagVal)) {
+            if (this.RegValidate.domain(tagVal)) {
                 done(true);
                 this.sourceDomainData.push(tagVal);
                 return;
@@ -274,7 +281,7 @@ export class WebsiteOperation extends ListBaseClass {
                 });
                 return;
             }
-            if (RegValidate.port(tagVal)) {
+            if (this.RegValidate.port(tagVal)) {
                 done(true);
                 this.httpTags.push(parseInt(tagVal));
                 return;
@@ -311,7 +318,7 @@ export class WebsiteOperation extends ListBaseClass {
                 });
                 return;
             }
-            if (RegValidate.port(tagVal)) {
+            if (this.RegValidate.port(tagVal)) {
                 done(true);
                 this.httpsTags.push(parseInt(tagVal));
                 return;

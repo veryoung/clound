@@ -8,7 +8,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
-import { ListBaseClass } from "@views/base/base.class";
+import { DiplomaBaseClass } from "@views/base/base.class";
 
 
 require("./defen.frame.styl");
@@ -26,21 +26,22 @@ require("./defen.frame.styl");
         CustomTags
     }
 })
-export class DenfenFrame extends ListBaseClass {
+export class DenfenFrame extends DiplomaBaseClass {
     // init props
     public uid: string;
     public data: FormType;
 
     // init data
-    public form: DenfenType = {
+    public form: {
+        waf_hotlink_white: string[];
+    } = {
         waf_hotlink_white: [""],
     };
-    public defalutUrl: Array<string>;
+    public defalutUrl: string[] = [];
     public UrlState: boolean = true;
 
     created() {
         this.defalutUrl = this.data.waf_hotlink_white;
-        console.log(this.defalutUrl);
     }
 
     getTags(tagVal: string, type: string, done: Function) {
@@ -88,17 +89,13 @@ export class DenfenFrame extends ListBaseClass {
                     });
                     this.cancel();
                     break;
-                case "error":
-      
-                    break;
-                case "red":
-                    break;
             }
         });
     }
 
     cancel() {
-        this.$emit("close", false);
+        this.close();
+        // this.$emit("close", false);
     }
 
     error(res: any) {
@@ -109,8 +106,4 @@ export class DenfenFrame extends ListBaseClass {
         });
         this.UrlState = false;
     }
-}
-
-export interface DenfenType {
-    waf_hotlink_white: Array<string>;
 }

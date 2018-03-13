@@ -1,16 +1,11 @@
-import Component from "vue-class-component";
-import Vue from "vue";
+import Component from "vue-class-component"; 
 import { mapGetters } from "vuex";
-
 import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER } from "@store/user.center.type";
-import { vm, EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { WebMessageType, WebMessagePageType } from "@views/websitemanage/website.manage.attachement";
 import { ListBaseClass } from "@views/base/base.class";
 
-const Aux = new Auxiliary<string>();
 require("./webstie.message.styl");
 @Component({
     name: "webstiemessage",
@@ -23,7 +18,12 @@ require("./webstie.message.styl");
     }
 })
 export class WebsiteMessage extends ListBaseClass {
+    // init computed
+    public websiteMessage: WebMessagePageType;
+
+
     // init data
+    public Aux = new this.Auxiliary<string>();
     public WebsiteInfo: WebMessageType = {
         cname: "",
         cperson: "",
@@ -52,8 +52,6 @@ export class WebsiteMessage extends ListBaseClass {
     public httpString: string = "";
     public httpsString: string = "";
     public sourcenfoString: string = "";
-    // init computed
-    public websiteMessage: WebMessagePageType;
 
     // lifecircle hook
     created() {
@@ -64,18 +62,20 @@ export class WebsiteMessage extends ListBaseClass {
         } else {
             this.WebsiteInfo = this.websiteMessage.default;
         }
-        let eventId = EventBus.register(CONSTANT.GETWEBMESSAGE, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETWEBMESSAGE, function (event: string, info: any) {
             that.WebsiteInfo = that.websiteMessage[id];
             console.log(that.WebsiteInfo);
             that.httpString = that.WebsiteInfo.port.http_port.join(",");
             that.httpsString = that.WebsiteInfo.port.https_port.join(",");
             that.sourcenfoString = that.WebsiteInfo.source_info.join(",");
         });
-        Aux.insertId(eventId);
+        this.Aux.insertId(eventId);
     }
 
-    beforeDestroy() {
-        // Aux.getIds().map((id, $index) => {     EventBus.unRegister(id); });
+    destroyed() {
+        this.Aux.getIds().map((id, $index) => { 
+            this.EventBus.unRegister(id); 
+        });
     }
 
     back() {

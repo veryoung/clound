@@ -1,8 +1,5 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, USER, UserCenterType, RoleType, DefaultUserType } from "@store/user.center.type";
 import { OrganizationTreeType, Organization } from "@store/organization.type";
@@ -12,14 +9,11 @@ import { TissueTree } from "@components/tissuetree/tree";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
-import { vm, EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { roleDict } from "@utils/role.fn";
 import { SubmitBtn } from "@components/submit/submit";
-import { ListBaseClass } from "@views/base/base.class";
+import { DetailBaseClass } from "@views/base/base.class";
 
 
-const Aux = new Auxiliary<string>();
 
 require("./operation.styl");
 @Component({
@@ -42,7 +36,7 @@ require("./operation.styl");
         ModuleTitle, AddOrganizationFrame, TissueTree, SubmitBtn
     }
 })
-export class UserOperation extends ListBaseClass {
+export class UserOperation extends DetailBaseClass {
     // init props
     public operation: "add" | "editor";
 
@@ -52,6 +46,7 @@ export class UserOperation extends ListBaseClass {
     public defaultUser: DefaultUserType;
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public roleType: string = "";
     public titles: string[] = [];
     public defaultTime: Date = new Date();
@@ -125,19 +120,19 @@ export class UserOperation extends ListBaseClass {
             });
             this.stringToBoolean();
         }
-        let eventId = EventBus.register(CONSTANT.GETUSER, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETUSER, function (event: string, info: any) {
             that.form = (<any>Object).assign({}, that.personInfo[id]);
             that.stringToBoolean();
         });
-        Aux.insertId(eventId);
+        this.Aux.insertId(eventId);
 
 
-        let eventId1 = EventBus.register(CONSTANT.GETUSERROLES, function () {
+        let eventId1 = this.EventBus.register(this.CONSTANT.GETUSERROLES, function () {
             that.roles = that.roleList;
         });
-        Aux.insertId(eventId1);
+        this.Aux.insertId(eventId1);
 
-        this.unwatch = vm.$watch(() => {
+        this.unwatch = this.vm.$watch(() => {
             if (that.form.role) {
                 return roleDict.ufcode(that.form.role);
             } else {
@@ -151,8 +146,8 @@ export class UserOperation extends ListBaseClass {
     }
 
     destroyed() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $index) => {
+            this.EventBus.unRegister(id);
         });
         this.unwatch();
     }

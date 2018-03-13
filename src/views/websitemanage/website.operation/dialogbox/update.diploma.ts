@@ -1,12 +1,6 @@
-import Vue from "vue";
 import Component from "vue-class-component";
-import { UserServer } from "@server/user";
 import { ResType } from "server";
-import { FormRuleType, FromValidator } from "@utils/form.validator";
-import { AxiosResponse } from "axios";
-import { ListBaseClass } from "@views/base/base.class";
-
-const style = require("./update.m.css");
+import { DiplomaBaseClass } from "@views/base/base.class";
 
 @Component({
     name: "updatediploma",
@@ -18,9 +12,10 @@ const style = require("./update.m.css");
         }
     },
 })
-export class UpdateDiploma extends ListBaseClass {
-    // init data
+export class UpdateDiploma extends DiplomaBaseClass {
+    // init computed
     public dialogVisible: boolean;
+    // init data
     public loading: boolean = false;
     public upLoadData: any = {
         cid: ""
@@ -114,7 +109,6 @@ export class UpdateDiploma extends ListBaseClass {
                 this.$emit("close", false);
                 break;
             case "error":
-
                 let temp: any = this.$refs.Crtupload;
                 temp.clearFiles();
                 break;
@@ -125,7 +119,7 @@ export class UpdateDiploma extends ListBaseClass {
     }
 
     cancel(done: Function) {
-        this.$emit("close", false);
+        this.close();
     }
 }
 
