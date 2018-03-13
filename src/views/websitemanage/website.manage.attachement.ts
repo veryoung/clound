@@ -1,10 +1,3 @@
-import { MYWEBSITEEVENT } from "@store/mywebsite.type";
-import { ResType } from "server";
-import { AxiosResponse } from "axios";
-import { MywebsiteServer } from "@server/mywebsite";
-import ElementUI from "element-ui";
-import { Store } from "@store/store";
-
 // 变量名	含义	类型	备注
 // cperson	创建人	string	
 // domain	域名	string	
@@ -145,35 +138,6 @@ export interface WebMessageType {
 
 }
 
-export interface DomainType {
-    used_domain_num: string;
-    max_domain_num: string;
-}
 export interface WebMessagePageType {
     [extra: string]: WebMessageType;
 }
-export class WebsiteManager {
-    handleDel(row: WebsiteListColumnType, opt: any) {
-        ElementUI.MessageBox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
-            MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                switch (res.status) {
-                    case "suc":
-                        ElementUI.Notification({
-                            title: "提示",
-                            message: "删除成功",
-                            type: "success"
-                        });
-                        Store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, opt);
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }).catch(() => {
-
-        });
-    }
-}
-
-export const WebsiteManagerController = new WebsiteManager();

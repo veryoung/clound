@@ -1,11 +1,7 @@
-import { RegValidate } from "./../../../../utils/form.validator";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
-import Vue from "vue";
 import Component from "vue-class-component";
-import { UserServer } from "@server/user";
 import { ResType } from "server";
-import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { DiplomaBaseClass } from "@views/base/base.class";
@@ -37,10 +33,12 @@ export class MirrorFrame extends DiplomaBaseClass {
     public data: FormType;
     public mirrcyc: Number | "";
     // init data
-    public form: MirrorType = {
+    public form: {
+        mirror_urls: string[];
+    } = {
         mirror_urls: [""],
     };
-    public defalutUrl: Array<string>;
+    public defalutUrl: string[] = [];
     public UrlState: boolean = true;
 
 
@@ -53,7 +51,7 @@ export class MirrorFrame extends DiplomaBaseClass {
             this.defalutUrl.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.uri(tagVal)) {
+            if (this.RegValidate.uri(tagVal)) {
                 done(true);
                 this.defalutUrl.push(tagVal);
                 return;
@@ -118,8 +116,4 @@ export class MirrorFrame extends DiplomaBaseClass {
         });
         this.UrlState = false;
     }
-}
-
-export interface MirrorType {
-    mirror_urls: Array<string>;
 }

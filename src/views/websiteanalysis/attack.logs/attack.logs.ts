@@ -1,19 +1,9 @@
-import { ResType } from "server";
-import { AxiosResponse } from "axios";
-import { MywebsiteServer } from "@server/mywebsite";
 import { TableConfigType } from "@store/table.type";
 import { CloudTable } from "@components/cloudtable/table";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-import * as moment from "moment";
-
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { SetCol } from "@components/setcol/setcol";
-import { EventBus, CONSTANT, vm } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
 import { ListBaseClass } from "@views/base/base.class";
 import { MYWEBSITEEVENT, WebsiteTableType } from "@store/mywebsite.type";
@@ -21,7 +11,6 @@ import { WebsiteListColumnType } from "@views/websitemanage/website.manage.attac
 
 
 
-const Aux = new Auxiliary<string>();
 require("./attack.logs.styl");
 @Component({
     name: "attacklogs",
@@ -47,19 +36,20 @@ export class AttackLogs extends ListBaseClass {
 
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["攻击日志"];
     public filterData: SearchType = {
         attack_type: "",
         attacked_url: "",
         attact_ip: "",
         attact_ip_add: "",
-        cdate: moment(new Date()).format("YYYYMMDD"),
-        etime: moment(new Date()).format("HHmmss"),
+        cdate: this.moment(new Date()).format("YYYYMMDD"),
+        etime: this.moment(new Date()).format("HHmmss"),
         id: "",
         name: "",
         results: "",
         safe_level: "",
-        stime: moment(new Date(new Date().getTime() - 1 * 60 * 60 * 1000)).format("HHmmss"),
+        stime: this.moment(new Date(new Date().getTime() - 1 * 60 * 60 * 1000)).format("HHmmss"),
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
     // 网站域名
@@ -78,8 +68,6 @@ export class AttackLogs extends ListBaseClass {
     // 选中项
     public log_ids: any = [];
 
-    // watch
-    public unwatch: Function = () => { };
 
     public pickerOptions2: any = {
         shortcuts: [{
@@ -158,12 +146,12 @@ export class AttackLogs extends ListBaseClass {
 
         let that = this;
 
-        let ListId = EventBus.register(WEBSITEANALYSISEVENT.GETATTACKLOGDATA, function (event: string, info: any) {
+        let ListId = this.EventBus.register(this.CONSTANT.GETATTACKLOGDATA, function (event: string, info: any) {
             that.attacktableData = (<any>Object).assign([], that.logAuditAttackLogtableData[that.tableConfig["attacklogtable"].page - 1]);
             console.log(that.attacktableData);
         });
 
-        let WebsiteId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
+        let WebsiteId = this.EventBus.register(this.CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
             that.domainDataArray = [];
             // 提取必须项 形成数组
@@ -182,15 +170,14 @@ export class AttackLogs extends ListBaseClass {
 
         });
 
-        Aux.insertId(ListId);
-        Aux.insertId(WebsiteId);
+        this.Aux.insertId(ListId);
+        this.Aux.insertId(WebsiteId);
     }
 
     destroyed() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $idnex) => {
+            this.EventBus.unRegister(id);
         });
-        this.unwatch();
     }
 
     // init method
@@ -258,8 +245,6 @@ export class AttackLogs extends ListBaseClass {
         let data = this.filter;
         this.exportFile(`/api/v20/dashboard/export_attack/?${this.objToUrl(this.filter)}`);
     }
-
-
 }
 
 export interface DomainType {

@@ -1,4 +1,3 @@
-import  ElementUI  from "element-ui";
 import { USER, DefaultUserType } from "@store/user.center.type";
 import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
@@ -9,21 +8,14 @@ import { MYWEBSITEEVENT, MyWebsiteType, WebsiteTableType } from "@store/mywebsit
 import { CloudTable } from "@components/cloudtable/table";
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
-
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { SetCol } from "@components/setcol/setcol";
-import SearchType, { filterData, WebsiteListColumnType, WebSiteListType, WebsiteManagerController, DomainType } from "./website.manage.attachement";
-import { EventBus, CONSTANT, vm } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
+import SearchType, { filterData, WebsiteListColumnType } from "./website.manage.attachement";
 import { ListBaseClass } from "@views/base/base.class";
-import { open } from "fs";
 
 
 
-const Aux = new Auxiliary<string>();
 require("./website.manage.styl");
 @Component({
     name: "websitemanagement",
@@ -50,14 +42,14 @@ export class WebsiteManagement extends ListBaseClass {
 
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["我的网站"];
     public filter: SearchType = (<any>Object).assign({}, filterData);
-    public websitetableData: WebsiteListColumnType[] = new Array<WebsiteListColumnType>();
-    public userMessage: DomainType = {
+    public websitetableData: WebsiteListColumnType[] = [];
+    public userMessage = {
         used_domain_num: "",
         max_domain_num: "",
     };
-
     // 导出
     public ids: string[] = [];
 
@@ -66,22 +58,22 @@ export class WebsiteManagement extends ListBaseClass {
     created() {
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.filter));
         let that = this;
-        let ListId = EventBus.register(CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
+        let ListId = this.EventBus.register(this.CONSTANT.GETLISTMESSAGE, function (event: string, info: any) {
             that.websitetableData = (<any>Object).assign([], that.tableData[that.tableConfig["mywebsitetable"].page - 1]);
         });
- 
+
         this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
-        let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+        let PersonInfoId = this.EventBus.register(this.CONSTANT.DEFAULTUSER, function (event: string, info: any) {
             that.userMessage.used_domain_num = that.personInfo[that.defaultUser.uid].used_domain_num;
             that.userMessage.max_domain_num = that.personInfo[that.defaultUser.uid].max_domain_num;
         });
-        Aux.insertId(ListId);
-        Aux.insertId(PersonInfoId);
+        this.Aux.insertId(ListId);
+        this.Aux.insertId(PersonInfoId);
     }
 
     destroyed() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $idnex) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -129,12 +121,12 @@ export class WebsiteManagement extends ListBaseClass {
             } else if (type === "look") {
                 this.$router.push(`/WebsiteManagement/myWebsite/look/${row.id}`);
             } else if (type === "del") {
-                ElementUI.MessageBox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
+                this.$msgbox.confirm("删除网站后，网站不再提供防御服务，将有攻击风险，是否继续删除？", "提示").then(() => {
                     MywebsiteServer.delWebsite(row.id).then((response: AxiosResponse<ResType>) => {
                         let res: ResType = response.data;
                         switch (res.status) {
                             case "suc":
-                                ElementUI.Notification({
+                                this.$notify({
                                     title: "提示",
                                     message: "删除成功",
                                     type: "success"
@@ -147,7 +139,7 @@ export class WebsiteManagement extends ListBaseClass {
                         }
                     });
                 }).catch(() => {
-        
+
                 });
             }
             return;

@@ -1,11 +1,7 @@
-import { RegValidate } from "./../../../../utils/form.validator";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
-import Vue from "vue";
 import Component from "vue-class-component";
-import { UserServer } from "@server/user";
 import { ResType } from "server";
-import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { DiplomaBaseClass } from "@views/base/base.class";
@@ -30,10 +26,12 @@ export class SpeedListFrame extends DiplomaBaseClass {
     public data: FormType;
 
     // init data
-    public form: SpeedListType = {
-        cache_url_black: [""],
-    };
-    public defalutUrl: Array<string>;
+    public form: {
+        cache_url_black: string[]
+    } = {
+            cache_url_black: [""],
+        };
+    public defalutUrl: string[] = [];
     public UrlState: boolean = true;
 
     created() {
@@ -41,12 +39,12 @@ export class SpeedListFrame extends DiplomaBaseClass {
     }
 
     getTags(tagVal: string, type: string, done: Function) {
-        if ( type === "del") {
+        if (type === "del") {
             let index = this.defalutUrl.indexOf(tagVal);
             this.defalutUrl.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.uri(tagVal)) {
+            if (this.RegValidate.uri(tagVal)) {
                 done(true);
                 this.defalutUrl.push(tagVal);
                 return;
@@ -105,8 +103,4 @@ export class SpeedListFrame extends DiplomaBaseClass {
         });
         this.UrlState = false;
     }
-}
-
-export interface SpeedListType {
-    cache_url_black: Array<string>;
 }

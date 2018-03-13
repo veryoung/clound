@@ -8,13 +8,11 @@ import { MirrorFrame } from "./dialogbox/mirror.frame";
 import { DenfenFrame } from "./dialogbox/defen.frame";
 import { ListFrame } from "./dialogbox/list.frame";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
-import { MirrorOptionsType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { DiplomaBaseClass } from "@views/base/base.class";
 
 
@@ -73,7 +71,7 @@ export class WebsiteSettings extends DiplomaBaseClass {
         waf_url_white: [],
     };
     // 获取的镜像
-    public options: Array<MirrorOptionsType> = [
+    public options: { value: number, label: string }[] = [
         {
             value: 0,
             label: " "
@@ -198,7 +196,7 @@ export class WebsiteSettings extends DiplomaBaseClass {
 
                         break;
                     case "red":
- 
+
                         break;
                 }
 
@@ -444,7 +442,4 @@ export class WebsiteSettings extends DiplomaBaseClass {
             });
         });
     }
-
-
-
 }

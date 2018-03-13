@@ -2,13 +2,10 @@ import { BarComponent } from "@components/echarts/bar/bar";
 import { PieComponent } from "@components/echarts/pie/pie";
 import { LineComponent } from "@components/echarts/line/line";
 import { ModuleTitle } from "@components/title/module.title";
-import Vue from "vue";
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
 import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
-import { EventBus, CONSTANT } from "@utils/event";
-import * as moment from "moment";
-import { ListBaseClass } from "@views/base/base.class";
+import { DetailBaseClass } from "@views/base/base.class";
 
 
 require("./website.detail.styl");
@@ -29,7 +26,7 @@ require("./website.detail.styl");
     }
 })
 
-export class WebsiteDetail extends ListBaseClass {
+export class WebsiteDetail extends DetailBaseClass {
     // init computed
     // init data
     // 初始化数据
@@ -132,7 +129,7 @@ export class WebsiteDetail extends ListBaseClass {
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETPANDECTDETAILACCESS, this.accessfilter);
         let that = this;
 
-        let AttackId = EventBus.register(CONSTANT.GETPANDECTDETAILATTACK, function (event: string, info: any) {
+        let AttackId = this.EventBus.register(this.CONSTANT.GETPANDECTDETAILATTACK, function (event: string, info: any) {
             that.DetailattackData = (<any>Object).assign([], that.WebsitePandectDetailattackData[that.$route.params.id]);
             let data = that.DetailattackData;
             console.log(data);
@@ -173,7 +170,7 @@ export class WebsiteDetail extends ListBaseClass {
 
 
         });
-        let AccessId = EventBus.register(CONSTANT.GETPANDECTDETAILACCESS, function (event: string, info: any) {
+        let AccessId = this.EventBus.register(this.CONSTANT.GETPANDECTDETAILACCESS, function (event: string, info: any) {
             that.DetailaccessData = (<any>Object).assign([], that.WebsitePandectDetailaccessData[that.$route.params.id]);
             let data = that.DetailaccessData;
 
@@ -1199,7 +1196,7 @@ export class WebsiteDetail extends ListBaseClass {
 
     date(value: string) {
         if (value === "") return value;
-        return moment(value).format("YYYY-MM-DD");
+        return this.moment(value).format("YYYY-MM-DD");
     }
 
 

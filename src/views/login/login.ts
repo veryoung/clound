@@ -1,14 +1,10 @@
 import Component from "vue-class-component";
-
-
-
 import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
-import { USER } from "@store/user.center.type";
 import { UserStatus } from "@utils/monitor";
 import { FooterComponent } from "@components/layout/footer/footer";
-import { BaseLibrary } from "@views/base/base.class";
+import { DetailBaseClass } from "@views/base/base.class";
 import { User } from "@server/user";
 import { mapGetters } from "vuex";
 import { RouteConfig } from "vue-router";
@@ -33,7 +29,7 @@ const form_frame = require("src/resource/images/login_line.png");
         ])
     }
 })
-export class Login extends BaseLibrary {
+export class Login extends DetailBaseClass {
     // init computed 
     public newRouter: RouteConfig[];
     // init data
@@ -55,7 +51,7 @@ export class Login extends BaseLibrary {
     created() {
         this.changeCode();
         new UserStatus(() => {
-            this.$router.go(-1);
+            this.back();
         });
     }
 

@@ -1,9 +1,7 @@
 import { ResType } from "@server/index";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
-import Vue from "vue";
 import Component from "vue-class-component";
-import { UserServer } from "@server/user";
 import { AxiosResponse } from "axios";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
 import { DiplomaBaseClass } from "@views/base/base.class";
@@ -20,7 +18,7 @@ require("./speedUpdate.styl");
     },
     components: {
         CustomTags
-    } 
+    }
 })
 export class SpeedUpdateFrame extends DiplomaBaseClass {
     // init props
@@ -28,10 +26,12 @@ export class SpeedUpdateFrame extends DiplomaBaseClass {
     public data: FormType;
 
     // init data
-    public form: SpeedUpdateType = {
-        url: [""],
-    };
-    public defalutUrl: Array<string>;
+    public form: {
+        url: string[]
+    } = {
+            url: [""],
+        };
+    public defalutUrl: string[] = [];
     public UrlState: boolean = true;
 
     created() {
@@ -52,7 +52,7 @@ export class SpeedUpdateFrame extends DiplomaBaseClass {
             cancelButtonText: "取消",
             type: "warning"
         }).then(() => {
-            MywebsiteServer.cache(params).then( (response: AxiosResponse<ResType>) => {
+            MywebsiteServer.cache(params).then((response: AxiosResponse<ResType>) => {
                 let res: ResType = response.data;
                 console.log(res);
                 switch (res.status) {
@@ -66,7 +66,7 @@ export class SpeedUpdateFrame extends DiplomaBaseClass {
                         this.cancel();
                         break;
                     case "error":
-    
+
                         break;
                 }
             });
@@ -76,7 +76,7 @@ export class SpeedUpdateFrame extends DiplomaBaseClass {
     }
 
     getTags(tagVal: string, type: string, done: Function) {
-        if ( type === "del") {
+        if (type === "del") {
             let index = this.defalutUrl.indexOf(tagVal);
             this.defalutUrl.splice(index, 1);
             done(true);
@@ -108,8 +108,4 @@ export class SpeedUpdateFrame extends DiplomaBaseClass {
         });
         this.UrlState = false;
     }
-}
-
-export interface SpeedUpdateType {
-    url: Array<string>;
 }

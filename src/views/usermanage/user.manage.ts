@@ -1,8 +1,5 @@
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
-
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { CloudTable } from "@components/cloudtable/table";
@@ -10,19 +7,15 @@ import { SetCol } from "@components/setcol/setcol";
 import { ResetPwd } from "@views/usermanage/dialogbox/reset.pwd";
 import { ImportUserFrame } from "@views/usermanage/dialogbox/import.user";
 import { USER, UserListColumnType, UserMessageType, RoleType, UserListType } from "@store/user.center.type";
-import { vm } from "@utils/index";
-import SearchType, { filterData, UserManagerController } from "./user.manage.attachement";
+import SearchType, { filterData } from "./user.manage.attachement";
 import { OrganizationTreeType } from "@store/organization.type";
-import { Config, TableConfigType, TABLECONFIG } from "@store/table.type";
-import { EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
+import { Config, TableConfigType } from "@store/table.type";
+import { ListBaseClass } from "@views/base/base.class";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
-import { ListBaseClass } from "@views/base/base.class";
 
 
-const Aux = new Auxiliary<string>();
 require("./user.manage.styl");
 @Component({
     name: "usermanagement",
@@ -46,6 +39,7 @@ export class UserManagement extends ListBaseClass {
     public roleList: RoleType[];
     public OrganizationTree: OrganizationTreeType[];
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["用户列表"];
     public dialogVisible: boolean = false;
     public dialogVisiblePwd: boolean = false;
@@ -59,30 +53,29 @@ export class UserManagement extends ListBaseClass {
     // lifecircle hook 
     created() {
         let that = this;
-        let id1 = EventBus.register(CONSTANT.INITORGANIZATIONTREE, (event: string, info: any) => {
+        let id1 = this.EventBus.register(this.CONSTANT.INITORGANIZATIONTREE, (event: string, info: any) => {
             that.clickNode(that.OrganizationTree[0]);
         });
-        let id2 = EventBus.register(CONSTANT.GETUSERLIST, function (event: string, info: any) {
+        let id2 = this.EventBus.register(this.CONSTANT.GETUSERLIST, function (event: string, info: any) {
             that.tableData = that.userlist[info.id][that.tableConfig.usertable.page - 1];
         });
 
-        Aux.insertId(id1);
-        Aux.insertId(id2);
+        this.Aux.insertId(id1);
+        this.Aux.insertId(id2);
         this.$store.dispatch(USER.GETUSERFILTERROLES);
-        let id3 = EventBus.register(CONSTANT.GETUSERFILTERROLES, function () {
+        let id3 = this.EventBus.register(this.CONSTANT.GETUSERFILTERROLES, function () {
             that.roles = that.roleList;
         });
-        Aux.insertId(id3);
+        this.Aux.insertId(id3);
     }
 
     destroyed() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $index) => {
+            this.EventBus.unRegister(id);
         });
     }
 
     // init methods
-
     exportUser(type: string) {
         if (type === "all") {
             this.exportFile(`/api/v20/account/user/excel/?ids=[]${this.objToUrl((<any>Object).assign(this.filter, { ori_id: this.ori_id }))}`);
@@ -111,7 +104,25 @@ export class UserManagement extends ListBaseClass {
             } else if (type === "look") {
                 this.$router.push(`/SystemManagement/UserManagement/look/${row.uid}`);
             } else if (type === "del") {
-                UserManagerController.handleDel(row, this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id }));
+                this.$msgbox.confirm("确定要删除嘛？", "提示").then(() => {
+                    UserServer.delUser(row.uid).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$notify({
+                                    title: "提示",
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.mergeData(this.tableConfig.usertable, this.filter, { ori_id: this.ori_id });
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }).catch(() => {
+        
+                });
             }
             return;
         }

@@ -1,13 +1,10 @@
-import { RegValidate } from "./../../../../utils/form.validator";
 import { ResType } from "@server/index";
 import { MywebsiteServer } from "@server/mywebsite";
 import { CustomTags } from "@components/customtags/custom.tags";
-import Vue from "vue";
 import Component from "vue-class-component";
-import { UserServer } from "@server/user";
 import { AxiosResponse } from "axios";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
-import { ListBaseClass } from "@views/base/base.class";
+import { DiplomaBaseClass } from "@views/base/base.class";
 
 
 require("./list.frame.styl");
@@ -23,17 +20,20 @@ require("./list.frame.styl");
         CustomTags
     }
 })
-export class ListFrame extends ListBaseClass {
+export class ListFrame extends DiplomaBaseClass {
     // init props
     public types: string;
     public data: FormType;
     // init data
-    public form: ListFrameType = {
+    public form: {
+        ip: string[];
+        url: string[];
+    } = {
         ip: [""],
         url: [""]
     };
-    public defalutUrl: Array<string>;
-    public defalutIP: Array<string>;
+    public defalutUrl: string[] = [];
+    public defalutIP: string[] = [];
     public UrlState: boolean = true;
     public ipState: boolean = true;
 
@@ -55,7 +55,7 @@ export class ListFrame extends ListBaseClass {
             this.defalutUrl.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.uri(tagVal)) {
+            if (this.RegValidate.uri(tagVal)) {
                 done(true);
                 this.defalutUrl.push(tagVal);
                 return;
@@ -76,7 +76,7 @@ export class ListFrame extends ListBaseClass {
             this.defalutIP.splice(index, 1);
             done(true);
         } else {
-            if (RegValidate.ip(tagVal)) {
+            if (this.RegValidate.ip(tagVal)) {
                 done(true);
                 this.defalutIP.push(tagVal);
                 return;
@@ -93,7 +93,13 @@ export class ListFrame extends ListBaseClass {
 
     submit(formName: string) {
         let id = this.$route.params.id;
-        let params: ListParamsType = {
+        let params: {
+            sid: string;
+            waf_ip_white?: string[];
+            waf_url_white?: string[];
+            waf_ip_black?: string[];
+            waf_url_black?: string[];
+        } = {
             sid: "",
             waf_ip_white: [""],
             waf_url_white: [""],
@@ -135,10 +141,6 @@ export class ListFrame extends ListBaseClass {
                     });
                     this.cancel();
                     break;
-                case "error":
-                    break;
-                case "red":
-                    break;
             }
         });
     }
@@ -151,7 +153,7 @@ export class ListFrame extends ListBaseClass {
             this.form.ip = this.data.waf_ip_black;
             this.form.url = this.data.waf_url_black;
         }
-        this.$emit("close", false);
+        this.close();
     }
 
     Urlerror(res: any) {
@@ -170,17 +172,4 @@ export class ListFrame extends ListBaseClass {
         });
         this.ipState = false;
     }
-}
-
-export interface ListFrameType {
-    ip: Array<string>;
-    url: Array<string>;
-}
-
-export interface ListParamsType {
-    sid: string;
-    waf_ip_white?: Array<string>;
-    waf_url_white?: Array<string>;
-    waf_ip_black?: Array<string>;
-    waf_url_black?: Array<string>;
 }

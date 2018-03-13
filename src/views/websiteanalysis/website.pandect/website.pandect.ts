@@ -1,25 +1,14 @@
-import { ResType } from "server";
-import { AxiosResponse } from "axios";
-import { MywebsiteServer } from "@server/mywebsite";
 import { TableConfigType } from "@store/table.type";
 import { MYWEBSITEEVENT, MyWebsiteType, WebsiteTableType } from "@store/mywebsite.type";
 import { CloudTable } from "@components/cloudtable/table";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { SetCol } from "@components/setcol/setcol";
-import { EventBus, CONSTANT, vm } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
 import { ListBaseClass } from "@views/base/base.class";
 
 
-
-const Aux = new Auxiliary<string>();
 require("./website.pandect.styl");
 @Component({
     name: "websitepandect",
@@ -40,6 +29,7 @@ export class WebsitePandect extends ListBaseClass {
     public tableConfig: TableConfigType;
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["网站总览"];
     public filterData: SearchType = {
         domain: "",
@@ -48,25 +38,22 @@ export class WebsitePandect extends ListBaseClass {
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
     public WebsitePandectData: WebsitePandectTableType[] = new Array<WebsitePandectTableType>();
-    // watch
-    public unwatch: Function = () => { };
 
     // lifecircle hook 
     created() {
         this.$store.dispatch(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, this.mergeData(this.tableConfig["websitepandecttable"], this.filter));
         let that = this;
 
-        let ListId = EventBus.register(WEBSITEANALYSISEVENT.GETWEBSITEPANDECTDATA, function (event: string, info: any) {
+        let ListId = this.EventBus.register(this.CONSTANT.GETWEBSITEPANDECTDATA, function (event: string, info: any) {
             that.WebsitePandectData = (<any>Object).assign([], that.WebsitePandecttableData[that.tableConfig["websitepandecttable"].page - 1]);
         });
       
     }
 
     destroyed() {
-        // Aux.getIds().map((id, $idnex) => {
-        //     EventBus.unRegister(id);
-        // });
-        // this.unwatch();
+        this.Aux.getIds().map((id, $idnex) => {
+            this.EventBus.unRegister(id);
+        });
     }
 
     // init method
