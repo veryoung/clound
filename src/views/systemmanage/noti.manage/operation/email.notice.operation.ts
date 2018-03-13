@@ -12,6 +12,7 @@ import { NoticeServer } from "@server/notice";
 import { OrganizationServer } from "@server/organization";
 import { UserServer } from "@server/user";
 import { SpliceTree } from "@components/splicetree/splice.tree";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 
@@ -33,7 +34,7 @@ require("./email.notice.operation.styl");
     }
 })
 
-export class EmailNoiceOperation extends Vue {
+export class EmailNoiceOperation extends ListBaseClass {
     // init props
 
     // init computed

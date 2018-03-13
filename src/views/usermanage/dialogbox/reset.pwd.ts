@@ -4,6 +4,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 require("./reset.pwd.styl");
@@ -17,7 +18,7 @@ require("./reset.pwd.styl");
         }
     }
 })
-export class ResetPwd extends Vue {
+export class ResetPwd extends ListBaseClass {
     // init props
     public uid: string;
     // init data

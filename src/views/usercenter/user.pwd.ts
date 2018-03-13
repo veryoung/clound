@@ -10,6 +10,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import { EventBus, CONSTANT } from "@utils/event";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 interface MiniUserMessageType {
@@ -32,7 +33,7 @@ require("./user.pwd.styl");
         ])
     }
 })
-export class UserPwd extends Vue {
+export class UserPwd extends ListBaseClass {
     // init computed
     public personInfo: UserCenterType;
     public defaultUser: DefaultUserType;

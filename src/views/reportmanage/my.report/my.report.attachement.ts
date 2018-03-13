@@ -1,7 +1,5 @@
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { ResType } from "server";
-import { AxiosResponse } from "axios";
-import ElementUI from "element-ui";
 import { Store } from "@store/store";
 import { ReportService } from "@server/report";
 
@@ -107,27 +105,3 @@ interface PortType {
 }
 
 
-export class MyReportManager {
-    handleDel(row: WebsiteListColumnType, opt: any) {
-        ElementUI.MessageBox.confirm("是否确认删除？", "提示").then(() => {
-            ReportService.delMyReport(row.id).then((response: AxiosResponse<ResType>) => {
-                let res: ResType = response.data;
-                switch (res.status) {
-                    case "suc":
-                        ElementUI.Notification({
-                            title: "提示",
-                            message: "删除成功",
-                            type: "success"
-                        });
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }).catch(() => {
-
-        });
-    }
-}
-
-export const MyReportManagerController = new MyReportManager();

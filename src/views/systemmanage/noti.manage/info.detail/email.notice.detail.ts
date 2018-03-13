@@ -6,6 +6,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 
@@ -22,7 +23,7 @@ require("./common.detail.styl");
         ...mapGetters(["emailDetail"])
     }
 })
-export class EmailNoticeDeatil extends Vue {
+export class EmailNoticeDeatil extends ListBaseClass {
     // init data
     public EmailNoticeInfo: EmailNoticeDetailType = {
         content: "",

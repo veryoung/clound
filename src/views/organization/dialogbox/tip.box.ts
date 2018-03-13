@@ -8,7 +8,7 @@ import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { SubmitBtn } from "@components/submit/submit";
-import { ListBaseClass } from "@views/base/base.class";
+import { ListBaseClass, DiplomaBaseClass } from "@views/base/base.class";
 
 
 
@@ -35,7 +35,7 @@ require("./tip.box.styl");
         ])
     }
 })
-export class TipBox extends ListBaseClass {
+export class TipBox extends DiplomaBaseClass {
     // init props
     public dialogVisible: boolean;
     public pid: string;
@@ -82,7 +82,7 @@ export class TipBox extends ListBaseClass {
                                 type: "success"
                             });
                             this.$store.dispatch(ORGANIZATION.INITORGANIZATIONTREE);
-                            this.$emit("close", false);
+                            this.close();
                             break;
                         default:
                             break;
@@ -93,7 +93,5 @@ export class TipBox extends ListBaseClass {
             }
         });
     }
-    cancel() {
-        this.$emit("close", false);
-    }
+
 }

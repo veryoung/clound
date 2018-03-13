@@ -4,6 +4,7 @@ import Component from "vue-class-component";
 import { WebsiteAnalysisServer } from "@server/website.analysis";
 import { AxiosResponse } from "axios";
 import { ResType } from "server";
+import { ListBaseClass } from "@views/base/base.class";
 require("./logs.detail.styl");
 
 @Component({
@@ -15,7 +16,7 @@ require("./logs.detail.styl");
 })
 
 
-export class LogsDetail extends Vue {
+export class LogsDetail extends ListBaseClass {
     // props
 
     // propss

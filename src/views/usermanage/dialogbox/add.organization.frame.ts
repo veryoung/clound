@@ -3,6 +3,7 @@ import Vue from "vue";
 
 import { TissueTree } from "@components/tissuetree/tree";
 import { ORGANIZATION, OrganizationTreeType } from "@store/organization.type";
+import { ListBaseClass } from "@views/base/base.class";
 
 require("./add.organization.frame.styl");
 @Component({
@@ -15,7 +16,7 @@ require("./add.organization.frame.styl");
         TissueTree
     },
 })
-export class AddOrganizationFrame extends Vue {
+export class AddOrganizationFrame extends ListBaseClass {
     // init props
     public dialogVisible: boolean;
     // init data

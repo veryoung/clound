@@ -7,6 +7,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER, DefaultUserType } from "@store/user.center.type";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
+import { ListBaseClass } from "@views/base/base.class";
 
 const Aux = new Auxiliary<string>();
 require("./user.message.styl");
@@ -23,7 +24,7 @@ require("./user.message.styl");
         ])
     }
 })
-export class UserMessage extends Vue {
+export class UserMessage extends ListBaseClass {
     // init data
     public unwatch: any = "";
     public userMessage: UserMessageType = {
