@@ -4,19 +4,15 @@ import { TableConfigType } from "@store/table.type";
 import { ModuleTitle } from "@components/title/module.title";
 import Vue from "vue";
 import Component from "vue-class-component";
-import * as moment from "moment";
 import { ListBaseClass } from "@views/base/base.class";
 import { NOTICEEVENT } from "@store/notice.type";
 import { mapGetters } from "vuex";
-import { EventBus, CONSTANT } from "@utils/event";
 import { AxiosResponse } from "axios";
 import { ResType } from "server";
 import { NoticeServer } from "@server/notice";
-import { Auxiliary } from "@utils/auxiliary";
 
 
 require("./pubilc.notice.styl");
-const Aux = new Auxiliary<string>();
 
 @Component({
     name: "publicnotice",
@@ -41,13 +37,14 @@ export class PublicNotice extends ListBaseClass {
     public tableConfig: TableConfigType;
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["站内公告"];
     public ids: string[] = [];
     public filterData: SearchType = {
         key_word: "",
         page: "1",
         page_size: "10",
-        send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+        send_date: [this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), this.moment(new Date()).format("YYYYMMDD")],
     };
 
     public delfilterData: DelSearchType = {
@@ -55,12 +52,12 @@ export class PublicNotice extends ListBaseClass {
         new: true,
         page: "1",
         page_size: "9999",
-        send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+        send_time: [this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), this.moment(new Date()).format("YYYYMMDD")],
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
     public delfilter: SearchType = (<any>Object).assign({}, this.filterData);
 
-    public PublicNoticeData: PublicNoticeColumnType[] = new Array<PublicNoticeColumnType>();
+    public PublicNoticeData: PublicNoticeColumnType[] = [];
     // watch
 
     // lifecircle hook 
@@ -70,15 +67,15 @@ export class PublicNotice extends ListBaseClass {
 
         let that = this;
 
-        let ListId = EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
+        let ListId = this.EventBus.register(NOTICEEVENT.GETNOTICELIST, function (event: string, info: any) {
             that.PublicNoticeData = (<any>Object).assign([], that.noticeTable[that.tableConfig["noticetable"].page - 1]);
         });
         // 
     }
 
     destroyed() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $idnex) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -115,7 +112,6 @@ export class PublicNotice extends ListBaseClass {
 
     // 查看详情
     look(rowObj?: any) {
-        console.log(rowObj);
         if (rowObj) {
             this.$router.push(`/SystemManagement/ReportManagement/notice/look/${rowObj.row.id}`);
         }
@@ -182,16 +178,6 @@ export class PublicNotice extends ListBaseClass {
             }
         }
     }
-
-    sortChange(opt: any) {
-
-    }
-
-    dateChange() {
-
-    }
-
-
 }
 
 export interface DomainType {

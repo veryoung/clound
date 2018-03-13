@@ -60,8 +60,8 @@ export class ReportOperation extends DiplomaBaseClass {
         cycle_range: [],
         indicators: [],
     };
-    public attackItem: Array<string> = [];
-    public defenItem: Array<string> = [];
+    public attackItem: string[] = [];
+    public defenItem: string[]  = [];
     // 防御详情
     public defenseOption: Array<any> = [
         { label: "攻击拦截趋势", value: "defenAttack_tendency" },
@@ -107,7 +107,6 @@ export class ReportOperation extends DiplomaBaseClass {
             let temp = that.reportTemplateDetail[id];
             let tempDefenItem: string[] = [];
             let tempAttackItem: string[] = [];
-            console.log(temp);
             if (temp) that.form.name = temp.name;
             for (let key in temp.indicators) {
                 for (let item of that.defenseOption) {
@@ -145,8 +144,8 @@ export class ReportOperation extends DiplomaBaseClass {
     }
 
     handleCheckAllChange(val: boolean) {
-        let defenseOptions: Array<string> = [];
-        let attackOptions: Array<string> = [];
+        let defenseOptions: string[] = [];
+        let attackOptions: string[] = [];
         for (let key in this.defenseOption) {
             defenseOptions.push(this.defenseOption[key].value);
         }
@@ -185,7 +184,7 @@ export class ReportOperation extends DiplomaBaseClass {
                                     message: "添加模板成功",
                                     type: "success"
                                 });
-                                this.$router.go(-1);
+                                this.back();
                                 break;
                             default:
                                 break;
@@ -202,7 +201,7 @@ export class ReportOperation extends DiplomaBaseClass {
                                     message: "编辑模板成功",
                                     type: "success"
                                 });
-                                this.$router.go(-1);
+                                this.back();
                                 break;
                             default:
                                 break;
@@ -215,10 +214,6 @@ export class ReportOperation extends DiplomaBaseClass {
 
 
 
-    }
-
-    back() {
-        this.$router.go(-1);
     }
 }
 

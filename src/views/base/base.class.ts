@@ -2,17 +2,10 @@ import Vue from "vue";
 import * as moment from "moment";
 import { Config } from "@store/table.type";
 import { CONSTANT, vm, EventBus } from "@utils/event";
-import { RegValidate, FromValidator} from "@utils/form.validator";
+import { RegValidate, FromValidator } from "@utils/form.validator";
 import { Auxiliary } from "@utils/auxiliary";
 import axios from "@server/index";
 import { entryRouter } from "@router/index";
-
-
-
-
-
-
-
 export class BaseLibrary extends Vue {
     protected moment = moment;
     protected vm = vm;
@@ -34,6 +27,20 @@ export class DetailBaseClass extends BaseLibrary {
 export class DiplomaBaseClass extends BaseLibrary {
     protected close() {
         this.$emit("close", false);
+    }
+
+    protected back() {
+        entryRouter.go(-1);
+    }
+
+    /**
+     * @param href 导出路径
+     */
+    protected exportFile(href: string) {
+        let dom: any = document.createElement("a");
+        dom.href = href;
+        dom.target = "_blank";
+        dom.click();
     }
 }
 export class ListBaseClass extends BaseLibrary {

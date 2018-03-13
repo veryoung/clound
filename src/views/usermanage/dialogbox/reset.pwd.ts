@@ -1,10 +1,9 @@
-import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
 import { ResType } from "server";
-import { FormRuleType, FromValidator } from "@utils/form.validator";
+import { FormRuleType} from "@utils/form.validator";
 import { AxiosResponse } from "axios";
-import { ListBaseClass } from "@views/base/base.class";
+import {  DiplomaBaseClass } from "@views/base/base.class";
 
 
 require("./reset.pwd.styl");
@@ -18,11 +17,11 @@ require("./reset.pwd.styl");
         }
     }
 })
-export class ResetPwd extends ListBaseClass {
+export class ResetPwd extends DiplomaBaseClass {
     // init props
     public uid: string;
     // init data
-    public form: ResetType = {
+    public form = {
         pwd1: "",
         pwd: ""
     };
@@ -37,7 +36,7 @@ export class ResetPwd extends ListBaseClass {
     public rules: FormRuleType = {
         pwd: [
             { required: true, message: "密码不能为空", trigger: "blur" },
-            { validator: FromValidator.pwd, message: "密码不符合规则", trigger: "blur" }
+            { validator: this.FromValidator.pwd, message: "密码不符合规则", trigger: "blur" }
         ],
         pwd1: [
             { required: true, message: "密码不能为空", trigger: "blur" },
@@ -65,7 +64,7 @@ export class ResetPwd extends ListBaseClass {
                                 message: "修改成功",
                                 type: "success"
                             });
-                            this.cancel();
+                            this.close();
                             break;
                         default:
                             break;
@@ -75,10 +74,6 @@ export class ResetPwd extends ListBaseClass {
                 return false;
             }
         });
-    }
-
-    cancel() {
-        this.$emit("close", false);
     }
 }
 

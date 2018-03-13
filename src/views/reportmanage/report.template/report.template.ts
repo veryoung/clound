@@ -5,7 +5,7 @@ import { TissueTree } from "@components/tissuetree/tree";
 import { ModuleTitle } from "@components/title/module.title";
 import { mapGetters } from "vuex";
 import { ListBaseClass } from "@views/base/base.class";
-import ReportTemplateSearchType, { filterData, ReportTemplateController, ReportTemplateColumnType } from "@views/reportmanage/report.template/report.template.attachement";
+import ReportTemplateSearchType, { filterData,  ReportTemplateColumnType } from "@views/reportmanage/report.template/report.template.attachement";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { TableConfigType } from "@store/table.type";
 import { REPORTEVENT } from "@store/report.type";
@@ -150,7 +150,25 @@ export class ReportTemplate extends ListBaseClass {
                         }
                     });
             } else if (type === "del") {
-                ReportTemplateController.handleDel(row, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
+                this.$msgbox.confirm("确认删除所选报告模板？？", "提示").then(() => {
+                    ReportService.DelReport(row.id).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$notify({
+                                    title: "提示",
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }).catch(() => {
+
+                });
             }
             return;
         }

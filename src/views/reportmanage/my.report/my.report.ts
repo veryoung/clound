@@ -87,12 +87,6 @@ export class MyReport extends ListBaseClass {
         this.Aux.insertId(ListId);
     }
 
-    mounted() {
-        // this.list = this.states.map((item: any) => {
-        //     return { value: item, label: item };
-        // });
-    }
-
     destroyed() {
         this.Aux.getIds().map((id: any, $idnex: any) => {
             this.EventBus.unRegister(id);
@@ -169,7 +163,6 @@ export class MyReport extends ListBaseClass {
                         }
                     });
                 }).catch(() => {
-        
                 });
 
             }
@@ -179,17 +172,6 @@ export class MyReport extends ListBaseClass {
             this.$router.push(`/WebsiteManagement/myWebsite/add`);
         }
     }
-
-    download() {
-
-    }
-
-    del() {
-
-    }
-
-
-
     handleSelectionChange(options: any[]) {
         this.ids = [];
         options.map((item: {

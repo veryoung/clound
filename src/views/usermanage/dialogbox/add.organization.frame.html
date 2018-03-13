@@ -1,4 +1,4 @@
-<el-dialog :visible="dialogVisible" width="340px" top="10%" :before-close="handleClose" class="dialog-plane">
+<el-dialog :visible="dialogVisible" width="340px" top="10%" :before-close="close()" class="dialog-plane">
     <span slot="title" class="dialog-title">
         <span class="iconfont">&#xe63b;</span>
         选择组织机构
@@ -8,6 +8,6 @@
     </div>
     <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="importOrganization()">确定</el-button>
-        <el-button @click="handleClose()">取消</el-button>
+        <el-button @click="close()">取消</el-button>
     </span>
 </el-dialog>

@@ -1,15 +1,11 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { UserCenterType, DefaultUserType, USER } from "@store/user.center.type";
-import { FormRuleType, FromValidator } from "@utils/index";
+import { FormRuleType } from "@utils/index";
 import { UserServer } from "@server/user";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
-import { EventBus, CONSTANT } from "@utils/event";
 import { ListBaseClass } from "@views/base/base.class";
 
 
@@ -48,18 +44,17 @@ export class UserPwd extends ListBaseClass {
     public rules: FormRuleType = {
         opwd: [
             { required: true, message: "原始密码不能为空", trigger: "blur" },
-            // { message: "密码不符合要求", validator: FromValidator.pwd, trigger: "blur" }
         ],
         npwd: [
             { required: true, message: "新密码不能为空", trigger: "blur" },
-            { message: "密码不符合要求", validator: FromValidator.pwd, trigger: "blur" }
+            { message: "密码不符合要求", validator: this.FromValidator.pwd, trigger: "blur" }
         ],
         npwdAgain: [
             { required: true, message: "确认密码不能为空", trigger: "blur" },
             { message: "与密码不符合", validator: this.npwdAgain, trigger: "blur" }
         ]
     };
-    public userMessage: MiniUserMessageType = {
+    public userMessage = {
         user_name: "",
         role: "",
         compay: ""
@@ -70,7 +65,7 @@ export class UserPwd extends ListBaseClass {
     created() {
         let that = this;
         this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
-        let PersonInfoId = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+        let PersonInfoId = this.EventBus.register(this.CONSTANT.DEFAULTUSER, function (event: string, info: any) {
             that.userMessage = (<any>Object).assign({}, that.personInfo[that.defaultUser.uid]);
         });
         this.userMessage = (<any>Object).assign({}, this.personInfo[this.defaultUser.uid]);

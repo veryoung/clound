@@ -1,16 +1,12 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
-import { vm, EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
-import { ListBaseClass } from "@views/base/base.class";
+import { DetailBaseClass } from "@views/base/base.class";
 
 
 
-const Aux = new Auxiliary<string>();
 require("./common.detail.styl");
 require("./message.notice.detail.styl");
 @Component({
@@ -23,8 +19,9 @@ require("./message.notice.detail.styl");
         ...mapGetters(["msgDetail"])
     }
 })
-export class MessageNoticeDeatil extends ListBaseClass {
+export class MessageNoticeDeatil extends DetailBaseClass {
     // init data
+    public Aux = new this.Auxiliary<string>();
     public MessageNoticeInfo: MessageNoticeDetailType = {
         content: "",
         id: "",
@@ -43,18 +40,14 @@ export class MessageNoticeDeatil extends ListBaseClass {
         let that = this;
         let id = that.$route.params.id;
         this.$store.dispatch(NOTICEEVENT.GETMSGDETAIL, { id: id });
-        let eventId = EventBus.register(CONSTANT.GETMSGDETAIL, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETMSGDETAIL, function (event: string, info: any) {
             that.MessageNoticeInfo = that.msgDetail[id];
-            console.log(that.MessageNoticeInfo);
         });
-        Aux.insertId(eventId);
+        this.Aux.insertId(eventId);
     }
 
     beforeDestroy() {
-        Aux.getIds().map((id, $index) => {     EventBus.unRegister(id); });
-    }
-    back() {
-        this.$router.go(-1);
+        this.Aux.getIds().map((id, $index) => {     this.EventBus.unRegister(id); });
     }
 }
 

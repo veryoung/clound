@@ -1,15 +1,9 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { UserMessageType, UserCenterType, USER, DefaultUserType } from "@store/user.center.type";
-import { vm, EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { ListBaseClass } from "@views/base/base.class";
 
-const Aux = new Auxiliary<string>();
 require("./user.message.styl");
 @Component({
     name: "usermessage",
@@ -27,6 +21,7 @@ require("./user.message.styl");
 export class UserMessage extends ListBaseClass {
     // init data
     public unwatch: any = "";
+    public Aux = new this.Auxiliary<string>();
     public userMessage: UserMessageType = {
         uid: "0",
         user_name: "",
@@ -57,7 +52,7 @@ export class UserMessage extends ListBaseClass {
     created() {
         let that = this;
         let id = this.$route.params.id;
-        this.unwatch = vm.$watch(function () {
+        this.unwatch = this.vm.$watch(function () {
             let id = that.$route.params.id;
             if (id) {
                 that.$store.dispatch(USER.GETUSER, { uid: id });
@@ -68,24 +63,20 @@ export class UserMessage extends ListBaseClass {
         }, (id, oldid) => {
         });
 
-        let eventId = EventBus.register(CONSTANT.GETUSER, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETUSER, function (event: string, info: any) {
             that.userMessage = that.personInfo[id];
         });
-        let eventId1 = EventBus.register(CONSTANT.DEFAULTUSER, function (event: string, info: any) {
+        let eventId1 = this.EventBus.register(this.CONSTANT.DEFAULTUSER, function (event: string, info: any) {
             that.userMessage = that.personInfo[that.defaultUser.uid];
         });
-        Aux.insertId(eventId);
-        Aux.insertId(eventId1);
+        this.Aux.insertId(eventId);
+        this.Aux.insertId(eventId1);
     }
 
     beforeDestroy() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $index) => {
+            this.EventBus.unRegister(id);
         });
         this.unwatch();
-    }
-
-    back() {
-        this.$router.go(-1);
     }
 }
