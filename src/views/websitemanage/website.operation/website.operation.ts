@@ -15,6 +15,7 @@ import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { Auxiliary } from "@utils/auxiliary";
 import { FormType, TagType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 const Aux = new Auxiliary<string>();
@@ -40,7 +41,7 @@ require("./website.operation.styl");
     }
 })
 
-export class WebsiteOperation extends Vue {
+export class WebsiteOperation extends ListBaseClass {
     // init props
     public operation: "add" | "editor";
 

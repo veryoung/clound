@@ -8,6 +8,7 @@ import { mapGetters } from "vuex";
 import { WEBSITEANALYSISEVENT } from "@store/website.analysis.type";
 import { EventBus, CONSTANT } from "@utils/event";
 import * as moment from "moment";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 require("./website.detail.styl");
@@ -28,7 +29,7 @@ require("./website.detail.styl");
     }
 })
 
-export class WebsiteDetail extends Vue {
+export class WebsiteDetail extends ListBaseClass {
     // init computed
     // init data
     // 初始化数据
@@ -58,10 +59,10 @@ export class WebsiteDetail extends Vue {
         dt: "0",
         level: "",
         site: "",
-        tendency_attack: "1",
-        top_ip: "1",
-        top_location: "1",
-        top_type: "1",
+        tendency_attack: "10",
+        top_ip: "10",
+        top_location: "10",
+        top_type: "10",
         total_cc: "1",
         total_web: "1",
     };
@@ -69,9 +70,9 @@ export class WebsiteDetail extends Vue {
     public accessfilterData: AccessSearchType = {
         dt: "0",
         site: "",
-        tendency_ip: "1",
-        tendency_req_flow: "1",
-        tendency_req_num: "1",
+        tendency_ip: "10",
+        tendency_req_flow: "10",
+        tendency_req_num: "10",
         total_hit_flow: "1",
         total_hit_num: "1",
     };

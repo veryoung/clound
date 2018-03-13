@@ -9,12 +9,10 @@ import { GeneralServer } from "@server/general";
 import { ResType } from "@server/index";
 import { UserCenterType, USER, DefaultUserType } from "@store/user.center.type";
 import { AxiosResponse } from "axios";
-import { EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
 import { ListBaseClass } from "@views/base/base.class";
 import { TableConfigType } from "@store/table.type";
-import * as moment from "moment";
 import { session } from "@utils/index";
 
 
@@ -49,7 +47,7 @@ export class UserMenu extends ListBaseClass {
         new: true,
         page: "1",
         page_size: "9999",
-        send_time: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+        send_time: [this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), this.moment(new Date()).format("YYYYMMDD")],
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
 
@@ -61,12 +59,12 @@ export class UserMenu extends ListBaseClass {
     created() {
         let that = this;
         this.$store.dispatch(USER.DEFAULTUSER, { uid: this.defaultUser.uid });
-        EventBus.register(CONSTANT.DEFAULTUSER, function () {
+        this.EventBus.register(this.CONSTANT.DEFAULTUSER, function () {
             if (that.personInfo[that.defaultUser.uid]) that.user_name = that.personInfo[that.defaultUser.uid].user_name;
         });
         // 获取公告
         this.$store.dispatch(NOTICEEVENT.GETPUBlICGETNOTICELIST,  this.filter);
-        let ListId = EventBus.register(NOTICEEVENT.GETPUBlICGETNOTICELIST, function (event: string, info: any) {
+        let ListId = this.EventBus.register(NOTICEEVENT.GETPUBlICGETNOTICELIST, function (event: string, info: any) {
             that.PublicNoticeData = (<any>Object).assign([], that.publicnoticeTable[that.tableConfig["publicnoticeTable"].page - 1]);
             that.NotReaderArray = that.PublicNoticeData;
             that.NoticeNum = that.NotReaderArray.length;

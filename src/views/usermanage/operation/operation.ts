@@ -16,6 +16,7 @@ import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { roleDict } from "@utils/role.fn";
 import { SubmitBtn } from "@components/submit/submit";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 const Aux = new Auxiliary<string>();
@@ -41,7 +42,7 @@ require("./operation.styl");
         ModuleTitle, AddOrganizationFrame, TissueTree, SubmitBtn
     }
 })
-export class UserOperation extends Vue {
+export class UserOperation extends ListBaseClass {
     // init props
     public operation: "add" | "editor";
 

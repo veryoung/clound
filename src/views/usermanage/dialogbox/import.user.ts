@@ -1,6 +1,7 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { ResType } from "server";
+import { ListBaseClass } from "@views/base/base.class";
 
 require("./import.user.styl");
 @Component({
@@ -10,7 +11,7 @@ require("./import.user.styl");
         dialogVisible: Boolean,
     },
 })
-export class ImportUserFrame extends Vue {
+export class ImportUserFrame extends ListBaseClass {
     // init data
     public dialogVisible: boolean;
     public loading: boolean = false;

@@ -1,3 +1,4 @@
+import { ReportService } from "@server/report";
 import { USER, DefaultUserType } from "@store/user.center.type";
 import { UserCenterType } from "@store/user.center.type";
 import { ResType } from "server";
@@ -6,22 +7,14 @@ import { TableConfigType } from "@store/table.type";
 import { CloudTable } from "@components/cloudtable/table";
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
-
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { SetCol } from "@components/setcol/setcol";
-import SearchType, { filterData, MyReportManagerController } from "./my.report.attachement";
-import { EventBus } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
+import SearchType, { filterData } from "./my.report.attachement";
 import { ListBaseClass } from "@views/base/base.class";
-import * as moment from "moment";
 import { REPORTEVENT } from "@store/report.type";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 
-
-const Aux = new Auxiliary<string>();
 require("./my.report.styl");
 @Component({
     name: "myreport",
@@ -51,6 +44,7 @@ export class MyReport extends ListBaseClass {
 
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["我的报告"];
     public filter: SearchType = (<any>Object).assign({}, filterData);
     public reporttable: {
@@ -78,8 +72,8 @@ export class MyReport extends ListBaseClass {
 
     // lifecircle hook 
     created() {
-        let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
-        let endDay = moment(new Date()).format("YYYYMMDD");
+        let startDay = this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
+        let endDay = this.moment(new Date()).format("YYYYMMDD");
         this.filter.count_time = [startDay, endDay];
         this.filter.pro_time = [startDay, endDay];
 
@@ -87,10 +81,10 @@ export class MyReport extends ListBaseClass {
 
         this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter));
         let that = this;
-        let ListId = EventBus.register(this.CONSTANT.GETREPORTLIST, function (event: string, info: any) {
+        let ListId = this.EventBus.register(this.CONSTANT.GETREPORTLIST, function (event: string, info: any) {
             that.reporttable = (<any>Object).assign([], that.reportList[that.tableConfig["myreporttable"].page - 1]);
         });
-        Aux.insertId(ListId);
+        this.Aux.insertId(ListId);
     }
 
     mounted() {
@@ -100,8 +94,8 @@ export class MyReport extends ListBaseClass {
     }
 
     destroyed() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id: any, $idnex: any) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -129,8 +123,8 @@ export class MyReport extends ListBaseClass {
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
-        let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
-        let endDay = moment(new Date()).format("YYYYMMDD");
+        let startDay = this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
+        let endDay = this.moment(new Date()).format("YYYYMMDD");
         this.filter.count_time = [startDay, endDay];
         this.filter.pro_time = [startDay, endDay];
         this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter));
@@ -158,7 +152,26 @@ export class MyReport extends ListBaseClass {
             } else if (type === "look") {
                 this.$router.push(`/ReportManagement/RreviewReport/${row.id}/${row.name}`);
             } else if (type === "del") {
-                MyReportManagerController.handleDel(row,  this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter)));
+                this.$msgbox.confirm("是否确认删除？", "提示").then(() => {
+                    ReportService.delMyReport(row.id).then((response: AxiosResponse<ResType>) => {
+                        let res: ResType = response.data;
+                        switch (res.status) {
+                            case "suc":
+                                this.$notify({
+                                    title: "提示",
+                                    message: "删除成功",
+                                    type: "success"
+                                });
+                                this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter));
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }).catch(() => {
+        
+                });
+
             }
             return;
         }
@@ -190,13 +203,6 @@ export class MyReport extends ListBaseClass {
             this.ids.push(item.rid);
         });
     }
-    // 时间选择
-
-    // dateChange(date: Array<string>) {
-    //     this.filter.start_date = date[0];
-    //     this.filter.end_date = date[1];
-    // }
-
 
     // 导出
     exportChoose(type: string) {

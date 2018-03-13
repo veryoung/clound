@@ -3,21 +3,16 @@ import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TissueTree } from "@components/tissuetree/tree";
 import { ModuleTitle } from "@components/title/module.title";
-import { Auxiliary } from "@utils/auxiliary";
 import { mapGetters } from "vuex";
 import { ListBaseClass } from "@views/base/base.class";
 import ReportTemplateSearchType, { filterData, ReportTemplateController, ReportTemplateColumnType } from "@views/reportmanage/report.template/report.template.attachement";
-import * as moment from "moment";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { TableConfigType } from "@store/table.type";
-import { EventBus, CONSTANT } from "@utils/event";
 import { REPORTEVENT } from "@store/report.type";
 import { ReportService } from "@server/report";
 import { AxiosResponse } from "axios";
 import { ResType } from "server";
 
-
-const Aux = new Auxiliary<string>();
 require("./report.template.styl");
 
 @Component({
@@ -41,7 +36,7 @@ export class ReportTemplate extends ListBaseClass {
 
     // data
     public titles: string[] = ["报告模板"];
-
+    public Aux = new this.Auxiliary<string>();
     public filter: ReportTemplateSearchType = (<any>Object).assign({}, filterData);
     public tableData: ReportTemplateColumnType[] = new Array<ReportTemplateColumnType>();
 
@@ -73,15 +68,15 @@ export class ReportTemplate extends ListBaseClass {
 
     // method    
     created() {
-        let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
-        let endDay = moment(new Date()).format("YYYYMMDD");
+        let startDay = this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
+        let endDay = this.moment(new Date()).format("YYYYMMDD");
         this.filter.create_time = [startDay, endDay];
         this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
         let that = this;
-        let ListId = EventBus.register(CONSTANT.GETREPORTTEMPLATELIST, function (event: string, info: any) {
+        let ListId = this.EventBus.register(this.CONSTANT.GETREPORTTEMPLATELIST, function (event: string, info: any) {
             that.tableData = that.reportTableData[that.tableConfig.reporttemplatetable.page - 1];
         });
-        Aux.insertId(ListId);
+        this.Aux.insertId(ListId);
     }
 
     mounted() {
@@ -112,8 +107,8 @@ export class ReportTemplate extends ListBaseClass {
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
-        let startDay = moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
-        let endDay = moment(new Date()).format("YYYYMMDD");
+        let startDay = this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
+        let endDay = this.moment(new Date()).format("YYYYMMDD");
         this.filter.create_time = [startDay, endDay];
         this.$store.dispatch(REPORTEVENT.GETREPORTTEMPLATELIST, this.mergeData(this.tableConfig["reporttemplatetable"], this.filter));
     }

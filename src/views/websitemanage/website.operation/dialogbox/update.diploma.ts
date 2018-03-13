@@ -4,6 +4,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { ListBaseClass } from "@views/base/base.class";
 
 const style = require("./update.m.css");
 
@@ -17,7 +18,7 @@ const style = require("./update.m.css");
         }
     },
 })
-export class UpdateDiploma extends Vue {
+export class UpdateDiploma extends ListBaseClass {
     // init data
     public dialogVisible: boolean;
     public loading: boolean = false;

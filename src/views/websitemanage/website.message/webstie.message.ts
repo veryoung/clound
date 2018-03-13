@@ -8,6 +8,7 @@ import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { MYWEBSITEEVENT } from "@store/mywebsite.type";
 import { WebMessageType, WebMessagePageType } from "@views/websitemanage/website.manage.attachement";
+import { ListBaseClass } from "@views/base/base.class";
 
 const Aux = new Auxiliary<string>();
 require("./webstie.message.styl");
@@ -21,7 +22,7 @@ require("./webstie.message.styl");
         ...mapGetters(["websiteMessage"])
     }
 })
-export class WebsiteMessage extends Vue {
+export class WebsiteMessage extends ListBaseClass {
     // init data
     public WebsiteInfo: WebMessageType = {
         cname: "",

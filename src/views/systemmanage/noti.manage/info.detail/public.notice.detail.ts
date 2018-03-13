@@ -6,6 +6,7 @@ import { ModuleTitle } from "@components/title/module.title";
 import { vm, EventBus, CONSTANT } from "@utils/event";
 import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 
@@ -27,7 +28,7 @@ require("./public.notice.detail.styl");
         "$route": "fetchDate"
     }
 })
-export class PublicNoticeDeatil extends Vue {
+export class PublicNoticeDeatil extends ListBaseClass {
     // init data
     public PublicNoticeInfo: PublicNoticeDetailType = {
         content: "",

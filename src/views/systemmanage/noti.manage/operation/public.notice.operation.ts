@@ -9,6 +9,7 @@ import { mapGetters } from "vuex";
 import { Auxiliary } from "@utils/auxiliary";
 import { FormRuleType } from "@utils/form.validator";
 import { NoticeServer } from "@server/notice";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 const Aux = new Auxiliary<string>();
@@ -29,7 +30,7 @@ require("./public.notice.operation.styl");
     }
 })
 
-export class PublicNoiceOperation extends Vue {
+export class PublicNoiceOperation extends ListBaseClass {
     // init props
 
     // init computed

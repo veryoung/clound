@@ -8,6 +8,7 @@ import { UserServer } from "@server/user";
 import { ResType } from "server";
 import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 require("./defen.frame.styl");
@@ -25,7 +26,7 @@ require("./defen.frame.styl");
         CustomTags
     }
 })
-export class DenfenFrame extends Vue {
+export class DenfenFrame extends ListBaseClass {
     // init props
     public uid: string;
     public data: FormType;

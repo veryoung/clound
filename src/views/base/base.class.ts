@@ -2,7 +2,7 @@ import Vue from "vue";
 import * as moment from "moment";
 import { Config } from "@store/table.type";
 import { CONSTANT, vm, EventBus } from "@utils/event";
-import { RegValidate, FromValidator, } from "@utils/form.validator";
+import { RegValidate, FromValidator} from "@utils/form.validator";
 import { Auxiliary } from "@utils/auxiliary";
 import axios from "@server/index";
 import { entryRouter } from "@router/index";

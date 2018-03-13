@@ -1,5 +1,4 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 
@@ -17,6 +16,7 @@ import { Auxiliary } from "@utils/auxiliary";
 import { create } from "domain";
 import { Permissions } from "@directives/permissions";
 import { SubmitBtn } from "@components/submit/submit";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 const Aux = new Auxiliary<string>();
@@ -39,7 +39,7 @@ require("./organization.styl");
         ])
     }
 })
-export class OrganizationComponent extends Vue {
+export class OrganizationComponent extends ListBaseClass {
     // init data
     public add: boolean = Permissions.judge("SystemManagement.Organization.Add");
     public del: boolean = Permissions.judge("SystemManagement.Organization.Delete");

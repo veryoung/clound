@@ -5,9 +5,9 @@ import { CustomTags } from "@components/customtags/custom.tags";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { UserServer } from "@server/user";
-import { FormRuleType, FromValidator } from "@utils/form.validator";
 import { AxiosResponse } from "axios";
 import { FormType } from "@views/websitemanage/website.settings/website.settings.attchement";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 require("./list.frame.styl");
@@ -23,7 +23,7 @@ require("./list.frame.styl");
         CustomTags
     }
 })
-export class ListFrame extends Vue {
+export class ListFrame extends ListBaseClass {
     // init props
     public types: string;
     public data: FormType;
