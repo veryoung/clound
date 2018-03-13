@@ -1,5 +1,4 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 
@@ -9,6 +8,7 @@ import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
 import { SubmitBtn } from "@components/submit/submit";
+import { ListBaseClass } from "@views/base/base.class";
 
 
 
@@ -35,7 +35,7 @@ require("./tip.box.styl");
         ])
     }
 })
-export class TipBox extends Vue {
+export class TipBox extends ListBaseClass {
     // init props
     public dialogVisible: boolean;
     public pid: string;

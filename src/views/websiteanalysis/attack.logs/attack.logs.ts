@@ -154,7 +154,6 @@ export class AttackLogs extends ListBaseClass {
     created() {
         // 初始化时间
         this.currentDate = [this.filter.stime, this.filter.etime];
-        console.log(this.websitefilter);
         this.$store.dispatch(MYWEBSITEEVENT.GETLISTMESSAGE, this.mergeData(this.tableConfig["mywebsitetable"], this.websitefilter));
 
         let that = this;
