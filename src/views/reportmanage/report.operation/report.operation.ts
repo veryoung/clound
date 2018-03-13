@@ -8,7 +8,6 @@ import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
 import { Auxiliary } from "@utils/auxiliary";
-import { FormType, TagType } from "@views/websitemanage/website.operation/website.operation.attachement";
 import { CustomTags } from "@components/customtags/custom.tags";
 import { DetailBaseClass } from "@views/base/base.class";
 import { ReportService } from "@server/report";

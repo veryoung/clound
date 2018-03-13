@@ -104,5 +104,3 @@ export class SpeedListFrame extends DiplomaBaseClass {
         this.UrlState = false;
     }
 }
-
-export interface SpeedListType 

@@ -51,25 +51,25 @@ export class WebsiteOperation extends BaseLibrary {
         industry: string;
         name: string;
         open_waf: string;
-        source_info: number[];
+        source_info: number | string[];
         source_type: string;
         remark: string;
         id: string;
         has_key: string;
     } = {
-        cid: "",
-        domain: "",
-        http_port: [80],
-        https_port: [443],
-        industry: "金融",
-        name: "",
-        open_waf: "1",
-        source_info: [],
-        source_type: "A",
-        remark: "",
-        id: "",
-        has_key: "",
-    };
+            cid: "",
+            domain: "",
+            http_port: [80],
+            https_port: [443],
+            industry: "金融",
+            name: "",
+            open_waf: "1",
+            source_info: [],
+            source_type: "A",
+            remark: "",
+            id: "",
+            has_key: "",
+        };
 
     // 标题
     public titles: string[] = [];
@@ -350,10 +350,10 @@ export class WebsiteOperation extends BaseLibrary {
                         message: "请输入https端口",
                         type: "warning"
                     });
-                   
+
                     return;
                 }
-                if ( this.form.cid === "" && this.form.https_port.length === 0) {
+                if (this.form.cid === "" && this.form.https_port.length === 0) {
                     this.$notify({
                         title: "提示",
                         message: "请上传证书",
