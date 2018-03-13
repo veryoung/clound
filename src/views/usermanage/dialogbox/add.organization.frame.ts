@@ -1,9 +1,7 @@
 import Component from "vue-class-component";
-import Vue from "vue";
-
 import { TissueTree } from "@components/tissuetree/tree";
 import { ORGANIZATION, OrganizationTreeType } from "@store/organization.type";
-import { ListBaseClass } from "@views/base/base.class";
+import {  DiplomaBaseClass } from "@views/base/base.class";
 
 require("./add.organization.frame.styl");
 @Component({
@@ -16,7 +14,7 @@ require("./add.organization.frame.styl");
         TissueTree
     },
 })
-export class AddOrganizationFrame extends ListBaseClass {
+export class AddOrganizationFrame extends DiplomaBaseClass {
     // init props
     public dialogVisible: boolean;
     // init data
@@ -28,11 +26,6 @@ export class AddOrganizationFrame extends ListBaseClass {
 
 
     // lifecycle hook
-    created() {
-    }
-    destroyed() {
-
-    }
 
     // init method
     clickNode(opt: OrganizationTreeType) {
@@ -48,10 +41,6 @@ export class AddOrganizationFrame extends ListBaseClass {
             return;
         }
         this.$emit("importNode", this.selectNode);
-    }
-
-    handleClose(done: any) {
-        this.$emit("close", false);
     }
 
 }

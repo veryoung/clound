@@ -2,20 +2,15 @@ import { CloudTable } from "@components/cloudtable/table";
 import { SetCol } from "@components/setcol/setcol";
 import { TableConfigType } from "@store/table.type";
 import { ModuleTitle } from "@components/title/module.title";
-import Vue from "vue";
 import Component from "vue-class-component";
-import * as moment from "moment";
 import { ListBaseClass } from "@views/base/base.class";
 import { mapGetters } from "vuex";
 import { NOTICEEVENT } from "@store/notice.type";
-import { EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { NoticeServer } from "@server/notice";
 import { AxiosResponse } from "axios";
 import { ResType } from "server";
 
 require("./message.notice.styl");
-const Aux = new Auxiliary<string>();
 
 @Component({
     name: "messagenotice",
@@ -40,11 +35,12 @@ export class MessageNotice extends ListBaseClass {
     public tableConfig: TableConfigType;
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["短信通知"];
     public ids: string[] = [];
     public filterData: SearchType = {
         key_word: "",
-        send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+        send_date: [this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), this.moment(new Date()).format("YYYYMMDD")],
         send_type: "",
         status: "",
     };
@@ -56,15 +52,15 @@ export class MessageNotice extends ListBaseClass {
     created() {
         this.$store.dispatch(NOTICEEVENT.GETMSGLIST, this.mergeData(this.tableConfig["msgtable"], this.filter));
         let that = this;
-        let ListId = EventBus.register(CONSTANT.GETMSGLIST, function (event: string, info: any) {
+        let ListId = this.EventBus.register(this.CONSTANT.GETMSGLIST, function (event: string, info: any) {
             that.MessageNoticetableData = (<any>Object).assign([], that.msgTable[that.tableConfig["msgtable"].page - 1]);
 
         });
     }
 
     destroyed() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $idnex) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -167,11 +163,6 @@ export class MessageNotice extends ListBaseClass {
             }
         }
     }
-
-    sortChange(opt: any) {
-
-    }
-
 
 }
 export interface SearchType {

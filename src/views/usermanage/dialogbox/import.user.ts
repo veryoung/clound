@@ -1,7 +1,7 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { ResType } from "server";
-import { ListBaseClass } from "@views/base/base.class";
+import { ListBaseClass, DiplomaBaseClass } from "@views/base/base.class";
 
 require("./import.user.styl");
 @Component({
@@ -11,25 +11,19 @@ require("./import.user.styl");
         dialogVisible: Boolean,
     },
 })
-export class ImportUserFrame extends ListBaseClass {
+export class ImportUserFrame extends DiplomaBaseClass {
     // init data
     public dialogVisible: boolean;
     public loading: boolean = false;
     // lifecycle hook
-    created() {
-
-    }
 
     // init method
     exportTemplate() {
-        let a = document.createElement("a");
-        a.target = "_black";
         if (process.env.PLATFORM === "operation") {
-            a.href = "/download/users_template_opc.xlsx";
+            this.exportFile("/download/users_template_opc.xlsx");
         } else {
-            a.href = "/download/users_template_portal.xls";
+            this.exportFile("/download/users_template_portal.xls");
         }
-        a.click();
     }
 
 
@@ -83,9 +77,6 @@ export class ImportUserFrame extends ListBaseClass {
             temp.clearFiles();
         });
 
-    }
-    handleClose(done: Function) {
-        this.$emit("close", false);
     }
 
 }

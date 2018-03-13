@@ -1,22 +1,16 @@
 import { RichTextEditor } from "@components/richtexteditor/editor";
 import { ModuleTitle } from "@components/title/module.title";
-import { EventBus, CONSTANT } from "@utils/event";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Auxiliary } from "@utils/auxiliary";
 import { FormRuleType } from "@utils/form.validator";
 import { NoticeServer } from "@server/notice";
 import { OrganizationServer } from "@server/organization";
 import { UserServer } from "@server/user";
 import { SpliceTree } from "@components/splicetree/splice.tree";
-import { ListBaseClass } from "@views/base/base.class";
+import { DiplomaBaseClass } from "@views/base/base.class";
 
-
-
-const Aux = new Auxiliary<string>();
 require("./email.notice.operation.styl");
 @Component({
     name: "emailcnoiceoperation",
@@ -34,13 +28,14 @@ require("./email.notice.operation.styl");
     }
 })
 
-export class EmailNoiceOperation extends ListBaseClass {
+export class EmailNoiceOperation extends DiplomaBaseClass {
     // init props
 
     // init computed
 
     // init data
-    public form: EmailNoticeFormType = {
+    public Aux = new this.Auxiliary<string>();
+    public form = {
         content: "",
         object: "",
         receiver_ids: [],
@@ -69,11 +64,6 @@ export class EmailNoiceOperation extends ListBaseClass {
 
 
     // init lifecircle hook
-    created() {
-    }
-    destroyed() {
-    }
-
     public num: number = 0;
     public checkoutData: any = {};
     getData(targetData: any) {
@@ -87,8 +77,6 @@ export class EmailNoiceOperation extends ListBaseClass {
     submitForm(formBasic: string) {
         let temp: any = this.$refs.noticeform;
         let flag: boolean = false;
-        console.log(this.checkoutData);
-
 
         if (this.form.receiver_ids.length === 0) {
             this.$notify({
@@ -120,10 +108,6 @@ export class EmailNoiceOperation extends ListBaseClass {
                 }
             });
         }
-    }
-
-    back() {
-        this.$router.go(-1);
     }
 
     content(val: string) {

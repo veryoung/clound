@@ -1,16 +1,12 @@
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
-import { vm, EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
-import { ListBaseClass } from "@views/base/base.class";
+import { ListBaseClass, DetailBaseClass } from "@views/base/base.class";
 
 
 
-const Aux = new Auxiliary<string>();
 require("./common.detail.styl");
 require("./public.notice.detail.styl");
 
@@ -28,9 +24,10 @@ require("./public.notice.detail.styl");
         "$route": "fetchDate"
     }
 })
-export class PublicNoticeDeatil extends ListBaseClass {
+export class PublicNoticeDeatil extends DetailBaseClass {
     // init data
-    public PublicNoticeInfo: PublicNoticeDetailType = {
+    public Aux = new this.Auxiliary<string>();
+    public PublicNoticeInfo = {
         content: "",
         cperson: "",
         ctime: "",
@@ -49,19 +46,15 @@ export class PublicNoticeDeatil extends ListBaseClass {
         let that = this;
         let id = this.$route.params.id;
         this.$store.dispatch(NOTICEEVENT.GETNOTICEDETAIL, { id: id });
-        let eventId = EventBus.register(CONSTANT.GETNOTICEDETAIL, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETNOTICEDETAIL, function (event: string, info: any) {
             that.PublicNoticeInfo = that.noticeDetail[id];
-            Aux.insertId(eventId);
+            this.Aux.insertId(eventId);
         });
     }
     beforeDestroy() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $idnex) => {
+            this.EventBus.unRegister(id);
         });
-    }
-
-    back() {
-        this.$router.go(-1);
     }
 }
 

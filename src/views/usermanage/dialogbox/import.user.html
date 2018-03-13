@@ -1,4 +1,4 @@
-<el-dialog :visible="dialogVisible" width="600px" top="10%" :before-close="handleClose" class="dialog-plane">
+<el-dialog :visible="dialogVisible" width="600px" top="10%" :before-close="close" class="dialog-plane">
     <span slot="title" class="dialog-title">
         <span class="iconfont ">&#xe63b;</span>
         批量导入用户
@@ -42,6 +42,6 @@
     </div>
     <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="importUser" :disabled="loading">导入</el-button>
-        <el-button @click="handleClose" :disabled="loading">取消</el-button>
+        <el-button @click="close" :disabled="loading">取消</el-button>
     </span>
 </el-dialog>

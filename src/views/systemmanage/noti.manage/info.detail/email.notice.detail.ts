@@ -3,14 +3,11 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 
 import { ModuleTitle } from "@components/title/module.title";
-import { vm, EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { NOTICEEVENT } from "@store/notice.type";
-import { ListBaseClass } from "@views/base/base.class";
+import {  DetailBaseClass } from "@views/base/base.class";
 
 
 
-const Aux = new Auxiliary<string>();
 
 require("./common.detail.styl");
 @Component({
@@ -23,9 +20,10 @@ require("./common.detail.styl");
         ...mapGetters(["emailDetail"])
     }
 })
-export class EmailNoticeDeatil extends ListBaseClass {
+export class EmailNoticeDeatil extends DetailBaseClass {
     // init data
-    public EmailNoticeInfo: EmailNoticeDetailType = {
+    public Aux = new this.Auxiliary<string>();
+    public EmailNoticeInfo = {
         content: "",
         id: "",
         object: "",
@@ -44,21 +42,18 @@ export class EmailNoticeDeatil extends ListBaseClass {
         let that = this;
         let id = that.$route.params.id;
         this.$store.dispatch(NOTICEEVENT.GETEMAILDETAIL, { id: id });
-        let eventId = EventBus.register(CONSTANT.GETEMAILDETAIL, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETEMAILDETAIL, function (event: string, info: any) {
             that.EmailNoticeInfo = that.emailDetail[id];
         });
-        Aux.insertId(eventId);
+        this.Aux.insertId(eventId);
     }
 
     beforeDestroy() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $idnex) => {
+            this.EventBus.unRegister(id);
         });
     }
 
-    back() {
-        this.$router.go(-1);
-    }
 }
 
 export interface EmailNoticeDetailType {

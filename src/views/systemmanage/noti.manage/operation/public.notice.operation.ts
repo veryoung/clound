@@ -1,18 +1,14 @@
 import { RichTextEditor } from "@components/richtexteditor/editor";
 import { ModuleTitle } from "@components/title/module.title";
-import { EventBus, CONSTANT } from "@utils/event";
 import { ResType } from "@server/index";
 import { AxiosResponse } from "axios";
 import Component from "vue-class-component";
-import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Auxiliary } from "@utils/auxiliary";
 import { FormRuleType } from "@utils/form.validator";
 import { NoticeServer } from "@server/notice";
-import { ListBaseClass } from "@views/base/base.class";
+import {  DiplomaBaseClass } from "@views/base/base.class";
 
 
-const Aux = new Auxiliary<string>();
 require("./public.notice.operation.styl");
 @Component({
     name: "publicnoiceoperation",
@@ -30,13 +26,14 @@ require("./public.notice.operation.styl");
     }
 })
 
-export class PublicNoiceOperation extends ListBaseClass {
+export class PublicNoiceOperation extends DiplomaBaseClass {
     // init props
 
     // init computed
 
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public form: PublicNoticeFormType = {
         content: "",
         title: "",
@@ -67,15 +64,15 @@ export class PublicNoiceOperation extends ListBaseClass {
         if (id) {
             // this.$store.dispatch(MYWEBSITEEVENT.GETWEBEDIT, { website_id: id, operation: this.operation });
         }
-        let eventId = EventBus.register(CONSTANT.GETWEBEDIT, function (event: string, info: any) {
+        let eventId = this.EventBus.register(this.CONSTANT.GETWEBEDIT, function (event: string, info: any) {
 
         });
-        Aux.insertId(eventId);
+        this.Aux.insertId(eventId);
     }
 
     destroyed() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $index) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -107,10 +104,6 @@ export class PublicNoiceOperation extends ListBaseClass {
                 }
             });
         }
-    }
-
-    back() {
-        this.$router.go(-1);
     }
 
     content(val: string) {

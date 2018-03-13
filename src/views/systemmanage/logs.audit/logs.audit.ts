@@ -5,16 +5,13 @@ import { TableConfigType } from "@store/table.type";
 import { ModuleTitle } from "@components/title/module.title";
 import Vue from "vue";
 import Component from "vue-class-component";
-require("./logs.audit.styl");
-import * as moment from "moment";
 import { ListBaseClass } from "@views/base/base.class";
-import { EventBus, CONSTANT } from "@utils/event";
 import { LogAuditType, LOGADUITEVENT, LogAuditsTableType, } from "@store/log.aduit.type";
-import { Auxiliary } from "@utils/auxiliary";
 
 
 
-const Aux = new Auxiliary<string>();
+
+require("./logs.audit.styl");
 
 @Component({
     name: "logsaudit",
@@ -41,9 +38,10 @@ export class LogsAudit extends ListBaseClass {
 
     // init data
     public titles: string[] = ["日志审计"];
+    public Aux = new this.Auxiliary<string>();
     public filterData: SearchType = {
         detail: "",
-        send_date: [moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), moment(new Date()).format("YYYYMMDD")],
+        send_date: [this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD"), this.moment(new Date()).format("YYYYMMDD")],
         ip: "",
         op_result: "",
         op_type: "",
@@ -52,7 +50,7 @@ export class LogsAudit extends ListBaseClass {
     };
     public filter: SearchType = (<any>Object).assign({}, this.filterData);
     // 选择当前时间
-    public logAuditTableColumnData: LogsAuditColumnType[] = new Array<LogsAuditColumnType>();
+    public logAuditTableColumnData: LogsAuditColumnType[] = [];
 
     // 下载
     public ids: string[] = [];
@@ -104,17 +102,17 @@ export class LogsAudit extends ListBaseClass {
         // 获取列表
         this.$store.dispatch(LOGADUITEVENT.GETLOGAUDITLIST, this.mergeData(this.tableConfig["logautdittable"], this.filter));
         let that = this;
-        let ListId = EventBus.register(LOGADUITEVENT.GETLOGAUDITLIST, function (event: string, info: any) {
+        let ListId = this.EventBus.register(LOGADUITEVENT.GETLOGAUDITLIST, function (event: string, info: any) {
             let data = [];
             data = (<any>Object).assign([], that.logAuditTableData[that.tableConfig["logautdittable"].page - 1]);
             that.logAuditTableColumnData = data[0].data;
         });
-        Aux.insertId(ListId);
+        this.Aux.insertId(ListId);
     }
 
     destroyed() {
-        Aux.getIds().map((id, $idnex) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id: any, $idnex: any) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -151,13 +149,11 @@ export class LogsAudit extends ListBaseClass {
         this.ids = [];
         options.map((item: LogsAuditColumnType, $index: number) => {
             this.ids.push(item.id);
-            console.log(this.ids);
         });
     }
  
     // 跳转方法同统一
     handle(type: "download", rowObj?: any) {
-        console.log(this.ids);
         if (type === "download") {
             if (this.ids.length === 0) {
                 this.downLoadAll();
@@ -167,11 +163,8 @@ export class LogsAudit extends ListBaseClass {
         }
     }
 
-
-
     // 下载
     downLoadChoose() {
-        console.log(`/api/v20/syslog/export_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
         this.exportFile(`/api/v20/syslog/export_log/?ids=[${this.ids}]${this.objToUrl(this.filter)}`);
     }
     downLoadAll() {
