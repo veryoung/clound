@@ -1,8 +1,5 @@
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
-
-
-
 import { ModuleTitle } from "@components/title/module.title";
 import { TissueTree } from "@components/tissuetree/tree";
 import { TipBox } from "@views/organization/dialogbox/tip.box";
@@ -11,15 +8,12 @@ import { OrganizationTreeType, Organization, MessageType, ORGANIZATION } from "@
 import { OrganizationServer } from "@server/organization";
 import { ResType } from "server";
 import { AxiosResponse } from "axios";
-import { EventBus, CONSTANT } from "@utils/event";
-import { Auxiliary } from "@utils/auxiliary";
 import { create } from "domain";
 import { Permissions } from "@directives/permissions";
 import { SubmitBtn } from "@components/submit/submit";
 import { ListBaseClass } from "@views/base/base.class";
 
 
-const Aux = new Auxiliary<string>();
 require("./organization.styl");
 @Component({
     name: "organization",
@@ -41,6 +35,7 @@ require("./organization.styl");
 })
 export class OrganizationComponent extends ListBaseClass {
     // init data
+    public Aux = new this.Auxiliary<string>();
     public add: boolean = Permissions.judge("SystemManagement.Organization.Add");
     public del: boolean = Permissions.judge("SystemManagement.Organization.Delete");
     public pid: string = "";
@@ -70,7 +65,7 @@ export class OrganizationComponent extends ListBaseClass {
     // lifecycle hook
     created() {
         let that = this;
-        let id = EventBus.register(CONSTANT.ADDORGANIZATIONMESSAGE, function (event: string, info: any) {
+        let id = this.EventBus.register(this.CONSTANT.ADDORGANIZATIONMESSAGE, function (event: string, info: any) {
             if (info.id !== "") {
                 that.form = that.OrganizationMessage[info.id];
                 that.create = true;
@@ -79,11 +74,11 @@ export class OrganizationComponent extends ListBaseClass {
                 that.create = false;
             }
         });
-        Aux.insertId(id);
+        this.Aux.insertId(id);
     }
     destroyed() {
-        Aux.getIds().map((id, $index) => {
-            EventBus.unRegister(id);
+        this.Aux.getIds().map((id, $index) => {
+            this.EventBus.unRegister(id);
         });
     }
 
@@ -146,7 +141,6 @@ export class OrganizationComponent extends ListBaseClass {
                     }
                 });
             } else {
-                console.log("error submit!!");
                 return false;
             }
         });

@@ -15,7 +15,6 @@ import { ResType } from "server";
 import { Auxiliary } from "@utils/auxiliary";
 
 require("./emails.notice.styl");
-const Aux = new Auxiliary<string>();
 
 @Component({
     name: "emailsnotice",
@@ -40,6 +39,7 @@ export class EmailsNotice extends ListBaseClass {
     public tableConfig: TableConfigType;
 
     // init data
+    public Aux = new this.Auxiliary<string>();
     public titles: string[] = ["邮件通知"];
     public ids: string[] = [];
     public filterData: SearchType = {
@@ -63,7 +63,7 @@ export class EmailsNotice extends ListBaseClass {
     }
 
     destroyed() {
-        Aux.getIds().map((id, $idnex) => {
+        this.Aux.getIds().map((id, $idnex) => {
             EventBus.unRegister(id);
         });
     }
@@ -137,7 +137,6 @@ export class EmailsNotice extends ListBaseClass {
               
             });
         } else {
-            console.log(this.ids);
             if (this.ids.length === 0) {
                 this.$notify({
                     title: "提示",
@@ -171,15 +170,6 @@ export class EmailsNotice extends ListBaseClass {
             }
         }
     }
-
-
-
-
-    sortChange(opt: any) {
-
-    }
-
-
 }
 export interface SearchType {
     key_word: string;

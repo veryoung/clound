@@ -7,14 +7,12 @@ import { mapGetters } from "vuex";
 
 
 import { ModuleTitle } from "@components/title/module.title";
-import { Auxiliary } from "@utils/auxiliary";
 import { CustomTags } from "@components/customtags/custom.tags";
 import { DetailBaseClass } from "@views/base/base.class";
 import { ReportService } from "@server/report";
 import { REPORTEVENT } from "@store/report.type";
 
 
-const Aux = new Auxiliary<string>();
 require("./report.operation.styl");
 
 @Component({
@@ -53,6 +51,8 @@ export class ReportOperation extends DetailBaseClass {
 
     // init data
     public titles = ["添加模板"];
+    public Aux = new this.Auxiliary<string>();
+
     public form: ReportOperationFormType = {
         name: "",
         cycle: "day",
@@ -62,7 +62,7 @@ export class ReportOperation extends DetailBaseClass {
     public attackItem: string[] = [];
     public defenItem: string[]  = [];
     // 防御详情
-    public defenseOption: Array<any> = [
+    public defenseOption: any[] = [
         { label: "攻击拦截趋势", value: "defenAttack_tendency" },
         { label: "网站攻击拦截情况", value: "defenWeb_info" },
         { label: "攻击类型分布", value: "attackType_spread" },
@@ -70,7 +70,7 @@ export class ReportOperation extends DetailBaseClass {
         { label: "攻击源地域排行", value: "attackSource_rank" },
     ];
 
-    public attackOption: Array<any> = [
+    public attackOption: any[] = [
         { label: "请求加速", value: "requset_spead" },
         { label: "流量加速", value: "fluent_spead" },
         { label: "访问IP数", value: "access_ip" },
@@ -128,7 +128,7 @@ export class ReportOperation extends DetailBaseClass {
     }
 
     destroyed() {
-        Aux.getIds().map((id, $index) => {
+        this.Aux.getIds().map((id, $index) => {
             this.EventBus.unRegister(id);
         });
     }

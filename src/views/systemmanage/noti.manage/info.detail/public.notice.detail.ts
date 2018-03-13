@@ -48,7 +48,7 @@ export class PublicNoticeDeatil extends DetailBaseClass {
         this.$store.dispatch(NOTICEEVENT.GETNOTICEDETAIL, { id: id });
         let eventId = this.EventBus.register(this.CONSTANT.GETNOTICEDETAIL, function (event: string, info: any) {
             that.PublicNoticeInfo = that.noticeDetail[id];
-            this.Aux.insertId(eventId);
+            that.Aux.insertId(eventId);
         });
     }
     beforeDestroy() {
