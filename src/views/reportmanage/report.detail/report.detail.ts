@@ -15,7 +15,7 @@ export class ReportDetail extends DetailBaseClass {
     mounted() {
         let id = this.$route.params.id;
         let name = this.$route.params.name;
-        let report_url = `/templates/report/${id}/${name}.pdf`;
+        let report_url = `/cache/report/${id}/${name}.pdf`;
         let loadingTask = pdfjs.getDocument(report_url);
         loadingTask.promise.then(function (pdf: any) {
             // Fetch the first page
