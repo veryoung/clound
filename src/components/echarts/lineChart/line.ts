@@ -8,14 +8,15 @@ import { BaseChart } from "@components/echarts/base.chart";
         datas: {
             type: Object,
         },
-        type: {
+        dt: {
             type: String,
         }
     }
 })
 export class LineComponent extends BaseChart {
     // init props
-    protected data: {
+    protected dt: string;
+    protected datas: {
         xAxis: {
             data: string[];
         },
@@ -23,6 +24,7 @@ export class LineComponent extends BaseChart {
             name: string[],
             type: string,
             data: number[],
+            color: string;
         }[],
         legend: {
             data: string[],
@@ -84,19 +86,6 @@ export class LineComponent extends BaseChart {
                 name: "Web攻击",
                 type: "line",
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                lineStyle: {
-                    normal: {
-                        width: 2,
-                        shadowColor: "rgba(0,0,0,0.4)",
-                        shadowBlur: 8,
-                        shadowOffsetY: 8
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        color: "#BFE83B"
-                    }
-                },
             },
             {
                 name: "CC攻击",
@@ -119,12 +108,50 @@ export class LineComponent extends BaseChart {
         ]
     };
 
+    /**
+     *         if (this.datas.xAxis.data.length === 0) {
+            let obj = this.createDate(this.dt);
+            this.datas.xAxis.data = obj.xDate;
+            for (let i = 0; i < this.datas.legend.data.length; i++) {
+                this.datas.series[i].data = obj.yDate;
+            }
+        }
+     */
+
     protected install(): any {
-        return "";
+        for (let i = 0; i < this.datas.legend.data.length; i++) {
+            this.baseOption.series[i].name = this.datas.legend.data[i];
+            this.baseOption.series[i].data = this.datas.series[i].data;
+            this.baseOption.series[i].lineStyle = {
+                normal: {
+                    width: 2,
+                    shadowColor: "rgba(0,0,0,0.4)",
+                    shadowBlur: 8,
+                    shadowOffsetY: 8
+                }
+            };
+            this.baseOption.series[i].itemStyle = {
+                normal: {
+                    color: this.datas.series[i].color
+                }
+            };
+            let temp = `{b0}<br />`;
+            let template = `<span style='${this.datas.series[i].color}'>{a${i}}: {c${i}}次</span><br />`;
+            this.baseOption.tooltip.formatter = temp + template;
+        }
+        this.baseOption.legend = this.datas.legend;
+        this.baseOption.xAxis[0].data = this.datas.xAxis.data;
+        return this.baseOption;
     }
 
     created() {
-        
+        this.vm.$watch(() => {
+            return this.datas;
+        }, (o: any, n: any) => {
+            this.init(this.install());
+        }, {
+                deep: true
+            });
     }
 
     mounted() {
