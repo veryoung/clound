@@ -59,7 +59,10 @@
                         {{scope.row[column.prop] + "次"}}
                     </span>
                     <span v-else-if="column.type==='flow'" class="ellipsis" :title="scope.row[column.prop] |  flow | none">
-                        {{scope.row[column.prop] |  flow | none}}
+                        {{scope.row[column.prop] | flow | none}}
+                    </span>
+                    <span v-else-if="column.type==='dateRange'" class="ellipsis" :title="scope.row[column.prop] |  dateRange | none">
+                        {{scope.row[column.prop] | dateRange | none}}
                     </span>
                     <span v-else class="ellipsis" :title="scope.row[column.prop]">{{scope.row[column.prop] | none}}</span>
                 </template>

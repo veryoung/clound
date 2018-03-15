@@ -80,13 +80,13 @@
                 <div class="flex50-box mariginright30">
                     <ModuleTitle :titles="['攻击次数趋势']" />
                     <div style="height:400px;" class="mariginright10">
-                        <LineComponent :option="tendency_attackOpt" />
+                        <LineComponents :dt="form.datePicker" :datas="tendency_attackOptDatas" />
                     </div>
                 </div>
                 <div class="flex50-box">
                     <ModuleTitle :titles="['攻击类型分布']" />
                     <div style="height:400px;">
-                        <PieComponent :option="type_attackOpt" />
+                        <PieComponents :dt="form.datePicker" :datas="type_attackOptDatas"/>
                     </div>
                 </div>
             </div>
@@ -94,13 +94,13 @@
                 <div class="flex50-box mariginright30">
                     <ModuleTitle :titles="['攻击源地域分布TOP10']" />
                     <div style="height:400px;">
-                        <BarComponent :option="top_locationOpt" />
+                        <BarComponents :dt="form.datePicker" :datas="top_locationOptDatas" />
                     </div>
                 </div>
                 <div class="flex50-box">
                     <ModuleTitle :titles="['攻击IPTOP10']" />
                     <div style="height:400px;">
-                        <BarComponent :option="top_ipOpt" />
+                        <BarComponents :dt="form.datePicker" :datas="top_ipOptDatas" />
                     </div>
                 </div>
             </div>
@@ -111,15 +111,13 @@
                 <div class="flex50-box mariginright30">
                     <ModuleTitle :titles="['访问流量趋势']" />
                     <div style="height:400px;">
-                        <LineComponent :option="tendency_req_flowOpt" />
-
+                        <LineComponents :dt="form.datePicker" :datas="tendency_req_flowOptDatas" />
                     </div>
                 </div>
                 <div class="flex50-box">
                     <ModuleTitle :titles="['访问次数趋势']" />
                     <div style="height:400px;">
-                        <LineComponent :option="tendency_req_numOpt" />
-
+                        <LineComponents :dt="form.datePicker" :datas="tendency_req_numOptDatas" />
                     </div>
                 </div>
             </div>
@@ -127,15 +125,13 @@
                 <div class="flex50-box mariginright30">
                     <ModuleTitle :titles="['IP访问次数']" />
                     <div style="height:400px;">
-                        <LineComponent :option="tendency_ipOpt" />
-
+                        <LineComponents :dt="form.datePicker" :datas="tendency_ipOptDatas" />
                     </div>
                 </div>
                 <div class="flex50-box">
                     <ModuleTitle :titles="['地域访问次数TOP10']" />
                     <div style="height:400px;">
-                        <BarComponent :option="tendency_locationtopOpt" />
-
+                        <BarComponents :dt="form.datePicker" :datas="tendency_locationtopOptDatas" />
                     </div>
                 </div>
             </div>

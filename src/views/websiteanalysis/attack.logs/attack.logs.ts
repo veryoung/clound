@@ -105,34 +105,34 @@ export class AttackLogs extends ListBaseClass {
         },
         {
             value: "跨站脚本攻击",
-            label: "跨站脚本"
+            label: "跨站脚本攻击"
         }, {
             value: "注入攻击",
             label: "注入攻击"
         }, {
             value: "文件包含攻击",
-            label: "文件包含"
+            label: "文件包含攻击"
         }, {
             value: "信息泄露攻击",
-            label: "信息泄露"
+            label: "信息泄露攻击"
         }, {
             value: "HTTP协议攻击",
-            label: "HTTP协议"
+            label: "HTTP协议攻击"
         }, {
             value: "CC攻击",
             label: "CC攻击"
         }, {
             value: "恶意爬虫攻击",
-            label: "恶意爬虫"
+            label: "恶意爬虫攻击"
         }, {
             value: "恶意扫描攻击",
-            label: "恶意扫描"
+            label: "恶意扫描攻击"
         }, {
             value: "应用漏洞攻击",
-            label: "应用漏洞"
+            label: "应用漏洞攻击"
         }, {
             value: "Webshell攻击",
-            label: "Webshell"
+            label: "Webshell攻击"
         }
     ];
     public value: string = "";

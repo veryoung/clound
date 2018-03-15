@@ -164,8 +164,6 @@ export const systemTable: TableConfigType = {
                 label: "网站域名",
                 show: true,
                 disable: true,
-
-
             },
             {
                 prop: "org",
@@ -183,7 +181,6 @@ export const systemTable: TableConfigType = {
                 prop: "web_attack",
                 label: "今日Web攻击",
                 show: true,
-                sortable: "custom",
                 width: "150px",
                 type: "times"
             },
@@ -191,7 +188,6 @@ export const systemTable: TableConfigType = {
                 prop: "cc_attack",
                 label: "今日CC攻击",
                 show: true,
-                sortable: "custom",
                 width: "150px",
                 type: "times"
 
@@ -200,7 +196,6 @@ export const systemTable: TableConfigType = {
                 prop: "ads_flux",
                 label: "今日加速流量",
                 show: true,
-                sortable: "custom",
                 width: "150px",
                 type: "flow"
             },
@@ -208,7 +203,7 @@ export const systemTable: TableConfigType = {
                 prop: "ads_req",
                 label: "今日加速请求",
                 show: true,
-                sortable: "custom",
+                // sortable: "custom",
                 width: "150px",
                 type: "times"
 
@@ -534,6 +529,7 @@ export const systemTable: TableConfigType = {
                 label: "统计周期",
                 prop: "count_cycle",
                 show: true,
+                type: "cycle"
             },
             {
                 label: "统计范围",
@@ -544,11 +540,13 @@ export const systemTable: TableConfigType = {
                 label: "统计时间",
                 prop: "count_time",
                 show: true,
+                type: "dateRange",
             },
             {
                 label: "生成时间",
                 prop: "pro_time",
                 show: true,
+                type: "dateTime"
             },
         ],
         pageSizes: [10, 20, 30, 40, 50],

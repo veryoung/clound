@@ -3,15 +3,17 @@ import * as moment from "moment";
 const echarts = require("echarts");
 
 export class BaseChart extends BaseLibrary {
-    protected init(options: any) {
+    public globalChart: any = "";
+    protected init(id: string) {
         // 基于准备好的dom，初始化echarts实例
-        let myChart = echarts.init(document.getElementById(this.buildId(Math.floor(Math.random() * 1000) + "")));
-
-        // 指定图表的配置项和数据
-        let option = options;
+        this.globalChart = echarts.init(document.getElementById(id));
 
         // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        // this.renderChart(options);
+    }
+
+    protected renderChart(options: any) {
+        this.globalChart.setOption(options);
     }
 
     protected buildId(name: string) {
@@ -35,14 +37,14 @@ export class BaseChartUtils {
             }
         } else if (dt === "7") {
             for (let i = 6, len = 0; i >= len; i--) {
-                xDate.push(moment(today.setDate(today.getDate() - i), "YYYY-MM-DD") + "");
+                xDate.push(moment(today.setDate(today.getDate() - i)).format("YYYY-MM-DD") + "");
             }
             for (let i = 0, len = parseInt(dt); i < len; i++) {
                 yDate.push(0);
             }
         } else if (dt === "30") {
             for (let i = 29, len = 0; i >= len; i--) {
-                xDate.push(moment(today.setDate(today.getDate() - i), "YYYY-MM-DD") + "");
+                xDate.push(moment(today.setDate(today.getDate() - i)).format("YYYY-MM-DD") + "");
             }
             for (let i = 0, len = parseInt(dt); i < len; i++) {
                 yDate.push(0);

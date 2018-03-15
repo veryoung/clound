@@ -11,7 +11,8 @@ module.exports = function (env) {
             noInfo: true,
             proxy: [{
                 context: ["/portal/api/v20/", "/api/v20/"],
-                target: "http://10.10.200.232:8080",
+                // target: "http://10.10.200.232:8080",
+                target: "http://10.10.19.98:8080",
                 changeOrigin: true,
                 secure: false,
             }, {

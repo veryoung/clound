@@ -72,10 +72,8 @@ export class MyReport extends ListBaseClass {
 
     // lifecircle hook 
     created() {
-        let startDay = this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
-        let endDay = this.moment(new Date()).format("YYYYMMDD");
-        this.filter.count_time = [startDay, endDay];
-        this.filter.pro_time = [startDay, endDay];
+        this.filter.count_time = [];
+        this.filter.pro_time = [];
 
 
 
@@ -117,10 +115,8 @@ export class MyReport extends ListBaseClass {
 
     reset() {
         this.filter = (<any>Object).assign({}, filterData);
-        let startDay = this.moment(new Date().getTime() - 24 * 60 * 60 * 1000).format("YYYYMMDD");
-        let endDay = this.moment(new Date()).format("YYYYMMDD");
-        this.filter.count_time = [startDay, endDay];
-        this.filter.pro_time = [startDay, endDay];
+        this.filter.count_time = [];
+        this.filter.pro_time = [];
         this.$store.dispatch(REPORTEVENT.GETREPORTLIST, this.mergeData(this.tableConfig["myreporttable"], this.filter));
     }
 
